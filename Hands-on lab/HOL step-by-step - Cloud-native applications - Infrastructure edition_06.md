@@ -8,7 +8,7 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected
+> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
 
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
@@ -37,13 +37,13 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png)
 
-4. Since the AKS cluster uses RBAC, a ClusterRoleBinding must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
+4. Since the AKS cluster uses RBAC, a `ClusterRoleBinding` must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
 
    ```bash
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
 
-5. Create an SSH tunnel linking a local port (8001) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+5. Create an SSH tunnel linking a local port (`8001`) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
@@ -67,35 +67,35 @@ In this task, you will gather the information you need about your Azure Kubernet
 
 In this task, you will deploy the API application to the Azure Kubernetes Service cluster using the Kubernetes dashboard.
 
-1. From the Kubernetes dashboard, select Create in the top right corner.
+1. From the Kubernetes dashboard, select **Create** in the top right corner.
 
-2. From the Resource creation view, select Create an App.
+2. From the Resource creation view, select **Create an App**.
 
    ![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png)
 
-   - Enter "api" for the App name.
+   - Enter `api` for the App name.
 
-   - Enter [LOGINSERVER]/content-api for the Container Image, replacing [LOGINSERVER] with your ACR login server, such as fabmedicalsol.azurecr.io.
+   - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as `fabmedicalsol.azurecr.io`.
 
-   - Set Number of pods to 1.
+   - Set Number of pods to `1`.
 
-   - Set Service to "Internal".
+   - Set Service to `Internal`.
 
-   - Use 3001 for Port and 3001 for Target port.
+   - Use `3001` for Port and `3001` for Target port.
 
 3. Select **SHOW ADVANCED OPTIONS**
 
-   - Enter 0.125 for the CPU requirement.
+   - Enter `0.125` for the CPU requirement.
 
-   - Enter 128 for the Memory requirement.
+   - Enter `128` for the Memory requirement.
 
    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](media/image79.png)
 
-4. Select Deploy to initiate the service deployment based on the image. This can take a few minutes. In the meantime, you will be redirected to the Overview dashboard. Select the API deployment from the Overview dashboard to see the deployment in progress.
+4. Select Deploy to initiate the service deployment based on the image. This can take a few minutes. In the meantime, you will be redirected to the Overview dashboard. Select the **API** deployment from the **Overview** dashboard to see the deployment in progress.
 
    ![This is a screenshot of the Kubernetes management dashboard. Overview is highlighted on the left, and at right, a red arrow points to the api deployment.](media/image80.png)
 
-5. Kubernetes indicates a problem with the api Replica Set after some seconds. Select the log icon to investigate.
+5. Kubernetes indicates a problem with the `api` **Replica Set** after some seconds. Select the log icon to investigate.
 
    ![This screenshot of the Kubernetes management dashboard shows an error with the replica set.](media/Ex2-Task1.5.png)
 
@@ -107,11 +107,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![A screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/Ex2-Task1.9.png)
 
-8. Under "Quick Start" select the "Node.js" tab and copy the Node 3.0 connection string.
+8. Under **Quick Start** select the **Node.js** tab and copy the Node 3.0 connection string.
 
    ![A screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API.](media/Ex2-Task1.10.png)
 
-9. Update the provided connection string with a database "contentdb" and a replica set "globaldb".
+9. Update the provided connection string with a database **contentdb** and a replica set **globaldb**.
 
    > **Note**: Username and password redacted for brevity.
 
@@ -133,13 +133,13 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png)
 
-12. Return to the Kubernetes UI in your browser and select "+ Create". Update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose "Upload".
+12. Return to the Kubernetes UI in your browser and select **+ Create**. Update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
     ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
-      name: mongodb
+      name: cosmosdb
     type: Opaque
     data:
       db: <base64 encoded value>
@@ -147,11 +147,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Kubernetes management dashboard showing the YAML file for creating a deployment.](media/Ex2-Task1.13.png)
 
-13. Scroll down in the Kubernetes dashboard until you can see "Secrets" in the left-hand menu. Select it.
+13. Scroll down in the Kubernetes dashboard until you can see **Secrets** in the left-hand menu. Select it.
 
     ![A screenshot of the Kubernetes management dashboard showing secrets.](media/Ex2-Task1.14.png)
 
-14. View the details for the "mongodb" secret. Select the eyeball icon to show the secret.
+14. View the details for the **cosmosdb** secret. Select the eyeball icon to show the secret.
 
     ![A screenshot of the Kubernetes management dashboard showing the value of a secret.](media/Ex2-Task1.15.png)
 
@@ -174,7 +174,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
         - name: MONGODB_CONNECTION
           valueFrom:
             secretKeyRef:
-              name: mongodb
+              name: cosmosdb
               key: db
     ```
 
@@ -190,7 +190,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     kubectl apply -f api.deployment.yml
     ```
 
-19. Select "Deployments" then "api" to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
+19. Select **Deployments** then **api** to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
 
     ![A screenshot of the Kubernetes management dashboard showing logs output.](media/Ex2-Task1.19.png)
 
@@ -200,7 +200,7 @@ In this task, deploy the web service using `kubectl`.
 
 1. Open a **new** Azure Cloud Shell console.
 
-2. Create a text file called web.deployment.yml using the Azure Cloud Shell
+2. Create a text file called `web.deployment.yml` using the Azure Cloud Shell
    Editor.
 
    ```bash
@@ -268,7 +268,7 @@ In this task, deploy the web service using `kubectl`.
            terminationGracePeriodSeconds: 30
    ```
 
-4. Update the [LOGINSERVER] entry to match the name of your ACR login server.
+4. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
 
 5. Select the **...** button and choose **Save**.
 
@@ -278,7 +278,7 @@ In this task, deploy the web service using `kubectl`.
 
    ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png)
 
-7. Create a text file called web.service.yml using the Azure Cloud Shell
+7. Create a text file called `web.service.yml` using the Azure Cloud Shell
    Editor.
 
    ```bash
@@ -310,9 +310,7 @@ In this task, deploy the web service using `kubectl`.
 
 9. Save changes and close the editor.
 
-10. Type the following command to deploy the application described by the YAML
-    files. You will receive a message indicating the items kubectl has created a
-    web deployment and a web service.
+10. Type the following command to deploy the application described by the YAML files. You will receive a message indicating the items kubectl has created a web deployment and a web service.
 
     ```bash
     kubectl create --save-config=true -f web.deployment.yml -f web.service.yml
@@ -330,26 +328,26 @@ In this task, deploy the web service using `kubectl`.
 
 ### Task 4: Deploy a service using a Helm chart
 
-In this task, deploy the web service using a helm chart.
+In this task, you will deploy the web service using a [Helm](https://helm.sh/) chart to streamline the installing and managing the container-based application on the Azure Kubernetes cluster.
 
-1. From the Kubernetes dashboard, under "Workloads", select "Deployments".
+1. From the Kubernetes dashboard, under **Workloads**, select **Deployments**.
 
-2. Select the triple vertical dots on the right of the "web" deployment and then choose "Delete". When prompted, select "Delete" again.
+2. Select the triple vertical dots on the right of the `web` deployment and then choose **Delete**. When prompted, select **Delete** again.
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.2.png)
 
-3. From the Kubernetes dashboard, under "Discovery and Load Balancing", select "Services".
+3. From the Kubernetes dashboard, under **Discovery and Load Balancing**, select **Services**.
 
-4. Select the triple vertical dots on the right of the "web" service and then choose "Delete". When prompted, select "Delete" again.
+4. Select the triple vertical dots on the right of the **web** service and then choose **Delete**. When prompted, select **Delete** again.
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png)
 
 5. Open a **new** Azure Cloud Shell console.
 
-6. Update your starter files by pulling the latest changes from Azure DevOps
+6. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/content-web
     git pull
    ```
 
@@ -493,7 +491,7 @@ In this task, deploy the web service using a helm chart.
 
     ![In this screenshot of the console, helm install web ./web has been typed and run at the command prompt. Messages about web deployment and web service creation appear below.](media/Ex2-Task4.24.png)
 
-24. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select Services view under Discovery and Load Balancing. From the Services view, select the web service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
+24. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the web service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png)
 
@@ -515,7 +513,7 @@ In this task, deploy the web service using a helm chart.
 
 In this task, you will use a Kubernetes Job to run a container that is meant to execute a task and terminate, rather than run all the time.
 
-1. Create a text file called init.job.yml using the Azure Cloud Shell Editor.
+1. Create a text file called `init.job.yml` using the Azure Cloud Shell Editor.
 
    ```bash
    code init.job.yml
@@ -540,23 +538,23 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
              - name: MONGODB_CONNECTION
                valueFrom:
                  secretKeyRef:
-                   name: mongodb
+                   name: cosmosdb
                    key: db
          restartPolicy: Never
      backoffLimit: 4
    ```
 
-3. Edit this file and update the [LOGINSERVER] entry to match the name of your ACR login server.
+3. Edit this file and update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
 
 4. Save changes and close the editor.
 
-5. Type the following command to deploy the job described by the YAML. You will receive a message indicating the kubectl has created an init "job.batch".
+5. Type the following command to deploy the job described by the YAML. You will receive a message indicating the kubectl has created an init `job.batch`.
 
    ```bash
    kubectl create --save-config=true -f init.job.yml
    ```
 
-6. View the Job by selecting "Jobs" under "Workloads" in the Kubernetes UI.
+6. View the Job by selecting **Jobs** under **Workloads** in the Kubernetes UI.
 
    ![A screenshot of the Kubernetes management dashboard showing jobs.](media/Ex2-Task5.6.png)
 
@@ -564,7 +562,7 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
 
    ![A screenshot of the Kubernetes management dashboard showing log output.](media/Ex2-Task5.7.png)
 
-8. Next view your Cosmos DB instance in the Azure portal and see that it now contains two collections.
+8. Next, view your Cosmos DB instance in the Azure portal and see that it now contains two collections.
 
    ![A screenshot of the Azure Portal showing Cosmos DB collections.](media/Ex2-Task5.8.png)
 
@@ -572,7 +570,7 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
 
 In this task, you will verify that you can browse to the web service you have deployed and view the speaker and content information exposed by the API service.
 
-1. From the Kubernetes management dashboard, in the navigation menu, select the Services view under Discovery and Load Balancing.
+1. From the Kubernetes management dashboard, in the navigation menu, select the **Services** view under **Discovery and Load Balancing**.
 
 2. In the list of services, locate the external endpoint for the web service and select this hyperlink to launch the application.
 
@@ -586,123 +584,123 @@ In this task, you will verify that you can browse to the web service you have de
 
 ### Task 7: Configure Continuous Delivery to the Kubernetes Cluster
 
-In this task, you will use Azure DevOps to automate the process for deploying the web image to the AKS cluster. You will update the DevOps Pipeline and configure a deployment stage so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
+In this task, you will use GitHub Actions workflows to automate the process for deploying the web image to the AKS cluster. You will update the DevOps Pipeline and configure a deployment stage so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
 
-1. Login to your Azure DevOps account, access the `fabmedical` project you created earlier, then select "Pipelines".
+1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
-2. From the pipelines list, select the `content-web` pipeline and select `Edit.`
+    ```bash
+    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    vi content-web.yml
+    ```
 
-   ![A screenshot with the `content-web` pipeline selected and the `Edit` button highlighted.](media/hol-2019-10-02_10-06-57.png)
+2. You will add a second job to the bottom of the `content-web.yml` workflow. Paste the following at the end of the file:
 
-3. You will add a second job to the `Build and Push` stage, below the existing `Docker` job. Paste the following into the pipeline editor:
+    > **Note**: Be careful to check your indenting when pasting. The `build-and-push-helm-chart` node should be indented with 2 spaces and line up with the node for the `build-and-publish-docker-image` job.
 
-   > **Note**: Be careful to check your indenting when pasting. The `job` node should be indented with 2 spaces and line up with the `job` node for the `Docker` job.
+    ```yaml
+      build-and-push-helm-chart:
+        name: Build and Push Helm Chart
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-   ```yaml
-   - job: Helm
-    displayName: Build and Push Helm Chart
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-      - checkout: self
-        fetchDepth: 1
+        - name: Helm Install
+          uses: azure/setup-helm@v1
 
-      - task: HelmInstaller@1
-        inputs:
-          helmVersionToInstall: 'latest'
-        displayName: 'Helm Install'
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistryName }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-      - task: HelmDeploy@0
-        inputs:
-          connectionType: 'None'
-          command: 'package'
-          chartPath: 'charts/web'
-          chartVersion: '$(Build.BuildNumber)'
-          save: false
-        displayName: 'Helm Package'
+        - name: Helm Chart Save
+          run: |
+            cd ./content-web/charts/web
 
-      - task: AzureCLI@1
-        inputs:
-          azureSubscription: 'azurecloud'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            set -euo pipefail
+            helm chart save . content-web:v${{ env.tag }}
+            helm chart save . ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
 
-            az acr helm push \
-              --name $(containerRegistryName) \
-              $(Build.ArtifactStagingDirectory)/web-$(Build.BuildNumber).tgz
+            # list out saved charts
+            helm chart list
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-          failOnStandardError: true
-        displayName: 'Helm Push'
-   ```
+        - name: Helm Chart Push
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart push ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
+    ```
 
-   ![A screenshot that shows the new job, with a line to highlight proper indenting.](media/hol-2019-10-02_10-23-10.png)
+3. Save the file.
 
-4. Choose "Save" and commit the changes directly to the master branch. A new build will start automatically. The two jobs are independent and will run in parallel if there are enough available build agents.
+4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously, and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
-   ![A screenshot that shows the jobs, Helm is complete, Docker is still running](media/hol-2019-10-02_10-57-42.png)
+    ```bash
+    cat ~/.kube/config
+    ```
 
-5. Now return to the pipeline editor to create a deployment stage. Paste the following into the pipeline editor and update the SUFFIX values:
+5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, select **Secrets** from the left menu, then select the **New secret** button.
 
-   > **Note**: Be careful to check your indenting when pasting. The `stage` node should be indented with 0 spaces and line up with the `stage` node for the `Build` stage.
+6. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 
-   ```yaml
-   - stage:
-     displayName: AKS Deployment
-     jobs:
-       - deployment: DeployAKS
-         displayName: "Deployment to AKS"
-         pool:
-           vmImage: $(vmImageName)
-         environment: "aks"
-         strategy:
-           runOnce:
-             deploy:
-               steps:
-                 - checkout: none
+    ![KUBECONFI secret](media/2020-08-25-22-34-04.png "KUBECONFI secret")
 
-                 - task: HelmInstaller@1
-                   inputs:
-                     helmVersionToInstall: "latest"
-                   displayName: "Helm Install"
+7. Now return to edit the `content-web.yml` workflow and paste the following at the end of the file.
 
-                 - task: AzureCLI@1
-                   inputs:
-                     azureSubscription: "azurecloud"
-                     scriptLocation: "inlineScript"
-                     inlineScript: |
-                       set -euo pipefail
+    > **Note**: Be careful to check your indenting when pasting. The `aks-deployment` node should be indented with 2 spaces and line up with the node for the `build-and-push-helm-chart` job.
 
-                       az acr helm repo add --name $(containerRegistryName)
+    ```yaml
+      aks-deployment:
+        name: AKS Deployment
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image,build-and-push-helm-chart]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-                     failOnStandardError: true
-                   displayName: "Helm repo update"
+        - name: Helm Install
+          uses: azure/setup-helm@v1
 
-                 - task: HelmDeploy@0
-                   inputs:
-                     connectionType: "Azure Resource Manager"
-                     azureSubscription: "azurecloud"
-                     azureResourceGroup: "fabmedical-[SUFFIX]"
-                     kubernetesCluster: "fabmedical-[SUFFIX]"
-                     command: "upgrade"
-                     chartType: "Name"
-                     chartName: "$(containerRegistryName)/web"
-                     releaseName: "web"
-                     overrideValues: "image.tag=$(Build.BuildNumber),image.repository=$(containerRegistry)/content-web"
-                   displayName: "Helm Upgrade"
-   ```
+        - name: kubeconfig
+          run: echo "${{ secrets.KUBECONFIG }}" >> kubeconfig
 
-   ![A screenshot that shows the new stage, with a line to highlight proper indenting.](media/hol-2019-10-02_11-19-51.png)
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistry }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm repo update
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-6. Select "Save" and commit the changes directly to the master branch. A new build will start automatically. The two jobs are independent and will run in parallel if there are enough available build agents. However, the deployment depends on the jobs and will wait for them to complete before starting.
+        - name: Helm Upgrade
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart pull ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+            helm chart export ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }} --destination ./upgrade
+            helm upgrade web ./upgrade/web
+          env:
+            KUBECONFIG: './kubeconfig'
+            HELM_EXPERIMENTAL_OCI: 1
+    ```
 
-   ![A screenshot that shows the stages, expanded to also show the jobs.  Docker is running, Helm is queued, AKS Deployment is not started.](media/hol-2019-10-02_11-27-34.png)
+8. Save the file.
+
+9. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
+
+10. Selecting the currently running workflow will display it's status.
+
+    ![Workflow is running](media/2020-08-25-22-15-39.png "Workflow is running")
 
 ### Task 8: Review Azure Monitor for Containers
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named fabmedical-SUFFIX, and then select your AKS cluster.
+1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your AKS cluster.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png)
 
@@ -730,7 +728,7 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In this screenshot, the pod cpu usage details are shown.](media/monitor_4.png)
 
-8. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
+8. To display the logs for any container simply select it and view the right panel and you will find **View container logs** option which will list all logs for this specific container.
 
    ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png)
 
