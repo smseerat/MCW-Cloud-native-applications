@@ -9,7 +9,7 @@ Whiteboard design session student guide
 </div>
 
 <div class="MCWHeader3">
-February 2020
+August 2020
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -76,9 +76,9 @@ The conference sites are currently hosted on-premises with the following topolog
 
 - The conference web sites are built with the MEAN stack (Mongo, Express, Angular, Node.js).
 
-- Web sites and APIs are hosted on Windows Server machines.
+- Web sites and APIs are built as microservices hosted on Linux servers.
 
-- MongoDB is also running on a separate cluster of Windows Server machines.
+- The on-prem data backend is MongoDB; also running on a separate cluster of Linux servers machines.
 
 Customers are considered "tenants", and each tenant is treated as a unique deployment whereby the following happens:
 
@@ -96,7 +96,7 @@ Customers are considered "tenants", and each tenant is treated as a unique deplo
 
   - They have the ability to add new events and isolate speakers, sessions, workshops, and other details.
 
-- The tenant's code (conference and admin web site) is deployed to a specific group of load balanced Windows Server machines dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
+- The tenant's code (conference and admin web site) is deployed to a specific group of load balanced Linux servers dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
 
 - Once the conference site is live, the inevitable requests for changes to the web site pages, styles, registration requirements, and any number of custom requests begin.
 
@@ -140,15 +140,15 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
     - Provide a vendor neutral solution so that a specific on-premises or cloud environment does not become a new dependency.
 
-4. Migrate data from MongoDB on-premises to CosmosDB with the least change possible to the application code.
+4. Migrate data from MongoDB on-premises to Azure Cosmos DB with the least changes possible to the application code.
 
-5. Continue to use Git repositories for source control and integrate into a CICD workflow.
+5. Continue to use Git repositories for source control and integrate into a CI/CD workflow.
 
 6. Prefer a complete suite of operational management tools with:
 
     - UI for manual deployment and management during development and initial POC work.
 
-    - APIs for integrated CICD automation.
+    - APIs for integrated CI/CD automation.
 
     - Container scheduling and orchestration.
 
@@ -164,6 +164,8 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
 2. Is there an option in Azure that provides container orchestration platform features that are easy to manage and migrate to, that can also handle our scale and management workflow requirements?
 
+3. We heard Azure Cosmos DB is compatible with MongoDB. Will this provide a migration that minimizes code changes?
+
 ### Infographic for common scenarios
 
 _Kubernetes Architecture_
@@ -174,7 +176,7 @@ _Kubernetes Architecture_
 
 <https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes>
 
-_CICD to Azure Kubernetes Service with Azure DevOps_
+_CI/CD to Azure Kubernetes Service with Azure DevOps_
 
 ![A diagram showing the Azure DevOps workflow to build Docker images from source code, push images to Azure Container Registry, and deploy to Azure Kubernetes Service.](media/azure-devops-aks.png)
 
@@ -238,7 +240,7 @@ _Scalability considerations_
 
 _Automating DevOps workflows_
 
-1. Describe how Azure DevOps can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
+1. Describe how GitHub Actions can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
 
 2. Describe the recommended approach for keeping Azure Kubernetes Service (AKS) nodes up to date with the latest security patches or supported Kubernetes versions.
 
@@ -291,13 +293,14 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 |                                 |                                                                                                  |
 | ------------------------------- | :----------------------------------------------------------------------------------------------- |
 | **Description**                 | **Links**                                                                                        |
-| Azure Kubernetes Services (AKS) | <https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes/>                                   |
+| Azure Kubernetes Services (AKS) | <https://docs.microsoft.com/azure/aks/intro-kubernetes/>                                   |
 | Kubernetes                      | <https://kubernetes.io/docs/home/>                                                               |
-| AKS FAQ                         | <https://docs.microsoft.com/en-us/azure/aks/faq>                                                   |
+| AKS FAQ                         | <https://docs.microsoft.com/azure/aks/faq>                                                   |
 | Autoscaling AKS                 | <https://github.com/kubernetes/autoscaler>                                                         |
-| AKS Cluster Autoscaler          | <https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler>                                    |
-| Upgrading an AKS cluster        | <https://docs.microsoft.com/en-us/azure/aks/upgrade-cluster>                                       |
-| Azure Pipelines                 | <https://docs.microsoft.com/en-us/azure/devops/pipelines/>                                       |
-| Container Security              | <https://docs.microsoft.com/en-us/azure/container-instances/container-instances-image-security/> |
+| AKS Cluster Autoscaler          | <https://docs.microsoft.com/azure/aks/cluster-autoscaler>                                    |
+| Upgrading an AKS cluster        | <https://docs.microsoft.com/azure/aks/upgrade-cluster>                                       |
+| Azure Pipelines                 | <https://docs.microsoft.com/azure/devops/pipelines/>                                       |
+| Container Security              | <https://docs.microsoft.com/azure/container-instances/container-instances-image-security/> |
 | Image Quarantine                | <https://github.com/Azure/acr/tree/master/docs/preview/quarantine/>                              |
-| Container Monitoring Solution   | <https://docs.microsoft.com/en-us/azure/azure-monitor/insights/containers>                       |
+| Container Monitoring Solution   | <https://docs.microsoft.com/azure/azure-monitor/insights/containers>                       |
+| Azure Cosmos DB                 | <https://docs.microsoft.com/azure/cosmos-db/introduction> |

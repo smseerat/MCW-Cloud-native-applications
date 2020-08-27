@@ -9,7 +9,7 @@ Hands-on lab step-by-step
 </div>
 
 <div class="MCWHeader3">
-February 2020
+August 2020
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -84,7 +84,7 @@ Below is a diagram of the solution architecture you will build in this lab. Plea
 
 The solution will use Azure Kubernetes Service (AKS), which means that the container cluster topology is provisioned according to the number of requested nodes. The proposed containers deployed to the cluster are illustrated below with Cosmos DB as a managed service:
 
-![A diagram showing the solution, using Azure Kubernetes Service with a Cosmos DB back end.](media/image3.png)
+![A diagram showing the solution, using Azure Kubernetes Service with a Cosmos DB back end.](media/solution-topology.png)
 
 Each tenant will have the following containers:
 
@@ -108,19 +108,14 @@ Each tenant will have the following containers:
 
    - To complete this lab, ensure your account has the following roles:
 
-     - The [Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)
+     - The [Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#owner)
        built-in role for the subscription you will use.
 
-     - Is a [Member](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/users-default-permissions#member-and-guest-users) user in the Azure AD tenant you will use. (Guest users will not have the necessary permissions).
+     - Is a [Member](https://docs.microsoft.com/azure/active-directory/fundamentals/users-default-permissions#member-and-guest-users) user in the Azure AD tenant you will use. (Guest users will not have the necessary permissions).
 
      > **Note** If you do not meet these requirements, you may have to ask another member user with subscription owner rights to login to the portal and execute the create service principal step ahead of time.
 
-   - You must have enough cores available in your subscription to create the
-     build agent and Azure Kubernetes Service cluster in Before the Hands-on
-     Lab. You will need eight cores if following the exact instructions in the
-     lab, or more if you choose additional cluster nodes or larger VM sizes.
-     If you execute the steps required before the lab, you will be able to
-     see if you need to request more cores in your sub.
+   - You must have enough cores available in your subscription to create the build agent and Azure Kubernetes Service cluster in Before the Hands-on Lab. You will need eight cores if following the exact instructions in the lab, or more if you choose additional cluster nodes or larger VM sizes. If you execute the steps required before the lab, you will be able to see if you need to request more cores in your sub.
 
 2. Local machine or a virtual machine configured with:
 
@@ -140,11 +135,9 @@ In this exercise, you will take the starter files and run the node.js applicatio
 
 The purpose of this task is to make sure you can run the application successfully before applying changes to run it as a Docker application.
 
-1. From Azure Cloud Shell, connect to your build agent if you are not already
-   connected. (If you need to reconnect, please review the instructions in the
-   "Before the HOL" document.)
+1. From Azure Cloud Shell, connect to your build agent if you are not already connected. (If you need to reconnect, please review the instructions in the "Before the HOL" document.)
 
-2. Type the following command to create a Docker network named "fabmedical":
+2. Type the following command to create a Docker network named `fabmedical`:
 
    ```bash
    docker network create fabmedical
@@ -155,6 +148,8 @@ The purpose of this task is to make sure you can run the application successfull
    ```bash
    docker container run --name mongo --net fabmedical -p 27017:27017 -d mongo
    ```
+
+   > **Note**:  With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows, however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
 
 4. Confirm that the mongo container is running and ready.
 
@@ -186,10 +181,10 @@ The purpose of this task is to make sure you can run the application successfull
    ```
 
    > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
-
-   ```bash
-   sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
-   ```
+   >
+   > ```bash
+   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   > ```
 
 7. Initialize the database.
 
@@ -218,7 +213,7 @@ The purpose of this task is to make sure you can run the application successfull
 
    ![This screenshot of the console window shows the data output.](media/Ex1-Task1.8.png)
 
-9. Now navigate to the content-api directory and run npm install.
+9. Now navigate to the `content-api` directory and run npm install.
 
    ```bash
    cd ../content-api
@@ -239,7 +234,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, nodejs ./server.js & has been typed and run at the command prompt, which starts the API as a background process.](media/image47.png)
 
-11. Press ENTER again to get to a command prompt for the next step.
+11. Press `ENTER` again to get to a command prompt for the next step.
 
 12. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
 
@@ -261,12 +256,12 @@ The purpose of this task is to make sure you can run the application successfull
     ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png)
 
     > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
+    >
+    > ```bash
+    > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+    > ```
 
-    ```bash
-    sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
-    ```
-
-14. Press ENTER again to get a command prompt for the next step.
+14. Press `ENTER` again to get a command prompt for the next step.
 
 15. Test the web application using curl. You will see HTML output returned without errors.
 
@@ -282,17 +277,17 @@ The purpose of this task is to make sure you can run the application successfull
 
 In this task, you will browse to the web application for testing.
 
-1. From the Azure portal select the resource group you created named fabmedical-SUFFIX.
+1. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
 
-2. Select the build agent VM named fabmedical-SUFFIX from your list of available resources.
+2. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
 
    ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png)
 
-3. From the Virtual Machine blade overview, find the IP address of the VM.
+3. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
 
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png)
 
-4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port 3000.
+4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
    ```text
    http://[BUILDAGENTIP]:3000
@@ -321,16 +316,28 @@ In this task, you will create Docker images for the application --- one for the 
    docker image ls
    ```
 
-2. From the content-api folder containing the API application files and the new Dockerfile you created, type the following command to create a Docker image for the API application. This command does the following:
+2. From the `content-api` folder containing the API application files and the new `Dockerfile` you created, type the following command to create a Docker image for the API application. This command does the following:
 
    - Executes the Docker build command to produce the image
 
    - Tags the resulting image with the name content-api (-t)
 
-   - The final dot (".") indicates to use the Dockerfile in this current directory context. By default, this file is expected to have the name "Dockerfile" (case sensitive).
+   - The final dot (`.`) indicates to use the Dockerfile in this current directory context. By default, this file is expected to have the name `Dockerfile` (case sensitive).
 
    ```bash
    docker image build -t content-api .
+   ```
+
+2. From the `content-init` folder containing the API application files and the new `Dockerfile` you created, type the following command to create a Docker image for the Init application. This command does the following:
+
+   - Executes the Docker build command to produce the image
+
+   - Tags the resulting image with the name content-init (-t)
+
+   - The final dot (`.`) indicates to use the Dockerfile in this current directory context. By default, this file is expected to have the name `Dockerfile` (case sensitive).
+
+   ```bash
+   docker image build -t content-init .
    ```
 
 3. Once the image is successfully built, run the Docker images listing command again. You will see several new images: the node images and your container image.
@@ -343,7 +350,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](media/image59.png)
 
-4. Navigate to the content-web folder again and list the files. Note that this folder has a Dockerfile.
+4. Navigate to the `content-web` folder again and list the files. Note that this folder has a Dockerfile.
 
    ```bash
    cd ../content-web
@@ -356,7 +363,7 @@ In this task, you will create Docker images for the application --- one for the 
    cat Dockerfile
    ```
 
-   Notice that the content-web Dockerfile build stage includes additional tools for a front-end Angular application in addition to installing npm packages.
+   > Notice that the `content-web` Dockerfile build stage includes additional tools for a front-end Angular application in addition to installing npm packages.
 
 6. Type the following command to create a Docker image for the web application.
 
@@ -378,13 +385,13 @@ The web application container will be calling endpoints exposed by the API appli
 
 1. Create and start the API application container with the following command. The command does the following:
 
-   - Names the container "api" for later reference with Docker commands.
+   - Names the container `api` for later reference with Docker commands.
 
-   - Instructs the Docker engine to use the "fabmedical" network.
+   - Instructs the Docker engine to use the `fabmedical` network.
 
-   - Instructs the Docker engine to use port 3001 and map that to the internal container port 3001.
+   - Instructs the Docker engine to use port `3001` and map that to the internal container port `3001`.
 
-   - Creates a container from the specified image, by its tag, such as content-api.
+   - Creates a container from the specified image, by its tag, such as `content-api`.
 
    ```bash
    docker container run --name api --net fabmedical -p 3001:3001 content-api
@@ -418,7 +425,7 @@ The web application container will be calling endpoints exposed by the API appli
    docker container run --name api --net fabmedical -p 3001:3001 -e MONGODB_CONNECTION=mongodb://mongo:27017/contentdb -d content-api
    ```
 
-4. Enter the command to show running containers. You will observe that the "api" container is in the list. Use the docker logs command to see that the API application has connected to mongodb.
+4. Enter the command to show running containers. You will observe that the `api` container is in the list. Use the docker logs command to see that the API application has connected to mongodb.
 
    ```bash
    docker container ls
@@ -455,7 +462,7 @@ The web application container will be calling endpoints exposed by the API appli
 
 ### Task 5: Setup environment variables
 
-In this task, you will configure the "web" container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
+In this task, you will configure the `web` container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
 
 1. From cloud shell connected to the build agent VM, stop and remove the web container using the following commands.
 
@@ -464,20 +471,20 @@ In this task, you will configure the "web" container to communicate with the API
    docker container rm web
    ```
 
-2. Validate that the web container is no longer running or present by using the -a flag as shown in this command. You will see that the "web" container is no longer listed.
+2. Validate that the web container is no longer running or present by using the `-a` flag as shown in this command. You will see that the **web** container is no longer listed.
 
    ```bash
    docker container ls -a
    ```
 
-3. Open the Dockerfile for editing using Vim and press the "i" key to go into edit mode.
+3. Open the Dockerfile for editing using Vim and press the `i` key to go into edit mode.
 
    ```bash
    vi Dockerfile
    <i>
    ```
 
-4. Locate the EXPOSE line shown below and add a line above it that sets the default value for the environment variable, as shown in the screenshot.
+4. Locate the `EXPOSE` line shown below and add a line above it that sets the default value for the environment variable, as shown in the screenshot.
 
    ```Dockerfile
    ENV CONTENT_API_URL http://localhost:3001
@@ -485,7 +492,7 @@ In this task, you will configure the "web" container to communicate with the API
 
    ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](media/hol-2019-10-01_19-37-35.png)
 
-5. Press the Escape key and type ":wq" and then press the Enter key to save and close the file.
+5. Press the Escape key and type `:wq` and then press the Enter key to save and close the file.
 
    ```text
    <Esc>
@@ -520,13 +527,13 @@ In this task, you will configure the "web" container to communicate with the API
     docker container run --name web --net fabmedical -p 3000:3000 -d -e CONTENT_API_URL=http://api:3001 content-web
    ```
 
-10. Curl the speaker path again, using port 3000. You will see the same HTML returned.
+10. Curl the speaker path again, using port `3000`. You will see the same HTML returned.
 
     ```bash
     curl http://localhost:3000/speakers.html
     ```
 
-11. You can now use a web browser to navigate to the website and successfully view the application at port 3000. Replace [BUILDAGENTIP] with the IP address you used previously.
+11. You can now use a web browser to navigate to the website and successfully view the application at port `3000`. Replace `[BUILDAGENTIP]` with the IP address you used previously.
 
     ```bash
     http://[BUILDAGENTIP]:3000
@@ -546,9 +553,7 @@ In this task, you will configure the "web" container to communicate with the API
 
 ### Task 6: Run several containers with Docker compose
 
-Managing several containers with all their command line options can become
-difficult as the solution grows. `docker-compose` allows us to declare options
-for several containers and run them together.
+Managing several containers with all their command line options can become difficult as the solution grows. `docker-compose` allows us to declare options for several containers and run them together.
 
 1. First, cleanup the existing containers.
 
@@ -595,7 +600,7 @@ for several containers and run them together.
          - "3000:3000"
    ```
 
-   Press the Escape key and type ":wq" and then press the Enter key to save and close the file.
+   Press the Escape key and type `:wq` and then press the Enter key to save and close the file.
 
    ```text
    <Esc>
@@ -691,7 +696,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
 1. In the [Azure Portal](https://portal.azure.com/), navigate to the ACR you created in Before the hands-on lab.
 
-2. Select Access keys under Settings on the left-hand menu.
+2. Select **Access keys** under **Settings** on the left-hand menu.
 
    ![In this screenshot of the left-hand menu, Access keys is highlighted below Settings.](media/image64.png)
 
@@ -713,13 +718,14 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ![In this screenshot of the console window, the following has been typed and run at the command prompt: docker login fabmedicalsoll.azurecr.io --u fabmedicalsoll --p +W/j=l+Fcze=n07SchxvGSlvsLRh/7ga](media/image65.png)
 
-   **Tip: Make sure to specify the fully qualified registry login server (all lowercase).**
+   > **Tip**: Make sure to specify the fully qualified registry login server (all lowercase).
 
 5. Run the following commands to properly tag your images to match your ACR account name.
 
    ```bash
    docker image tag content-web [LOGINSERVER]/content-web
    docker image tag content-api [LOGINSERVER]/content-api
+   docker image tag content-init [LOGINSERVER]/content-init
    ```
 
 6. List your docker images and look at the repository and tag. Note that the repository is prefixed with your ACR login server name, such as the sample shown in the screenshot below.
@@ -735,19 +741,20 @@ In this task, you will push images to your ACR account, version images with tagg
    ```bash
    docker image push [LOGINSERVER]/content-web
    docker image push [LOGINSERVER]/content-api
+   docker image push [LOGINSERVER]/content-init
    ```
 
    ![In this screenshot of the console window, an example of images being pushed to an ACR account results from typing and running the following at the command prompt: docker push [LOGINSERVER]/content-web.](media/image67.png)
 
-8. In the Azure Portal, navigate to your ACR account, and select Repositories under Services on the left-hand menu. You will now see two, one for each image.
+8. In the Azure Portal, navigate to your ACR account, and select **Repositories** under **Services** on the left-hand menu. You will now see two, one for each image.
 
    ![In this screenshot, content-api and content-web each appear on their own lines below Repositories.](media/image68.png)
-
-9. Select content-api. You will see the latest tag is assigned.
+   
+9. Select `content-api`. You will see the latest tag is assigned.
 
    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right.](media/image69.png)
 
-10. From the cloud shell session attached to the VM, assign the v1 tag to each image with the following commands. Then list the Docker images to note that there are now two entries for each image: showing the latest tag and the v1 tag. Also note that the image ID is the same for the two entries, as there is only one copy of the image.
+10. From the cloud shell session attached to the VM, assign the `v1` tag to each image with the following commands. Then list the Docker images to note that there are now two entries for each image: showing the `latest` tag and the `v1` tag. Also note that the image ID is the same for the two entries, as there is only one copy of the image.
 
     ```bash
     docker image tag [LOGINSERVER]/content-web:latest [LOGINSERVER]/content-web:v1
@@ -757,11 +764,11 @@ In this task, you will push images to your ACR account, version images with tagg
 
     ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png)
 
-11. Repeat Step 7 to push the images to ACR again so that the newly tagged v1 images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
+11. Repeat Step 7 to push the images to ACR again so that the newly tagged `v1` images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
 
     ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png)
 
-12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with "latest." You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
+12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
     ```bash
     docker image pull [LOGINSERVER]/content-web
@@ -770,117 +777,137 @@ In this task, you will push images to your ACR account, version images with tagg
 
 ### Task 8: Setup CI Pipeline to Push Images
 
-In this task, you will use YAML to define a pipeline that builds your Docker
+In this task, you will use YAML to define a GitHub Actions workflow that builds your Docker
 image and pushes it to your ACR instance automatically.
 
-1. In your cloud shell session connected to the build agent VM, navigate to the
-   `content-web` directory:
+1. In GitHub, return to the **Fabmedical** repository screen, and select the **Settings** tab.
+
+2. From the left menu, select **Secrets**.
+
+3. Select the **New secret** button.
+
+    ![Settings link, Secrets link, and New secret button are highlighted](media/2020-08-24-21-45-42.png "GitHub Repository secrets")
+
+4. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
+
+    ![New secret screen with values entered](media/2020-08-24-21-48-54.png "New secret screen")
+
+5. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
+
+    ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created](media/2020-08-24-21-51-24.png "Secrets screen")
+
+6. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
 
    ```bash
-   cd ~/content-web
+   cd ~/Fabmedical
    ```
 
-2. Next create the pipeline YAML file.
+7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created. Do this by running the following commands:
 
-   ```bash
-   vi azure-pipelines.yml
-   ```
+    ```bash
+    mkdir ~/Fabmedical/.github
+    mkdir ~/Fabmedical/.github/workflows
+    ```
 
-   Add the following as the content (replacing SHORT_SUFFIX with your short
-   suffix such as SOL):
+8. Navigate to the `.github/workflows` directory:
 
-   ```yaml
-   name: 0.1.$(Rev:r)
+    ```bash
+    cd ~/Fabmedical/.github/workflows
+    ```
 
-   trigger:
-     - master
+9. Next create the workflow YAML file.
 
-   resources:
-     - repo: self
+    ```dotnetcli
+    vi content-web.yml
+    ```
 
-   variables:
-     dockerRegistryServiceConnection: "Fabmedical ACR"
-     imageRepository: "content-web"
-     containerRegistry: "$(containerRegistryName).azurecr.io"
-     containerRegistryName: "fabmedical[SHORT_SUFFIX]"
-     dockerfilePath: "$(Build.SourcesDirectory)/Dockerfile"
-     tag: "$(Build.BuildNumber)"
-     vmImageName: "ubuntu-latest"
+   Add the following as the content. Be sure to replace the following placeholders:
 
-   stages:
-     - stage: Build
-       displayName: Build and Push
-       jobs:
-         - job: Docker
-           displayName: Build and Push Docker Image
-           pool:
-             vmImage: $(vmImageName)
-           steps:
-             - checkout: self
-               fetchDepth: 1
+   - replace `[SHORT_SUFFIX]` with your short suffix such as `SOL`.
 
-             - task: Docker@2
-               displayName: Build and push an image to container registry
-               inputs:
-                 command: buildAndPush
-                 repository: $(imageRepository)
-                 dockerfile: $(dockerfilePath)
-                 containerRegistry: $(dockerRegistryServiceConnection)
-                 tags: |
-                   $(tag)
-                   latest
-   ```
+    ```yml
+    name: content-web
 
-3. Save the pipeline YAML, then commit and push it to the Azure DevOps
-   repository:
+    # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
+    on:
+      push:
+        branches:
+        - master
+        paths:
+        - 'content-web/**'
 
-   ```bash
-   git add azure-pipelines.yml
-   git commit -m "Added pipeline YAML"
-   git push
-   ```
+      # Configure workflow to also support triggering manually
+      workflow_dispatch:
+        inputs:
+          logLevel:
+            description: 'Log level'
+            required: true
+            default: 'warning'
 
-4. Now login to Azure DevOps to create your first build. Navigate to the
-   `content-web` repository and choose 'Set up Build'.
+    # Environment variables are defined so that they can be used throughout the job definitions.
+    env:
+      imageRepository: 'content-web'
+      resourceGroupName: 'Fabmedical-[SHORT_SUFFIX]'
+      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
+      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
+      dockerfilePath: './content-web'
+      tag: '${{ github.run_id  }}'
 
-   ![A screenshot of the content-web repository with an arrow pointed at the Set up Build button](media/hol-2019-10-01_19-50-16.png)
+    # Jobs define the actions that take place when code is pushed to the master branch
+    jobs:
 
-5. Azure DevOps will automatically detect the pipeline YAML you added. You can
-   make additional edits here if needed. Select `Run` when you are ready to
-   execute the pipeline.
+      build-and-publish-docker-image:
+        name: Build and Push Docker Image
+        runs-on: ubuntu-latest
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-   ![A screenshot of the "Review your pipeline YAML" page.  An arrow points at the Run button](media/hol-2019-10-02_07-33-16.png)
+        - name: Build and push an image to container registry
+          uses: docker/build-push-action@v1
+          with:
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+            path: ${{ env.dockerfilePath  }}
+            dockerfile: '${{ env.dockerfilePath }}/Dockerfile'
+            registry: ${{ env.containerRegistry }}
+            repository: ${{ env.imageRepository }}
+            tags: ${{ env.tag }},latest
+    ```
 
-6. Azure DevOps will queue your first build and execute the pipeline when an
-   agent becomes available.
+10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-   ![A screenshot of Azure DevOps Pipeline with a queued job.](media/hol-2019-10-02_07-39-24.png)
+11. Save the pipeline YAML, then commit and push it to the Git repository:
 
-7. The build should take about five minutes to complete.
+    ```bash
+    git add .
+    git commit -m "Added workflow YAML"
+    git push
+    ```
 
-   ![A screenshot of Azure DevOps Pipeline with a completed job.](media/hol-2019-10-02_08-28-49.png)
+12. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
 
-   > **Note**: The build may fail due to an authorization error related to the
-   > Docker Registry Service connection. If this is the case, then select
-   > "Authorize Resources" and run the build again.
-   > ![A screenshot showing an authorization failure error. An arrow points to the Authorize Resources button.](media/hol-2019-10-02_07-30-37.png)
+13. On the **Actions** page, select the **content-web** workflow.
 
-8. Next, create the `content-api` build. Select the `content-api` repository.
-   This repository already includes `azure-pipelines.yaml`. Choose 'Set up
-   Build'.
+14. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
-9. In the "Review your pipeline YAML" step, edit the `containerRegistryName` value to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name.
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-   ![A screenshot of the "Review your pipeline YAML" step, with the containerRegistryName property highlighted.](media/hol-2019-10-18_06-32-34.png)
+15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view it's status.
 
-10. When you are finished editing, select `Run` to execute the pipeline.
+16. Selecting the **Build and Push Docker Image** job of the workflow will display it's execution status.
 
-11. While the `content-api` build runs, setup one last build for `content-init` by following the same steps as the previous `content-api` build, remembering to update the `[SHORT_SUFFIX]` value on the "Review your pipeline YAML" step.
+    ![Build and Push Docker Image job](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-12. Visit your ACR instance in the Azure portal, you should see new containers
-    tagged with the Azure DevOps build number.
+17. Next, setup the `content-api` workflow. This repository already includes `content-api.yaml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yaml` file for editing.
 
-    ![A screenshot of the container images in ACR.](media/Ex1-Task7.28.png)
+18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
+
+    ![Screenshot of content-api.yml with the environment variables highlighted](media/2020-08-25-15-59-56.png "Screenshot of content-api.yml with the environment variables highlighted")
+
+19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
+
+20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your own three-letter suffix.
 
 ## Exercise 2: Deploy the solution to Azure Kubernetes Service
 
@@ -892,7 +919,7 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected
+> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
 
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
@@ -921,13 +948,13 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png)
 
-4. Since the AKS cluster uses RBAC, a ClusterRoleBinding must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
+4. Since the AKS cluster uses RBAC, a `ClusterRoleBinding` must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
 
    ```bash
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
 
-5. Create an SSH tunnel linking a local port (8001) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+5. Create an SSH tunnel linking a local port (`8001`) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
@@ -951,35 +978,35 @@ In this task, you will gather the information you need about your Azure Kubernet
 
 In this task, you will deploy the API application to the Azure Kubernetes Service cluster using the Kubernetes dashboard.
 
-1. From the Kubernetes dashboard, select Create in the top right corner.
+1. From the Kubernetes dashboard, select **Create** in the top right corner.
 
-2. From the Resource creation view, select Create an App.
+2. From the Resource creation view, select **Create an App**.
 
    ![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png)
 
-   - Enter "api" for the App name.
+   - Enter `api` for the App name.
 
-   - Enter [LOGINSERVER]/content-api for the Container Image, replacing [LOGINSERVER] with your ACR login server, such as fabmedicalsol.azurecr.io.
+   - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as `fabmedicalsol.azurecr.io`.
 
-   - Set Number of pods to 1.
+   - Set Number of pods to `1`.
 
-   - Set Service to "Internal".
+   - Set Service to `Internal`.
 
-   - Use 3001 for Port and 3001 for Target port.
+   - Use `3001` for Port and `3001` for Target port.
 
 3. Select **SHOW ADVANCED OPTIONS**
 
-   - Enter 0.125 for the CPU requirement.
+   - Enter `0.125` for the CPU requirement.
 
-   - Enter 128 for the Memory requirement.
+   - Enter `128` for the Memory requirement.
 
    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](media/image79.png)
 
-4. Select Deploy to initiate the service deployment based on the image. This can take a few minutes. In the meantime, you will be redirected to the Overview dashboard. Select the API deployment from the Overview dashboard to see the deployment in progress.
+4. Select Deploy to initiate the service deployment based on the image. This can take a few minutes. In the meantime, you will be redirected to the Overview dashboard. Select the **API** deployment from the **Overview** dashboard to see the deployment in progress.
 
    ![This is a screenshot of the Kubernetes management dashboard. Overview is highlighted on the left, and at right, a red arrow points to the api deployment.](media/image80.png)
 
-5. Kubernetes indicates a problem with the api Replica Set after some seconds. Select the log icon to investigate.
+5. Kubernetes indicates a problem with the `api` **Replica Set** after some seconds. Select the log icon to investigate.
 
    ![This screenshot of the Kubernetes management dashboard shows an error with the replica set.](media/Ex2-Task1.5.png)
 
@@ -991,11 +1018,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![A screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/Ex2-Task1.9.png)
 
-8. Under "Quick Start" select the "Node.js" tab and copy the Node 3.0 connection string.
+8. Under **Quick Start** select the **Node.js** tab and copy the Node 3.0 connection string.
 
    ![A screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API.](media/Ex2-Task1.10.png)
 
-9. Update the provided connection string with a database "contentdb" and a replica set "globaldb".
+9. Update the provided connection string with a database **contentdb** and a replica set **globaldb**.
 
    > **Note**: Username and password redacted for brevity.
 
@@ -1017,13 +1044,13 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png)
 
-12. Return to the Kubernetes UI in your browser and select "+ Create". Update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose "Upload".
+12. Return to the Kubernetes UI in your browser and select **+ Create**. Update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
     ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
-      name: mongodb
+      name: cosmosdb
     type: Opaque
     data:
       db: <base64 encoded value>
@@ -1031,11 +1058,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Kubernetes management dashboard showing the YAML file for creating a deployment.](media/Ex2-Task1.13.png)
 
-13. Scroll down in the Kubernetes dashboard until you can see "Secrets" in the left-hand menu. Select it.
+13. Scroll down in the Kubernetes dashboard until you can see **Secrets** in the left-hand menu. Select it.
 
     ![A screenshot of the Kubernetes management dashboard showing secrets.](media/Ex2-Task1.14.png)
 
-14. View the details for the "mongodb" secret. Select the eyeball icon to show the secret.
+14. View the details for the **cosmosdb** secret. Select the eyeball icon to show the secret.
 
     ![A screenshot of the Kubernetes management dashboard showing the value of a secret.](media/Ex2-Task1.15.png)
 
@@ -1058,7 +1085,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
         - name: MONGODB_CONNECTION
           valueFrom:
             secretKeyRef:
-              name: mongodb
+              name: cosmosdb
               key: db
     ```
 
@@ -1074,7 +1101,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     kubectl apply -f api.deployment.yml
     ```
 
-19. Select "Deployments" then "api" to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
+19. Select **Deployments** then **api** to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
 
     ![A screenshot of the Kubernetes management dashboard showing logs output.](media/Ex2-Task1.19.png)
 
@@ -1084,7 +1111,7 @@ In this task, deploy the web service using `kubectl`.
 
 1. Open a **new** Azure Cloud Shell console.
 
-2. Create a text file called web.deployment.yml using the Azure Cloud Shell
+2. Create a text file called `web.deployment.yml` using the Azure Cloud Shell
    Editor.
 
    ```bash
@@ -1152,7 +1179,7 @@ In this task, deploy the web service using `kubectl`.
            terminationGracePeriodSeconds: 30
    ```
 
-4. Update the [LOGINSERVER] entry to match the name of your ACR login server.
+4. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
 
 5. Select the **...** button and choose **Save**.
 
@@ -1162,7 +1189,7 @@ In this task, deploy the web service using `kubectl`.
 
    ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png)
 
-7. Create a text file called web.service.yml using the Azure Cloud Shell
+7. Create a text file called `web.service.yml` using the Azure Cloud Shell
    Editor.
 
    ```bash
@@ -1194,9 +1221,7 @@ In this task, deploy the web service using `kubectl`.
 
 9. Save changes and close the editor.
 
-10. Type the following command to deploy the application described by the YAML
-    files. You will receive a message indicating the items kubectl has created a
-    web deployment and a web service.
+10. Type the following command to deploy the application described by the YAML files. You will receive a message indicating the items kubectl has created a web deployment and a web service.
 
     ```bash
     kubectl create --save-config=true -f web.deployment.yml -f web.service.yml
@@ -1214,26 +1239,26 @@ In this task, deploy the web service using `kubectl`.
 
 ### Task 4: Deploy a service using a Helm chart
 
-In this task, deploy the web service using a helm chart.
+In this task, you will deploy the web service using a [Helm](https://helm.sh/) chart to streamline the installing and managing the container-based application on the Azure Kubernetes cluster.
 
-1. From the Kubernetes dashboard, under "Workloads", select "Deployments".
+1. From the Kubernetes dashboard, under **Workloads**, select **Deployments**.
 
-2. Select the triple vertical dots on the right of the "web" deployment and then choose "Delete". When prompted, select "Delete" again.
+2. Select the triple vertical dots on the right of the `web` deployment and then choose **Delete**. When prompted, select **Delete** again.
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.2.png)
 
-3. From the Kubernetes dashboard, under "Discovery and Load Balancing", select "Services".
+3. From the Kubernetes dashboard, under **Discovery and Load Balancing**, select **Services**.
 
-4. Select the triple vertical dots on the right of the "web" service and then choose "Delete". When prompted, select "Delete" again.
+4. Select the triple vertical dots on the right of the **web** service and then choose **Delete**. When prompted, select **Delete** again.
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png)
 
 5. Open a **new** Azure Cloud Shell console.
 
-6. Update your starter files by pulling the latest changes from Azure DevOps
+6. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/content-web
     git pull
    ```
 
@@ -1377,7 +1402,7 @@ In this task, deploy the web service using a helm chart.
 
     ![In this screenshot of the console, helm install web ./web has been typed and run at the command prompt. Messages about web deployment and web service creation appear below.](media/Ex2-Task4.24.png)
 
-24. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select Services view under Discovery and Load Balancing. From the Services view, select the web service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
+24. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the web service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png)
 
@@ -1399,7 +1424,7 @@ In this task, deploy the web service using a helm chart.
 
 In this task, you will use a Kubernetes Job to run a container that is meant to execute a task and terminate, rather than run all the time.
 
-1. Create a text file called init.job.yml using the Azure Cloud Shell Editor.
+1. Create a text file called `init.job.yml` using the Azure Cloud Shell Editor.
 
    ```bash
    code init.job.yml
@@ -1424,23 +1449,23 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
              - name: MONGODB_CONNECTION
                valueFrom:
                  secretKeyRef:
-                   name: mongodb
+                   name: cosmosdb
                    key: db
          restartPolicy: Never
      backoffLimit: 4
    ```
 
-3. Edit this file and update the [LOGINSERVER] entry to match the name of your ACR login server.
+3. Edit this file and update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
 
 4. Save changes and close the editor.
 
-5. Type the following command to deploy the job described by the YAML. You will receive a message indicating the kubectl has created an init "job.batch".
+5. Type the following command to deploy the job described by the YAML. You will receive a message indicating the kubectl has created an init `job.batch`.
 
    ```bash
    kubectl create --save-config=true -f init.job.yml
    ```
 
-6. View the Job by selecting "Jobs" under "Workloads" in the Kubernetes UI.
+6. View the Job by selecting **Jobs** under **Workloads** in the Kubernetes UI.
 
    ![A screenshot of the Kubernetes management dashboard showing jobs.](media/Ex2-Task5.6.png)
 
@@ -1448,7 +1473,7 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
 
    ![A screenshot of the Kubernetes management dashboard showing log output.](media/Ex2-Task5.7.png)
 
-8. Next view your Cosmos DB instance in the Azure portal and see that it now contains two collections.
+8. Next, view your Cosmos DB instance in the Azure portal and see that it now contains two collections.
 
    ![A screenshot of the Azure Portal showing Cosmos DB collections.](media/Ex2-Task5.8.png)
 
@@ -1456,7 +1481,7 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
 
 In this task, you will verify that you can browse to the web service you have deployed and view the speaker and content information exposed by the API service.
 
-1. From the Kubernetes management dashboard, in the navigation menu, select the Services view under Discovery and Load Balancing.
+1. From the Kubernetes management dashboard, in the navigation menu, select the **Services** view under **Discovery and Load Balancing**.
 
 2. In the list of services, locate the external endpoint for the web service and select this hyperlink to launch the application.
 
@@ -1470,123 +1495,123 @@ In this task, you will verify that you can browse to the web service you have de
 
 ### Task 7: Configure Continuous Delivery to the Kubernetes Cluster
 
-In this task, you will use Azure DevOps to automate the process for deploying the web image to the AKS cluster. You will update the DevOps Pipeline and configure a deployment stage so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
+In this task, you will use GitHub Actions workflows to automate the process for deploying the web image to the AKS cluster. You will update the DevOps Pipeline and configure a deployment stage so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
 
-1. Login to your Azure DevOps account, access the `fabmedical` project you created earlier, then select "Pipelines".
+1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
-2. From the pipelines list, select the `content-web` pipeline and select `Edit.`
+    ```bash
+    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    vi content-web.yml
+    ```
 
-   ![A screenshot with the `content-web` pipeline selected and the `Edit` button highlighted.](media/hol-2019-10-02_10-06-57.png)
+2. You will add a second job to the bottom of the `content-web.yml` workflow. Paste the following at the end of the file:
 
-3. You will add a second job to the `Build and Push` stage, below the existing `Docker` job. Paste the following into the pipeline editor:
+    > **Note**: Be careful to check your indenting when pasting. The `build-and-push-helm-chart` node should be indented with 2 spaces and line up with the node for the `build-and-publish-docker-image` job.
 
-   > **Note**: Be careful to check your indenting when pasting. The `job` node should be indented with 2 spaces and line up with the `job` node for the `Docker` job.
+    ```yaml
+      build-and-push-helm-chart:
+        name: Build and Push Helm Chart
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-   ```yaml
-   - job: Helm
-    displayName: Build and Push Helm Chart
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-      - checkout: self
-        fetchDepth: 1
+        - name: Helm Install
+          uses: azure/setup-helm@v1
 
-      - task: HelmInstaller@1
-        inputs:
-          helmVersionToInstall: 'latest'
-        displayName: 'Helm Install'
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistryName }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-      - task: HelmDeploy@0
-        inputs:
-          connectionType: 'None'
-          command: 'package'
-          chartPath: 'charts/web'
-          chartVersion: '$(Build.BuildNumber)'
-          save: false
-        displayName: 'Helm Package'
+        - name: Helm Chart Save
+          run: |
+            cd ./content-web/charts/web
 
-      - task: AzureCLI@1
-        inputs:
-          azureSubscription: 'azurecloud'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            set -euo pipefail
+            helm chart save . content-web:v${{ env.tag }}
+            helm chart save . ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
 
-            az acr helm push \
-              --name $(containerRegistryName) \
-              $(Build.ArtifactStagingDirectory)/web-$(Build.BuildNumber).tgz
+            # list out saved charts
+            helm chart list
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-          failOnStandardError: true
-        displayName: 'Helm Push'
-   ```
+        - name: Helm Chart Push
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart push ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
+    ```
 
-   ![A screenshot that shows the new job, with a line to highlight proper indenting.](media/hol-2019-10-02_10-23-10.png)
+3. Save the file.
 
-4. Choose "Save" and commit the changes directly to the master branch. A new build will start automatically. The two jobs are independent and will run in parallel if there are enough available build agents.
+4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously, and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
-   ![A screenshot that shows the jobs, Helm is complete, Docker is still running](media/hol-2019-10-02_10-57-42.png)
+    ```bash
+    cat ~/.kube/config
+    ```
 
-5. Now return to the pipeline editor to create a deployment stage. Paste the following into the pipeline editor and update the SUFFIX values:
+5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, select **Secrets** from the left menu, then select the **New secret** button.
 
-   > **Note**: Be careful to check your indenting when pasting. The `stage` node should be indented with 0 spaces and line up with the `stage` node for the `Build` stage.
+6. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 
-   ```yaml
-   - stage:
-     displayName: AKS Deployment
-     jobs:
-       - deployment: DeployAKS
-         displayName: "Deployment to AKS"
-         pool:
-           vmImage: $(vmImageName)
-         environment: "aks"
-         strategy:
-           runOnce:
-             deploy:
-               steps:
-                 - checkout: none
+    ![KUBECONFI secret](media/2020-08-25-22-34-04.png "KUBECONFI secret")
 
-                 - task: HelmInstaller@1
-                   inputs:
-                     helmVersionToInstall: "latest"
-                   displayName: "Helm Install"
+7. Now return to edit the `content-web.yml` workflow and paste the following at the end of the file.
 
-                 - task: AzureCLI@1
-                   inputs:
-                     azureSubscription: "azurecloud"
-                     scriptLocation: "inlineScript"
-                     inlineScript: |
-                       set -euo pipefail
+    > **Note**: Be careful to check your indenting when pasting. The `aks-deployment` node should be indented with 2 spaces and line up with the node for the `build-and-push-helm-chart` job.
 
-                       az acr helm repo add --name $(containerRegistryName)
+    ```yaml
+      aks-deployment:
+        name: AKS Deployment
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image,build-and-push-helm-chart]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-                     failOnStandardError: true
-                   displayName: "Helm repo update"
+        - name: Helm Install
+          uses: azure/setup-helm@v1
 
-                 - task: HelmDeploy@0
-                   inputs:
-                     connectionType: "Azure Resource Manager"
-                     azureSubscription: "azurecloud"
-                     azureResourceGroup: "fabmedical-[SUFFIX]"
-                     kubernetesCluster: "fabmedical-[SUFFIX]"
-                     command: "upgrade"
-                     chartType: "Name"
-                     chartName: "$(containerRegistryName)/web"
-                     releaseName: "web"
-                     overrideValues: "image.tag=$(Build.BuildNumber),image.repository=$(containerRegistry)/content-web"
-                   displayName: "Helm Upgrade"
-   ```
+        - name: kubeconfig
+          run: echo "${{ secrets.KUBECONFIG }}" >> kubeconfig
 
-   ![A screenshot that shows the new stage, with a line to highlight proper indenting.](media/hol-2019-10-02_11-19-51.png)
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistry }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm repo update
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
 
-6. Select "Save" and commit the changes directly to the master branch. A new build will start automatically. The two jobs are independent and will run in parallel if there are enough available build agents. However, the deployment depends on the jobs and will wait for them to complete before starting.
+        - name: Helm Upgrade
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart pull ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+            helm chart export ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }} --destination ./upgrade
+            helm upgrade web ./upgrade/web
+          env:
+            KUBECONFIG: './kubeconfig'
+            HELM_EXPERIMENTAL_OCI: 1
+    ```
 
-   ![A screenshot that shows the stages, expanded to also show the jobs.  Docker is running, Helm is queued, AKS Deployment is not started.](media/hol-2019-10-02_11-27-34.png)
+8. Save the file.
+
+9. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
+
+10. Selecting the currently running workflow will display it's status.
+
+    ![Workflow is running](media/2020-08-25-22-15-39.png "Workflow is running")
 
 ### Task 8: Review Azure Monitor for Containers
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named fabmedical-SUFFIX, and then select your AKS cluster.
+1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your AKS cluster.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png)
 
@@ -1614,7 +1639,7 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In this screenshot, the pod cpu usage details are shown.](media/monitor_4.png)
 
-8. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
+8. To display the logs for any container simply select it and view the right panel and you will find **View container logs** option which will list all logs for this specific container.
 
    ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png)
 
@@ -1634,27 +1659,27 @@ At this point, you have deployed a single instance of the web and API service co
 
 In this task, you will increase the number of instances for the API deployment in the Kubernetes management dashboard. While it is deploying, you will observe the changing status.
 
-1. From the navigation menu, select Workloads\>Deployments, and then select the API deployment.
+1. From the navigation menu, select **Workloads** -> **Deployments**, and then select the **API** deployment.
 
-2. Select SCALE.
+2. Select **SCALE**.
 
    ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png)
 
-3. Change the number of pods to 2, and then select **OK**.
+3. Change the number of pods to `2`, and then select **OK**.
 
    ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png)
 
    > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
 
-4. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
+4. From the **Replica Set** view for the **API**, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png)
 
-5. From the navigation menu, select Deployments from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as "1/2").
+5. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png)
 
-6. From the Navigation menu, select Workloads. From this view, note that the health overview in the right panel of this view. You will see the following:
+6. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
    - One deployment and one replica set are each healthy for the api service.
 
@@ -1664,7 +1689,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 7. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages
 
-   - Navigate to the /stats page. You will see information about the environment including:
+   - Navigate to the `/stats` page. You will see information about the environment including:
 
      - **webTaskId:** The task identifier for the web service instance.
 
@@ -1680,33 +1705,33 @@ In this task, you will increase the number of instances for the API deployment i
 
      - **uptime:** The up time for the API service.
 
-   - Refresh the page in the browser, and you can see the hostName change between the two API service instances. The letters after "api-{number}-" in the hostname will change.
+   - Refresh the page in the browser, and you can see the hostName change between the two API service instances. The letters after `api-{number}-` in the hostname will change.
 
 ### Task 2: Increase service instances beyond available resources
 
 In this task, you will try to increase the number of instances for the API service container beyond available resources in the cluster. You will observe how Kubernetes handles this condition and correct the problem.
 
-1. From the navigation menu, select Deployments. From this view, select the API deployment.
+1. From the navigation menu, select **Deployments**. From this view, select the **API** deployment.
 
-2. Configure the deployment to use a fixed host port for initial testing. Select Edit.
+2. Configure the deployment to use a fixed host port for initial testing. Select **Edit**.
 
    ![In the Workloads > Deployments > api bar, the Edit icon is highlighted.](media/image81.png)
 
-3. In the Edit a Deployment dialog, you will see a list of settings shown in JSON format. Use the copy button to copy the text to your clipboard.
+3. In the **Edit a Deployment** dialog, you will see a list of settings shown in JSON format. Use the copy button to copy the text to your clipboard.
 
    ![Screenshot of the Edit a Deployment dialog box that displays JSON data.](media/image82.png)
 
-4. Paste the contents into the text editor of your choice (notepad is shown here, MacOS users can use TextEdit).
+4. Paste the contents into the text editor of your choice _(notepad is shown here, macOS users can use TextEdit)_.
 
    ![Screenshot of the Edit a Deployment contents pasted into Notepad text editor.](media/image83.png)
 
-5. Scroll down about halfway to find the node "\$.spec.template.spec.containers[0]", as shown in the screenshot below.
+5. Scroll down about halfway to find the node `$.spec.template.spec.containers[0]`, as shown in the screenshot below.
 
    ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted.](media/image84.png)
 
-6. The containers spec has a single entry for the API container at the moment. You will see that the name of the container is "api" - this is how you know you are looking at the correct container spec.
+6. The containers spec has a single entry for the API container at the moment. You will see that the name of the container is `api` - this is how you know you are looking at the correct container spec.
 
-   - Add the following JSON snippet below the "name" property in the container spec:
+   - Add the following JSON snippet below the `name` property in the container spec:
 
    ```json
    "ports": [
@@ -1721,15 +1746,15 @@ In this task, you will try to increase the number of instances for the API servi
 
    ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted, showing the updated values for containerPort and hostPort, both set to port 3001.](media/image85.png)
 
-7. Copy the updated JSON document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the "api" deployment.
+7. Copy the updated JSON document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the `api` deployment.
 
-   - Select Edit.
+   - Select **Edit**.
 
    ![In the Workloads > Deployments > api bar, the Edit icon is highlighted.](media/image87.png)
 
    - Paste the updated JSON document.
 
-   - Select Update.
+   - Select **Update**.
 
    ![UPDATE is highlighted in the Edit a Deployment dialog box.](media/image88.png)
 
@@ -1737,23 +1762,23 @@ In this task, you will try to increase the number of instances for the API servi
 
    ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png)
 
-9. Change the number of pods to 4 and select **OK**.
+9. Change the number of pods to `4` and select **OK**.
 
    ![In the Scale a Deployment dialog box, 4 is entered in the Desired number of pods box.](media/image119.png)
 
-10. From the navigation menu, select Services view under Discovery and Load Balancing. Select the api service from the Services list. From the api service view, you will see it has two healthy instances and two unhealthy (or possibly pending depending on timing) instances.
+10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and two unhealthy (or possibly pending depending on timing) instances.
 
     ![In the api service view, various information is displayed in the Details box and in the Pods box.](media/image120.png)
 
-11. After a few minutes, select Workloads from the navigation menu. From this view, you should see an alert reported for the api deployment.
+11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
 
     ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](media/image121.png)
 
     > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port 3001, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third and fourth pod instances will wait for a new node to be available that can run another instance using that port.
 
-12. Reduce the number of requested pods to 2 using the Scale button.
+12. Reduce the number of requested pods to `2` using the **Scale** button.
 
-13. Almost immediately, the warning message from the Workloads dashboard should disappear, and the API deployment will show 2/2 pods are running.
+13. Almost immediately, the warning message from the Workloads dashboard should disappear, and the API deployment will show "2/2" pods are running.
 
     ![Workloads is selected in the navigation menu. A green check mark now appears next to the api deployment listing in the Deployments box at right.](media/image122.png)
 
@@ -1761,19 +1786,19 @@ In this task, you will try to increase the number of instances for the API servi
 
 In this task, you will restart containers and validate that the restart does not impact the running service.
 
-1. From the navigation menu on the left, select Services view under Discovery and Load Balancing. From the Services list, select the external endpoint hyperlink for the web service, and visit the stats page by adding /stats to the URL. Keep this open and handy to be refreshed as you complete the steps that follow.
+1. From the navigation menu on the left, select **Services** view under **Discovery and Load Balancing**. From the **Services** list, select the external endpoint hyperlink for the web service, and visit the stats page by adding / stats to the URL. Keep this open and handy to be refreshed as you complete the steps that follow.
 
    ![In the Services box, a red arrow points at the hyperlinked external endpoint for the web service. ](media/image112.png)
 
    ![The Stats page is visible in this screenshot of the Contoso Neuro 2017 web application.](media/image123.png)
 
-2. From the navigation menu, select Workloads>Deployments. From Deployments list, select the API deployment.
+2. From the navigation menu, select **Workloads** -> **Deployments**. From Deployments list, select the **API** deployment.
 
    ![In the left menu the Deployments item is selected. The API deployment is highlighted in the Deployments list box.](media/image124.png)
 
-3. From the API deployment view, select **Scale** and from the dialog presented, and enter 4 for the desired number of pods. Select **OK**.
+3. From the API deployment view, select **Scale** and from the dialog presented, and enter `4` for the desired number of pods. Select **OK**.
 
-4. From the navigation menu, select Workloads>Replica Sets. Select the api replica set, and from the Replica Set view, you will see that two pods cannot deploy.
+4. From the navigation menu, select **Workloads** -> **Replica Sets**. Select the `api` replica set, and from the Replica Set view, you will see that two pods cannot deploy.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. In the Pods box, two pods have exclamation point (!) alerts and messages indicating that they cannot deploy.](media/image125.png)
 
@@ -1781,13 +1806,13 @@ In this task, you will restart containers and validate that the restart does not
 
    ![On the Stats page in the Contoso Neuro 2017 web application, two different api host name values are highlighted.](media/image126.png)
 
-6. After refreshing enough times to see that the hostName value is changing, and the service remains healthy, return to the Replica Sets view for the API. From the navigation menu, select Replica Sets under Workloads and select the API replica set.
+6. After refreshing enough times to see that the hostName value is changing, and the service remains healthy, return to the Replica Sets view for the API. From the navigation menu, select **Replica Sets** under **Workloads** and select the API replica set.
 
 7. From this view, take note that the hostName value shown in the web application stats page matches the pod names for the pods that are running.
 
    ![Two different pod names are highlighted in the Pods box, which match the values from the previous Stats page.](media/image127.png)
 
-8. Note the remaining pods are still pending, since there are not enough port resources available to launch another instance. Make some room by deleting a running instance. Select the context menu and choose Delete for one of the healthy pods.
+8. Note the remaining pods are still pending, since there are not enough port resources available to launch another instance. Make some room by deleting a running instance. Select the context menu and choose **Delete** for one of the healthy pods.
 
    ![The context menu for a pod in the pod list is expanded with the Delete item selected.](media/image128.png)
 
@@ -1795,9 +1820,9 @@ In this task, you will restart containers and validate that the restart does not
 
    ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](media/image129.png)
 
-10. From the navigation menu, select Deployments under Workloads. From the view's Deployments list, select the API deployment.
+10. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
 
-11. From the API Deployment view, select Scale and enter 1 as the desired number of pods. Select OK.
+11. From the API Deployment view, select Scale and enter `1` as the desired number of pods. Select **OK**.
 
     ![In the Scale a Deployment dialog box, 1 is entered in the Desired number of pods box.](media/image130.png)
 
@@ -1805,7 +1830,7 @@ In this task, you will restart containers and validate that the restart does not
 
     ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. Only one API host name, which has a green check mark and is listed as running, appears in the Pods box.](media/image131.png)
 
-13. From the navigation menu, select Workloads. From this view, note that there is only one API pod now.
+13. From the navigation menu, select **Workloads**. From this view, note that there is only one API pod now.
 
     ![Workloads is selected in the navigation menu on the left. On the right are the Deployment, Pods, and Replica Sets boxes.](media/image132.png)
 
@@ -1821,21 +1846,21 @@ Kubernetes services can discover the ports assigned to each pod, allowing you to
 
 In this task, we will reconfigure the API deployment so that it will produce pods that choose a dynamic hostPort for improved scalability.
 
-1. From the navigation menu select Deployments under Workloads. From the view's Deployments list, select the API deployment.
+1. From the navigation menu select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
 
-2. Select Edit.
+2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, do the following:
+3. From the **Edit a Deployment** dialog, do the following:
 
-   - Scroll to the first spec node that describes replicas as shown in the screenshot. Set the value for replicas to 4.
+   - Scroll to the first spec node that describes replicas as shown in the screenshot. Set the value for replicas to `4`.
 
-   - Within the replicas spec, beneath the template node, find the "api" containers spec. Remove the hostPort entry for the API container's port mapping.  The screenshot below shows the desired configuration after editing.
+   - Within the replicas spec, beneath the template node, find the `api` containers spec. Remove the hostPort entry for the API container's port mapping.  The screenshot below shows the desired configuration after editing.
 
      ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, selector, and template. Under the spec node, replicas: 4 is highlighted. Further down, ports are highlighted.](media/image137.png)
 
 4. Select **Update**. New pods will now choose a dynamic port.
 
-5. The API service can now scale to 4 pods since it is no longer constrained to an instance per node -- a previous limitation while using port 3001.
+5. The API service can now scale to 4 pods since it is no longer constrained to an instance per node -- a previous limitation while using port `3001`.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right, four pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image138.png)
 
@@ -1845,11 +1870,11 @@ In this task, we will reconfigure the API deployment so that it will produce pod
 
 In this task, you will update the web service so that it supports dynamic discovery through the Azure load balancer.
 
-1. From the navigation menu, select Deployments under Workloads. From the view's Deployments list, select the web deployment.
+1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
 
 2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
+3. From the **Edit a Deployment** dialog, scroll to the web containers spec as shown in the screenshot. Remove the `hostPort` entry for the web container's port mapping.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, containers, ports, and env. The ports node, containerPort: 3001 and protocol: TCP are highlighted.](media/image140.png)
 
@@ -1867,23 +1892,23 @@ Like the API deployment, the web deployment used a fixed _hostPort_, and your ab
 
 In this task, you will modify the CPU requirements for the web service so that it can scale out to more instances.
 
-1. From the navigation menu, select Deployments under Workloads. From the view's Deployments list, select the web deployment.
+1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the web deployment.
 
 2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, find the _cpu_ resource requirements for the web container. Change this value to "125m".
+3. From the Edit a Deployment dialog, find the `cpu` resource requirements for the web container. Change this value to `125m`.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png)
 
 4. Select **Update** to save the changes and update the deployment.
 
-5. From the navigation menu, select Replica Sets under Workloads. From the view's Replica Sets list select the web replica set.
+5. From the navigation menu, select Replica Sets under Workloads. From the view's **Replica Sets** list select the web replica set.
 
 6. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image143.png)
 
-7. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
+7. Return to the browser tab with the web application loaded. Refresh the stats page at / stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
 ### Task 4: Perform a rolling update
 
@@ -1897,10 +1922,10 @@ In this task, you will edit the web application source code to add Application I
 
    Copy this value. You will use it later.
 
-2. Update your starter files by pulling the latest changes from Azure DevOps.
+2. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/content-web
    git pull
    ```
 
@@ -1910,7 +1935,7 @@ In this task, you will edit the web application source code to add Application I
    npm install applicationinsights --save
    ```
 
-4. Open the app.js file:
+4. Open the `app.js` file:
 
    ```bash
    code app.js
@@ -1928,7 +1953,7 @@ In this task, you will edit the web application source code to add Application I
 
 6. Save changes and close the editor.
 
-7. Push these changes to your repository so that Azure DevOps CI will build and deploy a new image.
+7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new image.
 
    ```bash
    git add .
@@ -1936,11 +1961,11 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-8. Visit your Azure DevOps pipeline for the `content-web` application and see the new image being deployed into your Kubernetes cluster.
+8. Visit the `content-web` workflow for your GitHub repository and see the new image being deployed into your Kubernetes cluster.
 
 9. While this update runs, return the Kubernetes management dashboard in the browser.
 
-10. From the navigation menu, select Replica Sets under Workloads. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/image144.png)
 
@@ -1958,17 +1983,18 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    helm repo update
    ```
 
+   > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
+   > ```
+   > helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+   > ```
+
 2. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
-   helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2
+   helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
    ```
 
-3. Set a DNS prefix on the IP address allocated to the ingress controller. Visit the `kube-system` namespace in your Kubernetes dashboard to find the IP. Append the following path after the `#!/` marker in the URL:
-
-   ```text
-   service?namespace=kube-system
-   ```
+3. From the Kubernetes dashboard, under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the ingress-controller-nginx service.
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png)
 
@@ -1978,7 +2004,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > kubectl get svc --namespace kube-system
     > ```
     >
-    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png)
+    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png) 
 
 4. Create a script to update the public DNS name for the IP.
 
@@ -2005,6 +2031,11 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    ```
 
    ![A screenshot of cloud shell editor showing the updated file.](media/Ex4-Task5.6.png)
+
+   Be sure to replace the following placeholders in the script:
+
+   - `[INGRESS PUBLIC IP]`: replace this with the IP Address copied previously.
+   - `[SUFFIX]`: replace this with the same SUFFIX value used previously for this lab
 
 5. Save changes and close the editor.
 
@@ -2062,7 +2093,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 10. Save changes and close the editor.
 
-11. Create the issuer using kubectl.
+11. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
@@ -2082,7 +2113,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     code certificate.yml
     ```
 
-    Use the following as the contents and update the [SUFFIX] and [AZURE-REGION] to match your ingress DNS name:
+    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
 
     ```yaml
     apiVersion: certmanager.k8s.io/v1alpha1
@@ -2106,7 +2137,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 13. Save changes and close the editor.
 
-14. Create the certificate using kubectl.
+14. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -2123,8 +2154,8 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > Normal  OrderComplete       12s   cert-manager  Order "tls-secret-3254248695" completed successfully
     > Normal  CertIssued          12s   cert-manager  Certificate issued successfully
     > ```
-
-    > It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
+    
+    It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
 15. Now you can create an ingress resource for the content applications.
 
@@ -2164,7 +2195,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 16. Save changes and close the editor.
 
-17. Create the ingress using kubectl.
+17. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml
@@ -2188,7 +2219,7 @@ In this exercise, you will de-provision any Azure resources created in support o
 
 1. Delete the Resource Groups in which you placed all your Azure resources.
 
-   - From the Portal, navigate to the blade of your Resource Group and then select Delete in the command bar at the top.
+   - From the Portal, navigate to the blade of your **Resource Group** and then select **Delete** in the command bar at the top.
 
    - Confirm the deletion by re-typing the resource group name and selecting Delete.
 
