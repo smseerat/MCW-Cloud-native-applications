@@ -10,21 +10,21 @@ Kubernetes services can discover the ports assigned to each pod, allowing you to
 
 In this task, we will reconfigure the API deployment so that it will produce pods that choose a dynamic hostPort for improved scalability.
 
-1. From the navigation menu select Deployments under Workloads. From the view's Deployments list, select the API deployment.
+1. From the navigation menu select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
 
-2. Select Edit.
+2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, do the following:
+3. From the **Edit a Deployment** dialog, do the following:
 
-   - Scroll to the first spec node that describes replicas as shown in the screenshot. Set the value for replicas to 4.
+   - Scroll to the first spec node that describes replicas as shown in the screenshot. Set the value for replicas to `4`.
 
-   - Within the replicas spec, beneath the template node, find the "api" containers spec. Remove the hostPort entry for the API container's port mapping.  The screenshot below shows the desired configuration after editing.
+   - Within the replicas spec, beneath the template node, find the `api` containers spec. Remove the hostPort entry for the API container's port mapping.  The screenshot below shows the desired configuration after editing.
 
      ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, selector, and template. Under the spec node, replicas: 4 is highlighted. Further down, ports are highlighted.](media/image137.png)
 
 4. Select **Update**. New pods will now choose a dynamic port.
 
-5. The API service can now scale to 4 pods since it is no longer constrained to an instance per node -- a previous limitation while using port 3001.
+5. The API service can now scale to 4 pods since it is no longer constrained to an instance per node -- a previous limitation while using port `3001`.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right, four pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image138.png)
 
@@ -34,11 +34,11 @@ In this task, we will reconfigure the API deployment so that it will produce pod
 
 In this task, you will update the web service so that it supports dynamic discovery through the Azure load balancer.
 
-1. From the navigation menu, select Deployments under Workloads. From the view's Deployments list, select the web deployment.
+1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
 
 2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
+3. From the **Edit a Deployment** dialog, scroll to the web containers spec as shown in the screenshot. Remove the `hostPort` entry for the web container's port mapping.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, containers, ports, and env. The ports node, containerPort: 3001 and protocol: TCP are highlighted.](media/image140.png)
 
@@ -56,23 +56,23 @@ Like the API deployment, the web deployment used a fixed _hostPort_, and your ab
 
 In this task, you will modify the CPU requirements for the web service so that it can scale out to more instances.
 
-1. From the navigation menu, select Deployments under Workloads. From the view's Deployments list, select the web deployment.
+1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the web deployment.
 
 2. Select **Edit**.
 
-3. From the Edit a Deployment dialog, find the _cpu_ resource requirements for the web container. Change this value to "125m".
+3. From the Edit a Deployment dialog, find the `cpu` resource requirements for the web container. Change this value to `125m`.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png)
 
 4. Select **Update** to save the changes and update the deployment.
 
-5. From the navigation menu, select Replica Sets under Workloads. From the view's Replica Sets list select the web replica set.
+5. From the navigation menu, select Replica Sets under Workloads. From the view's **Replica Sets** list select the web replica set.
 
 6. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image143.png)
 
-7. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
+7. Return to the browser tab with the web application loaded. Refresh the stats page at / stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
 ### Task 4: Perform a rolling update
 
@@ -86,10 +86,10 @@ In this task, you will edit the web application source code to add Application I
 
    Copy this value. You will use it later.
 
-2. Update your starter files by pulling the latest changes from Azure DevOps.
+2. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/content-web
    git pull
    ```
 
@@ -99,7 +99,7 @@ In this task, you will edit the web application source code to add Application I
    npm install applicationinsights --save
    ```
 
-4. Open the app.js file:
+4. Open the `app.js` file:
 
    ```bash
    code app.js
@@ -117,7 +117,7 @@ In this task, you will edit the web application source code to add Application I
 
 6. Save changes and close the editor.
 
-7. Push these changes to your repository so that Azure DevOps CI will build and deploy a new image.
+7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new image.
 
    ```bash
    git add .
@@ -125,11 +125,11 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-8. Visit your Azure DevOps pipeline for the `content-web` application and see the new image being deployed into your Kubernetes cluster.
+8. Visit the `content-web` workflow for your GitHub repository and see the new image being deployed into your Kubernetes cluster.
 
 9. While this update runs, return the Kubernetes management dashboard in the browser.
 
-10. From the navigation menu, select Replica Sets under Workloads. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/image144.png)
 
@@ -147,17 +147,18 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    helm repo update
    ```
 
+   > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
+   > ```
+   > helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+   > ```
+
 2. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
-   helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2
+   helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
    ```
 
-3. Set a DNS prefix on the IP address allocated to the ingress controller. Visit the `kube-system` namespace in your Kubernetes dashboard to find the IP. Append the following path after the `#!/` marker in the URL:
-
-   ```text
-   service?namespace=kube-system
-   ```
+3. From the Kubernetes dashboard, under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the ingress-controller-nginx service.
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png)
 
@@ -167,7 +168,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > kubectl get svc --namespace kube-system
     > ```
     >
-    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png)
+    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png) 
 
 4. Create a script to update the public DNS name for the IP.
 
@@ -194,6 +195,11 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    ```
 
    ![A screenshot of cloud shell editor showing the updated file.](media/Ex4-Task5.6.png)
+
+   Be sure to replace the following placeholders in the script:
+
+   - `[INGRESS PUBLIC IP]`: replace this with the IP Address copied previously.
+   - `[SUFFIX]`: replace this with the same SUFFIX value used previously for this lab
 
 5. Save changes and close the editor.
 
@@ -251,7 +257,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 10. Save changes and close the editor.
 
-11. Create the issuer using kubectl.
+11. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
@@ -271,7 +277,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     code certificate.yml
     ```
 
-    Use the following as the contents and update the [SUFFIX] and [AZURE-REGION] to match your ingress DNS name:
+    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
 
     ```yaml
     apiVersion: certmanager.k8s.io/v1alpha1
@@ -295,7 +301,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 13. Save changes and close the editor.
 
-14. Create the certificate using kubectl.
+14. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -312,8 +318,8 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > Normal  OrderComplete       12s   cert-manager  Order "tls-secret-3254248695" completed successfully
     > Normal  CertIssued          12s   cert-manager  Certificate issued successfully
     > ```
-
-    > It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
+    
+    It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
 15. Now you can create an ingress resource for the content applications.
 
@@ -353,7 +359,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 16. Save changes and close the editor.
 
-17. Create the ingress using kubectl.
+17. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml

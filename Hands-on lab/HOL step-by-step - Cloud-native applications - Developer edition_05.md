@@ -8,11 +8,9 @@ In this exercise, you will take the starter files and run the node.js applicatio
 
 The purpose of this task is to make sure you can run the application successfully before applying changes to run it as a Docker application.
 
-1. From Azure Cloud Shell, connect to your build agent if you are not already
-   connected. (If you need to reconnect, please review the instructions in the
-   "Before the HOL" document.)
+1. From Azure Cloud Shell, connect to your build agent if you are not already connected. (If you need to reconnect, please review the instructions in the "Before the HOL" document.)
 
-2. Type the following command to create a Docker network named "fabmedical":
+2. Type the following command to create a Docker network named `fabmedical`:
 
    ```bash
    docker network create fabmedical
@@ -23,6 +21,8 @@ The purpose of this task is to make sure you can run the application successfull
    ```bash
    docker container run --name mongo --net fabmedical -p 27017:27017 -d mongo
    ```
+
+   > **Note**:  With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows, however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
 
 4. Confirm that the mongo container is running and ready.
 
@@ -49,7 +49,7 @@ The purpose of this task is to make sure you can run the application successfull
 6. To initialize the local database with test content, first navigate to the content-init directory and run npm install.
 
    ```bash
-   cd content-init
+   cd ~/Fabmedical/content-init
    npm install
    ```
 
@@ -86,7 +86,7 @@ The purpose of this task is to make sure you can run the application successfull
 
    ![This screenshot of the console window shows the data output.](media/Ex1-Task1.8.png)
 
-9. Now navigate to the content-api directory and run npm install.
+9. Now navigate to the `content-api` directory and run npm install.
 
    ```bash
    cd ../content-api
@@ -117,7 +117,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, made a curl request to view speakers.](media/image47_1.png)
 
-13. Navigate to the web application directory, run npm install and ng build.
+13. Navigate to the web application directory, run `npm install` and `ng build`.
 
     ```bash
     cd ../content-web
@@ -145,7 +145,7 @@ The purpose of this task is to make sure you can run the application successfull
     az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
     ```
 
-15. From the cloud shell in the build machine edit the app.js file using vim.
+15. From the cloud shell in the build machine edit the `app.js` file using vim.
 
     ```bash
     vim app.js
@@ -153,7 +153,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Then press **_i_** to get into the edit mode, after that replace localhost with the build machine IP address.
 
-    ![show the app.js file in vim in the build machine to update the API URL.](media/image27.png)
+    ![Show the app.js file in vim in the build machine to update the API URL.](media/image27.png)
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
 
@@ -163,7 +163,7 @@ The purpose of this task is to make sure you can run the application successfull
     node ./app.js &
     ```
 
-    Press ENTER again to get a command prompt for the next step.
+    Press `ENTER` again to get a command prompt for the next step.
 
 17. Test the web application using curl. You will see HTML output returned without errors.
 
@@ -179,9 +179,9 @@ The purpose of this task is to make sure you can run the application successfull
 
 In this task, you will browse to the web application for testing.
 
-1. From the Azure portal select the resource group you created named fabmedical-SUFFIX.
+1. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
 
-2. Select the build agent VM named fabmedical-SUFFIX from your list of available resources.
+2. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
 
    ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png)
 
@@ -189,7 +189,7 @@ In this task, you will browse to the web application for testing.
 
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png)
 
-4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port 3000.
+4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
    ```text
    http://[BUILDAGENTIP]:3000
@@ -210,11 +210,9 @@ In this task, you will browse to the web application for testing.
 
 In this task, you will create a new Dockerfile that will be used to run the API application as a containerized application.
 
-> **Note**: You will be working in a Linux VM without friendly editor tools. You
-> must follow the steps very carefully to work with Vim for a few editing
-> exercises if you are not already familiar with Vim.
+> **Note**: You will be working in a Linux VM without friendly editor tools. You must follow the steps very carefully to work with Vim for a few editing exercises if you are not already familiar with Vim.
 
-1. From cloud shell, navigate to the content-api folder. List the files in the folder with this command. The output should look like the screenshot below.
+1. From cloud shell, navigate to the `content-api` folder. List the files in the folder with this command. The output should look like the screenshot below.
 
    ```bash
    cd ../content-api
@@ -223,7 +221,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The files in the folder are listed in the window. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](media/image55.png)
 
-2. Create a new file named "Dockerfile" and note the casing in the name. Use the
+2. Create a new file named `Dockerfile` and note the casing in the name. Use the
    following Vim command to create a new file. The cloud shell window should
    look as shown in the following screenshot.
 
@@ -233,7 +231,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ![This is a screenshot of a new file named Dockerfile in the console window.](media/image56.png)
 
-3. Select "i" on your keyboard. You will see the bottom of the window showing INSERT mode.
+3. Select `i` on your keyboard. You will see the bottom of the window showing INSERT mode.
 
    ![-- INSERT -- appears at the bottom of the Dockerfile window.](media/image57.png)
 
@@ -247,15 +245,15 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
      - Creates a directory on the image where the application files can be copied.
 
-     - Exposes application port 3001 to the container environment so that the application can be reached at port 3001.
+     - Exposes application port `3001` to the container environment so that the application can be reached at port `3001`.
 
    - The build stage contains all the tools and intermediate files needed to create the application.
 
-     - Creates a new Docker image from node:argon.
+     - Creates a new Docker image from `node:argon`.
 
      - Creates a directory on the image where the application files can be copied.
 
-     - Copies package.json to the working directory.
+     - Copies `package.json` to the working directory.
 
      - Runs npm install to initialize the node application environment.
 
@@ -293,7 +291,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
    CMD [ "npm", "start" ]
    ```
 
-5. When you are finished typing, hit the Esc key and type ":wq" and hit the Enter key to save the changes and close the file.
+5. When you are finished typing, hit the Esc key and type `:wq` and hit the Enter key to save the changes and close the file.
 
    ```bash
    <Esc>
@@ -319,9 +317,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
 In this task, you will create Docker images for the application --- one for the API application and another for the web application. Each image will be created via Docker commands that rely on a Dockerfile.
 
-1. From cloud shell connected to the build agent VM, type the following command
-   to view any Docker images on the VM. The list will only contain the mongodb
-   image downloaded earlier.
+1. From cloud shell connected to the build agent VM, type the following command to view any Docker images on the VM. The list will only contain the mongodb image downloaded earlier.
 
    ```bash
    docker image ls
@@ -331,9 +327,9 @@ In this task, you will create Docker images for the application --- one for the 
 
    - Executes the Docker build command to produce the image
 
-   - Tags the resulting image with the name content-api (-t)
+   - Tags the resulting image with the name `content-api` (-t)
 
-   - The final dot (".") indicates to use the Dockerfile in this current directory context. By default, this file is expected to have the name "Dockerfile" (case sensitive).
+   - The final dot (`.`) indicates to use the Dockerfile in this current directory context. By default, this file is expected to have the name `Dockerfile` (case sensitive).
 
    ```bash
    docker image build -t content-api .
@@ -372,7 +368,7 @@ In this task, you will create Docker images for the application --- one for the 
    cat Dockerfile
    ```
 
-   Notice that the content-web Dockerfile build stage includes additional tools for a front-end Angular application in addition to installing npm packages.
+   > Notice that the `content-web` Dockerfile build stage includes additional tools for a front-end Angular application in addition to installing npm packages.
 
 7. Type the following command to create a Docker image for the web application.
 
@@ -394,11 +390,11 @@ The web application container will be calling endpoints exposed by the API appli
 
 1. Create and start the API application container with the following command. The command does the following:
 
-   - Names the container "api" for later reference with Docker commands.
+   - Names the container `api` for later reference with Docker commands.
 
-   - Instructs the Docker engine to use the "fabmedical" network.
+   - Instructs the Docker engine to use the `fabmedical` network.
 
-   - Instructs the Docker engine to use port 3001 and map that to the internal container port 3001.
+   - Instructs the Docker engine to use port `3001` and map that to the internal container port `3001`.
 
    - Creates a container from the specified image, by its tag, such as content-api.
 
@@ -434,7 +430,7 @@ The web application container will be calling endpoints exposed by the API appli
    docker container run --name api --net fabmedical -p 3001:3001 -e MONGODB_CONNECTION=mongodb://mongo:27017/contentdb -d content-api
    ```
 
-4. Enter the command to show running containers. You will observe that the "api" container is in the list. Use the docker logs command to see that the API application has connected to mongodb.
+4. Enter the command to show running containers. You will observe that the `api` container is in the list. Use the docker logs command to see that the API application has connected to mongodb.
 
    ```bash
    docker container ls
@@ -455,7 +451,7 @@ The web application container will be calling endpoints exposed by the API appli
    docker container run --name web --net fabmedical -P -d content-web
    ```
 
-7. Enter the command to show running containers again, and you will observe that both the API and web containers are in the list. The web container shows a dynamically assigned port mapping to its internal container port 3000.
+7. Enter the command to show running containers again, and you will observe that both the API and web containers are in the list. The web container shows a dynamically assigned port mapping to its internal container port `3000`.
 
    ```bash
    docker container ls
@@ -471,7 +467,7 @@ The web application container will be calling endpoints exposed by the API appli
 
 ### Task 6: Setup environment variables
 
-In this task, you will configure the "web" container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
+In this task, you will configure the **web** container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
 
 1. From cloud shell connected to the build agent VM, stop and remove the web container using the following commands.
 
@@ -480,7 +476,7 @@ In this task, you will configure the "web" container to communicate with the API
    docker container rm web
    ```
 
-2. Validate that the web container is no longer running or present by using the -a flag as shown in this command. You will see that the "web" container is no longer listed.
+2. Validate that the web container is no longer running or present by using the `-a` flag as shown in this command. You will see that the `web` container is no longer listed.
 
    ```bash
    docker container ls -a
@@ -492,20 +488,20 @@ In this task, you will configure the "web" container to communicate with the API
    cat app.js
    ```
 
-4. Observe that the contentApiUrl variable can be set with an environment variable.
+4. Observe that the `contentApiUrl` variable can be set with an environment variable.
 
    ```javascript
    const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
    ```
 
-5. Open the Dockerfile for editing using Vim and press the "i" key to go into edit mode.
+5. Open the Dockerfile for editing using Vim and press the `i` key to go into edit mode.
 
    ```bash
    vi Dockerfile
    <i>
    ```
 
-6. Locate the EXPOSE line shown below and add a line above it that sets the default value for the environment variable, as shown in the screenshot.
+6. Locate the `EXPOSE` line shown below and add a line above it that sets the default value for the environment variable, as shown in the screenshot.
 
    ```Dockerfile
    ENV CONTENT_API_URL http://localhost:3001
@@ -513,7 +509,7 @@ In this task, you will configure the "web" container to communicate with the API
 
    ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](media/hol-2019-10-01_19-37-35.png)
 
-7. Press the Escape key and type ":wq" and then press the Enter key to save and close the file.
+7. Press the Escape key and type `:wq` and then press the Enter key to save and close the file.
 
    ```text
    <Esc>
@@ -540,7 +536,7 @@ In this task, you will configure the "web" container to communicate with the API
     curl http://localhost:[PORT]/speakers.html
     ```
 
-11. You will not be able to browse to the web application on the ephemeral port because the VM only exposes a limited port range. Now you will stop the web container and restart it using port 3000 to test in the browser. Type the following commands to stop the container, remove it, and run it again using explicit settings for the port.
+11. You will not be able to browse to the web application on the ephemeral port because the VM only exposes a limited port range. Now you will stop the web container and restart it using port `3000` to test in the browser. Type the following commands to stop the container, remove it, and run it again using explicit settings for the port.
 
     ```bash
     docker container stop web
@@ -548,13 +544,13 @@ In this task, you will configure the "web" container to communicate with the API
     docker container run --name web --net fabmedical -p 3000:3000 -d -e CONTENT_API_URL=http://api:3001 content-web
     ```
 
-12. Curl the speaker path again, using port 3000. You will see the same HTML returned.
+12. Curl the speaker path again, using port `3000`. You will see the same HTML returned.
 
     ```bash
     curl http://localhost:3000/speakers.html
     ```
 
-13. You can now use a web browser to navigate to the website and successfully view the application at port 3000. Replace [BUILDAGENTIP] with the IP address you used previously.
+13. You can now use a web browser to navigate to the website and successfully view the application at port `3000`. Replace `[BUILDAGENTIP]` with the **IP address** you used previously.
 
     ```bash
     http://[BUILDAGENTIP]:3000
@@ -605,7 +601,7 @@ for several containers and run them together.
        restart: always
 
      api:
-       build: ./content-api
+       build: ./Fabmedical/content-api
        image: content-api
        depends_on:
          - mongo
@@ -613,7 +609,7 @@ for several containers and run them together.
          MONGODB_CONNECTION: mongodb://mongo:27017/contentdb
 
      web:
-       build: ./content-web
+       build: ./Fabmedical/content-web
        image: content-web
        depends_on:
          - api
@@ -623,7 +619,7 @@ for several containers and run them together.
          - "3000:3000"
    ```
 
-   Press the Escape key and type ":wq" and then press the Enter key to save and close the file.
+   Press the Escape key and type `:wq` and then press the Enter key to save and close the file.
 
    ```text
    <Esc>
@@ -662,7 +658,7 @@ for several containers and run them together.
 
    The result should look similar to the following screenshot:
 
-   ![This screenshot of the VIM edit window shows the resulting compose file.](media/Ex1-Task6.19.png)
+   ![A screenshot of the VIM edit window shows the resulting compose file.](media/Ex1-Task6.19.png)
 
 6. Next, we will add a second file to our composition so that we can initialize the mongodb data when needed.
 
@@ -677,7 +673,7 @@ for several containers and run them together.
 
    services:
      init:
-       build: ./content-init
+       build: ./Fabmedical/content-init
        image: content-init
        depends_on:
          - mongo
@@ -719,7 +715,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
 1. In the Azure Portal `(https://portal.azure.com/)`, navigate to the ACR you created in Before the hands-on lab.
 
-2. Select Access keys under Settings on the left-hand menu.
+2. Select **Access keys** under **Settings** on the left-hand menu.
 
    ![In this screenshot of the left-hand menu, Access keys is highlighted below Settings.](media/image64.png)
 
@@ -741,14 +737,17 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ![In this screenshot of the console window, the following has been typed and run at the command prompt: docker login fabmedicalsoll.azurecr.io --u fabmedicalsoll --p +W/j=l+Fcze=n07SchxvGSlvsLRh/7ga](media/image65.png)
 
-   **Tip: Make sure to specify the fully qualified registry login server (all lowercase).**
+   >**Tip**: Make sure to specify the fully qualified registry login server (all lowercase).
 
 5. Run the following commands to properly tag your images to match your ACR account name.
 
    ```bash
    docker image tag content-web [LOGINSERVER]/content-web
    docker image tag content-api [LOGINSERVER]/content-api
+   docker image tag content-init [LOGINSERVER]/content-init
    ```
+
+   > **Note**: Be sure to replace the `[LOGINSERVER]` of your ACR instance.
 
 6. List your docker images and look at the repository and tag. Note that the repository is prefixed with your ACR login server name, such as the sample shown in the screenshot below.
 
@@ -763,6 +762,7 @@ In this task, you will push images to your ACR account, version images with tagg
    ```bash
    docker image push [LOGINSERVER]/content-web
    docker image push [LOGINSERVER]/content-api
+   docker image push [LOGINSERVER]/content-init
    ```
 
    ![In this screenshot of the console window, an example of images being pushed to an ACR account results from typing and running the following at the command prompt: docker push [LOGINSERVER]/content-web.](media/image67.png)
@@ -771,25 +771,26 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ![In this screenshot, content-api and content-web each appear on their own lines below Repositories.](media/image68.png)
 
-9. Select content-api. You will see the latest tag is assigned.
+9. Select `content-api`. You will see the latest tag is assigned.
 
    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right.](media/image69.png)
 
-10. From the cloud shell session attached to the VM, assign the v1 tag to each image with the following commands. Then list the Docker images to note that there are now two entries for each image: showing the latest tag and the v1 tag. Also note that the image ID is the same for the two entries, as there is only one copy of the image.
+10. From the cloud shell session attached to the VM, assign the v1 tag to each image with the following commands. Then list the Docker images to note that there are now two entries for each image: showing the latest tag and the `v1` tag. Also note that the image ID is the same for the two entries, as there is only one copy of the image.
 
     ```bash
     docker image tag [LOGINSERVER]/content-web:latest [LOGINSERVER]/content-web:v1
     docker image tag [LOGINSERVER]/content-api:latest [LOGINSERVER]/content-api:v1
+    docker image tag [LOGINSERVER]/content-init:latest [LOGINSERVER]/content-init:v1
     docker image ls
     ```
 
-    ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png)
+    ![In this screenshot of the console window, an example of tags being added and displayed.](media/image70.png)
 
-11. Repeat Step 7 to push the images to ACR again so that the newly tagged v1 images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
+11. Repeat Step 7 to push the images to ACR again so that the newly tagged `v1` images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
 
     ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png)
 
-12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with "latest." You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
+12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
     ```bash
     docker image pull [LOGINSERVER]/content-web
@@ -798,115 +799,135 @@ In this task, you will push images to your ACR account, version images with tagg
 
 ### Task 9: Setup CI Pipeline to Push Images
 
-In this task, you will use YAML to define a pipeline that builds your Docker
+In this task, you will use YAML to define a GitHub Actions workflow that builds your Docker
 image and pushes it to your ACR instance automatically.
 
-1. In your cloud shell session connected to the build agent VM, navigate to the
-   `content-web` directory:
+1. In GitHub, return to the **Fabmedical** repository screen, and select the **Settings** tab.
+
+2. From the left menu, select **Secrets**.
+
+3. Select the **New secret** button.
+
+    ![Settings link, Secrets link, and New secret button are highlighted.](media/2020-08-24-21-45-42.png "GitHub Repository secrets")
+
+4. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
+
+    ![New secret screen with values are entered.](media/2020-08-24-21-48-54.png "New secret screen")
+
+5. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
+
+    ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created.](media/2020-08-24-21-51-24.png "Secrets screen")
+
+6. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
 
    ```bash
-   cd ~/content-web
+   cd ~/Fabmedical
    ```
 
-2. Next create the pipeline YAML file.
+7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created. Do this by running the following commands:
 
-   ```bash
-   vi azure-pipelines.yml
-   ```
+    ```bash
+    mkdir ~/Fabmedical/.github
+    mkdir ~/Fabmedical/.github/workflows
+    ```
 
-   Add the following as the content (replacing SHORT_SUFFIX with your short
-   suffix such as SOL):
+8. Navigate to the `.github/workflows` directory:
 
-   ```yaml
-   name: 0.1.$(Rev:r)
+    ```bash
+    cd ~/Fabmedical/.github/workflows
+    ```
 
-   trigger:
-     - master
+9. Next create the workflow YAML file.
 
-   resources:
-     - repo: self
+    ```dotnetcli
+    vi content-web.yml
+    ```
 
-   variables:
-     dockerRegistryServiceConnection: "Fabmedical ACR"
-     imageRepository: "content-web"
-     containerRegistry: "$(containerRegistryName).azurecr.io"
-     containerRegistryName: "fabmedical[SHORT_SUFFIX]"
-     dockerfilePath: "$(Build.SourcesDirectory)/Dockerfile"
-     tag: "$(Build.BuildNumber)"
-     vmImageName: "ubuntu-latest"
+   Add the following as the content. Be sure to replace the following placeholders:
 
-   stages:
-     - stage: Build
-       displayName: Build and Push
-       jobs:
-         - job: Docker
-           displayName: Build and Push Docker Image
-           pool:
-             vmImage: $(vmImageName)
-           steps:
-             - checkout: self
-               fetchDepth: 1
+   - replace `[SHORT_SUFFIX]` with your short suffix such as `SOL`.
 
-             - task: Docker@2
-               displayName: Build and push an image to container registry
-               inputs:
-                 command: buildAndPush
-                 repository: $(imageRepository)
-                 dockerfile: $(dockerfilePath)
-                 containerRegistry: $(dockerRegistryServiceConnection)
-                 tags: |
-                   $(tag)
-                   latest
-   ```
+    ```yml
+    name: content-web
 
-3. Save the pipeline YAML, then commit and push it to the Azure DevOps
-   repository:
+    # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
+    on:
+      push:
+        branches:
+        - master
+        paths:
+        - 'content-web/**'
 
-   ```bash
-   git add azure-pipelines.yml
-   git commit -m "Added pipeline YAML"
-   git push
-   ```
+      # Configure workflow to also support triggering manually
+      workflow_dispatch:
+        inputs:
+          logLevel:
+            description: 'Log level'
+            required: true
+            default: 'warning'
 
-4. Now login to Azure DevOps to create your first build. Navigate to the
-   `content-web` repository and choose 'Set up Build'.
+    # Environment variables are defined so that they can be used throughout the job definitions.
+    env:
+      imageRepository: 'content-web'
+      resourceGroupName: 'Fabmedical-[SHORT_SUFFIX]'
+      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
+      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
+      dockerfilePath: './content-web'
+      tag: '${{ github.run_id  }}'
 
-   ![A screenshot of the content-web repository with an arrow pointed at the Set up Build button.](media/hol-2019-10-01_19-50-16.png)
+    # Jobs define the actions that take place when code is pushed to the master branch
+    jobs:
 
-5. Azure DevOps will automatically detect the pipeline YAML you added. You can
-   make additional edits here if needed. Select `Run` when you are ready to
-   execute the pipeline.
+      build-and-publish-docker-image:
+        name: Build and Push Docker Image
+        runs-on: ubuntu-latest
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
 
-   ![A screenshot of the "Review your pipeline YAML" page.  An arrow points at the Run button.](media/hol-2019-10-02_07-33-16.png)
+        - name: Build and push an image to container registry
+          uses: docker/build-push-action@v1
+          with:
+            username: ${{ secrets.ACR_USERNAME }}
+            password: ${{ secrets.ACR_PASSWORD }}
+            path: ${{ env.dockerfilePath  }}
+            dockerfile: '${{ env.dockerfilePath }}/Dockerfile'
+            registry: ${{ env.containerRegistry }}
+            repository: ${{ env.imageRepository }}
+            tags: ${{ env.tag }},latest
+    ```
 
-6. Azure DevOps will queue your first build and execute the pipeline when an
-   agent becomes available.
+10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-   ![A screenshot of Azure DevOps Pipeline with a queued job.](media/hol-2019-10-02_07-39-24.png)
+11. Save the pipeline YAML, then commit and push it to the Git repository:
 
-7. The build should take about five minutes to complete.
+    ```bash
+    git add .
+    git commit -m "Added workflow YAML"
+    git push
+    ```
 
-   ![A screenshot of Azure DevOps Pipeline with a completed job.](media/hol-2019-10-02_08-28-49.png)
+12. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
 
-   > **Note**: The build may fail due to an authorization error related to the
-   > Docker Registry Service connection. If this is the case, then select
-   > "Authorize Resources" and run the build again.
-   > ![A screenshot showing an authorization failure error. An arrow points to the Authorize Resources button.](media/hol-2019-10-02_07-30-37.png)
+13. On the **Actions** page, select the **content-web** workflow.
 
-8. Next, create the `content-api` build. Select the `content-api` repository.
-   This repository already includes `azure-pipelines.yaml`. Choose 'Set up
-   Build'.
+14. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
-9. In the "Review your pipeline YAML" step, edit the `containerRegistryName` value to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name.
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-   ![A screenshot of the "Review your pipeline YAML" step, with the containerRegistryName property highlighted.](media/hol-2019-10-18_06-32-34.png)
+15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view it's status.
 
-10. When you are finished editing, select `Run` to execute the pipeline.
+16. Selecting the **Build and Push Docker Image** job of the workflow will display it's execution status.
 
-11. While the `content-api` build runs, setup one last build for `content-init` by following the same steps as the previous `content-api` build, remembering to update the `[SHORT_SUFFIX]` value on the "Review your pipeline YAML" step.
+    ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-12. Visit your ACR instance in the Azure portal, you should see new containers
-    tagged with the Azure DevOps build number.
+17. Next, setup the `content-api` workflow. This repository already includes `content-api.yaml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yaml` file for editing.
 
-    ![A screenshot of the container images in ACR.](media/Ex1-Task7.28.png)
+18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
+
+    ![Screenshot of content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "Screenshot of content-api.yml with the environment variables highlighted")
+
+19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
+
+20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your own three-letter suffix.
 

@@ -4,7 +4,7 @@ Fabrikam Medical Conferences provides conference web site services, tailored to 
 
 The goal of this workshop is to help them build a proof of concept (POC) that will migrate their code to a more manageable process that involves containerization of tenant code, a better DevOps workflow, and a simple lift-and-shift story for their database backend.
 
-February 2020
+August 2020
 
 ## Target Audience
 
@@ -35,7 +35,7 @@ At the end of this lab, you will be better able to build and deploy containerize
 
 - Azure Kubernetes Service (AKS)
 - Azure Container Registry
-- Azure DevOps
+- GitHub
 - Docker
 - Cosmos DB (including MongoDB API)
 

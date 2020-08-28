@@ -9,7 +9,7 @@ Whiteboard design session trainer guide
 </div>
 
 <div class="MCWHeader3">
-February 2020
+August 2020
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -202,9 +202,9 @@ The conference sites are currently hosted on-premises with the following topolog
 
 - The conference web sites are built with the MEAN stack (Mongo, Express, Angular, Node.js).
 
-- Web sites and APIs are hosted on Windows Server machines.
+- Web sites and APIs are built as microservices hosted on Linux servers.
 
-- MongoDB is also running on a separate cluster of Windows Server machines.
+- The on-prem data backend is MongoDB; also running on a separate cluster of Linux servers.
 
 Customers are considered "tenants", and each tenant is treated as a unique deployment whereby the following happens:
 
@@ -222,7 +222,7 @@ Customers are considered "tenants", and each tenant is treated as a unique deplo
 
   - They have the ability to add new events and isolate speakers, sessions, workshops, and other details.
 
-- The tenant's code (conference and admin web site) is deployed to a specific group of load balanced Windows Server machines dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
+- The tenant's code (conference and admin web site) is deployed to a specific group of load balanced Linux servers dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
 
 - Once the conference site is live, the inevitable requests for changes to the web site pages, styles, registration requirements, and any number of custom requests begin.
 
@@ -266,15 +266,15 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
     - Provide a vendor neutral solution so that a specific on-premises or cloud environment does not become a new dependency.
 
-4. Migrate data from MongoDB on-premises to CosmosDB with the least change possible to the application code.
+4. Migrate data from MongoDB on-premises to Azure Cosmos DB with the least changes possible to the application code.
 
-5. Continue to use Git repositories for source control and integrate into a CICD workflow.
+5. Continue to use Git repositories for source control and integrate into a CI/CD workflow.
 
 6. Prefer a complete suite of operational management tools with:
 
     - UI for manual deployment and management during development and initial POC work.
 
-    - APIs for integrated CICD automation.
+    - APIs for integrated CI/CD automation.
 
     - Container scheduling and orchestration.
 
@@ -290,6 +290,8 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
 2. Is there an option in Azure that provides container orchestration platform features that are easy to manage and migrate to, that can also handle our scale and management workflow requirements?
 
+3. We heard Azure Cosmos DB is compatible with MongoDB. Will this provide a migration that minimizes code changes?
+
 ### Infographic for common scenarios
 
 _Kubernetes Architecture_
@@ -298,9 +300,9 @@ _Kubernetes Architecture_
 
 ![A diagram of Azure Kubernetes Service managed components with master and agent nodes.](media/azure-kubernetes-components.png)
 
-<https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes>
+<https://docs.microsoft.com/azure/aks/intro-kubernetes>
 
-_CICD to Azure Kubernetes Service with Azure DevOps_
+_CI/CD to Azure Kubernetes Service with Azure DevOps_
 
 ![A diagram showing the Azure DevOps workflow to build Docker images from source code, push images to Azure Container Registry, and deploy to Azure Kubernetes Service.](media/azure-devops-aks.png)
 
@@ -364,7 +366,7 @@ _Scalability considerations_
 
 _Automating DevOps workflows_
 
-1. Describe how Azure DevOps can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
+1. Describe how GitHub Actions can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
 
 2. Describe the recommended approach for keeping Azure Kubernetes Service (AKS) nodes up to date with the latest security patches or supported Kubernetes versions.
 
@@ -417,16 +419,17 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 |                                 |                                                                                                  |
 | ------------------------------- | :----------------------------------------------------------------------------------------------- |
 | **Description**                 | **Links**                                                                                        |
-| Azure Kubernetes Services (AKS) | <https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes/>                                   |
+| Azure Kubernetes Services (AKS) | <https://docs.microsoft.com/azure/aks/intro-kubernetes/>                                   |
 | Kubernetes                      | <https://kubernetes.io/docs/home/>                                                               |
-| AKS FAQ                         | <https://docs.microsoft.com/en-us/azure/aks/faq>                                                   |
+| AKS FAQ                         | <https://docs.microsoft.com/azure/aks/faq>                                                   |
 | Autoscaling AKS                 | <https://github.com/kubernetes/autoscaler>                                                         |
-| AKS Cluster Autoscaler          | <https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler>                                    |
-| Upgrading an AKS cluster        | <https://docs.microsoft.com/en-us/azure/aks/upgrade-cluster>                                       |
-| Azure Pipelines                 | <https://docs.microsoft.com/en-us/azure/devops/pipelines/>                                       |
-| Container Security              | <https://docs.microsoft.com/en-us/azure/container-instances/container-instances-image-security/> |
+| AKS Cluster Autoscaler          | <https://docs.microsoft.com/azure/aks/cluster-autoscaler>                                    |
+| Upgrading an AKS cluster        | <https://docs.microsoft.com/azure/aks/upgrade-cluster>                                       |
+| Azure Pipelines                 | <https://docs.microsoft.com/azure/devops/pipelines/>                                       |
+| Container Security              | <https://docs.microsoft.com/azure/container-instances/container-instances-image-security/> |
 | Image Quarantine                | <https://github.com/Azure/acr/tree/master/docs/preview/quarantine/>                              |
-| Container Monitoring Solution   | <https://docs.microsoft.com/en-us/azure/azure-monitor/insights/containers>                       |
+| Container Monitoring Solution   | <https://docs.microsoft.com/azure/azure-monitor/insights/containers>                       |
+| Azure Cosmos DB                 | <https://docs.microsoft.com/azure/cosmos-db/introduction> |
 
 # Cloud-native applications whiteboard design session trainer guide
 
@@ -480,7 +483,7 @@ The primary audience is the technical strategic decision-maker with influential 
 
 After evaluating the options for container platforms on Azure and discussing Azure Kubernetes Service (AKS) features with the team at Microsoft, Fabrikam Medical Conferences decided to move forward with Azure Kubernetes Service (AKS).
 
-They also decided to move forward with Azure DevOps for container DevOps workflows.
+They also decided to move forward with GitHub Actions for container DevOps workflows.
 
 **Design**
 
@@ -503,29 +506,25 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
 2. Without getting into the details (the following sections will address the particular details), diagram your initial vision of the container platform, the containers that should be deployed (for a single tenant), and the data tier.
 
-    The solution will use Azure Kubernetes Service (AKS), which means that the container cluster topology is provisioned according to the number of requested nodes. The proposed containers deployed to the cluster are illustrated below. The data tier is provided by Cosmos DB outside of the container platform:
+    The solution will use Azure Kubernetes Service (AKS), which means that the container cluster topology is provisioned according to the number of requested nodes. The proposed containers deployed to the cluster are illustrated below. The data tier is provided by Cosmos DB outside of the container platform. The deployment of the containers to AKS is managed using a DevOps workflow utilizing GitHub Actions for CI/CD with Azure Container Registry and Helm:
 
-![A diagram showing the solution, using Azure Kubernetes Service with a CosmosDB back end.](media/solution-topology.png)
+![A diagram showing the solution, using Azure Kubernetes Service with a Cosmos DB back end.](media/solution-topology.png)
 
 *Choosing a container platform on Azure*
 
 1. List the potential platform choices for deploying containers to Azure.
 
-    **Azure Web App for Containers**
+    **Azure Kubernetes Service (AKS)**
 
-    Azure Web App for Containers specifically targets container deployments, which makes it easy to run containers in a fully managed App Service Plan. This option is ideal for solutions that do not require the features offered by an orchestration platform such as Kubernetes.
+    Azure Kubernetes Service (AKS) is the easiest way to manage a Kubernetes cluster on Azure - providing you with a managed control plane and configurable cluster with automatic updates and easy scaling capabilities. AKS removes the management overhead of container orchestration cluster, allowing teams to focus on the application and core DevOps workflows relevant to the solution.
 
     **Azure Container Instances**
 
     Azure Container Instances provide a serverless approach to running containers on demand and at scale enabling additional compute power and elasticity for select workloads - with the security of hypervisor isolation.
+    
+    **Azure Web App for Containers**
 
-    **Windows Server Containers on Windows Server**
-
-    Windows Server Containers allow Windows applications to be containerized. Windows Server 2016 or later versions support the installation of Docker Engine to run containers. For orchestration features you can also set up a cluster with an orchestration platform such as Docker Engine (Community or Enterprise), Kubernetes or other platforms - if you want to take responsibility for managing the clustering and related configurations.
-
-    **Azure Kubernetes Service (AKS)**
-
-    Azure Kubernetes Service (AKS) is the easiest way to manage a Kubernetes cluster on Azure - providing you with a managed control plane and configurable cluster with automatic updates and easy scaling capabilities. AKS removes the management overhead of container orchestration cluster, allowing teams to focus on the application and core DevOps workflows relevant to the solution.
+    Azure Web App for Containers specifically targets container deployments, which makes it easy to run containers in a fully managed App Service Plan. This option is ideal for solutions that do not require the features offered by an orchestration platform such as Kubernetes.
 
 2. Which would you recommend and why?
 
@@ -563,19 +562,19 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
    The basic workflow is to build an image from the service source repository, push the image to a registry from which it is deployed, and run as a container.
 
-   A Dockerfile describing each container can reside in the Git repository together with the source. Using command line tools, the developers can build Docker images and push to the registry. A CI process can also automate building images and push to the registry when changes are checked in using Azure DevOps build pipelines.
+   A Dockerfile describing each container can reside in the Git repository together with the source. Using command line tools, the developers can build Docker images and push to the registry. A CI process can also automate building images and push to the registry when changes are checked in using GitHub Actions workflows.
 
    To deploy and run a container, the developer can:
 
    - Securely access the Kubernetes dashboard and create a deployment specifying an image from the repository manually
 
-   - POST a service definition file (JSON) to the REST API using `kubectl` from the command line. This process can also be automated as part of a CD process using Azure DevOps release pipelines.
+   - POST a service definition file (JSON) to the REST API using `kubectl` from the command line. This process can also be automated as part of a CD process using GitHub Actions workflows.
 
-   - Create Azure DevOps CICD build and release pipelines to automate building images and deploying them to run in the cluster.
+   - Create GitHub Actions CI/CD workflows to automate building images and deploying them to run in the cluster.
 
 2. What options does the customer have for a Docker image registry, and what would you recommend?
 
-   The image registry is core to the CICD workflow and must be a production worthy implementation as it is the source of container images, versioning, deployment, upgrade, and rollback strategies. Registry images can also be used for cross-environment promotion (between development, test, staging, and production for example).
+   The image registry is core to the CI/CD workflow and must be a production worthy implementation as it is the source of container images, versioning, deployment, upgrade, and rollback strategies. Registry images can also be used for cross-environment promotion (between development, test, staging, and production for example).
 
    The following are a few natural options for image registries that could support Azure container deployments:
 
@@ -585,7 +584,7 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
    - You can optionally pay for a private repository on Docker Hub, which enables you to control who can access your repository. This comes at a reasonable cost and is fully managed.
 
-   - You can deploy and manage your own Docker Registry in Azure VMs---which would have to be clustered for high availability and this is not trivial to set up. This is not a recommended option when a hosted repository can fit solution requirements.
+   - You can deploy and manage your own Docker Registry in Azure VMs --- which would have to be clustered for high availability and this is not trivial to set up. This is not a recommended option when a hosted repository can fit solution requirements.
 
    Deploying and configuring a Docker Registry, clustered or not, is a complex and time-consuming task. We recommend the use of Azure Container Registry where possible for Azure solutions.
 
@@ -609,11 +608,11 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
 *Automating DevOps workflows*
 
-1. Describe how Azure DevOps can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
+1. Describe how GitHub Actions can help the customer automate their continuous integration and deployment workflows and the Azure Kubernetes Service (AKS) infrastructure.
 
-   With Azure DevOps you can create build definitions that, on commit or check-in can produce build artifacts from the latest source (for example) and build Docker images, then push them to a Docker image repository such as Azure Container Registry. This build definition can be configured to respond to specific folder changes, can build one or more Docker image based on different project folders, and tag images with build number, required image repository tags and other information useful to your image promotion workflows.
+   With GitHub Actions you can create build workflows that, on commit or check-in can produce build artifacts from the latest source (for example) and build Docker images, then push them to a Docker image repository such as Azure Container Registry. This build definition can be configured to respond to specific folder changes, can build one or more Docker image based on different project folders, and tag images with build number, required image repository tags and other information useful to your image promotion workflows.
 
-   To trigger deployment, you can also use Azure DevOps to produce release definitions that can create or update services in AKS. You may, for example, want your development cluster to always deploy the latest images as code is committed. On the other hand, for test, UAT or production clusters you may want to manually run release jobs based on a specific image tag of the environment in order to control when a new version of a service or services are released.
+   To trigger deployment, you can also use GitHub Actions to create or update services in AKS. You may, for example, want your development cluster to always deploy the latest images as code is committed. On the other hand, for test, UAT or production clusters you may want to manually run release jobs based on a specific image tag of the environment in order to control when a new version of a service or services are released.
 
 2. Describe the recommended approach for keeping Azure Kubernetes Service (AKS) nodes up to date with the latest security patches or supported Kubernetes versions.
 
@@ -629,7 +628,7 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
     With Kubernetes you will have additional features at your fingertips beyond the pure Docker approach including:
 
-    - The Kubernetes dashboard includes web interface and remote APIs for managing, running, and scaling containers, including CICD integration options.
+    - The Kubernetes dashboard includes web interface and remote APIs for managing, running, and scaling containers, including CI/CD integration options.
 
     - The kubectl command line tool for engaging remote Kubernetes APIs and assisting with automation.
 
@@ -643,8 +642,14 @@ They also decided to move forward with Azure DevOps for container DevOps workflo
 
     Azure Kubernetes Service (AKS) provides a fully managed service with the full set of orchestration and management tools. This is the best possible choice for reduced management overhead while still having access to the features provided with orchestration platforms like Kubernetes.
 
+3. We heard Azure Cosmos DB is compatible with MongoDB. Will this provide a migration that minimizes code changes?
+
+    Azure Cosmos DB supports multiple NoSQL data models; including supporting a MongoDB API. This provides compatibility for code written for MongoDB to communicate with Cosmos DB without code changes; for easier migration and interoperability.
+
+    With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows, however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
+
 ## Customer quote (to be read back to the attendees at the end)
 
-"With Azure Kubernetes Service (AKS) we feel confident we can make the move to a container-based platform with the right DevOps support in place to be successful with a small team."
+"With Azure Kubernetes Service (AKS) and Cosmos DB we feel confident we can make the move to a cloud-native, container-based platform with the right DevOps support in place to be successful with a small team."
 
 - Arthur Block, VP of Engineering at Fabrikam Medical Conferences

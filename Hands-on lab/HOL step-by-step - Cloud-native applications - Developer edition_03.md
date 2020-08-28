@@ -4,7 +4,7 @@ Below is a diagram of the solution architecture you will build in this lab. Plea
 
 The solution will use Azure Kubernetes Service (AKS), which means that the container cluster topology is provisioned according to the number of requested nodes. The proposed containers deployed to the cluster are illustrated below with Cosmos DB as a managed service:
 
-![A diagram showing the solution, using Azure Kubernetes Service with a Cosmos DB back end.](media/image3.png)
+![A diagram showing the solution, using Azure Kubernetes Service with a Cosmos DB back end.](media/solution-topology.png)
 
 Each tenant will have the following containers:
 
