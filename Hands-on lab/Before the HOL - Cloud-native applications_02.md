@@ -69,7 +69,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 ### Task 3: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
- # Note:- User can use there personal GitHub account to complete this step.
+ > **Note**: User can use there personal GitHub account to complete this step.
  
 1. Open a web browser, and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
 
