@@ -845,7 +845,7 @@ image and pushes it to your ACR instance automatically.
 
    Add the following as the content. Be sure to replace the following placeholders:
 
-   - replace `[SHORT_SUFFIX]` with your short suffix such as `SOL`.
+   - replace `[SHORT_SUFFIX]` with your DeploymentID from lab details page.
 
     ```yml
     name: content-web
@@ -870,8 +870,8 @@ image and pushes it to your ACR instance automatically.
     env:
       imageRepository: 'content-web'
       resourceGroupName: 'Fabmedical-[SHORT_SUFFIX]'
-      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
-      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
+      containerRegistryName: 'acr[SHORT_SUFFIX]'
+      containerRegistry: 'acr[SHORT_SUFFIX].azurecr.io'
       dockerfilePath: './content-web'
       tag: '${{ github.run_id  }}'
 
