@@ -136,13 +136,13 @@ The purpose of this task is to make sure you can run the application successfull
 14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment.
 
     ```bash
-    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SHORT_SUFFIX] --query publicIps -o tsv
+    az vm show -d -g fabmedical-[deploymentID] -n fabmedical-[deploymentID] --query publicIps -o tsv
     ```
 
     Example:
 
     ```bash
-    az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
+    az vm show -d -g fabmedical-deploymentID -n fabmedical-deploymentID --query publicIps -o tsv
     ```
 
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
