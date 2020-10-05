@@ -327,10 +327,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     code content.ingress.yml
     ```
 
-    Use the following as the contents and update the [SUFFIX] and [AZURE-REGION] to match your ingress DNS name:
+    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
 
     ```yaml
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Ingress
     metadata:
       name: content-ingress

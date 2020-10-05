@@ -295,14 +295,14 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    ```bash
    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
-   ll
+   ls
    ```
 
    > **Important note**: If you will be taking the Infrastructure edition of the lab, instead of using the above instructions, type the following ones:
    >
    > ```bash
    > cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/
-   > ll
+   > ls
    > ```
    >
    > This will take you to the version of the starter files that will be used by that edition of the lab.
@@ -339,7 +339,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 12. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
 
     ```bash
-    git config --global credential.helper cache
+    git config --global --unset credential.helper
+    git config --global credential.helper store
     ```
 
 13. Push to the master branch by issuing the following command:

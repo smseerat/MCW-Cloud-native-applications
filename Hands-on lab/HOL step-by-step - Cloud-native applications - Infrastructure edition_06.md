@@ -182,7 +182,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 15. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
 
     ```bash
-    kubectl get -o=yaml --export=true deployment api > api.deployment.yml
+    kubectl get -o=yaml deployment api > api.deployment.yml
     ```
 
 16. Edit the downloaded file using cloud shell code editor:
@@ -236,7 +236,7 @@ In this task, deploy the web service using `kubectl`.
    > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
 
    ```yaml
-   apiVersion: extensions/v1beta1
+   apiVersion: apps/v1
    kind: Deployment
    metadata:
      labels:

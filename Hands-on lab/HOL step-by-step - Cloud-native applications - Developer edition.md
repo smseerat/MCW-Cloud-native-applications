@@ -1088,7 +1088,7 @@ In this task, you will gather the information you need about your Azure Kubernet
 2. Configure kubectl to connect to the Kubernetes cluster:
 
    ```bash
-   az aks get-credentials --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
+   az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
    ```
 
 3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
@@ -1105,7 +1105,27 @@ In this task, you will gather the information you need about your Azure Kubernet
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
 
-5. Create an SSH tunnel linking a local port (8001) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+   > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
+
+5. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Cloud Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
+
+    Within the Azure Cloud Shell, use the following command to download the Kubeconfig file:
+
+    ```bash
+    download /home/<username>/.kube/config
+    ```
+
+    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Cloud Shell.
+
+    >**Note**: You can find the `<username>` from the first part of the Azure Cloud Shell command-line prompt; such as `<username>@Azure:~$`.
+    >
+    > You can also look in the `/home` directory and so see the directory name that exists within it to find the correct username directory where the Kubeconfig file resides:
+    >
+    > ```bash
+    > ls /home
+    > ```
+
+6. Create an SSH tunnel linking a local port (8001) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
@@ -1115,7 +1135,11 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    ![In this screenshot of the console, the output of the above command produces output similar to the following: Password for private key: Proxy running on 127.0.0.1:8001/ui Press CTRL+C to close the tunnel ... Starting to server on 127.0.0.1:8001.](media/image76.png)
 
-6. If the tunnel is successful, you will see the Kubernetes management dashboard.
+7. If the tunnel is successful, you will see the Kubernetes Dashboard authentication screen. Select the **Kubeconfig** option, select the ellipsis (`...`) button, select the **Kubeconfig** file that was previously downloaded, then select **Sign in**.
+
+    ![Kubernetes Dashboard authentication prompt](media/kubernetes-dashboard-kubeconfig-prompt.png "Kubernetes Dashboard authentication prompt")
+
+8. Once authenticated, you will see the Kubernetes management dashboard.
 
    ![This is a screenshot of the Kubernetes management dashboard. Overview is highlighted on the left, and at right, kubernetes has a green check mark next to it. Below that, default-token-s6kmc is listed under Secrets.](media/image77.png)
 
@@ -1220,7 +1244,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 15. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
 
     ```bash
-    kubectl get -o=yaml --export=true deployment api > api.deployment.yml
+    kubectl get -o=yaml deployment api > api.deployment.yml
     ```
 
 16. Edit the downloaded file using cloud shell code editor:
@@ -1274,7 +1298,7 @@ In this task, deploy the web service using `kubectl`.
    > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
 
    ```yaml
-   apiVersion: extensions/v1beta1
+   apiVersion: apps/v1
    kind: Deployment
    metadata:
      labels:
@@ -2319,7 +2343,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
 
     ```yaml
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Ingress
     metadata:
       name: content-ingress
