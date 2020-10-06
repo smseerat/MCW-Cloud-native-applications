@@ -109,11 +109,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 3. Select **SHOW ADVANCED OPTIONS**
 
-<<<<<<< Updated upstream
-   - Enter `0.125` for the CPU requirement.
-=======
    - Enter `1` for the CPU requirement.
->>>>>>> Stashed changes
 
    - Enter `128` for the Memory requirement.
 

@@ -244,9 +244,6 @@ In this task, you will create Docker images for the application --- one for the 
    docker image build -t content-web .
    ```
 
-<<<<<<< Updated upstream
-7. When complete, you will see seven images now exist when you run the Docker images command.
-=======
 8. Navigate to the content-init folder again and list the files. Note that this folder already has a Dockerfile.
 
    ```bash
@@ -267,7 +264,6 @@ In this task, you will create Docker images for the application --- one for the 
    ```
 
 11. When complete, you will see seven images now exist when you run the Docker images command.
->>>>>>> Stashed changes
 
    ```bash
    docker image ls
