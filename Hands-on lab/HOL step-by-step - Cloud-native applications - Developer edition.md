@@ -505,7 +505,26 @@ In this task, you will create Docker images for the application --- one for the 
    docker image build -t content-web .
    ```
 
-8. When complete, you will see seven images now exist when you run the Docker images command.
+8. Navigate to the content-init folder again and list the files. Note that this folder already has a Dockerfile.
+
+   ```bash
+   cd ../content-init
+   ll
+   ```
+
+9. View the Dockerfile contents -- which are similar to the file you created previously in the API folder. Type the following command:
+
+   ```bash
+   cat Dockerfile
+   ```
+
+10. Type the following command to create a Docker image for the init application.
+
+   ```bash
+   docker image build -t content-init .
+   ```
+
+11. When complete, you will see seven images now exist when you run the Docker images command.
 
    ```bash
    docker image ls
@@ -1171,7 +1190,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 3. Select **SHOW ADVANCED OPTIONS**
 
-   - Enter `0.125` for the CPU requirement.
+   - Enter `1` for the CPU requirement.
 
    - Enter `128` for the Memory requirement.
 
@@ -2237,9 +2256,9 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    ```bash
    kubectl create namespace cert-manager
 
-   kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+   kubectl label namespace cert-manager cert-manager.io/disable-validation=true
 
-   kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.8.1/cert-manager.yaml
+   kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
    ```
 
 9. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
@@ -2251,7 +2270,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     The following resource configuration should work as is:
 
     ```yaml
-    apiVersion: certmanager.k8s.io/v1alpha1
+    apiVersion: cert-manager.io/v1
     kind: ClusterIssuer
     metadata:
       name: letsencrypt-prod
@@ -2265,7 +2284,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
         privateKeySecretRef:
           name: letsencrypt-prod
         # Enable HTTP01 validations
-        http01: {}
+        solvers:
+        - http01:
+            ingress:
+              class: nginx
     ```
 
 10. Save changes and close the editor.
@@ -2293,7 +2315,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
 
     ```yaml
-    apiVersion: certmanager.k8s.io/v1alpha1
+    apiVersion: cert-manager.io/v1
     kind: Certificate
     metadata:
       name: tls-secret
@@ -2301,12 +2323,6 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
       secretName: tls-secret
       dnsNames:
         - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-      acme:
-        config:
-          - http01:
-              ingressClass: nginx
-            domains:
-              - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
       issuerRef:
         name: letsencrypt-prod
         kind: ClusterIssuer
@@ -2343,7 +2359,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
 
     ```yaml
-    apiVersion: apps/v1
+    apiVersion: extensions/v1beta1
     kind: Ingress
     metadata:
       name: content-ingress
