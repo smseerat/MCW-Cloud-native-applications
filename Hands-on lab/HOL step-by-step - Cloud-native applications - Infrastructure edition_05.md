@@ -791,7 +791,7 @@ image and pushes it to your ACR instance automatically.
 
     ![Build and Push Docker Image job](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yaml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yaml` file for editing.
+17. Next, setup the `content-api` workflow. This repository already includes `` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
 
 18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
 

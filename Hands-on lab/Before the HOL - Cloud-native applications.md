@@ -58,7 +58,7 @@ The names of manufacturers, products, or URLs are provided for informational pur
 
    - You must have enough cores available in your subscription to create the build agent and Azure Kubernetes Service cluster in [Task 6: Deploy ARM Template](#Task-6-Deploy-ARM-Template). You'll need eight cores if following the exact instructions in the lab, more if you choose additional agents or larger VM sizes. Execute the steps required before the lab to see if you need to request more cores in your sub.
 
-2. An account in Azure DevOps.
+2. An account in Microsoft [GitHub](https://github.com).
 
 3. Local machine or a virtual machine configured with:
 
@@ -78,7 +78,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png)
 
-2. The cloud shell opens in the browser window. Choose **Bash** if prompted or use the left-hand dropdown on the shell menu bar to choose **Bash** (as shown).
+2. The cloud shell opens in the browser window. Choose **Bash** if prompted or use the left-hand dropdown on the shell menu bar to choose **Bash** from the dropdown (as shown). If prompted, select **Confirm**.
 
    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png)
 
@@ -90,19 +90,19 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png)
 
-4. To list all of your subscriptions, type:
+4. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
+
+   ```bash
+   az account set --subscription {id}
+   ```
+
+> **Note**: To list all of your subscriptions, type:
 
    ```bash
    az account list
    ```
 
    ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png)
-
-5. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
-
-   ```bash
-   az account set --subscription {id}
-   ```
 
 ### Task 2: Download Starter Files
 
@@ -115,6 +115,8 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
    ```bash
    git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
    ```
+
+   > **Note**: If you do not have enough free space, you may need to remove extra files from your cloud shell environment.  Try running `azcopy jobs clean` to remove any `azcopy` jobs and data you do not need.
 
 2. The lab files download.
 
@@ -130,12 +132,12 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 Create an Azure Resource Group to hold most of the resources that you create in this hands-on lab. This approach makes it easier to clean up later.
 
-1. In your cloud shell window, you type a command similar to the following command:
+1. In your cloud shell window, you type a command similar to the following command, be sure to replace the tokens:
 
    > **Note**: If you don't have a cloud shell available, refer back to [Task 1: Setup Azure Cloud Shell](#task-1-setup-azure-cloud-shell).
 
    ```bash
-   az group create -l [LOCATION] -n fabmedical-[SUFFIX]
+   az group create -l '[LOCATION]' -n 'fabmedical-[SUFFIX]'
    ```
 
    - **Suffix:** Throughout the lab, suffix should be used to make resources unique, like your email prefix or your first initial and last name.
@@ -145,7 +147,7 @@ Create an Azure Resource Group to hold most of the resources that you create in 
    Example:
 
    ```bash
-   az group create -l westus -n fabmedical-sol
+   az group create -l 'west us' -n 'fabmedical-sol'
    ```
 
 2. When this completes, the Azure Portal shows your Resource Group.
@@ -174,7 +176,7 @@ You create VMs during the upcoming exercises. In this section, you create an SSH
 
 4. Enter a passphrase when prompted, and **don't forget it**!
 
-5. Because you entered `.ssh/fabmedical`e, ssh-keygen generates the file in the `.ssh` folder in your user folder, where the cloud shell opens by default.
+5. Because you entered `.ssh/fabmedical` the ssh-keygen generates the file in the `.ssh` folder in your user folder, where the cloud shell opens by default.
 
    ![In this screenshot of the cloud shell window, ssh-keygen -t RSA -b 2048 -C admin@fabmedical has been typed and run at the command prompt. Information about the generated key appears in the window.](media/b4-image57.png)
 
@@ -190,7 +192,7 @@ You create VMs during the upcoming exercises. In this section, you create an SSH
 
 ### Task 5: Create a Service Principal
 
-Azure Kubernetes Service requires an Azure Active Directory service principal to interact with Azure APIs. The service principal is needed to dynamically manage resources such as user-defined routes and the Layer 4 Azure Load Balancer. The easiest way to set up the service principal is by using the Azure cloud shell.
+Azure Kubernetes Service (AKS) requires an Azure Active Directory (AAD) service principal to interact with Azure APIs. The service principal is needed to dynamically manage resources such as user-defined routes and the Layer 4 Azure Load Balancer. The easiest way to set up the service principal is by using the Azure cloud shell.
 
 > **Note**: To complete this task, ensure your account is an [Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#owner) built-in role for the subscription you use and is a [Member](https://docs.microsoft.com/azure/active-directory/fundamentals/users-default-permissions#member-and-guest-users) user in the Azure AD tenant you use. You may have trouble creating a service principal if you do not meet these requirements.
 
@@ -199,7 +201,7 @@ Azure Kubernetes Service requires an Azure Active Directory service principal to
    > **Note**: If you don't have a cloud shell available, refer back to [Task 1: Setup Azure Cloud Shell](#task-1-setup-azure-cloud-shell).
 
    ```bash
-   az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/{id}" --name="http://Fabmedical-sp-{SUFFIX}"
+   az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/{id}" --name="http://fabmedical-sp-{SUFFIX}"
    ```
 
 2. The command produces output like this. Copy this information to use later.
@@ -265,13 +267,15 @@ In this section, you configure and execute an ARM template that creates all the 
    az deployment group create --resource-group {resourceGroup} --template-file azuredeploy.json --parameters azuredeploy.parameters.json
    ```
 
-   This command takes up to 30 to 60 minutes to deploy all lab resources. You can continue to the next task to setup Azure DevOps while the deployment runs.
+   This command takes 30 to 60 minutes to deploy all lab resources. You can continue to the next task to setup GitHub while the deployment runs.
+
+   > **Note** If you get an error about the Cosmos DB name, ensure that you typed the `ComsosLocation` and `CosmosPairedLocation` without any spaces. Re-run the above command after you have corrected the name.
 
 ### Task 7: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. Open a web browser, and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
+1. Open a web browser and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
 
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
@@ -289,7 +293,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-6. Open a **new** Azure Cloud Shell console.
+6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to https://shell.azure.com and logging in with the same lab credentials.
 
 7. Navigate to the FabMedical source code folder and list the contents.
 
@@ -315,7 +319,14 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    content-web/
    ```
 
-9. Using the Cloud Shell, initialize a new git repository:
+9. Set your username and email, which git uses for commits.
+
+    ```bash
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+    ```
+
+10. Using the Cloud Shell, initialize a new git repository:
 
     ```bash
     git init
@@ -323,17 +334,10 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git commit -m "Initial Commit"
     ```
 
-10. Set the remote origin to the GitHub URL by issuing the following command:
+11. Set the remote origin to the GitHub URL by issuing the following command:
 
     ```bash
     git remote add origin <your GitHub URL>
-    ```
-
-11. Set your username and email, which git uses for commits.
-
-    ```bash
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
     ```
 
 12. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
@@ -349,7 +353,11 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git push -u origin master
     ```
 
-    > **Note**: Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>.
+
+    > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
+
+14. Refresh your GitHub repository, you should now see the code published.
 
 ### Task 8: Connect securely to the build agent
 
@@ -384,7 +392,7 @@ VM.
 
    - `[PRIVATEKEYNAME]`: Use the private key name `.ssh/fabmedical`, created above.
 
-   - `[BUILDAGENTUSERNAME]`: Use the username for the VM, such as adminfabmedical.
+   - `[BUILDAGENTUSERNAME]`: Use the username for the VM, in the default setup it is `adminfabmedical`.
 
    - `[BUILDAGENTIP]`: The IP address for the build agent VM, retrieved in the previous step.
 
@@ -415,6 +423,8 @@ In this task, you update the packages and install the Docker engine.
    ```bash
    sudo apt-get update && sudo apt install apt-transport-https ca-certificates curl software-properties-common
    ```
+
+   > **Note**: This is a single line.
 
 3. Add Docker's official GPG key by typing the following in a single line command:
 
@@ -508,7 +518,7 @@ In this task, you update the packages and install the Docker engine.
 
 ### Task 10: Clone Repositories to the Build Agent
 
-In this task, you clone your repositories from Azure DevOps so you can work with them on the build agent.
+In this task, you clone your repositories from GitHub so you can work with them on the build agent.
 
 1. As you previously did in cloud shell, set your username and email which are used for git commits.
 
@@ -551,4 +561,3 @@ In this task, you clone your repositories from Azure DevOps so you can work with
 You should follow all steps provided _before_ performing the Hands-on lab.
 
 [logo]: https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/master/Media/ms-cloud-workshop.png
-[devops]: https://dev.azure.com

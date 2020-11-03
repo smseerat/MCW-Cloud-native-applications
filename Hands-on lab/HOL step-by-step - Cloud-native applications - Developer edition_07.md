@@ -8,27 +8,27 @@ At this point, you have deployed a single instance of the web and API service co
 
 In this task, you will increase the number of instances for the API deployment in the Kubernetes management dashboard. While it is deploying, you will observe the changing status.
 
-1. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
+1. Switch to the Kubernetes Dashboard
 
-2. Select **SCALE**.
+2. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
 
-   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png)
+3. Select the vertical ellipses, then select **SCALE**.
 
-3. Change the number of pods to **2**, and then select **OK**.
+4. Change the number of replicas to **2**, and then select **Scale**.
 
    ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png)
 
    > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
 
-4. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
+5. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png)
 
-5. From the navigation menu, select Deployments from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as "1/2").
+6. From the navigation menu, select Deployments from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as "1/2").
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png)
 
-6. From the Navigation menu, select Workloads. From this view, note that the health overview in the right panel of this view. You will see the following:
+7. From the Navigation menu, select Workloads. From this view, note that the health overview in the right panel of this view. You will see the following:
 
    - One deployment and one replica set are each healthy for the api service.
 
@@ -36,7 +36,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Three pods are healthy.
 
-7. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
+8. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
    - Navigate to the /stats page. You will see information about the environment including:
 
@@ -60,13 +60,11 @@ In this task, you will increase the number of instances for the API deployment i
 
 In this task, you will try to increase the number of instances for the API service container beyond available resources in the cluster. You will observe how Kubernetes handles this condition and correct the problem.
 
-1. From the navigation menu, select Deployments. From this view, select the API deployment.
+1. From the navigation menu, select **Deployments**. From this view, select the **api** deployment.
 
-2. Configure the deployment to use a fixed host port for initial testing. Select Edit.
+2. Configure the deployment to use a fixed host port for initial testing. Select the vertical ellipses and then select **Edit**.
 
-   ![In the Workloads > Deployments > api bar, the Edit icon is highlighted.](media/image81.png)
-
-3. In the Edit a Deployment dialog, you will see a list of settings shown in JSON format. Use the copy button to copy the text to your clipboard.
+3. In the Edit a Deployment dialog, select the JSON tab. You will see a list of settings shown in JSON format. Use the copy button to copy the text to your clipboard.
 
    ![Screenshot of the Edit a Deployment dialog box that displays JSON data.](media/image82.png)
 
@@ -76,32 +74,25 @@ In this task, you will try to increase the number of instances for the API servi
 
 5. Scroll down about halfway to find the node `$.spec.template.spec.containers[0]`, as shown in the screenshot below.
 
-   ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted.](media/image84.png)
+   ![Screenshot of the deployment code, with the $.spec.template.spec.containers[0] section highlighted.](media/image84.png)
 
 6. The containers spec has a single entry for the API container at the moment. You will see that the name of the container is `api` - this is how you know you are looking at the correct container spec.
 
-   - Add the following JSON snippet below the `name` property in the container spec:
+   - Add the following snippet below the `name` property in the container spec:
 
-   ```json
-   "ports": [
-       {
-       "containerPort": 3001,
-       "hostPort": 3001
-       }
-   ],
+   ```text
+      ports:
+			containerPort: 3001
+			hostPort: 3001
    ```
 
    - Your container spec should now look like this:
 
    ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted, showing the updated values for containerPort and hostPort, both set to port 3001.](media/image85.png)
 
-7. Copy the updated JSON document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the **api** deployment.
+7. Copy the updated document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the **api** deployment.
 
-   - Select Edit.
-
-   ![In the Workloads > Deployments > api bar, the Edit icon is highlighted.](media/image87.png)
-
-   - Paste the updated JSON document.
+   - Paste the updated document.
 
    - Select Update.
 
@@ -109,9 +100,7 @@ In this task, you will try to increase the number of instances for the API servi
 
 8. From the API deployment view, select **Scale**.
 
-   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png)
-
-9. Change the number of pods to 4 and select **OK**.
+9. Change the number of replicas to 4 and select **Scale**.
 
    ![In the Scale a Deployment dialog box, 4 is entered in the Desired number of pods box.](media/image119.png)
 
@@ -119,7 +108,7 @@ In this task, you will try to increase the number of instances for the API servi
 
     ![In the api service view, various information is displayed in the Details box and in the Pods box.](media/image120.png)
 
-11. After a few minutes, select Workloads from the navigation menu. From this view, you should see an alert reported for the api deployment.
+11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
 
     ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](media/image121.png)
 
