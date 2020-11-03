@@ -504,6 +504,7 @@ In this task, you will configure the **web** container to communicate with the A
 3. Review the `app.js` file.
 
    ```bash
+   cd ../content-web
    cat app.js
    ```
 
@@ -898,22 +899,32 @@ image and pushes it to your ACR instance automatically.
     jobs:
 
       build-and-publish-docker-image:
-        name: Build and Push Docker Image
-        runs-on: ubuntu-latest
-        steps:
-        # Checkout the repo
+         name: Build and Push Docker Image
+         runs-on: ubuntu-latest
+         steps:
+         # Checkout the repo
         - uses: actions/checkout@master
 
-        - name: Build and push an image to container registry
-          uses: docker/build-push-action@v1
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Login to ACR
+          uses: docker/login-action@v1
           with:
+            registry: ${{ env.containerRegistry }}
             username: ${{ secrets.ACR_USERNAME }}
             password: ${{ secrets.ACR_PASSWORD }}
-            path: ${{ env.dockerfilePath  }}
-            dockerfile: '${{ env.dockerfilePath }}/Dockerfile'
-            registry: ${{ env.containerRegistry }}
-            repository: ${{ env.imageRepository }}
-            tags: ${{ env.tag }},latest
+
+        - name: Build and push an image to container registry
+          uses: docker/build-push-action@v2
+          with:
+            context: ${{ env.dockerfilePath  }}
+            file: "${{ env.dockerfilePath }}/Dockerfile"
+            pull: true
+            push: true
+            tags: |
+              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
+              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
     ```
 
 10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
@@ -934,13 +945,13 @@ image and pushes it to your ACR instance automatically.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view it's status.
+15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
-16. Selecting the **Build and Push Docker Image** job of the workflow will display it's execution status.
+16. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yaml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yaml` file for editing.
+17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
 
 18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
 
@@ -949,4 +960,12 @@ image and pushes it to your ACR instance automatically.
 19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
 
 20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your own three-letter suffix.
+
+21. Commit and push the changes to the Git repository:
+
+    ```bash
+    git add .
+    git commit -m "Updated workflow YAML"
+    git push
+    ```
 

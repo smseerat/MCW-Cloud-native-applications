@@ -93,13 +93,13 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 1. From the Kubernetes dashboard, select **Create** in the top right corner.
 
-2. From the Resource creation view, select **Create an App**.
+2. From the Resource creation view, select **Create from form**.
 
    ![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png)
 
    - Enter `api` for the App name.
 
-   - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as fabmedicalsol.azurecr.io.
+   - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as `fabmedicalsol.azurecr.io`.
 
    - Set Number of pods to `1`.
 
@@ -109,9 +109,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 3. Select **SHOW ADVANCED OPTIONS**
 
-   - Enter `1` for the CPU requirement.
+   - Enter `1` for the CPU requirement (cores).
 
-   - Enter `128` for the Memory requirement.
+   - Enter `128` for the Memory requirement (MiB).
 
    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](media/image79.png)
 
@@ -157,7 +157,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png)
 
-12. Return to the Kubernetes UI in your browser and select **+ Create**. Update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
+12. Return to the Kubernetes UI in your browser and select **+ Create**.
+
+13. In the **Create from input** tab, update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
     ```yaml
     apiVersion: v1
@@ -171,21 +173,21 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Kubernetes management dashboard showing the YAML file for creating a deployment.](media/Ex2-Task1.13.png)
 
-13. Scroll down in the Kubernetes dashboard until you can see **Secrets** in the left-hand menu. Select it.
+14. Scroll down in the Kubernetes dashboard until you can see **Secrets** in the left-hand menu. Select it.
 
     ![A screenshot of the Kubernetes management dashboard showing secrets.](media/Ex2-Task1.14.png)
 
-14. View the details for the **cosmosdb** secret. Select the eyeball icon to show the secret.
+15. View the details for the **cosmosdb** secret. Select the eyeball icon to show the secret.
 
     ![A screenshot of the Kubernetes management dashboard showing the value of a secret.](media/Ex2-Task1.15.png)
 
-15. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
+16. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
 
     ```bash
     kubectl get -o=yaml deployment api > api.deployment.yml
     ```
 
-16. Edit the downloaded file using cloud shell code editor:
+17. Edit the downloaded file using cloud shell code editor:
 
     ```bash
     code api.deployment.yml
@@ -204,17 +206,17 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![A screenshot of the Kubernetes management dashboard showing part of the deployment file.](media/Ex2-Task1.17.png)
 
-17. Save your changes and close the editor.
+18. Save your changes and close the editor.
 
     ![A screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png)
 
-18. Update the api deployment by using `kubectl` to apply the new configuration.
+19. Update the api deployment by using `kubectl` to apply the new configuration.
 
     ```bash
     kubectl apply -f api.deployment.yml
     ```
 
-19. Select **Deployments** then **api** to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
+20. Select **Deployments** then **api** to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
 
     ![A screenshot of the Kubernetes management dashboard showing logs output.](media/Ex2-Task1.19.png)
 
@@ -342,11 +344,15 @@ In this task, deploy the web service using `kubectl`.
 
     ![In this screenshot of the console, kubectl apply -f kubernetes-web.yaml has been typed and run at the command prompt. Messages about web deployment and web service creation appear below.](media/image93.png)
 
-11. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the web service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
+11. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, under **Discovery and Load Balancing**, select the **Services** view.
+
+12. From the Services view, select the `web` service, and from this view, you will see the web service deploying. This deployment can take a few minutes.
+
+13. When it completes, navigate to the main services link, you should be able to access the website via an external endpoint.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](media/image94.png)
 
-12. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
+14. In the top navigation, select the `speakers` and `sessions` links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png)
 
@@ -413,7 +419,7 @@ In this task, you will deploy the web service using a [Helm](https://helm.sh/) c
       port: 80
     ```
 
-12. Search for the `resources` definition and update the values so that they match the following:
+12. Search for the `resources` definition and update the values so that they match the following. You are removing the curly braces and adding the `requests`:
 
     ```yaml
     resources:
@@ -450,7 +456,7 @@ In this task, you will deploy the web service using a [Helm](https://helm.sh/) c
     code deployment.yaml
     ```
 
-17. Search for the `metadata` definition and update the values so that they match the following:
+17. Search for the `metadata` definition and update the values so that they match the following. You are replacing the line under annotations:
 
     ```yaml
     apiVersion: apps/v1
@@ -466,7 +472,7 @@ In this task, you will deploy the web service using a [Helm](https://helm.sh/) c
             rollme: {{ randAlphaNum 5 | quote }}
     ```
 
-18. Search for the `containers` definition and update the values so that they match the following:
+18. Search for the `containers` definition and update the values so that they match the following. You are changing the containerPort, livenessProbe port and adding the env variable:
 
     ```yaml
     containers:
@@ -584,7 +590,7 @@ In this task, you will use a Kubernetes Job to run a container that is meant to 
 
    ![A screenshot of the Kubernetes management dashboard showing jobs.](media/Ex2-Task5.6.png)
 
-7. Select the log icon to view the logs.
+7. Select virtual ellipses and then select **Logs**.
 
    ![A screenshot of the Kubernetes management dashboard showing log output.](media/Ex2-Task5.7.png)
 
@@ -598,11 +604,11 @@ In this task, you will verify that you can browse to the web service you have de
 
 1. From the Kubernetes management dashboard, in the navigation menu, select the **Services** view under **Discovery and Load Balancing**.
 
-2. In the list of services, locate the external endpoint for the web service and select this hyperlink to launch the application.
+2. In the list of services, locate the external endpoint for the `web` service and select this hyperlink to launch the application.
 
    ![In the Services box, a red arrow points at the hyperlinked external endpoint for the web service.](media/image112.png)
 
-3. You will see the web application in your browser and be able to select the Speakers and Sessions links to view those pages without errors. The lack of errors means that the web application is correctly calling the API service to show the details on each of those pages.
+3. You will see the `web` application in your browser and be able to select the Speakers and Sessions links to view those pages without errors. The lack of errors means that the web application is correctly calling the API service to show the details on each of those pages.
 
    ![In this screenshot of the Contoso Neuro 2017 web application, Speakers has been selected, and sample speaker information appears at the bottom.](media/image114.png)
 
@@ -663,7 +669,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 3. Save the file.
 
-4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously, and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
+4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
     ```bash
     cat ~/.kube/config
@@ -714,11 +720,23 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 8. Save the file.
 
-9. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+9. Commit your changes
+
+   ```bash
+   cd ..
+   git pull
+   git add --all
+   git commit -m "Deployment update."
+   git push
+   ```
+
+10. Switch back to GitHub
+
+11. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-10. Selecting the currently running workflow will display it's status.
+12. Selecting the currently running workflow will display its status.
 
     ![Workflow is running](media/2020-08-25-22-15-39.png "Workflow is running")
 
@@ -726,7 +744,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your AKS cluster.
+1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your `Kubernetes Service` Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png)
 
@@ -734,11 +752,11 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In the Monitoring blade, Insights is highlighted.](media/Ex2-Task8.2.png)
 
-3. Review the various available dashboards and a deeper look at the various metrics and logs available on the Cluster, Cluster Nodes, Cluster Controllers, and deployed Containers.
+3. Review the various available dashboards and a deeper look at the various metrics and logs available on the Cluster, Nodes, Controllers, and deployed Containers.
 
    ![In this screenshot, the dashboards and blades are shown.](media/Ex2-Task8.3.png)
 
-4. To review the Containers dashboards and see more detailed information about each container, select the containers tab.
+4. To review the Containers dashboards and see more detailed information about each container, select the **Containers** tab.
 
    ![In this screenshot, the various containers information is shown.](media/monitor_1.png)
 

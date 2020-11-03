@@ -36,9 +36,9 @@ In this task, you will update the web service so that it supports dynamic discov
 
 1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
 
-2. Select **Edit**.
+2. Select **Edit**, then select the **JSON** tab
 
-3. From the **Edit a Deployment** dialog, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
+3. From the dialog, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, containers, ports, and env. The ports node, containerPort: 3001 and protocol: TCP are highlighted.](media/image140.png)
 
@@ -46,7 +46,7 @@ In this task, you will update the web service so that it supports dynamic discov
 
 5. From the web Deployments view, select **Scale**. From the dialog presented enter 4 as the desired number of pods and select **OK**.
 
-6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select Deployments from under Workloads. Select the web deployment. From this view, you should see an error like that shown in the following screenshot.
+6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **api** pods. From this view, you should see an error like that shown in the following screenshot.
 
    ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](media/image141.png)
 
@@ -58,9 +58,9 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
 
-2. Select **Edit**.
+2. Select the vertical ellipses, then select **Edit**.
 
-3. From the Edit a Deployment dialog, find the **cpu** resource requirements for the web container. Change this value to `125m`.
+3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png)
 
@@ -105,11 +105,11 @@ In this task, you will edit the web application source code to add Application I
    code app.js
    ```
 
-5. Add the following lines immediately after `express` is instantiated:
+5. Add the following lines immediately after `express` is instantiated on line 6:
 
    ```javascript
    const appInsights = require("applicationinsights");
-   appInsights.setup("[YOUR APPINSIGHTS KEY]");
+   appInsights.setup("3324847d-625d-47cf-994b-386644d34a9a");
    appInsights.start();
    ```
 
@@ -158,19 +158,21 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
    ```
 
-3. From the Kubernetes dashboard, under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the ingress-controller-nginx service.
+3. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
+
+4. Under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the `nginx-ingress-RANDOM-controller` service.
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png)
 
-    > **Note**: Alternately, you can find the IP using the following command in Azure Cloud Shell.
+    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Cloud Shell.
     >
     > ```bash
     > kubectl get svc --namespace kube-system
     > ```
     >
-    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png) 
+    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png)
 
-4. Create a script to update the public DNS name for the IP.
+5. Create a script to update the public DNS name for the IP.
 
    ```bash
    code update-ip.sh
@@ -201,15 +203,15 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    - `[INGRESS PUBLIC IP]`: replace this with the IP Address copied previously.
    - `[SUFFIX]`: replace this with the same SUFFIX value used previously for this lab
 
-5. Save changes and close the editor.
+6. Save changes and close the editor.
 
-6. Run the update script.
+7. Run the update script.
 
    ```bash
    bash ./update-ip.sh
    ```
 
-7. Verify the IP update by visiting the URL in your browser.
+8. Verify the IP update by visiting the URL in your browser.
 
    > **Note**: It is normal to receive a 404 message at this time.
 
@@ -219,7 +221,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    ![A screenshot of the browser URL.](media/Ex4-Task5.9.png)
 
-8. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
+9.  Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
 
    ```bash
    kubectl create namespace cert-manager
@@ -229,7 +231,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
    ```
 
-9. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
+11. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
 
     ```bash
     code clusterissuer.yml
@@ -258,15 +260,15 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
               class: nginx
     ```
 
-10. Save changes and close the editor.
+12. Save changes and close the editor.
 
-11. Create the issuer using `kubectl`.
+13. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
     ```
 
-12. Now you can create a certificate object.
+14. Now you can create a certificate object.
 
     > **Note**:
     >
@@ -296,9 +298,9 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
         kind: ClusterIssuer
     ```
 
-13. Save changes and close the editor.
+15. Save changes and close the editor.
 
-14. Create the certificate using `kubectl`.
+16. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -315,10 +317,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > Normal  OrderComplete       12s   cert-manager  Order "tls-secret-3254248695" completed successfully
     > Normal  CertIssued          12s   cert-manager  Certificate issued successfully
     > ```
-    
+
     It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
-15. Now you can create an ingress resource for the content applications.
+17. Now you can create an ingress resource for the content applications.
 
     ```bash
     code content.ingress.yml
@@ -354,21 +356,21 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
                   servicePort: 3001
     ```
 
-16. Save changes and close the editor.
+18. Save changes and close the editor.
 
-17. Create the ingress using `kubectl`.
+19. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml
     ```
 
-18. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
+20. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
 
-19. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
+21. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
     ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png)
 
-20. Test TLS termination by visiting both services again using `https`.
+22. Test TLS termination by visiting both services again using `https`.
 
     > It can take between 5 and 30 minutes before the SSL site becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
