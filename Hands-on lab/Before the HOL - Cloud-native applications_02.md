@@ -12,7 +12,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png)
 
-2. The cloud shell opens in the browser window. Choose **Bash** if prompted or use the left-hand dropdown on the shell menu bar to choose **Bash** from the dropdown (as shown). If prompted, select **Confirm**.
+2. The cloud shell opens in the browser window. Choose **Bash** if prompted. Click on **show advanced settings**. In **advanced settings** , select **Create new** for storage account and file share and fill the details, provide unique name for storage account.
 
    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png)
 
@@ -150,7 +150,20 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 14. Refresh your GitHub repository, you should now see the code published.
 
-### Task 4: Clone Repositories to the Build Agent
+### Task 4: Connect securely to the build agent
+
+In this section, you will validate that you can connect to the new build agent
+VM.
+
+1. From Environment details page go to **Command to Connect to Build Agent VM** copy the ssh key and paste in cloud shell:
+
+   > **Note**: If you don't have cloud shell available, refer back to Task 1: Setup Azure Cloud Shell.
+
+2. In the cloud shell output, paste  the ssh key that you copied earlier enter **yes** when prompted.
+
+3. Enter the Buid Agent VM password provided in environment details, you will be connected to Build Agent VM.
+
+### Task 5: Clone Repositories to the Build Agent
 
 In this task, you clone your repositories from GitHub so you can work with them on the build agent.
 
@@ -191,5 +204,3 @@ In this task, you clone your repositories from GitHub so you can work with them 
    > ```bash
    > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
    > ```
-
-
