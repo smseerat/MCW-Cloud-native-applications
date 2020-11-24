@@ -62,3 +62,134 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
    rm -rf MCW-Cloud-native-applications/.git
    ```
 
+### Task 3: Create a GitHub repository
+
+FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
+
+1. Open a web browser and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
+
+2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
+
+    ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu")
+
+3. Next to the search criteria, locate and select the **New** button.
+
+    ![The GitHub Find a repository search criteria is shown with the New button selected.](media/2020-08-23-18-08-02.png "New repository button")
+
+4. On the **Create a new repository** screen, name the repository **Fabmedical** and select the **Create repository** button.
+
+    ![Create a new repository page with Repository name field and Create repository button highlighted.](media/2020-08-23-18-11-38.png "Create a new repository")
+
+5. On the **Quick setup** screen, copy the **HTTPS** GitHub URL for your new repository, paste this in notepad for future use.
+
+    ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
+
+6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to https://shell.azure.com and logging in with the same lab credentials.
+
+7. Navigate to the FabMedical source code folder and list the contents.
+
+   ```bash
+   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
+   ls
+   ```
+
+   > **Important note**: If you will be taking the Infrastructure edition of the lab, instead of using the above instructions, type the following ones:
+   >
+   > ```bash
+   > cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/
+   > ls
+   > ```
+   >
+   > This will take you to the version of the starter files that will be used by that edition of the lab.
+
+8. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
+
+   ```bash
+   content-api/
+   content-init/
+   content-web/
+   ```
+
+9. Set your username and email, which git uses for commits.
+
+    ```bash
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+    ```
+
+10. Using the Cloud Shell, initialize a new git repository:
+
+    ```bash
+    git init
+    git add .
+    git commit -m "Initial Commit"
+    ```
+
+11. Set the remote origin to the GitHub URL by issuing the following command:
+
+    ```bash
+    git remote add origin <your GitHub URL>
+    ```
+
+12. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
+
+    ```bash
+    git config --global --unset credential.helper
+    git config --global credential.helper store
+    ```
+
+13. Push to the master branch by issuing the following command:
+
+    ```bash
+    git push -u origin master
+    ```
+
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>.
+
+    > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
+
+14. Refresh your GitHub repository, you should now see the code published.
+
+### Task 4: Clone Repositories to the Build Agent
+
+In this task, you clone your repositories from GitHub so you can work with them on the build agent.
+
+1. As you previously did in cloud shell, set your username and email which are used for git commits.
+
+   ```bash
+   git config --global user.email "you@example.com"
+   git config --global user.name "Your Name"
+   ```
+
+   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
+   >
+   > ```bash
+   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   > ```
+
+2. Configure git CLI to cache your credentials, so that you don't have to keep
+   re-typing them.
+
+   ```bash
+   git config --global credential.helper cache
+   ```
+
+   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
+   >
+   > ```bash
+   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   > ```
+
+3. Use the GitHub URL to clone the repository code to your build agent machine.
+
+   ```bash
+   git clone <GITHUB_REPOSITORY_URL>
+   ```
+
+   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
+   >
+   > ```bash
+   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   > ```
+
+
