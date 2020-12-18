@@ -7,7 +7,7 @@ Fabrikam Medical Conferences provides conference web site services, tailored to 
 
 The goal of this workshop is to help them build a proof of concept (POC) that will migrate their code to a more manageable process that involves containerization of tenant code, a better DevOps workflow, and a simple lift-and-shift story for their database backend.
 
-August 2020
+November 2020
 
 ## Target Audience
 
