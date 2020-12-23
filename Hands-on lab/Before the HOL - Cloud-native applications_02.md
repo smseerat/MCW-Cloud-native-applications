@@ -23,7 +23,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to https:<span></span>//shell.azure.com
 
-   ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png)
+   ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png "Cloud Shell")
 
 7. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
   
@@ -32,7 +32,7 @@ You should follow all of the steps provided in this section _before_ taking part
   
      >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png)
+      ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png "Cloud Shell Bash Window")
 
 8. You should make sure to set your default subscription correctly. To view your current subscription type:
 
@@ -40,7 +40,7 @@ You should follow all of the steps provided in this section _before_ taking part
    az account show
    ```
 
-   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png)
+   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png "Bash Shell AZ Account Show")
 
 9. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
 
@@ -54,7 +54,7 @@ You should follow all of the steps provided in this section _before_ taking part
    az account list
    ```
 
-   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png)
+   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png "Bash AZ Account List")
 
 ### Task 2: Download Starter Files
 
@@ -72,7 +72,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 2. The lab files download.
 
-   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png)
+   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png "Bash Git Clone")
 
 3. We do not need the `.git` folder, and later steps will be less complex if we remove it. Run this command:
 
@@ -88,7 +88,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
-    ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu")
+    ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu, your repositories")
 
 3. Next to the search criteria, locate and select the **New** button.
 
