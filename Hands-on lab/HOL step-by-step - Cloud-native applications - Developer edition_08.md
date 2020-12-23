@@ -178,7 +178,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
 
-2. Select **Data Explorer**. 
+2. From the lef navigation menu select **Data Explorer**. 
 
 3. Within **Data Explorer**, expand the `contentdb` database, then expand the `sessions` collection.
 
@@ -212,7 +212,7 @@ In this task, you will run a performance test script that will test the Autoscal
     cd ~/Fabmedical
     ```
 
-6. Run the following command to open the `perftest.sh` script for editing in Vim.
+6. Run the following command to open the `perftest.sh` script for editing in Vi.
 
     ```bash
     vi perftest.sh
@@ -222,7 +222,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Save the file and exit Vim.
+8. Press the Escape key and type :wq and then press the Enter key to save and close the file.
 
 9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 

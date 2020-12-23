@@ -21,13 +21,13 @@ You should follow all of the steps provided in this section _before_ taking part
  
 5. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to https:<span></span>//shell.azure.com
+6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to **https:<span></span>//shell.azure.com**
 
    ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png "Cloud Shell")
 
 7. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
   
-      - **Storage account** : **storage<Deployementid>**
+      - **Storage account** : **storage{Deployementid}**
       - **File Share** : **blob**
   
      >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 

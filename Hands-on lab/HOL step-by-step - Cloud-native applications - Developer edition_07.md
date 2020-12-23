@@ -95,8 +95,6 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 2. From the Resource creation view, select **Create from form**.
 
-   ![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png "Display Create from form")
-
    - Enter `api` for the App name.
 
    - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as `fabmedicalsol.azurecr.io`.
@@ -106,6 +104,8 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    - Set Service to `Internal`.
 
    - Use `3001` for Port and `3001` for Target port.
+    
+![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png "Display Create from form")
 
 3. Select **SHOW ADVANCED OPTIONS**
 
@@ -464,8 +464,9 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     cd templates
     code deployment.yaml
     ```
+16. Save changes and close the editor.
 
-17. Search for the `metadata` definition and update the values so that they match the following. You are replacing the line under annotations:
+18. Search for the `metadata` definition and update the values so that they match the following. You are replacing the line under annotations:
 
     ```yaml
     apiVersion: apps/v1
@@ -481,7 +482,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
             rollme: {{ randAlphaNum 5 | quote }}
     ```
 
-18. Search for the `containers` definition and update the values so that they match the following. You are changing the `containerPort`, `livenessProbe` port and adding the `env` variable:
+19. Search for the `containers` definition and update the values so that they match the following. You are changing the `containerPort`, `livenessProbe` port and adding the `env` variable:
 
     ```yaml
     containers:
@@ -503,7 +504,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
             port: 3000
     ```
 
-19. Save changes and close the editor.
+20. Save changes and close the editor.
 
 20. We will now update the file named `service.yaml`.
 
@@ -511,7 +512,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     code service.yaml
     ```
 
-21. Search for the `ports` definition and update the values so that they match the following:
+22. Search for the `ports` definition and update the values so that they match the following:
 
     ```yaml
     ports:
@@ -521,9 +522,9 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         name: http
     ```
 
-22. Save changes and close the editor.
+23. Save changes and close the editor.
 
-23. The chart is now setup to run our web container. Type the following command to deploy the application described by the YAML files. You will receive a message indicating that helm has created a web deployment and a web service.
+24. The chart is now setup to run our web container. Type the following command to deploy the application described by the YAML files. You will receive a message indicating that helm has created a web deployment and a web service.
 
     ```bash
     cd ../..
@@ -532,15 +533,15 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In this screenshot of the console, helm install web ./web has been typed and run at the command prompt. Messages about web deployment and web service creation appear below.](media/Ex2-Task4.24.png "Helm web deployment messages")
 
-24. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the **web** service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
+25. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the **web** service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
 
-25. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
+26. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
-26. We will now persist the changes into the repository. Execute the following commands:
+27. We will now persist the changes into the repository. Execute the following commands:
 
     ```bash
     cd ..
@@ -696,7 +697,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your `Kubernetes Service` Azure resource.
+1. From the Azure Portal, select the resource group `fabmedical-{DeploymentId}`, and then select your `Kubernetes Service` Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png "Select fabmedical resource group")
 

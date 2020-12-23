@@ -4,19 +4,7 @@
 
 At this point, you have the web and API applications running in Azure Kubernetes Service. The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
 
-### Task 1: Enable Microsoft.DataMigration resource provider
-
-In this task, you will enable the use of the Azure Database Migration Service within your Azure subscription by registering the `Microsoft.DataMigration` resource provider.
-
-1. Open the Azure Cloud Shell.
-
-2. Run the following Azure CLI command to register the `Microsoft.DataMigration` resource provider in your Azure subscription:
-
-   ```sh
-   az provider register --namespace Microsoft.DataMigration
-   ```
-
-### Task 2: Provision Azure Database Migration Service
+### Task 1: Provision Azure Database Migration Service
 
 In this task, you will deploy an instance of the Azure Database Migration Service that will be used to migrate the data from MongoDB to Cosmos DB.
 
@@ -30,7 +18,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 4. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
-    - Resource group: Select the Resource Group created with this lab.
+    - Resource group: Select fabmedical-{Deployment-Id} resource group.
     - Migration service name: Enter a name, such as `fabmedical[SUFFIX]`.
     - Location: Choose the Azure Region used for the Resource Group.
 
@@ -48,7 +36,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 The service may take 5 - 10 minutes to provision.
 
-### Task 3: Migrate data to Azure Cosmos DB
+### Task 2: Migrate data to Azure Cosmos DB
 
 In this task, you will create a **Migration project** within Azure Database Migration Service, and then migrate the data from MongoDB to Azure Cosmos DB.
 

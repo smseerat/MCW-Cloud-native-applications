@@ -145,6 +145,16 @@ The purpose of this task is to make sure you can run the application successfull
     az vm show -d -g fabmedical-278384 -n fabmedical --query publicIps -o tsv
     ```
 
+   - **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
+ 
+     1. In the Cloud shell run the following command
+ 
+        ```BASH
+        az login
+        ``` 
+ 
+     2. Click on the https:<span></span>//microsoft.com/devicelogin link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
+
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
 
     ```bash
@@ -815,13 +825,13 @@ image and pushes it to your ACR instance automatically.
 
 17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
 
-18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
+18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your DeploymentId so that it matches your container registry's name and resource group.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "content-api.yml environment variables highlighted")
 
 19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
 
-20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your own three-letter suffix.
+20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your DeploymentId.
 
 21. Commit and push the changes to the Git repository:
 
