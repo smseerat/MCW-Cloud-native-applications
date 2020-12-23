@@ -136,13 +136,13 @@ The purpose of this task is to make sure you can run the application successfull
 14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment.
 
     ```bash
-    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SHORT_SUFFIX] --query publicIps -o tsv
+    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical --query publicIps -o tsv
     ```
 
     Example:
 
     ```bash
-    az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
+    az vm show -d -g fabmedical-278384 -n fabmedical --query publicIps -o tsv
     ```
 
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
@@ -733,7 +733,12 @@ To run containers in a remote environment, you will typically push images to a D
 
 In this task, you will push images to your ACR account, version images with tagging, and setup continuous integration (CI) to build future versions of your containers and push them to ACR automatically.
 
-1. In the Azure Portal `(https://portal.azure.com/)`, navigate to the ACR you created in Before the hands-on lab.
+1. In the Azure Portal `(https://portal.azure.com/)`, under navigate select **Resource groups** and click on fabmedical-DeploymentID resource group. Now in the resource group page select Azure container registry 
+ 
+   ![This is a screenshot of the selecting resource group.](media/resourcegroup.png "Cloud Shell Bash Window") 
+ 
+   ![This is a screenshot of acr.](media/acr.png "Cloud Shell Bash Window") 
+ 
 
 2. Select **Access keys** under **Settings** on the left-hand menu.
 
@@ -865,7 +870,7 @@ image and pushes it to your ACR instance automatically.
 
    Add the following as the content. Be sure to replace the following placeholders:
 
-   - replace `[SHORT_SUFFIX]` with your short suffix such as `SOL`.
+   - replace `[SHORT_SUFFIX]` with your Deployment Id
 
    ```yml
    name: content-web
@@ -890,8 +895,8 @@ image and pushes it to your ACR instance automatically.
    env:
       imageRepository: 'content-web'
       resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
-      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
-      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
+      containerRegistryName: 'acr[SHORT_SUFFIX]'
+      containerRegistry: 'acr[SHORT_SUFFIX].azurecr.io'
       dockerfilePath: './content-web'
       tag: '${{ github.run_id  }}'
 
