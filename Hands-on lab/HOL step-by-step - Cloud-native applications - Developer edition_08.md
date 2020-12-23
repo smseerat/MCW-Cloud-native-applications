@@ -178,7 +178,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
 
-2. From the lef navigation menu select **Data Explorer**. 
+2. From the left hand-menu select **Data Explorer**. 
 
 3. Within **Data Explorer**, expand the `contentdb` database, then expand the `sessions` collection.
 

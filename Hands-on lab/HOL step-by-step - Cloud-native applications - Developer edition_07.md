@@ -458,13 +458,14 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     appVersion: latest
     ```
 
-16. We will now update the file named `deployment.yaml`.
+16. Save changes and close the editor.
+
+17. We will now update the file named `deployment.yaml`.
 
     ```bash
     cd templates
     code deployment.yaml
     ```
-16. Save changes and close the editor.
 
 18. Search for the `metadata` definition and update the values so that they match the following. You are replacing the line under annotations:
 

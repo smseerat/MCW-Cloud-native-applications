@@ -145,7 +145,7 @@ The purpose of this task is to make sure you can run the application successfull
     az vm show -d -g fabmedical-278384 -n fabmedical --query publicIps -o tsv
     ```
 
-   - **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
+   > **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
  
      1. In the Cloud shell run the following command
  
@@ -606,7 +606,7 @@ To run containers in a remote environment, you will typically push images to a D
 
 In this task, you will push images to your ACR account, version images with tagging, and setup continuous integration (CI) to build future versions of your containers and push them to ACR automatically.
 
-1. In the Azure Portal `(https://portal.azure.com/)`, under navigate select **Resource groups** and click on fabmedical-DeploymentID resource group. Now in the resource group page select Azure container registry 
+1. In the Azure Portal `(https://portal.azure.com/)`, under navigate select **Resource groups** and click on **fabmedical-{DeploymentID}** resource group. Now in the resource group page select Azure container registry 
  
    ![This is a screenshot of the selecting resource group.](media/resourcegroup.png "Cloud Shell Bash Window") 
  

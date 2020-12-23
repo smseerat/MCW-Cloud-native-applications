@@ -9,19 +9,19 @@ You should follow all of the steps provided in this section _before_ taking part
  
    ![This is a screenshot is selecting edge.](media/edge.png "Cloud Shell Bash Window") 
  
-2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials
+2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials.
  
      * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
  
      * Azure Password: <inject key="AzureAdUserPassword"></inject> 
  
-3. If you see the pop-up **Stay Signed in?**, click Yes 
+3. If you see the pop-up **Stay Signed in?**, click Yes. 
  
 4. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
  
 5. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to **https:<span></span>//shell.azure.com**
+6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to **https:<span></span>//shell.azure.com**.
 
    ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png "Cloud Shell")
 
@@ -30,6 +30,7 @@ You should follow all of the steps provided in this section _before_ taking part
       - **Storage account** : **storage{Deployementid}**
       - **File Share** : **blob**
   
+ 
      >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
       ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png "Cloud Shell Bash Window")
