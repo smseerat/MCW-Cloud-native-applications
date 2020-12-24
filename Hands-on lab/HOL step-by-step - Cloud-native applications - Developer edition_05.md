@@ -608,9 +608,9 @@ In this task, you will push images to your ACR account, version images with tagg
 
 1. In the Azure Portal `(https://portal.azure.com/)`, under navigate select **Resource groups** and click on **fabmedical-{DeploymentID}** resource group. Now in the resource group page select Azure container registry 
  
-   ![This is a screenshot of the selecting resource group.](media/resourcegroup.png "Cloud Shell Bash Window") 
+   ![This is a screenshot of the selecting resource group.](media/https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/resourcegroup.png?raw=true "Cloud Shell Bash Window") 
  
-   ![This is a screenshot of acr.](media/acr.png "Cloud Shell Bash Window") 
+   ![This is a screenshot of acr.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/acr.png?raw=true "Cloud Shell Bash Window") 
  
 
 2. Select **Access keys** under **Settings** on the left-hand menu.

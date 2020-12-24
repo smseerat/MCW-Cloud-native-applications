@@ -7,7 +7,7 @@ You should follow all of the steps provided in this section _before_ taking part
 ### Task 1: Setup Azure Cloud Shell
 1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop. 
  
-   ![This is a screenshot is selecting edge.](media/edge.png "Cloud Shell Bash Window") 
+   ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/edge.png?raw=true "Cloud Shell Bash Window") 
  
 2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials.
  
@@ -23,7 +23,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to **https:<span></span>//shell.azure.com**.
 
-   ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png "Cloud Shell")
+   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
 7. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
   
@@ -33,7 +33,7 @@ You should follow all of the steps provided in this section _before_ taking part
  
      >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-      ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png "Cloud Shell Bash Window")
+      ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
 8. You should make sure to set your default subscription correctly. To view your current subscription type:
 
