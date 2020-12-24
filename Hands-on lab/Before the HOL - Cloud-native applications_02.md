@@ -5,7 +5,7 @@
 You should follow all of the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
 
 ### Task 1: Setup Azure Cloud Shell
-1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop. 
+1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to https:<span></span>//portal.azure.com. 
  
    ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/edge.png?raw=true "Cloud Shell Bash Window") 
  
