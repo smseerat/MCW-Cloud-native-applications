@@ -5,7 +5,7 @@
 You should follow all of the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
 
 ### Task 1: Setup Azure Cloud Shell
-1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to https:<span></span>//portal.azure.com. 
+1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to ```https://portal.azure.com```. 
  
    ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/edge.png?raw=true "Cloud Shell Bash Window") 
  
@@ -21,7 +21,7 @@ You should follow all of the steps provided in this section _before_ taking part
  
 5. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to **https:<span></span>//shell.azure.com**.
+6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
@@ -61,7 +61,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-> **Note**: If you don't have a cloud shell available, refer back to [Task 1: Setup Azure Cloud Shell](#task-1-setup-azure-cloud-shell).
+> **Note**: If you don't have a cloud shell available, refer back to ```Task 1: Setup Azure Cloud Shell```.
 
 1. Type the following command and press `<ENTER>`:
 
@@ -85,7 +85,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. Open a web browser and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
+1. Open a web browser and navigate to ```https://www.github.com```. Log in using your GitHub account credentials.
 
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
@@ -103,7 +103,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to https://shell.azure.com and logging in with the same lab credentials.
+6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
 7. Navigate to the FabMedical source code folder and list the contents.
 
@@ -163,7 +163,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git push -u origin master
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>.
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
 
     > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
 
