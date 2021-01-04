@@ -836,7 +836,7 @@ image and pushes it to your ACR instance automatically.
 19. Save the file, then commit and push it to the Git repository:
     ```bash
     git add .
-    git commit -m "Added workflow YAML"
+    git commit -m "Updated workflow YAML"
     git push
     ```
 20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
