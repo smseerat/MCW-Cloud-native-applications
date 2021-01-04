@@ -9,7 +9,7 @@ Whiteboard design session trainer guide
 </div>
 
 <div class="MCWHeader3">
-August 2020
+November 2020
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -172,7 +172,7 @@ When participants are doing activities, you can **look ahead to refresh your mem
 
 In this whiteboard design session, you will learn about the choices related to building and deploying containerized applications in Azure, critical decisions around this, and other aspects of the solution, including ways to lift-and-shift parts of the application to reduce applications changes.
 
-By the end of this design session you will be better able to design solutions that target Azure Kubernetes Service (AKS) and define a DevOps workflow for containerized applications.
+By the end of this design session, you will be better able to design solutions that target Azure Kubernetes Service (AKS) and define a DevOps workflow for containerized applications.
 
 ## Step 1: Review the customer case study
 
@@ -206,13 +206,15 @@ The conference sites are currently hosted on-premises with the following topolog
 
 - The on-prem data backend is MongoDB; also running on a separate cluster of Linux servers.
 
+- There is relational data stored in PostgreSQL running on Linux servers.
+
 Customers are considered "tenants", and each tenant is treated as a unique deployment whereby the following happens:
 
-- Each tenant has a database in the MongoDB cluster with its own collections.
+- Each tenant has a database in the MongoDB cluster with its own collections, and a database in PostgreSQL.
 
 - A copy of the most recent functional conference code base is taken and configured to point at the tenant database.
 
-  - This includes a web site code base and an administrative site code base for entering conference content such as speakers, sessions, workshops, and sponsors.
+  - This includes a web site code base and an administrative site code base for entering conference content such as speakers, sessions, workshops, sponsors, and session feedback from attendees.
 
 - Modifications to support the customer's styles, graphics, layout, and other custom requests are applied.
 
@@ -268,9 +270,11 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
 4. Migrate data from MongoDB on-premises to Azure Cosmos DB with the least changes possible to the application code.
 
-5. Continue to use Git repositories for source control and integrate into a CI/CD workflow.
+5. Migrate relational data from PostgreSQL on-premises databases to Microsoft Azure
 
-6. Prefer a complete suite of operational management tools with:
+6. Continue to use Git repositories for source control and integrate into a CI/CD workflow.
+
+7. Prefer a complete suite of operational management tools with:
 
     - UI for manual deployment and management during development and initial POC work.
 
@@ -282,7 +286,9 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
     - Container image scanning.
 
-7. Complete an implementation of the proposed solution for a single tenant to train the team and perfect the process.
+8. Complete an implementation of the proposed solution for a single tenant to train the team and perfect the process.
+
+9. Enhance attendee session feedback with AI to prevent inappropriate content from being posted, and real-time language translation to better accommodate growing worldwide conference attendance.
 
 ### Customer objections
 
@@ -291,6 +297,8 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 2. Is there an option in Azure that provides container orchestration platform features that are easy to manage and migrate to, that can also handle our scale and management workflow requirements?
 
 3. We heard Azure Cosmos DB is compatible with MongoDB. Will this provide a migration that minimizes code changes?
+
+4. We know Microsoft offers Cognitive Services with pre-built AI models. What models offer the features we are looking to use for enhancing our conference web site?
 
 ### Infographic for common scenarios
 
@@ -430,6 +438,8 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 | Image Quarantine                | <https://github.com/Azure/acr/tree/master/docs/preview/quarantine/>                              |
 | Container Monitoring Solution   | <https://docs.microsoft.com/azure/azure-monitor/insights/containers>                       |
 | Azure Cosmos DB                 | <https://docs.microsoft.com/azure/cosmos-db/introduction> |
+| Azure Database for PostgreSQL   | <https://azure.microsoft.com/services/postgresql/> |
+| Azure Cognitive Services        | <https://azure.microsoft.com/services/cognitive-services/> |
 
 # Cloud-native applications whiteboard design session trainer guide
 
@@ -646,7 +656,15 @@ They also decided to move forward with GitHub Actions for container DevOps workf
 
     Azure Cosmos DB supports multiple NoSQL data models; including supporting a MongoDB API. This provides compatibility for code written for MongoDB to communicate with Cosmos DB without code changes; for easier migration and interoperability.
 
-    With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows, however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
+    With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows; however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
+
+4. We know Microsoft offers Cognitive Services with pre-built AI models. What models offer the features we are looking to use for enhancing our conference web site?
+
+    Azure Cognitive Services brings AI within reach for every developer - without requiring machine-learning expertise. All it takes is an API call to embed the ability to implement ML models managed by Microsoft.
+
+    - Content Moderator API can be used to add machine-assisted content moderation and human review tools for images, text, and videos. You can enhance your ability to detect potentially offensive or unwanted images through machine learning-based classifiers, custom lists, and optical character recognition (OCR).
+
+    - Translator API can be used to integrate an AI service for real-time text translation. It can translate text in real-time across more than 70 languages.
 
 ## Customer quote (to be read back to the attendees at the end)
 

@@ -5,26 +5,45 @@
 You should follow all of the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
 
 ### Task 1: Setup Azure Cloud Shell
+1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to ```https://portal.azure.com```. 
+ 
+   ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/edge.png?raw=true "Cloud Shell Bash Window") 
+ 
+2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials.
+ 
+     * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
+ 
+     * Azure Password: <inject key="AzureAdUserPassword"></inject> 
+ 
+3. If you see the pop-up **Stay Signed in?**, click Yes. 
+ 
+4. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
+ 
+5. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-1.  In a web browser, navigate to https:<span></span>//shell.azure.com. Alternatively, from the Azure web portal, launch the **Azure Cloud Shell**. It has common Azure tools preinstalled and configured to use with your account. Login with following Azure credentials
-     * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject>
-     * Azure Password: <inject key="AzureAdUserPassword"></inject>
+6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
 
-   ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png)
+   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-2. The cloud shell opens in the browser window. Choose **Bash** if prompted. Click on **show advanced settings**. In **advanced settings** , select **Create new** for storage account and file share and fill the details, provide unique name for storage account.
+7. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
+  
+      - **Storage account** : **storage{Deployementid}**
+      - **File Share** : **blob**
+  
+ 
+     >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png)
+      ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
-3. You should make sure to set your default subscription correctly. To view your current subscription type:
+8. You should make sure to set your default subscription correctly. To view your current subscription type:
 
    ```bash
    az account show
    ```
 
-   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png)
+   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png "Bash Shell AZ Account Show")
 
-4. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
+9. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
 
    ```bash
    az account set --subscription {id}
@@ -36,13 +55,13 @@ You should follow all of the steps provided in this section _before_ taking part
    az account list
    ```
 
-   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png)
+   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png "Bash AZ Account List")
 
 ### Task 2: Download Starter Files
 
 In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-> **Note**: If you don't have a cloud shell available, refer back to [Task 1: Setup Azure Cloud Shell](#task-1-setup-azure-cloud-shell).
+> **Note**: If you don't have a cloud shell available, refer back to ```Task 1: Setup Azure Cloud Shell```.
 
 1. Type the following command and press `<ENTER>`:
 
@@ -54,7 +73,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 2. The lab files download.
 
-   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png)
+   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png "Bash Git Clone")
 
 3. We do not need the `.git` folder, and later steps will be less complex if we remove it. Run this command:
 
@@ -66,11 +85,11 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. Open a web browser and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
+1. Open a web browser and navigate to ```https://www.github.com```. Log in using your GitHub account credentials.
 
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
-    ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu")
+    ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu, your repositories")
 
 3. Next to the search criteria, locate and select the **New** button.
 
@@ -84,7 +103,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to https://shell.azure.com and logging in with the same lab credentials.
+6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
 7. Navigate to the FabMedical source code folder and list the contents.
 
@@ -144,26 +163,13 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git push -u origin master
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>.
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
 
     > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
 
 14. Refresh your GitHub repository, you should now see the code published.
 
-### Task 4: Connect securely to the build agent
-
-In this section, you will validate that you can connect to the new build agent
-VM.
-
-1. From Environment details page go to **Command to Connect to Build Agent VM** copy the ssh key and paste in cloud shell:
-
-   > **Note**: If you don't have cloud shell available, refer back to Task 1: Setup Azure Cloud Shell.
-
-2. In the cloud shell output, paste  the ssh key that you copied earlier enter **yes** when prompted.
-
-3. Enter the Buid Agent VM password provided in environment details, you will be connected to Build Agent VM.
-
-### Task 5: Clone Repositories to the Build Agent
+### Task 4: Clone Repositories to the Build Agent
 
 In this task, you clone your repositories from GitHub so you can work with them on the build agent.
 
@@ -204,3 +210,5 @@ In this task, you clone your repositories from GitHub so you can work with them 
    > ```bash
    > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
    > ```
+
+

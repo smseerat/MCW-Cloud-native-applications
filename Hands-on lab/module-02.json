@@ -15,24 +15,28 @@
       "Order": 3
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/Before%20the%20HOL%20-%20Cloud-native%20applications_02.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_05.md",
       "Order": 4
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_05.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_06.md",
       "Order": 5
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_06.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_07.md",
       "Order": 6
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_07.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_08.md",
       "Order": 7
     },
     {
-      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_08.md",
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_09.md",
       "Order": 8
+    },
+    {
+      "RawFilePath": "https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/prod/Hands-on%20lab/HOL%20step-by-step%20-%20Cloud-native%20applications%20-%20Developer%20edition_10.md",
+      "Order": 9
     }
   ]
 } ]

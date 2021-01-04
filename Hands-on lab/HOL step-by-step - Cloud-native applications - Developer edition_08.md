@@ -1,376 +1,244 @@
-## Exercise 4: Working with services and routing application traffic
+## Exercise 4: Scale the application and test HA
 
-**Duration**: 45 minutes
+**Duration**: 20 minutes
 
-In the previous exercise, we introduced a restriction to the scale properties of the service. In this exercise, you will configure the api deployments to create pods that use dynamic port mappings to eliminate the port resource constraint during scale activities.
+At this point, you have deployed a single instance of the web and API service containers. In this exercise, you will increase the number of container instances for the web service and scale the front-end on the existing cluster.
 
-Kubernetes services can discover the ports assigned to each pod, allowing you to run multiple instances of the pod on the same agent node --- something that is not possible when you configure a specific static port (such as 3001 for the API service).
+### Task 1: Increase service instances from the Kubernetes dashboard
 
-### Task 1: Scale a service without port constraints
+In this task, you will increase the number of instances for the API deployment in the Kubernetes management dashboard. While it is deploying, you will observe the changing status.
 
-In this task, we will reconfigure the API deployment so that it will produce pods that choose a dynamic hostPort for improved scalability.
+1. Switch to the Kubernetes Dashboard.
 
-1. From the navigation menu select **Deployments** under **Workloads**. From the view's Deployments list, select the API deployment.
+2. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
 
-2. Select **Edit**.
+3. Select the **SCALE** button in the upper-right.
 
-3. From the **Edit a Deployment** dialog, do the following:
+   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png "Scale a resource")
 
-   - Scroll to the first spec node that describes replicas as shown in the screenshot. Set the value for replicas to `4`.
+4. Change the number of replicas to **2**, and then select **Scale**.
 
-   - Within the replicas spec, beneath the template node, find the **api** containers spec. Remove the hostPort entry for the API container's port mapping.  The screenshot below shows the desired configuration after editing.
+   ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png "Scale a Deployment dialog")
 
-     ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, selector, and template. Under the spec node, replicas: 4 is highlighted. Further down, ports are highlighted.](media/image137.png)
+   > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
 
-4. Select **Update**. New pods will now choose a dynamic port.
+5. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-5. The API service can now scale to 4 pods since it is no longer constrained to an instance per node -- a previous limitation while using port `3001`.
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png "View replica details")
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right, four pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image138.png)
+6. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
 
-6. Return to the browser and refresh the stats page. You should see all 4 pods serve responses as you refresh.
+   ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
 
-### Task 2: Update an external service to support dynamic discovery with a load balancer
+7. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
-In this task, you will update the web service so that it supports dynamic discovery through the Azure load balancer.
+   - One deployment and one replica set are each healthy for the api service.
 
-1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
+   - One replica set is healthy for the web service.
 
-2. Select **Edit**, then select the **JSON** tab
+   - Three pods are healthy.
 
-3. From the dialog, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
+8. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
-   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about spec, containers, ports, and env. The ports node, containerPort: 3001 and protocol: TCP are highlighted.](media/image140.png)
+   - Navigate to the `/stats` page. You will see information about the environment including:
 
-4. Select **Update**.
+     - **webTaskId:** The task identifier for the web service instance.
 
-5. From the web Deployments view, select **Scale**. From the dialog presented enter 4 as the desired number of pods and select **OK**.
+     - **taskId:** The task identifier for the API service instance.
 
-6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **api** pods. From this view, you should see an error like that shown in the following screenshot.
+     - **hostName:** The hostname identifier for the API service instance.
 
-   ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](media/image141.png)
+     - **pid:** The process id for the API service instance.
 
-Like the API deployment, the web deployment used a fixed _hostPort_, and your ability to scale was limited by the number of available agent nodes. However, after resolving this issue for the web service by removing the _hostPort_ setting, the web deployment is still unable to scale past two pods due to CPU constraints. The deployment is requesting more CPU than the web application needs, so you will fix this constraint in the next task.
+     - **mem:** Some memory indicators returned from the API service instance.
 
-### Task 3: Adjust CPU constraints to improve scale
+     - **counters:** Counters for the service itself, as returned by the API service instance.
 
-In this task, you will modify the CPU requirements for the web service so that it can scale out to more instances.
+     - **uptime:** The up time for the API service.
 
-1. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **web** deployment.
+   - Refresh the page in the browser, and you can see the hostName change between the two API service instances. The letters after `api-{number}-` in the hostname will change.
 
-2. Select the vertical ellipses, then select **Edit**.
+### Task 2: Increase service instances beyond available resources
 
-3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`.
+In this task, you will try to increase the number of instances for the API service container beyond available resources in the cluster. You will observe how Kubernetes handles this condition and correct the problem.
 
-   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png)
+1. From the navigation menu, select **Deployments**. From this view, select the **api** deployment.
 
-4. Select **Update** to save the changes and update the deployment.
+2. Configure the deployment to use a fixed host port for initial testing. Select the vertical ellipses and then select **Edit**.
 
-5. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
+3. In the Edit a resource dialog, select the YAML tab. You will see a list of settings shown in YAML format. Use the copy button to copy the text to your clipboard.
 
-6. When the deployment update completes, four web pods should be shown in running state.
+   ![Screenshot of the Edit a resource dialog box that displays JSON data.](media/api-deployment-edit.PNG "Edit a resource YAML config")
 
-   ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image143.png)
+4. Paste the contents into the text editor of your choice (such as Notepad on Windows, macOS users can use TextEdit).
 
-7. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
+5. Scroll down about halfway to find the node `$.spec.template.spec.containers[0]`, as shown in the screenshot below.
 
-### Task 4: Perform a rolling update
+   ![Screenshot of the deployment code, with the $.spec.template.spec.containers[0] section highlighted.](media/image84.png "Container deployment configuration")
 
-In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
+6. The containers spec has a single entry for the API container at the moment. You will see that the name of the container is `api` - this is how you know you are looking at the correct container spec.
 
-1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
-
-   ```bash
-   az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
-   ```
-
-   Copy this value. You will use it later.
-
-2. Update your starter files by pulling the latest changes from the Git repository:
-
-   ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
-   git pull
-   ```
-
-3. Install support for Application Insights.
-
-   ```bash
-   npm install applicationinsights --save
-   ```
-
-4. Open the `app.js` file:
-
-   ```bash
-   code app.js
-   ```
-
-5. Add the following lines immediately after `express` is instantiated on line 6:
-
-   ```javascript
-   const appInsights = require("applicationinsights");
-   appInsights.setup("3324847d-625d-47cf-994b-386644d34a9a");
-   appInsights.start();
-   ```
-
-   ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png)
-
-6. Save changes and close the editor.
-
-7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new image.
-
-   ```bash
-   git add .
-   git commit -m "Added Application Insights"
-   git push
-   ```
-
-8. Visit the `content-web` workflow for your GitHub repository and see the new image being deployed into your Kubernetes cluster.
-
-9. While this update runs, return the Kubernetes management dashboard in the browser.
-
-10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
-
-    ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/image144.png)
-
-11. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
-
-    ![On the Stats page, the webTaskId is highlighted.](media/image145.png)
-
-### Task 5: Configure Kubernetes Ingress
-
-In this task you will setup a Kubernetes Ingress to take advantage of path-based routing and TLS termination.
-
-1. Update your helm package list.
-
-   ```bash
-   helm repo update
-   ```
-
-   > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
-   > ```
-   > helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-   > ```
-
-2. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
-
-   ```bash
-   helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
-   ```
-
-3. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
-
-4. Under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the `nginx-ingress-RANDOM-controller` service.
-
-   ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png)
-
-    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Cloud Shell.
-    >
-    > ```bash
-    > kubectl get svc --namespace kube-system
-    > ```
-    >
-    > ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png)
-
-5. Create a script to update the public DNS name for the IP.
-
-   ```bash
-   code update-ip.sh
-   ```
-
-   Paste the following as the contents and update the IP and SUFFIX values:
-
-   ```bash
-   #!/bin/bash
-
-   # Public IP address
-   IP="[INGRESS PUBLIC IP]"
-
-   # Name to associate with public IP address
-   DNSNAME="fabmedical-[SUFFIX]-ingress"
-
-   # Get the resource-id of the public ip
-   PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
-
-   # Update public ip address with dns name
-   az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
-   ```
-
-   ![A screenshot of cloud shell editor showing the updated file.](media/Ex4-Task5.6.png)
-
-   Be sure to replace the following placeholders in the script:
-
-   - `[INGRESS PUBLIC IP]`: replace this with the IP Address copied previously.
-   - `[SUFFIX]`: replace this with the same SUFFIX value used previously for this lab
-
-6. Save changes and close the editor.
-
-7. Run the update script.
-
-   ```bash
-   bash ./update-ip.sh
-   ```
-
-8. Verify the IP update by visiting the URL in your browser.
-
-   > **Note**: It is normal to receive a 404 message at this time.
+   - Add the following snippet below the `name` property in the container spec:
 
    ```text
-   http://fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com/
+     ports:
+	    containerPort: 3001
+	    hostPort: 3001
    ```
 
-   ![A screenshot of the browser URL.](media/Ex4-Task5.9.png)
+   - Your container spec should now look like this:
 
-9.  Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
+   ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted, showing the updated values for containerPort and hostPort, both set to port 3001.](media/image85.png "View container ports")
 
-   ```bash
-   kubectl create namespace cert-manager
+7. Copy the updated document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the **api** deployment.
 
-   kubectl label namespace cert-manager cert-manager.io/disable-validation=true
+   - Paste the updated document.
 
-   kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
-   ```
+   - Select Update.
 
-11. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
+   ![UPDATE is highlighted in the Edit a Deployment dialog box.](media/image88.png "Update API YAML")
 
-    ```bash
-    code clusterissuer.yml
-    ```
+8. From the API deployment view, select **Scale**.
 
-    The following resource configuration should work as is:
+9. Change the number of replicas to 4 and select **Scale**.
 
-    ```yaml
-    apiVersion: cert-manager.io/v1
-    kind: ClusterIssuer
-    metadata:
-      name: letsencrypt-prod
-    spec:
-      acme:
-        # The ACME server URL
-        server: https://acme-v02.api.letsencrypt.org/directory
-        # Email address used for ACME registration
-        email: user@fabmedical.com
-        # Name of a secret used to store the ACME account private key
-        privateKeySecretRef:
-          name: letsencrypt-prod
-        # Enable HTTP01 validations
-        solvers:
-        - http01:
-            ingress:
-              class: nginx
-    ```
+   ![In the Scale a Deployment dialog box, 4 is entered in the Desired number of pods box.](media/image119.png "Scale a resource")
 
-12. Save changes and close the editor.
+10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and two unhealthy (or possibly pending depending on timing) instances.
 
-13. Create the issuer using `kubectl`.
+    ![In the api service view, various information is displayed in the Details box and in the Pods box.](media/image120.png "View API service endpoints and pods")
 
-    ```bash
-    kubectl create --save-config=true -f clusterissuer.yml
-    ```
+11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
 
-14. Now you can create a certificate object.
+    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](media/image121.png "View deployment log")
 
-    > **Note**:
-    >
-    > Cert-manager might have already created a certificate object for you using ingress-shim.
-    >
-    > To verify that the certificate was created successfully, use the `kubectl describe certificate tls-secret` command.
-    >
-    > If a certificate is already available, skip to step 16.
+    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third and fourth pod instances will wait for a new node to be available that can run another instance using that port.
 
-    ```bash
-    code certificate.yml
-    ```
+12. Reduce the number of requested pods to `2` using the **Scale** button.
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
+13. Almost immediately, the warning message from the **Workloads** dashboard should disappear, and the **API** deployment will show `2/2` pods are running.
 
-    ```yaml
-    apiVersion: cert-manager.io/v1
-    kind: Certificate
-    metadata:
-      name: tls-secret
-    spec:
-      secretName: tls-secret
-      dnsNames:
-        - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-      issuerRef:
-        name: letsencrypt-prod
-        kind: ClusterIssuer
-    ```
+    ![Workloads is selected in the navigation menu. A green check mark now appears next to the api deployment listing in the Deployments box at right.](media/image122.png "Review pods list")
 
-15. Save changes and close the editor.
+### Task 3: Restart containers and test HA
 
-16. Create the certificate using `kubectl`.
+In this task, you will restart containers and validate that the restart does not impact the running service.
 
-    ```bash
-    kubectl create --save-config=true -f certificate.yml
-    ```
+1. From the navigation menu on the left, select **Services** view under **Discovery and Load Balancing**. From the **Services** list, select the external endpoint hyperlink for the web service, and visit the **Stats** page by adding / stats to the URL. Keep this open and handy to be refreshed as you complete the steps that follow.
 
-    > **Note**: To check the status of the certificate issuance, use the `kubectl describe certificate tls-secret` command and look for an _Events_ output similar to the following:
-    >
-    > ```text
-    > Type    Reason         Age   From          Message
-    > ----    ------         ----  ----          -------
-    > Normal  Generated           38s   cert-manager  Generated new private key
-    > Normal  GenerateSelfSigned  38s   cert-manager  Generated temporary self signed certificate
-    > Normal  OrderCreated        38s   cert-manager  Created Order resource "tls-secret-3254248695"
-    > Normal  OrderComplete       12s   cert-manager  Order "tls-secret-3254248695" completed successfully
-    > Normal  CertIssued          12s   cert-manager  Certificate issued successfully
-    > ```
+   ![In the Services box, the hyperlinked external endpoint for the web service is highlighted. ](media/image112.png "View the services external endpoint")
 
-    It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
+   ![The Stats page is visible in this screenshot of the Contoso Neuro web application.](media/image123.png "Contoso web task details")
 
-17. Now you can create an ingress resource for the content applications.
+2. From the navigation menu, select **Workloads** -> **Deployments**. From Deployments list, select the **API** deployment.
 
-    ```bash
-    code content.ingress.yml
-    ```
+   ![In the left menu the Deployments item is selected. The API deployment is highlighted in the Deployments list box.](media/image124.png "API pod deployments")
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
+3. From the API deployment view, select **Scale** and from the dialog presented, and enter `4` for the desired number of pods. Select **OK**.
 
-    ```yaml
-    apiVersion: extensions/v1beta1
-    kind: Ingress
-    metadata:
-      name: content-ingress
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/rewrite-target: /$1
-    spec:
-      tls:
-        - hosts:
-            - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-          secretName: tls-secret
-      rules:
-        - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-          http:
-            paths:
-              - path: /(.*)
-                backend:
-                  serviceName: web
-                  servicePort: 80
-              - path: /content-api/(.*)
-                backend:
-                  serviceName: api
-                  servicePort: 3001
-    ```
+4. From the navigation menu, select **Workloads** -> **Replica Sets**. Select the **api** replica set, and from the **Replica Set** view, you will see that two pods cannot deploy.
 
-18. Save changes and close the editor.
+   ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. In the Pods box, two pods have exclamation point (!) alerts and messages indicating that they cannot deploy.](media/image125.png "View failed pod deployment details")
 
-19. Create the ingress using `kubectl`.
+5. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the two api pod instances periodically. The task id and pid might also change between the two api pod instances.
+
+   ![On the Stats page in the Contoso Neuro web application, two different api host name values are highlighted.](media/image126.png "View web task hostname")
+
+6. After refreshing enough times to see that the `hostName` value is changing, and the service remains healthy, return to the **Replica Sets** view for the API. From the navigation menu, select Replica Sets under Workloads and select the **API** replica set.
+
+7. From this view, take note that the hostName value shown in the web application stats page matches the pod names for the pods that are running.
+
+   ![Two different pod names are highlighted in the Pods box, which match the values from the previous Stats page.](media/image127.png "View two API pod details")
+
+8. Note the remaining pods are still pending, since there are not enough port resources available to launch another instance. Make some room by deleting a running instance. Select the context menu and choose **Delete** for one of the healthy pods.
+
+   ![The context menu for a pod in the pod list is expanded with the Delete item selected.](media/image128.png "Delete running pod instance")
+
+9. Once the running instance is gone, Kubernetes will be able to launch one of the pending instances. However, because you set the desired size of the deploy to 4, Kubernetes will add a new pending instance. Removing a running instance allowed a pending instance to start, but in the end, the number of pending and running instances is unchanged.
+
+   ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](media/image129.png "API pod running")
+
+10. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
+
+11. From the API Deployment view, select Scale and enter `1` as the desired number of pods. Select **OK**.
+
+    ![In the Scale a Deployment dialog box, 1 is entered in the Desired number of pods box.](media/image130.png "Scale replicas to one")
+
+12. Return to the web site's stats page in the browser and refresh while this is scaling down. You will notice that only one API host name shows up, even though you may still see several running pods in the API replica set view. Even though several pods are running, Kubernetes will no longer send traffic to the pods it has selected to scale down. In a few moments, only one pod will show in the API replica set view.
+
+    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. Only one API host name, which has a green check mark and is listed as running, appears in the Pods box.](media/image131.png "View replica details")
+
+13. From the navigation menu, select **Workloads**. From this view, note that there is only one API pod now.
+
+    ![Workloads is selected in the navigation menu on the left. On the right are the Deployment, Pods, and Replica Sets boxes.](media/image132.png "View only one replica")
+
+### Task 4: Configure Cosmos DB Autoscale
+
+In this task, you will setup Autoscale on Azure Cosmos DB.
+
+1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
+
+2. From the left hand-menu select **Data Explorer**. 
+
+3. Within **Data Explorer**, expand the `contentdb` database, then expand the `sessions` collection.
+
+4. Under the `sessions` collection, select **Scale & Settings**.
+
+5. On the **Scale & Settings**, select **Autoscale** for the **Throughput** setting under **Scale**.
+
+    ![The screenshot displays Cosmos DB Scale and Settings tab with Autoscale selected](media/cosmosdb-autoscale.png "CosmosDB collection scale and settings")
+
+6. Select **Save**.
+
+7. Perform the same task to enable **Autoscale** Throughput on the `speakers` collection.
+
+### Task 5: Test Cosmos DB Autoscale
+
+In this task, you will run a performance test script that will test the Autoscale feature of Azure Cosmos DB so you can see that it will now scale greater than 400 RU/s.
+
+1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Cosmos DB account**.
+
+2. Select **Connection String** under **Settings**.
+
+3. On the **Connection String** pane, copy the **HOST**, **USERNAME**, and **PRIMARY PASSWORD** values. Save these for use later.
+
+    ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
+
+4. Open the Azure Cloud Shell, and **SSH** to the **Build agent VM**.
+
+5. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
 
     ```bash
-    kubectl create --save-config=true -f content.ingress.yml
+    cd ~/Fabmedical
     ```
 
-20. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
+6. Run the following command to open the `perftest.sh` script for editing in Vi.
 
-21. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
+    ```bash
+    vi perftest.sh
+    ```
 
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png)
+7. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
 
-22. Test TLS termination by visiting both services again using `https`.
+    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-    > It can take between 5 and 30 minutes before the SSL site becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
+8. Press the Escape key and type :wq and then press the Enter key to save and close the file.
+
+9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
+
+    ```bash
+    bash ./perftest.sh
+    ```
+
+    > **Note:** The script will take a minute to complete executing.
+
+10. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
+
+11. Scroll down on the **Overview** pane of the **Cosmos DB account** blade, and locate the **Request Charge** graph.
+
+    > **Note:** It may take 2 - 5 minutes for the activity on the Cosmos DB collection to appear in the activity log. Wait a couple minutes and then refresh the pane if the recent Request charge doesn't show up right now.
+
+12. Notice that the **Request charge** now shows there was activity on the **Cosmos DB account** that exceeded the 400 RU/s limit that was previously set before Autoscale was turned on.
+
+    ![The screenshot shows the Cosmos DB request charge graph showing recent activity from performance test](media/cosmos-request-charge.png "Recent CosmosDB activity graph")
 
