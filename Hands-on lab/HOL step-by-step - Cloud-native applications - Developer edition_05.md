@@ -147,13 +147,9 @@ The purpose of this task is to make sure you can run the application successfull
 
    > **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
  
-     1. In the Cloud shell run the following command
+     1. In the Cloud shell run the following command **az login** 
  
-        ```BASH
-        az login
-        ``` 
- 
-     2. Click on the https:<span></span>//microsoft.com/devicelogin link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
++     2. Click on the https:<span></span>//microsoft.com/devicelogin link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
 
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
 
@@ -684,11 +680,19 @@ In this task, you will push images to your ACR account, version images with tagg
 
     ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png "View latest image by tag")
 
-11. Repeat Step 7 to push the images to ACR again so that the newly tagged `v1` images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
+11. Push the images to your ACR account with the following command:
+
+    ```bash
+    docker image push [LOGINSERVER]/content-web:v1
+    docker image push [LOGINSERVER]/content-api:v1
+    docker image push [LOGINSERVER]/content-init:v1
+    ```
+
+12. Refresh one of the repositories to see the two versions of the image now appear.
 
     ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png "View two versions of image")
 
-12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
+13. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
     ```bash
     docker image pull [LOGINSERVER]/content-web

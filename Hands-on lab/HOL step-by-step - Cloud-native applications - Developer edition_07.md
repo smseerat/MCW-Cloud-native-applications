@@ -449,6 +449,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 14. We will now update the file named `Chart.yaml`.
 
     ```bash
+
+16. Save changes and close the editor.
     code Chart.yaml
     ```
 
@@ -457,8 +459,6 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     ```yaml
     appVersion: latest
     ```
-
-16. Save changes and close the editor.
 
 17. We will now update the file named `deployment.yaml`.
 
@@ -505,7 +505,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
             port: 3000
     ```
 
-20. Save changes and close the editor.
+19. Save changes and close the editor.
 
 20. We will now update the file named `service.yaml`.
 
@@ -523,7 +523,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         name: http
     ```
 
-23. Save changes and close the editor.
+22. Save changes and close the editor.
 
 24. The chart is now setup to run our web container. Type the following command to deploy the application described by the YAML files. You will receive a message indicating that helm has created a web deployment and a web service.
 
