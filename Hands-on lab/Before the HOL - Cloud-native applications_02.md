@@ -31,9 +31,9 @@ You should follow all of the steps provided in this section _before_ taking part
       - **File Share** : **blob**
   
  
-     >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
+      >**Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-      ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
+    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
 8. You should make sure to set your default subscription correctly. To view your current subscription type:
 
