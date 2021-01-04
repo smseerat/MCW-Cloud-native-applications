@@ -145,11 +145,11 @@ The purpose of this task is to make sure you can run the application successfull
     az vm show -d -g fabmedical-278384 -n fabmedical --query publicIps -o tsv
     ```
 
-   > **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
+     > **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
  
-      1. In the Cloud shell run the command **az login** 
+      1. In the Cloud shell run the command ```az login``` 
  
-      2. Click on the https:<span></span>//microsoft.com/devicelogin link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
+      2. Click on the ```https://microsoft.com/devicelogin ``` link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
 
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
 
