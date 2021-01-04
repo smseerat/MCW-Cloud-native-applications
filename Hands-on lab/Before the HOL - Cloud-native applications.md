@@ -243,9 +243,6 @@ In this section, you configure and execute an ARM template that creates all the 
    - **Suffix**: Enter a shortened version of your SUFFIX with a max of 3 chars.
    - **VirtualMachineAdminUsernameLinux**: The Linux Build Agent VM admin username (example: `"adminfabmedical"`).
    - **VirtualMachineAdminPublicKeyLinux**: The Linux Build Agent VM admin ssh public key. You find this value in the `.ssh/fabmedical.pub` file created previously (example: `"ssh-rsa AAAAB3N(...)vPiybQV admin@fabmedical"`).
-   - **KubernetesServicePrincipalClientId**: The Kubernetes Cluster Service Principal Client Id. Use the service principal **appId** from a previous step.
-   - **KubernetesServicePrincipalClientSecret**: The Kubernetes Cluster Service Principal Client Secret. Use the service principal **password** from a previous step.
-   - **KubernetesServicePrincipalObjectId**: The Kubernetes Cluster Service Principal Object Id. Use the service principal **objectId** from a previous step.
    - **CosmosLocation**: The primary location of the Azure Cosmos DB. Use the same location as the resource group previously created (example: `"eastus"`).
    - **CosmosLocationName**: The name of the primary location of the Azure Cosmos DB. Use the name of the same location as the resource group previously created (example: `"East US"`).
    - **CosmosPairedLocation**: The secondary location of the Azure Cosmos DB. The below link can be used to help find the Azure Region Pair for your primary location. (example: `"westus"`).
@@ -454,14 +451,7 @@ In this task, you update the packages and install the Docker engine.
    sudo apt-get upgrade -y
    ```
 
-7. Install `docker-compose`
-
-   ```bash
-   sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-   sudo chmod +x /usr/local/bin/docker-compose
-   ```
-
-8. When the command has completed, check the Docker version installed by executing this command. The output may look something like that shown in the following screenshot. Note that the server version is not shown yet, because you didn't run the command with elevated privileges (to be addressed shortly).
+7. When the command has completed, check the Docker version installed by executing this command. The output may look something like that shown in the following screenshot. Note that the server version is not shown yet, because you didn't run the command with elevated privileges (to be addressed shortly).
 
    ```bash
    docker version
@@ -469,7 +459,7 @@ In this task, you update the packages and install the Docker engine.
 
    ![In this screenshot of a Cloud Shell window, docker version has been typed and run at the command prompt. Docker version information appears in the window.](media/b4-image28.png "Display Docker version")
 
-9. You may check the versions of node.js and npm as well, just for information purposes, using these commands:
+8. You may check the versions of node.js and npm as well, just for information purposes, using these commands:
 
    ```bash
    nodejs --version
@@ -477,13 +467,13 @@ In this task, you update the packages and install the Docker engine.
    npm -version
    ```
 
-10. Install the Angular CLI.
+9. Install the Angular CLI.
 
     ```bash
     sudo npm install -g @angular/cli
     ```
 
-11. To remove the requirement to use sudo, add your user to the Docker group. You can ignore any errors you see in the output.
+10. To remove the requirement to use sudo, add your user to the Docker group. You can ignore any errors you see in the output.
 
     ```bash
     sudo usermod -aG docker $USER
@@ -491,14 +481,14 @@ In this task, you update the packages and install the Docker engine.
 
     ![In this screenshot of a Cloud Shell window, sudo usermod -aG docker $USER has been typed and run at the command prompt. Errors appear in the window.](media/b4-image29.png "Remove SUDO requirement")
 
-12. For the user permission changes to take effect, exit the SSH
+11. For the user permission changes to take effect, exit the SSH
     session by typing `exit`, then press \<Enter\>. Reconnect to the build agent VM using SSH as you did in the previous task.
 
-13. Repeat the Docker version command, and note the output now shows the server version as well.
+12. Repeat the Docker version command, and note the output now shows the server version as well.
 
     ![In this screenshot of a Cloud Shell window, docker version has been typed and run at the command prompt. Docker version information appears in the window, in addition to server version information.](media/b4-image30.png "Display Docker version")
 
-14. Run a few Docker commands:
+13. Run a few Docker commands:
 
     - One to see if there are any containers presently running.
 
@@ -512,7 +502,7 @@ In this task, you update the packages and install the Docker engine.
       docker container ls -a
       ```
 
-15. In both cases, you have an empty list but no errors while running the command. Your build agent is ready with the Docker engine running correctly.
+14. In both cases, you have an empty list but no errors while running the command. Your build agent is ready with the Docker engine running correctly.
 
     ![In this screenshot of a Cloud Shell window, docker container ls has been typed and run at the command prompt, as has the docker container ls -a command.](media/b4-image31.png "Display Docker container list")
 
