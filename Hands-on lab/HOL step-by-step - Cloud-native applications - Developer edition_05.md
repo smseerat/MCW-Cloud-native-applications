@@ -133,7 +133,7 @@ The purpose of this task is to make sure you can run the application successfull
     sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
     ```
 
-14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment.
+14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment. Make sure to update the [SHORT_SUFFIX] value with your DeploymentId.
 
     ```bash
     az vm show -d -g fabmedical-[SUFFIX] -n fabmedical --query publicIps -o tsv
@@ -714,7 +714,7 @@ image and pushes it to your ACR instance automatically.
 
 4. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
 
-    ![New secret screen with values are entered.](media/2020-08-24-21-48-54.png "New secret screen")
+    ![New secret screen with values are entered.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/2020-08-24-21-48-54.png?raw=true "New secret screen")
 
 5. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
 
@@ -833,11 +833,17 @@ image and pushes it to your ACR instance automatically.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "content-api.yml environment variables highlighted")
 
-19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
+19. Save the file, then commit and push it to the Git repository:
+    ```bash
+    git add .
+    git commit -m "Added workflow YAML"
+    git push
+    ```
+20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
 
-20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your DeploymentId.
+21. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your DeploymentId.
 
-21. Commit and push the changes to the Git repository:
+22. Commit and push the changes to the Git repository:
 
    ```bash
    git add .
