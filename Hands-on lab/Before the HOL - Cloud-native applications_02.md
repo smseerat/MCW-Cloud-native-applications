@@ -169,7 +169,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 14. Refresh your GitHub repository, you should now see the code published.
 
-### Task 4: Clone Repositories to the Build Agent
+### Task 4: Connect securely to the build agent
 
 In this section, you validate that you can connect to the new build agent
 VM.
