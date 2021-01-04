@@ -171,6 +171,23 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 4: Clone Repositories to the Build Agent
 
+In this section, you validate that you can connect to the new build agent
+VM.
+
+1. Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
+
+2. When asked to confirm if you want to continue connecting, type `yes`.
+
+3. When asked for the password, enter **Build Agent VM Password** value, which is given on lab environment details page.
+
+4. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
+
+   `adminfabmedical@fabmedical-SUFFIX:~$`
+
+   ![In this screenshot of a Cloud Shell window, ssh -i .ssh/fabmedical adminfabmedical@52.174.141.11 has been typed and run at the command prompt. The information detailed above appears in the window.](media/b4-image27.png "Azure Cloud Shell Connect to Host")
+
+### Task 5: Clone Repositories to the Build Agent
+
 In this task, you clone your repositories from GitHub so you can work with them on the build agent.
 
 1. As you previously did in cloud shell, set your username and email which are used for git commits.
