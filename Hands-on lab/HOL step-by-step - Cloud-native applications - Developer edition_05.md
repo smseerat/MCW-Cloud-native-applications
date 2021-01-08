@@ -213,11 +213,11 @@ In this task, you will browse to the web application for testing.
    ```
    > **Note**: If cloud shell gets struck, follow the below steps
 
-  1. Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
+  - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
-  2. Connect to build agent vm using the Command to Connect to Build Agent VM, which is given on lab environment details page.
+  - Connect to build agent vm using the Command to Connect to Build Agent VM, which is given on lab environment details page.
 
-  3. Run the following command
+  - Run the following command
    ```cd ~/Fabmedical/content-web``` 
 
 ### Task 3: Create a Dockerfile
