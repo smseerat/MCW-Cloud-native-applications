@@ -449,8 +449,6 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 14. We will now update the file named `Chart.yaml`.
 
     ```bash
-
-16. Save changes and close the editor.
     code Chart.yaml
     ```
 
@@ -459,6 +457,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     ```yaml
     appVersion: latest
     ```
+
+16. Save changes and close the editor.
 
 17. We will now update the file named `deployment.yaml`.
 
@@ -629,7 +629,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
     cat ~/.kube/config
     ```
 
-5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, select **Secrets** from the left menu, then select the **New secret** button.
+5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, select **Secrets** from the left menu, then select the **New repository secret** button.
 
 6. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 

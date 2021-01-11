@@ -1741,6 +1741,8 @@ In this task, you will increase the number of instances for the API deployment i
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
 
+    > **Note**: If you receive an error about insufficient CPU, that is expected.
+
 7. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
    - One deployment and one replica set are each healthy for the api service.
