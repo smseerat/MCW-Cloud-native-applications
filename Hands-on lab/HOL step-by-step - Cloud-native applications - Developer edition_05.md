@@ -835,10 +835,10 @@ image and pushes it to your ACR instance automatically.
 
   > **Note**: If you face any error's while running the workflow follow the below steps:
 
-  1. Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
-  2. In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
-  3. Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and paste the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
-  4. Now redo the steps from 10-14.
+   1. Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
+   2. In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
+   3. Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and paste the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
+   4. Now redo the steps from 10-14.
 
 15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
