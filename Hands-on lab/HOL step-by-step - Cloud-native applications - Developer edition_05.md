@@ -625,7 +625,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ![In this screenshot of the left-hand menu, Access keys is highlighted below Settings.](media/image64.png "Access keys")
 
-3. The Access keys blade displays the Login server, username, and password that will be required for the next step. Keep this handy as you perform actions on the build VM.
+3. The Access keys blade displays the Login server, username, and password that will be required for the next step. Make note of this values, you will be using it in the next part of lab
 
    > **Note**: If the username and password do not appear, select Enable on the Admin user option.
 
@@ -837,7 +837,7 @@ image and pushes it to your ACR instance automatically.
 
    - Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
    - In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
-   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and paste the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
+   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and replace the existing content with the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
    - Now redo the steps from 10-14.
 
 15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
