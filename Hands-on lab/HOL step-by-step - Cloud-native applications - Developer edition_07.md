@@ -95,6 +95,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 2. From the Resource creation view, select **Create from form**.
 
+
    - Enter `api` for the App name.
 
    - Enter `[LOGINSERVER]/content-api` for the Container Image, replacing `[LOGINSERVER]` with your ACR login server, such as `fabmedicalsol.azurecr.io`.
@@ -104,7 +105,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    - Set Service to `Internal`.
 
    - Use `3001` for Port and `3001` for Target port.
-    
+
 ![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png "Display Create from form")
 
 3. Select **SHOW ADVANCED OPTIONS**

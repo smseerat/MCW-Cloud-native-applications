@@ -136,7 +136,7 @@ The purpose of this task is to make sure you can run the application successfull
 14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment. Make sure to update the [SHORT_SUFFIX] value with your DeploymentId.
 
     ```bash
-    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical --query publicIps -o tsv
+    az vm show -d -g fabmedical-[SHORT_SUFFIX] -n fabmedical --query publicIps -o tsv
     ```
 
     Example:
@@ -176,6 +176,10 @@ The purpose of this task is to make sure you can run the application successfull
     ```bash
     curl http://localhost:3000
     ```
+   > **Note**:  If you get no such file or directory error, run the below command and retry step 17
+   ```
+   ng build
+   ```
 
 18. Leave the application running for the next task.
 
@@ -829,17 +833,24 @@ image and pushes it to your ACR instance automatically.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
+  > **Note**: If you face any error's while running the workflow follow the below steps:
+
+   - Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
+   - In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
+   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and paste the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
+   - Now redo the steps from 10-14.
+
 15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
 16. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
+17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. In cloud shell open the `.github/workflows/content-api.yml` file for editing by running the command ```vi content-api.yml```
 
-18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your DeploymentId so that it matches your container registry's name and resource group.
+18. Edit the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your DeploymentId , then update the `containerRegistryName` and `containerRegistry` with the values which you noted earlier in Task 7 .
 
-    ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "content-api.yml environment variables highlighted")
+    ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
 19. Save the file, then commit and push it to the Git repository:
     ```bash
@@ -849,9 +860,9 @@ image and pushes it to your ACR instance automatically.
     ```
 20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
 
-21. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your DeploymentId.
+21. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your DeploymentId and `containerRegistryName`,`containerRegistry` with the values which you noted earlier in Task 7.
 
-22. Commit and push the changes to the Git repository:
+22. Commit and push the changes to the Git repository. After pushing changes navigate back to the repositories in GitHub, select Actions, and then manually run the content-init workflow.
 
    ```bash
    git add .
