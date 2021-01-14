@@ -159,7 +159,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
    > ```
-   > helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+   > helm repo add stable https://charts.helm.sh/stable
    > ```
 
 3. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
