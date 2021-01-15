@@ -86,8 +86,6 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Open a web browser and navigate to ```https://www.github.com```. Log in using your GitHub account credentials.
 
-  > **Note** : You have to use your own GitHub account. If you don't have a GitHub account navigate to the following link ```https://github.com/join ``` and create one.
-
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
     ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu, your repositories")
@@ -112,6 +110,15 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
    ls
    ```
+
+   > **Important note**: If you will be taking the Infrastructure edition of the lab, instead of using the above instructions, type the following ones:
+   >
+   > ```bash
+   > cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/
+   > ls
+   > ```
+   >
+   > This will take you to the version of the starter files that will be used by that edition of the lab.
 
 8. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
 
