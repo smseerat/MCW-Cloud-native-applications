@@ -193,11 +193,11 @@ In this task, you will browse to the web application for testing.
 
 2. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
 
-   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png "List of resources")
+   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/e1t2s2.png "List of resources")
 
 3. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
 
-   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png "VM Public IP Address")
+   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/e1t2s3.png "VM Public IP Address")
 
 4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
@@ -702,7 +702,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
 12. Refresh one of the repositories to see the two versions of the image now appear.
 
-    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png "View two versions of image")
+    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/e1t2s12.png "View two versions of image")
 
 13. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
