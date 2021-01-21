@@ -183,7 +183,7 @@ In this task, you will browse to the web application for testing.
 
 2. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
 
-   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/e1t2s2 "List of resources")
+   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/e1t2s2.png "List of resources")
 
 3. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
 
