@@ -50,7 +50,7 @@ In this task, you will update the web service so that it supports dynamic discov
 
 5. From the **web** Deployments view, select **Scale**. From the dialog presented enter 4 as the desired number of pods and select **OK**.
 
-6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **api** pods. From this view, you should see an error like that shown in the following screenshot.
+6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **web** pods. From this view, you should see an error like that shown in the following screenshot.
 
    ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](media/image141.png "View Pod deployment events")
 
@@ -64,19 +64,23 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 2. Select the vertical ellipses, then select **Edit**.
 
-3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`.
+3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`
 
-   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png "Change cpu value")
+   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk3-step3.png?raw=true "Change cpu value")
 
-4. Select **Update** to save the changes and update the deployment.
+4. In the same **JSON** tab, find the **port** resource under readinessProbe and update it to 3000.
 
-5. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
+   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk3-step4.png?raw=true "Change cpu value")
 
-6. When the deployment update completes, four web pods should be shown in running state.
+5. Select **Update** to save the changes and update the deployment.
+
+6. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
+
+7. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image143.png "Four pods running")
 
-7. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
+8. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
 ### Task 4: Perform a rolling update
 
