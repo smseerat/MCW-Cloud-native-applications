@@ -148,7 +148,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 1. Within the Azure Cloud Shell, run the following command to add the Nginx stable Helm repository:
 
     ```bash
-    helm repo add nginx-stable https://helm.nginx.com/stable
+    helm repo add stable helm
     ```
 
 2. Update your helm package list.
@@ -159,13 +159,13 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
    > ```
-   > helm repo add stable https://charts.helm.sh/stable
+   > helm repo add nginx-stable https://helm.nginx.com/stable
    > ```
 
 3. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
-   helm install nginx-stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
+   helm install nginx stable/nginx-ingress
    ```
 
 4. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
@@ -378,7 +378,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 21. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
+    ![A screenshot showing the output of the sessions content in the browser.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk5-step21.png?raw=true "Content api sessions")
 
 22. Test TLS termination by visiting both services again using `https`.
 
