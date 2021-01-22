@@ -12,27 +12,37 @@ In this task, you will increase the number of instances for the API deployment i
 
 2. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
 
-3. Select the **SCALE** button in the upper-right.
+3. Select the vertical ellipses and then select **Edit**.
+
+   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step3.png?raw=true "Scale a resource")
+
+4. In the Edit a resource dialog, select the YAML tab. You will see a list of settings shown in YAML format.
+
+5. Scroll down about halfway to find the cpu and update the value of cpu to 500m, as shown in the screenshot below. When done click on update.
+
+   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step5.png?raw=true "Scale a resource")
+
+6. From the API deployment view, select the **SCALE** button.
 
    ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png "Scale a resource")
 
-4. Change the number of replicas to **2**, and then select **Scale**.
+7. Change the number of replicas to **2**, and then select **Scale**.
 
    ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png "Scale a Deployment dialog")
 
    > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
 
-5. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
+8. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png "View replica details")
 
-6. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
+9. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
 
    > **Note**: If you receive an error about insufficient CPU, that is expected.
 
-7. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
+10. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
    - One deployment and one replica set are each healthy for the api service.
 
@@ -40,7 +50,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Three pods are healthy.
 
-8. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
+11. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
    - Navigate to the `/stats` page. You will see information about the environment including:
 
