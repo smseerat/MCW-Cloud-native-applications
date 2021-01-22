@@ -17,6 +17,8 @@ In this task, you will gather the information you need about your Azure Kubernet
    ```
 
    - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in cloud shell before the lab):
+   
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step1.png?raw=true "kubectl get nodes")
 
    ```bash
    az account list
@@ -28,6 +30,9 @@ In this task, you will gather the information you need about your Azure Kubernet
    ```bash
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
    ```
+   
+    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
+
 
 3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
@@ -42,6 +47,7 @@ In this task, you will gather the information you need about your Azure Kubernet
    ```bash
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step4.png?raw=true "kubectl get nodes")
 
    > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
 
@@ -62,6 +68,8 @@ In this task, you will gather the information you need about your Azure Kubernet
     > ```bash
     > ls /home
     > ```
+    
+    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step5.png?raw=true "kubectl get nodes")
 
 6. Create an SSH tunnel linking a local port (`8001`) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
@@ -106,7 +114,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    - Use `3001` for Port and `3001` for Target port.
 
-![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png "Display Create from form")
+![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step1.png?raw=true "Display Create from form")
 
 3. Select **SHOW ADVANCED OPTIONS**
 
@@ -130,11 +138,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 7. Open the Azure portal in your browser and navigate to your resource group and find your Cosmos DB resource. Select the Cosmos DB resource to view details.
 
-   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/Ex2-Task1.9.png "Select CosmosDB resource from list")
+   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step7.png?raw=true "Select CosmosDB resource from list")
 
 8. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
-   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](media/Ex2-Task1.10.png "Capture CosmosDB connection string")
+   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step8.png?raw=true "Capture CosmosDB connection string")
 
 9. Update the provided connection string with a database `contentdb` and a replica set `globaldb`.
 
@@ -413,6 +421,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
       repository: [LOGINSERVER].azurecr.io/content-web
       pullPolicy: Always
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk4-step9.png?raw=true "Show Advanced Options")
 
 10. Search for `nameOverride` and `fullnameOverride` entries and update the values so that they match the following:
 
@@ -420,7 +429,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     nameOverride: "web"
     fullnameOverride: "web"
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step10.png?raw=true "Show Advanced Options")
+    
 11. Search for the `service` definition and update the values so that they match the following:
 
     ```yaml
@@ -428,6 +438,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
       type: LoadBalancer
       port: 80
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step11.png?raw=true "Show Advanced Options")
 
 12. Search for the `resources` definition and update the values so that they match the following. You are removing the curly braces and adding the `requests`:
 
@@ -444,7 +455,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         cpu: 1000m
         memory: 128Mi
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step12.png?raw=true "Show Advanced Options")
+    
 13. Save changes and close the editor.
 
 14. We will now update the file named `Chart.yaml`.
@@ -458,7 +470,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     ```yaml
     appVersion: latest
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step15.png?raw=true "Show Advanced Options")
+    
 16. Save changes and close the editor.
 
 17. We will now update the file named `deployment.yaml`.
@@ -483,6 +496,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
           annotations:
             rollme: {{ randAlphaNum 5 | quote }}
     ```
+    
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3task2-step18.png?raw=true "Show Advanced Options")
 
 19. Search for the `containers` definition and update the values so that they match the following. You are changing the `containerPort`, `livenessProbe` port and adding the `env` variable:
 
@@ -505,10 +520,12 @@ You will configure a Helm Chart that will be used to deploy and configure the **
             path: /
             port: 3000
     ```
+    
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step19.png?raw=true "Show Advanced Options")
 
-19. Save changes and close the editor.
+20. Save changes and close the editor.
 
-20. We will now update the file named `service.yaml`.
+21. We will now update the file named `service.yaml`.
 
     ```bash
     code service.yaml
@@ -523,8 +540,9 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         protocol: TCP
         name: http
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step22.png?raw=true "Show Advanced Options")
 
-22. Save changes and close the editor.
+23. Save changes and close the editor.
 
 24. The chart is now setup to run our web container. Type the following command to deploy the application described by the YAML files. You will receive a message indicating that helm has created a web deployment and a web service.
 
@@ -701,7 +719,7 @@ In this task, you will access and review the various logs and dashboards made av
 
 1. From the Azure Portal, select the resource group `fabmedical-{DeploymentId}`, and then select your `Kubernetes Service` Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk7-step1.png?raw=true "Select fabmedical resource group")
 
 2. From the Monitoring blade, select **Insights**.
 
