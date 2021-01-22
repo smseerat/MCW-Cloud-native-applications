@@ -200,11 +200,11 @@ In this task, you will browse to the web application for testing.
 
 2. Select the build agent VM named `fabmedical` from your list of available resources.
 
-   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png "List of resources")
+   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step2.png?raw=true "List of resources")
 
 3. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
 
-   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png "VM Public IP Address")
+   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step3.png?raw=true "VM Public IP Address")
 
 4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
@@ -882,12 +882,3 @@ image and pushes it to your ACR instance automatically.
     git push
     ```
 20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
-
-21. Commit and push the changes to the Git repository:
-
-   ```bash
-   git add .
-   git commit -m "Updated workflow YAML"
-   git push
-   ```
-
