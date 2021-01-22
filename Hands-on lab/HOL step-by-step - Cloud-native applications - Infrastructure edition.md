@@ -685,11 +685,19 @@ In this task, you will push images to your ACR account, version images with tagg
 
     ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png "View latest image by tag")
 
-11. Repeat Step 7 to push the images to ACR again so that the newly tagged `v1` images are pushed. Then refresh one of the repositories to see the two versions of the image now appear.
+11. Push the images to your ACR account with the following command:
+
+    ```bash
+    docker image push [LOGINSERVER]/content-web:v1
+    docker image push [LOGINSERVER]/content-api:v1
+    docker image push [LOGINSERVER]/content-init:v1
+    ```
+
+12. Refresh one of the repositories to see the two versions of the image now appear.
 
     ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png "View two versions of image")
 
-12. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
+13. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
     ```bash
     docker image pull [LOGINSERVER]/content-web
@@ -1328,7 +1336,7 @@ In this task, deploy the web service using `kubectl`.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events.](media/image94.png "Display External Endpoint")
 
-14. In the top navigation, select the `speakers` and `sessions` links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
+14. In the top navigation, select the `speakers` and `sessions` links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -1503,7 +1511,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
 
-25. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
+25. Select the speakers and sessions links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -1732,6 +1740,8 @@ In this task, you will increase the number of instances for the API deployment i
 6. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
+
+    > **Note**: If you receive an error about insufficient CPU, that is expected.
 
 7. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
@@ -2106,7 +2116,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
    > ```
-   > helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+   > helm repo add stable https://charts.helm.sh/stable 
    > ```
 
 3. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
