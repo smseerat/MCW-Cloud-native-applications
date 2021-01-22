@@ -360,7 +360,7 @@ In this task, deploy the web service using `kubectl`.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events.](media/image94.png "Display External Endpoint")
 
-14. In the top navigation, select the `speakers` and `sessions` links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
+14. In the top navigation, select the `speakers` and `sessions` links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -539,7 +539,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
 
-26. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
+25. Select the speakers and sessions links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
