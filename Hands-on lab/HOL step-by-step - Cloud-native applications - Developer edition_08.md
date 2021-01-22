@@ -118,13 +118,13 @@ In this task, you will try to increase the number of instances for the API servi
 
 10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and two unhealthy (or possibly pending depending on timing) instances.
 
-    ![In the api service view, various information is displayed in the Details box and in the Pods box.](media/image120.png "View API service endpoints and pods")
+    ![In the api service view, various information is displayed in the Details box and in the Pods box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step10.png?raw=true "View API service endpoints and pods")
 
 11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
 
-    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](media/image121.png "View deployment log")
+    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step11.png?raw=true "View deployment log")
 
-    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third and fourth pod instances will wait for a new node to be available that can run another instance using that port.
+    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third or fourth pod instances will wait for a new node to be available that can run another instance using that port.
 
 12. Reduce the number of requested pods to `2` using the **Scale** button.
 
