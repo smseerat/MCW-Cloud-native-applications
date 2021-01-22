@@ -429,7 +429,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     nameOverride: "web"
     fullnameOverride: "web"
     ```
-    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step10.png?raw=true "Show Advanced Options")
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step10.png?raw=true "Show Advanced Options")
     
 11. Search for the `service` definition and update the values so that they match the following:
 
@@ -438,7 +438,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
       type: LoadBalancer
       port: 80
     ```
-    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step11.png?raw=true "Show Advanced Options")
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step11.png?raw=true "Show Advanced Options")
 
 12. Search for the `resources` definition and update the values so that they match the following. You are removing the curly braces and adding the `requests`:
 
