@@ -28,7 +28,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 6. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-[SUFFIX]` resource group.
 
-    ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-create-networking.png "Create Migration Service Networking tab")
+    ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex2task1-step6.png?raw=true "Create Migration Service Networking tab")
 
 7. Select **Review + create**.
 
@@ -82,7 +82,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
 7. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]`.
 
-    ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](media/dms-select-target-connection-string.png "Setting the Connection string")
+    ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex2tsk2-ste7.png?raw=true "Setting the Connection string")
 
 8. Select **Next: Database setting >>**.
 
