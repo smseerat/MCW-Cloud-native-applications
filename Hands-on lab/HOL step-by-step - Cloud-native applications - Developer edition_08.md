@@ -232,7 +232,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
 7. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
 
-    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
+    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk5-step7.png?raw=true "Modify the connection information in Vim")
 
 8. Press the Escape key and type :wq and then press the Enter key to save and close the file.
 
@@ -242,7 +242,7 @@ In this task, you will run a performance test script that will test the Autoscal
     bash ./perftest.sh
     ```
 
-    > **Note:** The script will take a minute to complete executing.
+    > **Note:** The script will take a minute to complete executing. If it takes more then 2 mins press ctrl+c to close current process.
 
 10. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
 
