@@ -10,6 +10,9 @@ The purpose of this task is to make sure you can run the application successfull
 
 1. From Azure Cloud Shell, connect to your build agent if you are not already connected. (If you need to reconnect, please review the instructions in the "Before the HOL" document.)
 
+   ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-step1.png?raw=true "Connect to mongodb")
+
+
 2. Type the following command to create a Docker network named `fabmedical`:
 
    ```bash
@@ -52,7 +55,9 @@ The purpose of this task is to make sure you can run the application successfull
    cd ~/Fabmedical/content-init
    npm install
    ```
-
+  
+  ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-stp6.png?raw=true "Connect to mongodb")
+  
    > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
 
    ```bash
@@ -176,11 +181,13 @@ The purpose of this task is to make sure you can run the application successfull
     ```bash
     curl http://localhost:3000
     ```
+    ![Edit the app.js file in vim in the build machine to update the API URL.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk1-step17.png?raw=true "Edit the app.js")
+
    > **Note**:  If you get no such file or directory error, run the below command and retry step 17
    ```
    ng build
    ```
-
+  
 18. Leave the application running for the next task.
 
 19. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
@@ -191,7 +198,7 @@ In this task, you will browse to the web application for testing.
 
 1. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
 
-2. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
+2. Select the build agent VM named `fabmedical` from your list of available resources.
 
    ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png "List of resources")
 
@@ -206,8 +213,11 @@ In this task, you will browse to the web application for testing.
 
    EXAMPLE: http://13.68.113.176:3000
    ```
+   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step4.png?raw=true "VM Public IP Address")
 
 5. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
+
+   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
 6. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
 
@@ -340,6 +350,9 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    docker image ls
    ```
+   
+   ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step1.png?raw=true "List Docker images")
+
 
 2. From the content-api folder containing the API application files and the new Dockerfile you created, type the following command to create a Docker image for the API application. This command does the following:
 
@@ -352,6 +365,9 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    docker image build -t content-api .
    ```
+   
+   ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step2.png?raw=true "List Docker images")
+
 
 3. Once the image is successfully built, run the Docker images listing command again. You will see several new images: the node images and your container image.
 
@@ -393,7 +409,7 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    docker image build -t content-web .
    ```
-
+   
 8. Navigate to the content-init folder again and list the files. Note that this folder already has a Dockerfile.
 
    ```bash
@@ -412,6 +428,9 @@ In this task, you will create Docker images for the application --- one for the 
       ```bash
       docker image build -t content-init .
       ```
+      
+     ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step10.png?raw=true "List Docker images")
+
 
 11. When complete, you will see eight images now exist when you run the Docker images command.
 
@@ -438,7 +457,8 @@ The web application container will be calling endpoints exposed by the API appli
    ```bash
    docker container run --name api --net fabmedical -p 3001:3001 content-api
    ```
-
+   ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step1.png?raw=true "View content images")
+   
 2. The `docker container run` command has failed because it is configured to connect to mongodb using a localhost URL. However, now that content-api is isolated in a separate container, it cannot access mongodb via localhost even when running on the same docker host. Instead, the API must use the bridge network to connect to mongodb.
 
    ```text
@@ -468,6 +488,7 @@ The web application container will be calling endpoints exposed by the API appli
    docker container rm api
    docker container run --name api --net fabmedical -p 3001:3001 -e MONGODB_CONNECTION=mongodb://mongo:27017/contentdb -d content-api
    ```
+   ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step3.png?raw=true "List Docker containers")
 
 4. Enter the command to show running containers. You will observe that the `api` container is in the list. Use the docker logs command to see that the API application has connected to mongodb.
 
@@ -483,26 +504,27 @@ The web application container will be calling endpoints exposed by the API appli
    ```bash
    curl http://localhost:3001/speakers
    ```
-
+   
 6. Create and start the web application container with a similar `docker container run` command -- instruct the docker engine to use any port with the `-P` command.
 
    ```bash
    docker container run --name web --net fabmedical -P -d content-web
    ```
+   ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step6.png?raw=true "List Docker containers")
 
 7. Enter the command to show running containers again, and you will observe that both the API and web containers are in the list. The web container shows a dynamically assigned port mapping to its internal container port `3000`.
 
    ```bash
    docker container ls
    ```
-
-   ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](media/image62.png "List Docker containers")
+   ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step7.png?raw=true "List Docker containers")
 
 8. Test the web application by fetching the URL with curl. For the port, use the dynamically assigned port, which you can find in the output from the previous command. You will see HTML output, as you did when testing previously.
 
    ```bash
    curl http://localhost:[PORT]/speakers.html
    ```
+    ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step8.png?raw=true "List Docker containers")
 
 ### Task 6: Setup environment variables
 
@@ -533,7 +555,8 @@ In this task, you will configure the `web` container to communicate with the API
    ```javascript
    const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
    ```
-
+   ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step4.png?raw=true "Set ENV variable")
+  
 5. Open the Dockerfile for editing using Vim and press the `i` key to go into edit mode.
 
    ```bash
@@ -546,8 +569,7 @@ In this task, you will configure the `web` container to communicate with the API
    ```Dockerfile
    ENV CONTENT_API_URL http://localhost:3001
    ```
-
-   ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](media/hol-2019-10-01_19-37-35.png "Set ENV variable")
+   ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step6.png?raw=true "Set ENV variable")
 
 7. Press the Escape key and type `:wq` and then press the Enter key to save and close the file.
 
@@ -569,13 +591,17 @@ In this task, you will configure the `web` container to communicate with the API
    docker container run --name web --net fabmedical -P -d -e CONTENT_API_URL=http://api:3001 content-web
    docker container ls
    ```
+   
+   ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step9.png?raw=true "Set ENV variable")
 
 10. Curl the speakers path again, using the port assigned to the web container. Again, you will see HTML returned, but because curl does not process javascript, you cannot determine if the web application is communicating with the api application. You must verify this connection in a browser.
 
     ```bash
     curl http://localhost:[PORT]/speakers.html
     ```
-
+    
+    ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step10.png?raw=true "Set ENV variable")
+   
 11. You will not be able to browse to the web application on the ephemeral port because the VM only exposes a limited port range. Now you will stop the web container and restart it using port `3000` to test in the browser. Type the following commands to stop the container, remove it, and run it again using explicit settings for the port.
 
     ```bash
@@ -623,12 +649,14 @@ In this task, you will push images to your ACR account, version images with tagg
 
 2. Select **Access keys** under **Settings** on the left-hand menu.
 
-   ![In this screenshot of the left-hand menu, Access keys is highlighted below Settings.](media/image64.png "Access keys")
+   ![In this screenshot of the left-hand menu, Access keys is highlighted below Settings.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task7-step2.png?raw=true "Access keys")
 
 3. The Access keys blade displays the Login server, username, and password that will be required for the next step. Make note of this values, you will be using it in the next part of lab
 
    > **Note**: If the username and password do not appear, select Enable on the Admin user option.
 
+   ![This is a screenshot of acr.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task7-step3.png?raw=true "Cloud Shell Bash Window")
+   
 4. From the cloud shell session connected to your build VM, login to your ACR account by typing the following command. Follow the instructions to complete the login.
 
    ```bash
@@ -698,7 +726,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
 12. Refresh one of the repositories to see the two versions of the image now appear.
 
-    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png "View two versions of image")
+    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task7-step12.png?raw=true "View two versions of image")
 
 13. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
