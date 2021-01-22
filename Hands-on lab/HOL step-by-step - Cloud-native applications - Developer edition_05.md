@@ -437,7 +437,6 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    docker image ls
    ```
-   
    ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
 
 ### Task 5: Run a containerized application
@@ -553,7 +552,7 @@ In this task, you will configure the `web` container to communicate with the API
 4. Observe that the `contentApiUrl` variable can be set with an environment variable.
 
    ```javascript
-   const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
+   const contentApiUrl = process.env.CONTENT_API_URL || "http://Build-Machine-IP:3001";
    ```
    ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step4.png?raw=true "Set ENV variable")
   
