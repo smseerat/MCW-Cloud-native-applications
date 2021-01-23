@@ -658,7 +658,7 @@ In this task, you will push images to your ACR account, version images with tagg
    For example:
 
    ```bash
-   docker login acr289069.azurecr.io -u fabmedicalsoll -p +W/j=l+Fcze=n07SchxvGSlvsLRh/7ga
+   docker login acr289069.azurecr.io -u acr289069 -p +W/j=l+Fcze=n07SchxvGSlvsLRh/7ga
    ```
 
    ![In this screenshot of the console window, the following has been typed and run at the command prompt: docker login fabmedicalsoll.azurecr.io](media/image65.png "Docker log into container")
@@ -694,11 +694,11 @@ In this task, you will push images to your ACR account, version images with tagg
 
 8. In the Azure Portal, navigate to your ACR account, and select **Repositories** under **Services** on the left-hand menu. You will now see two, one for each image.
 
-   ![In this screenshot, content-api and content-web each appear on their own lines below Repositories.](media/image68.png "Search for repositories")
+   ![In this screenshot, content-api and content-web each appear on their own lines below Repositories.](media/image68spk.png "Search for repositories")
 
 9. Select `content-api`. You will see the latest tag is assigned.
 
-   ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right.](media/image69.png "View latest repo tags")
+   ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right.](media/image69spk.png "View latest repo tags")
 
 10. From the cloud shell session attached to the VM, assign the `v1` tag to each image with the following commands. Then list the Docker images to note that there are now two entries for each image: showing the `latest` tag and the `v1` tag. Also note that the image ID is the same for the two entries, as there is only one copy of the image.
 
