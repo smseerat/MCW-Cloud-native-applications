@@ -537,7 +537,7 @@ In this task, you will configure the `web` container to communicate with the API
    
    ```
 
-4. Observe that the `contentApiUrl` variable can be set with an environment variable.
+4. Observe the output of above command: Observe that the `contentApiUrl` variable can be set with an environment variable.
 
    ```javascript
    const contentApiUrl = process.env.CONTENT_API_URL || "http://Build-Machine-IP:3001";
