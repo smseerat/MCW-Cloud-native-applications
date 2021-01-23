@@ -52,22 +52,14 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 1. Copy the following command to clone the lab files inside clouddrive directory and then delete **.git** directory, becouse **.git** directory is not required. Paste in cloudshell and then press `<ENTER>`:
 
-   ```
-   cd clouddrive
-   git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
-   rm -rf MCW-Cloud-native-applications/.git
-   
-   ```
+     ```
+     cd clouddrive
+     git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
+     rm -rf MCW-Cloud-native-applications/.git
 
-2. The lab files download.
+     ```
 
-   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png "Bash Git Clone")
-
-3. We do not need the `.git` folder, and later steps will be less complex if we remove it. Run this command:
-
-   ```bash
-   rm -rf MCW-Cloud-native-applications/.git
-   ```
+   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/clonefiles.png?raw=true "Cloud Shell")
 
 ### Task 3: Create a GitHub repository
 
