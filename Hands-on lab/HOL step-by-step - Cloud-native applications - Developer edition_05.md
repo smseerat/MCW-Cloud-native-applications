@@ -149,6 +149,7 @@ The purpose of this task is to make sure you can run the application successfull
     curl http://localhost:3000
     
     ```
+    
     ![Edit the app.js file in vim in the build machine to update the API URL.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk1-step17.png?raw=true "Edit the app.js")
 
    > **Note**:  If you get no such file or directory error, run the below command and retry step 17
@@ -165,10 +166,10 @@ The purpose of this task is to make sure you can run the application successfull
 
 In this task, you will browse to the web application for testing.
 
-1. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
+1. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`. Get the Build Agent VM Ip from **Environment Details** tab.
 
-   ```text
-   http://[BUILDAGENTIP]:3000
+   ```
+   http://[BUILDAGENTVMIP]:3000
 
    EXAMPLE: http://13.68.113.176:3000
    ```
@@ -194,6 +195,7 @@ In this task, you will browse to the web application for testing.
   - Run the following command
    ```
    cd ~/Fabmedical/content-web
+   
    ``` 
 
 ### Task 3: Create a Dockerfile
