@@ -779,15 +779,15 @@ image and pushes it to your ACR instance automatically.
 
     ```
 
-   - replace `[DeploymentID]` with your DeploymentID value given on Environment details page
+   - replace `[SHORT_SUFFIX]` with your DeploymentID value given on Environment details page
 
        ```
        # Environment variables are defined so that they can be used throughout the job definitions.
        env:
         imageRepository: 'content-web'
-        resourceGroupName: 'fabmedical-[DeploymentID]'
-        containerRegistryName: 'acr[DeploymentID]'
-        containerRegistry: 'acr[DeploymentID].azurecr.io'
+        resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
+        containerRegistryName: 'acr[SHORT_SUFFIX]'
+        containerRegistry: 'acr[SHORT_SUFFIX].azurecr.io'
         dockerfilePath: './content-web'
         tag: '${{ github.run_id  }}'
 
@@ -814,20 +814,13 @@ image and pushes it to your ACR instance automatically.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-  > **Note**: If you face any error's while running the workflow follow the below steps:
-
-   - Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
-   - In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
-   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and replace the existing content with the copied content. Make sure to replace [DeploymentID] with your DeploymentId value from Environment Details tab.
-   - Now redo the steps from 10-14.
-
 15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
 16. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. In cloud shell open the `.github/workflows/content-api.yml` file for editing by running the command ```vi content-api.yml```
+17. Next, setup the `content-api` workflow. 
 
     ```
     cd ~/Fabmedical/content-api/
@@ -835,7 +828,7 @@ image and pushes it to your ACR instance automatically.
     
     ```
 
-18. Edit the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your DeploymentId , then update the `containerRegistryName` and `containerRegistry` with the values which you noted earlier in Task 7 .
+18. Edit the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your ```DeploymentID``` value from ```Environment Details``` tab.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
