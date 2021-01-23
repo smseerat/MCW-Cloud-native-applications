@@ -5,27 +5,37 @@
 You should follow all of the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
 
 ### Task 1: Setup Azure Cloud Shell
-1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to ```https://portal.azure.com```. 
+1. In the **JumpVM** provided to you on the left side, double click on the **Azure Portal** browser shortcut on the desktop.
  
-   ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/azureportal.png?raw=true "Cloud Shell Bash Window") 
+   ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/azureportal.png?raw=true "Cloud Shell Bash Window")
+   
+1. Click on **Get Started** on edge browser.
+
+   ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/getstarted.png?raw=true)
+   
+1. Now, click on the cross icon to close **Let's set up your new tab page**.
+
+   ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/closeletus.png?raw=true)
+   
+1. Close the current tab by clicking on close tab icon and then **Sign in Microsoft Azure** tab will open.
  
-2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials.
+1. On **Sign in to Microsoft Azure** tab, login with following Azure credentials.
  
      * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
  
      * Azure Password: <inject key="AzureAdUserPassword"></inject> 
  
-3. If you see the pop-up **Stay Signed in?**, click Yes. 
+1. If you see the pop-up **Stay Signed in?**, click Yes. 
  
-4. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
+1. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
  
-5. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
+1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-6. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
+1. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-7. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
+1. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
   
       - **Storage account** : **storage{Deployementid}**
       - **File Share** : **blob**
@@ -34,7 +44,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
-8. You should make sure to set your default subscription correctly. To view your current subscription type:
+1. You should make sure to set your default subscription correctly. To view your current subscription type:
 
    ```bash
    az account show
@@ -42,7 +52,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png "Bash Shell AZ Account Show")
 
-9. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
+1. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
 
    ```bash
    az account set --subscription {id}
