@@ -120,25 +120,8 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png "Running web server")
 
-13. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment. Make sure to update the [SHORT_SUFFIX] value with your DeploymentId.
 
-    ```
-    az vm show -d -g fabmedical-[SHORT_SUFFIX] -n fabmedical --query publicIps -o tsv
-    ```
-
-    Example:
-
-    ```
-    az vm show -d -g fabmedical-278384 -n fabmedical --query publicIps -o tsv
-    ```
-
-     > **Note**: If you get an error message to run az login follow the below instructions and then try Step 14 again. 
- 
-      1. In the Cloud shell run the command ```az login``` 
- 
-      2. Click on the ```https://microsoft.com/devicelogin ``` link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
-
-14. From the cloud shell in the build machine edit the `app.js` file using vim.
+13. From the cloud shell in the build machine edit the `app.js` file using vim. You will need **build agent vm** public IP address, which you can get from **Environment Details** tab.
 
     ```
     vim app.js
@@ -151,7 +134,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
 
-15. Now run the content-web application in the background.
+14. Now run the content-web application in the background.
 
     ```
     node ./app.js &
@@ -160,7 +143,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Press `ENTER` again to get a command prompt for the next step.
 
-16. Test the web application using curl. You will see HTML output returned without errors.
+15. Test the web application using curl. You will see HTML output returned without errors.
 
     ```
     curl http://localhost:3000
@@ -174,9 +157,9 @@ The purpose of this task is to make sure you can run the application successfull
    
    ```
   
-17. Leave the application running for the next task.
+16. Leave the application running for the next task.
 
-18. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
+17. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
 
 ### Task 2: Browsing to the web application
 
