@@ -823,7 +823,7 @@ image and pushes it to your ACR instance automatically.
 17. Next, setup the `content-api` workflow. 
 
     ```
-    cd ~/Fabmedical/content-api/
+    cd ~/Fabmedical/.github/workflows
     vi content-api.yml
     
     ```
