@@ -7,7 +7,7 @@ You should follow all of the steps provided in this section _before_ taking part
 ### Task 1: Setup Azure Cloud Shell
 1. In the JumpVM provided to you on the left side, double click on the Microsoft Edge browser shortcut on the desktop and open Azure portal by navigating to ```https://portal.azure.com```. 
  
-   ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/edge.png?raw=true "Cloud Shell Bash Window") 
+   ![This is a screenshot is selecting edge.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/azureportal.png?raw=true "Cloud Shell Bash Window") 
  
 2. On **Sign in to Microsoft Azure** blade, Login with following Azure credentials.
  
