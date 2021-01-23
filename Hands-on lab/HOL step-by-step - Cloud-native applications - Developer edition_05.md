@@ -70,10 +70,6 @@ The purpose of this task is to make sure you can run the application successfull
 
    ```
    mongo
-   
-   ```
-
-   ```
    show dbs
    use contentdb
    show collections
