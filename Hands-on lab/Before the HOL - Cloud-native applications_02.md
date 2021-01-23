@@ -65,75 +65,80 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. Open a web browser and navigate to ```https://www.github.com```. Log in using your GitHub account credentials.
+1. In a new browser tab and open ```https://www.github.com``` and Log in with your personal GitHub account.
 
-  > **Note** : You have to use your own GitHub account. If you don't have a GitHub account navigate to the following link ```https://github.com/join ``` and create one.
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
 
-2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
+1. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
     ![The user menu is expanded with the Your repositories item selected.](media/2020-08-23-18-03-40.png "User menu, your repositories")
 
-3. Next to the search criteria, locate and select the **New** button.
+1. Next to the search criteria, locate and select the **New** button.
 
     ![The GitHub Find a repository search criteria is shown with the New button selected.](media/2020-08-23-18-08-02.png "New repository button")
 
-4. On the **Create a new repository** screen, name the repository **Fabmedical** and select the **Create repository** button.
+1. On the **Create a new repository** screen, name the repository ```Fabmedical``` and select the **Create repository** button.
 
     ![Create a new repository page with Repository name field and Create repository button highlighted.](media/2020-08-23-18-11-38.png "Create a new repository")
 
-5. On the **Quick setup** screen, copy the **HTTPS** GitHub URL for your new repository, paste this in notepad for future use.
+1. On the **Quick setup** screen, copy the **HTTPS** GitHub URL for your new repository, paste this in notepad for future use.
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-6. Open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
+1. Now, go back to the cloudshell window, if you have closed that open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
-7. Navigate to the FabMedical source code folder and list the contents.
+1. Navigate to the **FabMedical** source code folder and list the contents.
 
-   ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
-   ls
-   ```
+    ```
+    cd clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
+    ls
 
-8. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
+    ```
 
-   ```bash
-   content-api/
-   content-init/
-   content-web/
-   ```
+1. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
 
-9. Set your username and email, which git uses for commits.
+    ```
+    content-api/
+    content-init/
+    content-web/
+    ```
 
-    ```bash
+1. Set your username and email, which git uses for commits.
+
+    ```
     git config --global user.email "you@example.com"
     git config --global user.name "Your Name"
     ```
 
-10. Using the Cloud Shell, initialize a new git repository:
+1. Using the Cloud Shell, initialize a new git repository:
 
-    ```bash
+    ```
     git init
     git add .
     git commit -m "Initial Commit"
+    
     ```
 
-11. Set the remote origin to the GitHub URL by issuing the following command:
+11. Set the remote origin to the GitHub URL by issuing the following command, replace ```<your_github_username>``` with your Github username.
 
-    ```bash
-    git remote add origin <your GitHub URL>
+    ```
+    git remote add origin https://github.com/<your_github_username>/Fabmedical
+    
     ```
 
 12. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
 
-    ```bash
+    ```
     git config --global --unset credential.helper
     git config --global credential.helper store
+    
     ```
 
 13. Push to the master branch by issuing the following command:
 
-    ```bash
+    ```
     git push -u origin master
+    
     ```
 
     > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
@@ -144,14 +149,16 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 4: Connect securely to the build agent
 
-In this section, you validate that you can connect to the new build agent
-VM.
+In this section, you validate that you can connect to the new build agent VM.
 
 1. Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
 2. When asked to confirm if you want to continue connecting, type `yes`.
 
-3. When asked for the password, enter **Build Agent VM Password** value, which is given on lab environment details page.
+3. When asked for the password, enter **Build Agent VM Password** given below.
+    ```
+    Password.1!!
+    ```
 
 4. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
 
