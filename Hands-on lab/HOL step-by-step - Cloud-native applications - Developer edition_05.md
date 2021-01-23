@@ -91,7 +91,7 @@ The purpose of this task is to make sure you can run the application successfull
    
    ```
 
-10. Start the API as a background process.
+10. Start the API as a background process. Press `ENTER` again to get to a command prompt for the next step.
 
     ```
     nodejs ./server.js &
@@ -100,9 +100,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, nodejs ./server.js & has been typed and run at the command prompt, which starts the API as a background process.](media/image47.png "Start the mongodb in background")
 
-11. Press `ENTER` again to get to a command prompt for the next step.
-
-12. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
+11. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
 
     ```
     curl http://localhost:3001/speakers
@@ -111,7 +109,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, made a curl request to view speakers.](media/image47_1.png "Display speaker data")
 
-13. Navigate to the web application directory, run `npm install` and `ng build`.
+12. Navigate to the web application directory, run `npm install` and `ng build`.
 
     ```
     cd ../content-web
@@ -122,7 +120,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png "Running web server")
 
-14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment. Make sure to update the [SHORT_SUFFIX] value with your DeploymentId.
+13. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment. Make sure to update the [SHORT_SUFFIX] value with your DeploymentId.
 
     ```
     az vm show -d -g fabmedical-[SHORT_SUFFIX] -n fabmedical --query publicIps -o tsv
@@ -140,7 +138,7 @@ The purpose of this task is to make sure you can run the application successfull
  
       2. Click on the ```https://microsoft.com/devicelogin ``` link, enter the automatically generated authentication code and click on Next. If prompted sign in with your Azure credentials.
 
-15. From the cloud shell in the build machine edit the `app.js` file using vim.
+14. From the cloud shell in the build machine edit the `app.js` file using vim.
 
     ```
     vim app.js
@@ -153,7 +151,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
 
-16. Now run the content-web application in the background.
+15. Now run the content-web application in the background.
 
     ```
     node ./app.js &
@@ -162,7 +160,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Press `ENTER` again to get a command prompt for the next step.
 
-17. Test the web application using curl. You will see HTML output returned without errors.
+16. Test the web application using curl. You will see HTML output returned without errors.
 
     ```
     curl http://localhost:3000
@@ -176,9 +174,9 @@ The purpose of this task is to make sure you can run the application successfull
    
    ```
   
-18. Leave the application running for the next task.
+17. Leave the application running for the next task.
 
-19. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
+18. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
 
 ### Task 2: Browsing to the web application
 
