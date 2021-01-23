@@ -90,7 +90,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. Navigate to the **FabMedical** source code folder and list the contents.
 
     ```
-    cd clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
+    cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
     ls
 
     ```
@@ -106,8 +106,9 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. Set your username and email, which git uses for commits.
 
     ```
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
+    git config --global user.email "<inject key="AzureAdUserEmail"></inject>"
+    git config --global user.name "odl_user"
+    
     ```
 
 1. Using the Cloud Shell, initialize a new git repository:
