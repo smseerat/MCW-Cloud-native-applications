@@ -105,8 +105,9 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Set your username and email, which git uses for commits, run below commands
   
-    git config --global user.email "<inject key="AzureAdUserEmail"></inject>"
-    git config --global user.name "odl_user"
+     git config --global user.email "<inject key="AzureAdUserEmail"></inject>"
+
+     git config --global user.name "odl_user"
 
 1. Using the Cloud Shell, initialize a new git repository:
 
