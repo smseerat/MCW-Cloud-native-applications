@@ -119,14 +119,13 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     
     ```
 
-11. Set the remote origin to the GitHub URL by issuing the following command, replace ```<your_github_username>``` with your Github username.
+1. Set the remote origin to the GitHub URL by issuing the following command, replace ```<your_github_username>``` with your Github username.
 
     ```
-    git remote add origin https://github.com/<your_github_username>/Fabmedical
-    
+    git remote add origin https://github.com/<your_github_username>/Fabmedical    
     ```
 
-12. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
+1. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
 
     ```
     git config --global --unset credential.helper
@@ -134,7 +133,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     
     ```
 
-13. Push to the master branch by issuing the following command:
+1. Push to the master branch by issuing the following command:
 
     ```
     git push -u origin master
@@ -145,7 +144,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
 
-14. Refresh your GitHub repository, you should now see the code published.
+1. Refresh your GitHub repository, you should now see the code published.
 
 ### Task 4: Connect securely to the build agent
 
@@ -153,14 +152,14 @@ In this section, you validate that you can connect to the new build agent VM.
 
 1. Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
-2. When asked to confirm if you want to continue connecting, type `yes`.
+1. When asked to confirm if you want to continue connecting, type `yes`.
 
-3. When asked for the password, enter **Build Agent VM Password** given below.
+1. When asked for the password, enter **Build Agent VM Password** given below.
     ```
     Password.1!!
     ```
 
-4. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
+1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
 
    `adminfabmedical@fabmedical:~$`
 
@@ -178,35 +177,17 @@ In this task, you clone your repositories from GitHub so you can work with them 
    git config --global user.name "Your Name"
    ```
 
-   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
-   >
-   > ```bash
-   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
-   > ```
-
 2. Configure git CLI to cache your credentials, so that you don't have to keep
    re-typing them.
 
-   ```bash
+   ```
    git config --global credential.helper cache
+   
    ```
 
-   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
-   >
-   > ```bash
-   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
-   > ```
+3. Use the GitHub URL to clone the repository code to your build agent machine. Replace ```<your_github_username>``` with your Github username.
 
-3. Use the GitHub URL to clone the repository code to your build agent machine.
-
-   ```bash
-   git clone <GITHUB_REPOSITORY_URL>
    ```
-
-   > **Note**: In some cases, the `root` user owns your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try the `git` command again:
-   >
-   > ```bash
-   > sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
-   > ```
-
+   git clone https://github.com/<your_github_username>/Fabmedical 
+   ```
 
