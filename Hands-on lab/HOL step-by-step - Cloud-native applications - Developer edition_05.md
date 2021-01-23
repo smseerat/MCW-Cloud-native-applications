@@ -49,13 +49,13 @@ The purpose of this task is to make sure you can run the application successfull
 
 6. To initialize the local database with test content, first navigate to the content-init directory and run npm install.
 
-   ```
-   cd ~/Fabmedical/content-init
-   npm install
-   
-   ```
+      ```
+      cd ~/Fabmedical/content-init
+      npm install
+
+      ```
   
-  ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-stp6.png?raw=true "Connect to mongodb")
+   ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-stp6.png?raw=true "Connect to mongodb")
 
 7. Initialize the database.
 
