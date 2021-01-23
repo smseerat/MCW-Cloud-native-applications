@@ -220,6 +220,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ```bash
    vi Dockerfile
+
    ```
 
    ![This is a screenshot of a new file named Dockerfile in the console window.](media/image56.png "Open new file in VIM")
@@ -296,6 +297,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ```bash
    ll
+
    ```
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The Dockerfile file is highlighted at the top of list.](media/image58.png "Highlight the Dockerfile")
@@ -304,6 +306,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ```bash
    cat Dockerfile
+
    ```
 
 ### Task 4: Create Docker images
@@ -314,6 +317,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ```bash
    docker image ls
+
    ```
    
    ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step1.png?raw=true "List Docker images")
@@ -329,6 +333,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ```bash
    docker image build -t content-api .
+
    ```
    
    ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step2.png?raw=true "List Docker images")
@@ -338,6 +343,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ```bash
    docker image ls
+
    ```
 
    Notice the untagged image. This is the build stage which contains all the intermediate files not needed in your final image.
@@ -350,6 +356,7 @@ In this task, you will create Docker images for the application --- one for the 
    git add .
    git commit -m "Added Dockerfile"
    git push
+
    ```
 
    Enter credentials if prompted.
@@ -359,12 +366,14 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    cd ../content-web
    ll
+
    ```
 
 6. View the Dockerfile contents -- which are similar to the file you created previously in the API folder. Type the following command:
 
    ```bash
    cat Dockerfile
+
    ```
 
    > Notice that the `content-web` Dockerfile build stage includes additional tools for a front-end Angular application in addition to installing npm packages.
@@ -373,6 +382,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ```bash
    docker image build -t content-web .
+
    ```
    
 8. Navigate to the content-init folder again and list the files. Note that this folder already has a Dockerfile.
@@ -380,18 +390,21 @@ In this task, you will create Docker images for the application --- one for the 
    ```bash
    cd ../content-init
    ll
+
    ```
 
 9. View the Dockerfile contents -- which are similar to the file you created previously in the API folder. Type the following command:
 
    ```bash
    cat Dockerfile
+
    ```
 
 10. Type the following command to create a Docker image for the init application.
 
       ```bash
       docker image build -t content-init .
+
       ```
       
      ![The node image (node) and your container image (content-api) are visible in this screenshot of the console window.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk4-step10.png?raw=true "List Docker images")
@@ -401,6 +414,7 @@ In this task, you will create Docker images for the application --- one for the 
 
    ```bash
    docker image ls
+
    ```
    ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
 
@@ -420,6 +434,7 @@ The web application container will be calling endpoints exposed by the API appli
 
    ```bash
    docker container run --name api --net fabmedical -p 3001:3001 content-api
+
    ```
    ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step1.png?raw=true "View content images")
    
@@ -451,6 +466,7 @@ The web application container will be calling endpoints exposed by the API appli
    ```bash
    docker container rm api
    docker container run --name api --net fabmedical -p 3001:3001 -e MONGODB_CONNECTION=mongodb://mongo:27017/contentdb -d content-api
+
    ```
    ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step3.png?raw=true "List Docker containers")
 
@@ -459,6 +475,7 @@ The web application container will be calling endpoints exposed by the API appli
    ```bash
    docker container ls
    docker container logs api
+
    ```
 
    ![In this screenshot of the console window, docker container ls has been typed and run at the command prompt, and the "api" container is in the list with the following values for Container ID, Image, Command, Created, Status, Ports, and Names: 458d47f2aaf1, content-api, "docker-entrypoint.s...", 37 seconds ago, Up 36 seconds, 0.0.0.0:3001->3001/tcp, and api.](media/image61.png "List Docker containers")
@@ -467,12 +484,14 @@ The web application container will be calling endpoints exposed by the API appli
 
    ```bash
    curl http://localhost:3001/speakers
+
    ```
    
 6. Create and start the web application container with a similar `docker container run` command -- instruct the docker engine to use any port with the `-P` command.
 
    ```bash
    docker container run --name web --net fabmedical -P -d content-web
+
    ```
    ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step6.png?raw=true "List Docker containers")
 
@@ -480,6 +499,7 @@ The web application container will be calling endpoints exposed by the API appli
 
    ```bash
    docker container ls
+
    ```
    ![In this screenshot of the console window, docker container ls has again been typed and run at the command prompt. 0.0.0.0:32768->3000/tcp is highlighted under Ports.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task5-step7.png?raw=true "List Docker containers")
 
@@ -499,12 +519,14 @@ In this task, you will configure the `web` container to communicate with the API
    ```bash
    docker container stop web
    docker container rm web
+
    ```
 
 2. Validate that the web container is no longer running or present by using the `-a` flag as shown in this command. You will see that the `web` container is no longer listed.
 
    ```bash
    docker container ls -a
+
    ```
 
 3. Review the `app.js` file.
@@ -512,6 +534,7 @@ In this task, you will configure the `web` container to communicate with the API
    ```bash
    cd ../content-web
    cat app.js
+   
    ```
 
 4. Observe that the `contentApiUrl` variable can be set with an environment variable.
@@ -547,6 +570,7 @@ In this task, you will configure the `web` container to communicate with the API
 
    ```bash
    docker image build -t content-web .
+
    ```
 
 9. Create and start the image passing the correct URI to the API container as an environment variable. This variable will address the API application using its container name over the Docker network you created. After running the container, check to see the container is running and note the dynamic port assignment for the next step.
@@ -554,6 +578,7 @@ In this task, you will configure the `web` container to communicate with the API
    ```bash
    docker container run --name web --net fabmedical -P -d -e CONTENT_API_URL=http://api:3001 content-web
    docker container ls
+
    ```
    
    ![In this screenshot of Dockerfile, the CONTENT_API_URL code appears above the next Dockerfile line, which reads EXPOSE 3000.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task6-step9.png?raw=true "Set ENV variable")
@@ -572,12 +597,14 @@ In this task, you will configure the `web` container to communicate with the API
     docker container stop web
     docker container rm web
     docker container run --name web --net fabmedical -p 3000:3000 -d -e CONTENT_API_URL=http://api:3001 content-web
+
     ```
 
 12. Curl the speaker path again, using port `3000`. You will see the same HTML returned.
 
     ```bash
     curl http://localhost:3000/speakers.html
+
     ```
 
 13. You can now use a web browser to navigate to the website and successfully view the application at port `3000`. Replace `[BUILDAGENTIP]` with the **IP address** you used previously.
@@ -594,6 +621,7 @@ In this task, you will configure the `web` container to communicate with the API
     git add .
     git commit -m "Setup Environment Variables"
     git push
+
     ```
 
     Enter credentials if prompted.
@@ -650,6 +678,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ```bash
    docker image ls
+
    ```
 
    ![This is a screenshot of a docker images list example.](media/vm-docker-images-list.PNG "Docker image list")
@@ -724,6 +753,7 @@ image and pushes it to your ACR instance automatically.
 
    ```bash
    cd ~/Fabmedical
+
    ```
 
 7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created, if it doesn't already exist. Do this by running the following commands:
@@ -731,6 +761,7 @@ image and pushes it to your ACR instance automatically.
     ```bash
     mkdir ~/Fabmedical/.github
     mkdir ~/Fabmedical/.github/workflows
+
     ```
 
 8. Navigate to the `.github/workflows` directory:
@@ -743,38 +774,40 @@ image and pushes it to your ACR instance automatically.
 
     ```dotnetcli
     vi content-web.yml
+
     ```
 
    Add the following as the content. Be sure to replace the following placeholders:
 
-   - replace `[SHORT_SUFFIX]` with your Deployment Id
+   - replace `[DeploymentID]` with your DeploymentID value given on Environment details page
 
-   ```yml
-   name: content-web
+    ```
+    name: content-web
 
-   # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
-   on:
-      push:
-         branches:
-            - master
-         paths:
-            - 'content-web/**'
+    # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
+    on:
+     push:
+       branches:
+       - master
+       paths:
+       - 'content-web/**'
 
-      # Configure workflow to also support triggering manually
-      workflow_dispatch:
+     # Configure workflow to also support triggering manually
+     workflow_dispatch:
 
     # Environment variables are defined so that they can be used throughout the job definitions.
     env:
-      imageRepository: 'content-web'
-      resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
-      containerRegistryName: 'acr[SHORT_SUFFIX]'
-      containerRegistry: 'acr[SHORT_SUFFIX].azurecr.io'
-      dockerfilePath: './content-web'
-      tag: '${{ github.run_id  }}'
+     imageRepository: 'content-web'
+     resourceGroupName: 'fabmedical-[DeploymentID]'
+     containerRegistryName: 'acr[DeploymentID]'
+     containerRegistry: 'acr[DeploymentID].azurecr.io'
+     dockerfilePath: './content-web'
+     tag: '${{ github.run_id  }}'
 
-   # Jobs define the actions that take place when code is pushed to the master branch
-   jobs:
-      build-and-publish-docker-image:
+    # Jobs define the actions that take place when code is pushed to the master branch
+    jobs:
+
+     build-and-publish-docker-image:
         name: Build and Push Docker Image
         runs-on: ubuntu-latest
         steps:
@@ -800,7 +833,74 @@ image and pushes it to your ACR instance automatically.
             push: true
             tags: |
               ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
+              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest 
+  
+     build-and-push-helm-chart:
+        name: Build and Push Helm Chart
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
+
+        - name: Helm Install
+          uses: azure/setup-helm@v1
+
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistryName }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
+
+        - name: Helm Chart Save
+          run: |
+            cd ./content-web/charts/web
+
+            helm chart save . content-web:v${{ env.tag }}
+            helm chart save . ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+
+            # list out saved charts
+            helm chart list
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
+
+        - name: Helm Chart Push
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart push ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1 
+
+     aks-deployment:
+        name: AKS Deployment
+        runs-on: ubuntu-latest
+        needs: [build-and-publish-docker-image,build-and-push-helm-chart]
+        steps:
+        # Checkout the repo
+        - uses: actions/checkout@master
+
+        - name: Helm Install
+          uses: azure/setup-helm@v1
+
+        - name: kubeconfig
+          run: echo "${{ secrets.KUBECONFIG }}" >> kubeconfig
+
+        - name: Helm Repo Add
+          run: |
+            helm repo add ${{ env.containerRegistry }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm repo update
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
+
+        - name: Helm Upgrade
+          run: |
+            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+            helm chart pull ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
+            helm chart export ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }} --destination ./upgrade
+            helm upgrade web ./upgrade/web
+          env:
+            KUBECONFIG: './kubeconfig'
+            HELM_EXPERIMENTAL_OCI: 1
     ```
 
 10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
@@ -811,6 +911,7 @@ image and pushes it to your ACR instance automatically.
     git add .
     git commit -m "Added workflow YAML"
     git push
+
     ```
 
 12. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
@@ -825,7 +926,7 @@ image and pushes it to your ACR instance automatically.
 
    - Go to cloud shell and open content-web.yml by running the command ```vi content-web.yml```.
    - In the browser open a new tab and navigate to ``` https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml ```.
-   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and replace the existing content with the copied content. Make sure to replace [SUFFIX] with your DeploymentId.
+   - Copy the content till the line ```${{ env.containerRegistry }}/${{ env.imageRepository }}:latest```, switch back to cloud shell and replace the existing content with the copied content. Make sure to replace [DeploymentID] with your DeploymentId value from Environment Details tab.
    - Now redo the steps from 10-14.
 
 15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
@@ -845,5 +946,6 @@ image and pushes it to your ACR instance automatically.
     git add .
     git commit -m "Updated workflow YAML"
     git push
+    
     ```
 20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
