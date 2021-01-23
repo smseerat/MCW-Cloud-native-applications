@@ -162,7 +162,7 @@ In this section, you validate that you can connect to the new build agent VM.
 
 4. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
 
-   `adminfabmedical@fabmedical-SUFFIX:~$`
+   `adminfabmedical@fabmedical:~$`
 
    ![In this screenshot of a Cloud Shell window, ssh -i .ssh/fabmedical adminfabmedical@52.174.141.11 has been typed and run at the command prompt. The information detailed above appears in the window.](media/b4-image27.png "Azure Cloud Shell Connect to Host")
 
