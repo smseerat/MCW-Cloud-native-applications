@@ -37,50 +37,27 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-1. After logging in to the Azure Cloud Shell, from the Welcome to Azure Cloud shell dialog box select the **Bash** option. Now on You have no storage mounted dialog box click on Show advanced settings. Select Create new under Storage account and provide values as below: 
+1. After launching the Azure Cloud Shell, select the **Bash** option. Now, on **You have no storage mounted** dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
   
       - **Storage account** : **storage{Deployementid}**
       - **File Share** : **blob**
   
-  > **Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
+    > **Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
-
-1. You should make sure to set your default subscription correctly. To view your current subscription type:
-
-   ```bash
-   az account show
-   ```
-
-   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png "Bash Shell AZ Account Show")
-
-1. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
-
-   ```bash
-   az account set --subscription {id}
-   ```
-
-> **Note**: To list all of your subscriptions, type:
-
-   ```bash
-   az account list
-   ```
-
-   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png "Bash AZ Account List")
+   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
 ### Task 2: Download Starter Files
 
 In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-> **Note**: If you don't have a cloud shell available, refer back to ```Task 1: Setup Azure Cloud Shell```.
+1. Copy the following command to clone the lab files inside clouddrive directory and then delete **.git** directory, becouse **.git** directory is not required. Paste in cloudshell and then press `<ENTER>`:
 
-1. Type the following command and press `<ENTER>`:
-
-   ```bash
-   git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
    ```
-
-   > **Note**: If you do not have enough free space, you may need to remove extra files from your cloud shell environment.  Try running `azcopy jobs clean` to remove any `azcopy` jobs and data you do not need.
+   cd clouddrive
+   git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
+   rm -rf MCW-Cloud-native-applications/.git
+   
+   ```
 
 2. The lab files download.
 
