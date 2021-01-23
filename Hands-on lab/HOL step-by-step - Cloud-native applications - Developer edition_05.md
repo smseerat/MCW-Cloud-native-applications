@@ -768,6 +768,8 @@ image and pushes it to your ACR instance automatically.
 
     ```bash
     cd ~/Fabmedical/.github/workflows
+    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml -P ~/Fabmedical/.github/workflows
+    
     ```
 
 9. Next create the workflow YAML file.
@@ -777,131 +779,21 @@ image and pushes it to your ACR instance automatically.
 
     ```
 
-   Add the following as the content. Be sure to replace the following placeholders:
-
    - replace `[DeploymentID]` with your DeploymentID value given on Environment details page
 
-    ```
-    name: content-web
+       ```
+       # Environment variables are defined so that they can be used throughout the job definitions.
+       env:
+        imageRepository: 'content-web'
+        resourceGroupName: 'fabmedical-[DeploymentID]'
+        containerRegistryName: 'acr[DeploymentID]'
+        containerRegistry: 'acr[DeploymentID].azurecr.io'
+        dockerfilePath: './content-web'
+        tag: '${{ github.run_id  }}'
 
-    # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
-    on:
-     push:
-       branches:
-       - master
-       paths:
-       - 'content-web/**'
-
-     # Configure workflow to also support triggering manually
-     workflow_dispatch:
-
-    # Environment variables are defined so that they can be used throughout the job definitions.
-    env:
-     imageRepository: 'content-web'
-     resourceGroupName: 'fabmedical-[DeploymentID]'
-     containerRegistryName: 'acr[DeploymentID]'
-     containerRegistry: 'acr[DeploymentID].azurecr.io'
-     dockerfilePath: './content-web'
-     tag: '${{ github.run_id  }}'
-
-    # Jobs define the actions that take place when code is pushed to the master branch
-    jobs:
-
-     build-and-publish-docker-image:
-        name: Build and Push Docker Image
-        runs-on: ubuntu-latest
-        steps:
-        # Checkout the repo
-        - uses: actions/checkout@master
-
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
-
-        - name: Login to ACR
-          uses: docker/login-action@v1
-          with:
-            registry: ${{ env.containerRegistry }}
-            username: ${{ secrets.ACR_USERNAME }}
-            password: ${{ secrets.ACR_PASSWORD }}
-
-        - name: Build and push an image to container registry
-          uses: docker/build-push-action@v2
-          with:
-            context: ${{ env.dockerfilePath  }}
-            file: "${{ env.dockerfilePath }}/Dockerfile"
-            pull: true
-            push: true
-            tags: |
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest 
-  
-     build-and-push-helm-chart:
-        name: Build and Push Helm Chart
-        runs-on: ubuntu-latest
-        needs: [build-and-publish-docker-image]
-        steps:
-        # Checkout the repo
-        - uses: actions/checkout@master
-
-        - name: Helm Install
-          uses: azure/setup-helm@v1
-
-        - name: Helm Repo Add
-          run: |
-            helm repo add ${{ env.containerRegistryName }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-          env:
-            HELM_EXPERIMENTAL_OCI: 1
-
-        - name: Helm Chart Save
-          run: |
-            cd ./content-web/charts/web
-
-            helm chart save . content-web:v${{ env.tag }}
-            helm chart save . ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
-
-            # list out saved charts
-            helm chart list
-          env:
-            HELM_EXPERIMENTAL_OCI: 1
-
-        - name: Helm Chart Push
-          run: |
-            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-            helm chart push ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
-          env:
-            HELM_EXPERIMENTAL_OCI: 1 
-
-     aks-deployment:
-        name: AKS Deployment
-        runs-on: ubuntu-latest
-        needs: [build-and-publish-docker-image,build-and-push-helm-chart]
-        steps:
-        # Checkout the repo
-        - uses: actions/checkout@master
-
-        - name: Helm Install
-          uses: azure/setup-helm@v1
-
-        - name: kubeconfig
-          run: echo "${{ secrets.KUBECONFIG }}" >> kubeconfig
-
-        - name: Helm Repo Add
-          run: |
-            helm repo add ${{ env.containerRegistry }} https://${{ env.containerRegistry }}/helm/v1/repo --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-            helm repo update
-          env:
-            HELM_EXPERIMENTAL_OCI: 1
-
-        - name: Helm Upgrade
-          run: |
-            helm registry login ${{ env.containerRegistry }} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-            helm chart pull ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }}
-            helm chart export ${{ env.containerRegistry }}/helm/content-web:v${{ env.tag }} --destination ./upgrade
-            helm upgrade web ./upgrade/web
-          env:
-            KUBECONFIG: './kubeconfig'
-            HELM_EXPERIMENTAL_OCI: 1
-    ```
+       ```
+ 
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
 
 10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
@@ -936,6 +828,12 @@ image and pushes it to your ACR instance automatically.
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
 17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. In cloud shell open the `.github/workflows/content-api.yml` file for editing by running the command ```vi content-api.yml```
+
+    ```
+    cd ~/Fabmedical/content-api/
+    vi content-api.yml
+    
+    ```
 
 18. Edit the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your DeploymentId , then update the `containerRegistryName` and `containerRegistry` with the values which you noted earlier in Task 7 .
 
