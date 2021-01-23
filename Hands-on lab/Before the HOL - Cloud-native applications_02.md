@@ -21,7 +21,7 @@ You should follow all of the steps provided in this section _before_ taking part
  
    ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/closeedgetab.png?raw=true)
  
-1. On **Sign in to Microsoft Azure** tab, login with following Azure credentials.
+1. On **Sign in to Microsoft Azure** tab, **Sign in** with following Azure credentials.
  
      * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
  
