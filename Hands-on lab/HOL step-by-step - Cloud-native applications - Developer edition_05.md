@@ -128,7 +128,7 @@ The purpose of this task is to make sure you can run the application successfull
     
     ```
 
-    Then press **_i_** to get into the edit mode, after that replace localhost with the build machine IP address.
+    Then press **_i_** to get into the edit mode, after that replace localhost with the **build machine public IP address**.
 
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
@@ -165,17 +165,7 @@ The purpose of this task is to make sure you can run the application successfull
 
 In this task, you will browse to the web application for testing.
 
-1. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
-
-2. Select the build agent VM named `fabmedical` from your list of available resources.
-
-   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step2.png?raw=true "List of resources")
-
-3. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
-
-   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step3.png?raw=true "VM Public IP Address")
-
-4. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
+1. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
    ```text
    http://[BUILDAGENTIP]:3000
@@ -184,24 +174,27 @@ In this task, you will browse to the web application for testing.
    ```
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step4.png?raw=true "VM Public IP Address")
 
-5. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
+1. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
 
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
-6. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
+1. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
 
-   ```bash
+   ```
    killall nodejs
    killall node
+   
    ```
-   > **Note**: If cloud shell gets struck, follow the below steps
+   > **Note**: If cloud shell gets stuck, follow the below steps
 
   - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
   - Connect to build agent vm using the Command to Connect to Build Agent VM, which is given on lab environment details page.
 
   - Run the following command
-   ```cd ~/Fabmedical/content-web``` 
+   ```
+   cd ~/Fabmedical/content-web
+   ``` 
 
 ### Task 3: Create a Dockerfile
 
@@ -211,9 +204,10 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
 1. From cloud shell, navigate to the `content-api` folder. List the files in the folder with this command. The output should look like the screenshot below.
 
-   ```bash
+   ```
    cd ../content-api
    ll
+   
    ```
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The files in the folder are listed in the window. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](media/image55.png "List the files")
