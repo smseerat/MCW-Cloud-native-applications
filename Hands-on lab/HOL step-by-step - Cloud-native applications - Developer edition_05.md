@@ -739,38 +739,34 @@ image and pushes it to your ACR instance automatically.
 
    ```
 
-7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created, if it doesn't already exist. Do this by running the following commands:
+7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
 
     ```bash
-    mkdir ~/Fabmedical/.github
-    mkdir ~/Fabmedical/.github/workflows
-
-    ```
-
-8. Navigate to the `.github/workflows` directory:
-
-    ```bash
-    cd ~/Fabmedical/.github/workflows
+    rm -rf ~/Fabmedical/.github/workflows/
+    mkdir ~/Fabmedical/.github/workflows/
+    cd ~/Fabmedical/.github/workflows/
     wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml -P ~/Fabmedical/.github/workflows
-    
+    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-api.yml -P ~/Fabmedical/.github/workflows
+    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-init.yml -P ~/Fabmedical/.github/workflows
+
     ```
 
-9. Next create the workflow YAML file.
+9. Next edit the workflow YAML file.
 
     ```dotnetcli
     vi content-web.yml
 
     ```
 
-   - replace `[SHORT_SUFFIX]` with your DeploymentID value given on Environment details page
+   - replace `[DeploymentID]` with your DeploymentID value given on Environment details page
 
        ```
        # Environment variables are defined so that they can be used throughout the job definitions.
        env:
         imageRepository: 'content-web'
-        resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
-        containerRegistryName: 'acr[SHORT_SUFFIX]'
-        containerRegistry: 'acr[SHORT_SUFFIX].azurecr.io'
+        resourceGroupName: 'fabmedical-[DeploymentID]'
+        containerRegistryName: 'acr[DeploymentID]'
+        containerRegistry: 'acr[DeploymentID].azurecr.io'
         dockerfilePath: './content-web'
         tag: '${{ github.run_id  }}'
 
@@ -811,7 +807,7 @@ image and pushes it to your ACR instance automatically.
     
     ```
 
-18. Edit the `resourceGroupName` by replacing the `[SHORT_SUFFIX]` with your ```DeploymentID``` value from ```Environment Details``` tab.
+18. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value from ```Environment Details``` tab.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
