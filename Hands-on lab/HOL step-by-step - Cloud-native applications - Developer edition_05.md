@@ -740,13 +740,13 @@ image and pushes it to your ACR instance automatically.
 
 7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
 
-    ```bash
+    ```
     rm -rf ~/Fabmedical/.github/workflows/
     mkdir ~/Fabmedical/.github/workflows/
     cd ~/Fabmedical/.github/workflows/
-    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-web.yml -P ~/Fabmedical/.github/workflows
-    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-api.yml -P ~/Fabmedical/.github/workflows
-    wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/content-init.yml -P ~/Fabmedical/.github/workflows
+    wget http://bit.ly/hol-content-web -O content-web.yml
+    wget http://bit.ly/hol-content-api -O content-api.yml
+    wget http://bit.ly/hol-content-init -O content-init.yml
 
     ```
 
