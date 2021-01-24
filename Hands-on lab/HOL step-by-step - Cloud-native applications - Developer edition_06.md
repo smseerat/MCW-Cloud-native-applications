@@ -10,7 +10,11 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 1. From the Azure Portal, select **+ Create a resource**.
 
+    ![](media/createresource.png)
+
 2. Search the marketplace for **Azure Database Migration Service** and select it.
+
+    ![](media/searchdms.png)
 
 3. Select **Create**.
 
