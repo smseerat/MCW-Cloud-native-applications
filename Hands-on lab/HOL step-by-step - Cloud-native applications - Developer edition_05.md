@@ -216,13 +216,10 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The files in the folder are listed in the window. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](media/image55.png "List the files")
 
-
-
-
 2. Download a file named `Dockerfile` and varify it is downloaded by listing the contents of the folder again.
 
    ```
-   wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/Dockerfile -P ~/Fabmedical/content-api
+   wget http://bit.ly/hol-Dockerfile  -O Dockerfile
    ll
    
    ```
