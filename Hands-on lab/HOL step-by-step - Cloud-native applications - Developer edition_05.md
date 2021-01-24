@@ -219,7 +219,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 2. Download a file named `Dockerfile` and varify it is downloaded by listing the contents of the folder again.
 
    ```
-   wget http://bit.ly/hol-Dockerfile  -O Dockerfile
+   wget http://bit.ly/hol-Dockerfile -O Dockerfile
    ll
    
    ```
