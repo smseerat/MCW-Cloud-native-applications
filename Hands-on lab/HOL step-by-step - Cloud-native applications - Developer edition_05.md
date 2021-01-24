@@ -8,27 +8,15 @@ In this exercise, you will take the starter files and run the node.js applicatio
 
 The purpose of this task is to make sure you can run the application successfully before applying changes to run it as a Docker application.
 
-1. From Azure Cloud Shell, connect to your build agent if you are not already connected. (If you need to reconnect, please review the instructions on previous page 4 "Before the HOL" document.)
-
-   ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-step1.png?raw=true)
-
-2. Type the following command to create a Docker network named `fabmedical`:
+1. Switch to the Git Bash Shell window, (If you have closed it and need to reconnect, please review the instructions on previous page i.e. "Before the HOL" document.)
+   
+1. Type the following command to create a Docker network named `fabmedical`, launch an instance of the mongo db container to use for local testing and confirm that it is running and ready:
 
    ```
    docker network create fabmedical
-   
-   ```
 
-3. Run an instance of mongodb to use for local testing.
-
-   ```
    docker container run --name mongo --net fabmedical -p 27017:27017 -d mongo:4.0
-   
-   ```
 
-4. Confirm that the mongo container is running and ready.
-
-   ```
    docker container list
    docker container logs mongo
    
@@ -36,37 +24,20 @@ The purpose of this task is to make sure you can run the application successfull
 
    ![In this screenshot of the console window, docker container list has been typed and run at the command prompt, and the “api” container is in the list. Below this the log output is shown.](media/Ex1-Task1.4.png "Docker container mongo logs")
 
-5. Connect to the mongo instance using the mongo shell and test some basic commands:
-
-   ```
-   mongo
-   show dbs
-   quit()
-   
-   ```
-
-   ![This screenshot of the console window shows the output from connecting to mongo.](media/Ex1-Task1.5.png "Connect to mongodb")
-
-6. To initialize the local database with test content, first navigate to the content-init directory and run npm install.
+1. Next, we will initialize the local database with test content, first navigate to the content-init directory and run npm install.
 
       ```
       cd ~/Fabmedical/content-init
       npm install
+      nodejs server.js
 
       ```
   
    ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-stp6.png?raw=true "Connect to mongodb")
 
-7. Initialize the database.
-
-   ```
-   nodejs server.js
-   
-   ```
-
    ![This screenshot of the console window shows output from running the database initialization.](media/Ex1-Task1.7.png "Run nodejs server.js")
 
-8. Confirm that the database now contains test data.
+1. Confirm that the database now contains test data.
 
    ```
    mongo
@@ -83,33 +54,27 @@ The purpose of this task is to make sure you can run the application successfull
 
    ![This screenshot of the console window shows the data output.](media/Ex1-Task1.8.png "Show database records")
 
-9. Now navigate to the `content-api` directory and run npm install.
+1. Now navigate to the `content-api` directory,  run npm install and Start the API as a background process. Press `ENTER` again to get to a command prompt for the next step.
+.
 
    ```
    cd ../content-api
    npm install
-   
+   nodejs ./server.js &
    ```
-
-10. Start the API as a background process. Press `ENTER` again to get to a command prompt for the next step.
-
-    ```
-    nodejs ./server.js &
-    
-    ```
 
     ![In this screenshot, nodejs ./server.js & has been typed and run at the command prompt, which starts the API as a background process.](media/image47.png "Start the mongodb in background")
 
-11. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
+1. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
 
     ```
     curl http://localhost:3001/speakers
-    
+    curl http://localhost:3001/sessions
     ```
 
     ![In this screenshot, made a curl request to view speakers.](media/image47_1.png "Display speaker data")
 
-12. Navigate to the web application directory, run `npm install` and `ng build`.
+1. Navigate to the web application directory, run `npm install` and `ng build`.
 
     ```
     cd ../content-web
@@ -120,33 +85,24 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png "Running web server")
 
-13. You will need **build agent vm** public IP address, which you can get from **Environment Details** tab.
+1. You will need **build agent vm** public IP address, which you can get from **Environment Details** tab.
 
-    ![Edit the app.js file in vim in the build machine to update the API URL.](media/copyip.png)   
+    ![Edit the app.js file in vim in the build machine to update the API URL.](media/copyip.png)  
 
-14. From the cloud shell in the build machine edit the `app.js` file using vim.
+1. From the bash console, we will use the sed command to  edit the `app.js` file and verify it. replace `<AGENT VM IP>` with the IP address copied in the previous step. We will also run the content-web application in the background.
 
        ```
-       vim app.js
-
+       sed -i 's/localhost:/<AGENT VM IP>:/' app.js
+       head app.js
+       node ./app.js &
        ```
        
-    Then press **_i_** to get into the edit mode, after that replace localhost with the **build machine public IP address**.
 
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
-    Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
-
-15. Now run the content-web application in the background.
-
-    ```
-    node ./app.js &
-    
-    ```
-
     Press `ENTER` again to get a command prompt for the next step.
 
-16. Test the web application using curl. You will see HTML output returned without errors.
+1. Test the web application using curl. You will see HTML output returned without errors.
 
     ```
     curl http://localhost:3000
@@ -160,10 +116,6 @@ The purpose of this task is to make sure you can run the application successfull
    ng build
    
    ```
-  
-17. Leave the application running for the next task.
-
-18. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
 
 ### Task 2: Browsing to the web application
 
@@ -182,22 +134,12 @@ In this task, you will browse to the web application for testing.
 
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
-1. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
+1. Once you have verified the application is accessible through a browser, go to your Git Bash window and stop the running node processes.
 
    ```
    killall nodejs
    killall node
    
-   ```
-   > **Note**: If cloud shell gets stuck, follow the below steps
-
-  - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
-
-  - Connect to build agent vm using the Command to Connect to Build Agent VM, which is given on lab environment details page.
-
-  - Run the following command
-   ```
-   cd ~/Fabmedical/content-web
    ```
 
 ### Task 3: Download a Dockerfile
@@ -209,7 +151,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 1. From cloud shell, navigate to the `content-api` folder. List the files in the folder with this command. The output should look like the screenshot below.
 
    ```
-   cd ../content-api
+   cd ~/Fabmedical/content-api
    ll
    
    ```
