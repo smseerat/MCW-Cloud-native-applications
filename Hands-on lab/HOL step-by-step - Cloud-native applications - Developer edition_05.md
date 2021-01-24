@@ -201,7 +201,7 @@ In this task, you will browse to the web application for testing.
    
    ``` 
 
-### Task 3: Create a Dockerfile
+### Task 3: Download a Dockerfile
 
 In this task, you will create a new Dockerfile that will be used to run the API application as a containerized application.
 
@@ -217,22 +217,49 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The files in the folder are listed in the window. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](media/image55.png "List the files")
 
-2. Create a new file named `Dockerfile` and note the casing in the name. Use the
-   following Vim command to create a new file. The cloud shell window should
-   look as shown in the following screenshot.
 
-   ```bash
-   vi Dockerfile
+
+
+2. Download a file named `Dockerfile` and varify it is downloaded by listing the contents of the folder again.
 
    ```
+   wget https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/Dockerfile -P ~/Fabmedical/content-api
+   ll
+   
+   ```
+   
+   ![In this screenshot of the console window, ll has been typed and run at the command prompt. The Dockerfile file is highlighted at the top of list.](media/image58.png "Highlight the Dockerfile")
+   
+3. Review the `Dockerfile` content.   
 
-   ![This is a screenshot of a new file named Dockerfile in the console window.](media/image56.png "Open new file in VIM")
+   ```
+   cat Dockerfile
+   ```
+   > Content should be similar to following:
+   
+   ```
+   FROM node:alpine AS base
+   RUN apk -U add curl
+   WORKDIR /usr/src/app
+   EXPOSE 3001
 
-3. Select `i` on your keyboard. You will see the bottom of the window showing INSERT mode.
+   FROM node:argon AS build
+   WORKDIR /usr/src/app
 
-   ![INSERT appears at the bottom of the Dockerfile window.](media/image57.png "Insert mode")
+   # Install app dependencies
+   COPY package.json /usr/src/app/
+   RUN npm install
 
-4. Type the following into the file. These statements produce a Dockerfile that describes the following:
+   # Bundle app source
+   COPY . /usr/src/app
+
+   FROM base AS final
+   WORKDIR /usr/src/app
+   COPY --from=build /usr/src/app .
+   CMD [ "npm", "start" ]
+   ```
+   
+4. This Dockerfile describes the following:
 
    - The base stage includes environment setup which we expect to change very rarely, if at all.
 
@@ -264,53 +291,6 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
      - Indicates the command to start the node application when the container is run.
 
-   > **Note**: Type the following into the editor, as you may have errors with copying and pasting:
-
-   ```Dockerfile
-   FROM node:alpine AS base
-   RUN apk -U add curl
-   WORKDIR /usr/src/app
-   EXPOSE 3001
-
-   FROM node:argon AS build
-   WORKDIR /usr/src/app
-
-   # Install app dependencies
-   COPY package.json /usr/src/app/
-   RUN npm install
-
-   # Bundle app source
-   COPY . /usr/src/app
-
-   FROM base AS final
-   WORKDIR /usr/src/app
-   COPY --from=build /usr/src/app .
-   CMD [ "npm", "start" ]
-   ```
-
-5. When you are finished typing, hit the Esc key and type `:wq` and hit the Enter key to save the changes and close the file.
-
-   ```bash
-   <Esc>
-   :wq
-   <Enter>
-   ```
-
-6. List the contents of the folder again to verify that the new Dockerfile has been created.
-
-   ```bash
-   ll
-
-   ```
-
-   ![In this screenshot of the console window, ll has been typed and run at the command prompt. The Dockerfile file is highlighted at the top of list.](media/image58.png "Highlight the Dockerfile")
-
-7. Verify the file contents to ensure it was saved as expected. Type the following command to see the output of the Dockerfile in the command window.
-
-   ```bash
-   cat Dockerfile
-
-   ```
 
 ### Task 4: Create Docker images
 
