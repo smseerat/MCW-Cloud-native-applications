@@ -198,8 +198,7 @@ In this task, you will browse to the web application for testing.
   - Run the following command
    ```
    cd ~/Fabmedical/content-web
-   
-   ``` 
+   ```
 
 ### Task 3: Download a Dockerfile
 
