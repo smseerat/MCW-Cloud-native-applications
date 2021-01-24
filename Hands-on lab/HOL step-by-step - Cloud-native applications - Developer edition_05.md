@@ -120,21 +120,24 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png "Running web server")
 
+13. You will need **build agent vm** public IP address, which you can get from **Environment Details** tab.
 
-13. From the cloud shell in the build machine edit the `app.js` file using vim. You will need **build agent vm** public IP address, which you can get from **Environment Details** tab.
+    ![Edit the app.js file in vim in the build machine to update the API URL.](media/copyip.png)   
 
-    ```
-    vim app.js
-    
-    ```
+14. From the cloud shell in the build machine edit the `app.js` file using vim.
 
+       ```
+       vim app.js
+
+       ```
+       
     Then press **_i_** to get into the edit mode, after that replace localhost with the **build machine public IP address**.
 
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
 
-14. Now run the content-web application in the background.
+15. Now run the content-web application in the background.
 
     ```
     node ./app.js &
@@ -143,7 +146,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     Press `ENTER` again to get a command prompt for the next step.
 
-15. Test the web application using curl. You will see HTML output returned without errors.
+16. Test the web application using curl. You will see HTML output returned without errors.
 
     ```
     curl http://localhost:3000
@@ -152,15 +155,15 @@ The purpose of this task is to make sure you can run the application successfull
     
     ![Edit the app.js file in vim in the build machine to update the API URL.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk1-step17.png?raw=true "Edit the app.js")
 
-   > **Note**:  If you get no such file or directory error, run the below command and retry step 17
+   > **Note**:  If you get no such file or directory error, run the below command and retry step 16
    ```
    ng build
    
    ```
   
-16. Leave the application running for the next task.
+17. Leave the application running for the next task.
 
-17. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
+18. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
 
 ### Task 2: Browsing to the web application
 
@@ -170,9 +173,9 @@ In this task, you will browse to the web application for testing.
 
    ```
    http://[BUILDAGENTVMIP]:3000
-
-   EXAMPLE: http://13.68.113.176:3000
    ```
+   > EXAMPLE: ```http://13.68.113.176:3000```
+   
    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step4.png?raw=true "VM Public IP Address")
 
 1. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
