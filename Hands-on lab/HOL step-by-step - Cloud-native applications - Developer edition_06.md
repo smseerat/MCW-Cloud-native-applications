@@ -50,6 +50,8 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
 2. On the Azure Database Migration Service blade, select **+ New Migration Project** on the **Overview** pane.
 
+    ![](media/newmigrationproject.png)
+
 3. On the **New migration project** pane, enter the following values, then select **Create and run activity**:
 
     - Project name: `fabmedical`
@@ -57,7 +59,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
     - Target server type: `CosmosDB (MongoDB API)`
     - Choose type of activity: `Offline data migration`
 
-    ![The screenshot shows the New migration project pane with values entered.](media/dms-new-migration-project.png "New migration project pane")
+    ![](media/createandrunactivity.png)
 
     > **Note:** The **Offline data migration** activity type is selected since you will be performing a one-time migration from MongoDB to Cosmos DB. Also, the data in the database won't be updated during the migration. In a production scenario, you will want to choose the migration project activity type that best fits your solution requirements.
 
@@ -70,49 +72,40 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     > **Note:** Leave the **User Name** and **Password** blank as the MongoDB instance on the Build Agent VM for this lab does not have authentication turned on. The Azure Database Migration Service is connected to the same VNet as the Build Agent VM, so it's able to communicate within the VNet directly to the VM without exposing the MongoDB service to the Internet. In production scenarios, you should always have authentication enabled on MongoDB.
 
-    ![Select source tab with values selected for the MongoDB server.](media/dms-select-source.png "MongoDB to Azure Database for CosmosDB - Select source")
+    ![](media/dmsselectsource.png)
 
 5. Select **Next: Select target >>**.
 
 6. On the **Select target** pane, select the following values:
 
     - Mode: **Select Cosmos DB target**
-
     - Subscription: Select the Azure subscription you're using for this lab.
+    - Select Cosmos DB name: Select the `fabmedical-[DeploymentID]` Cosmos DB instance.
+    - Notice, the **Connection String** will automatically populate with the Key for your Azure Cosmos DB instance.    
+    - Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[DeploymentID].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[DeploymentID]` with DeploymentID value from lab Environment details page.
+    -Select **Next: Database setting >>**.
 
-    - Select Cosmos DB name: Select the `fabmedical-[SUFFIX]` Cosmos DB instance.
+    ![](media/dmsselecttarget.png)
 
-    ![The Select target tab with values selected.](media/dms-select-target.png "MongoDB to Azure Database for CosmosDB - Select target")
+7. On the **Database setting** tab:
+    - select the `contentdb` **Source Database** so this database from MongoDB will be migrated to Azure Cosmos DB.    
+    - Select **Next: Collection setting >>**.
 
-    Notice, the **Connection String** will automatically populate with the Key for your Azure Cosmos DB instance.
+    ![](media/dmsdatabasesetting.png)
 
-7. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]`.
+9. On the **Collection setting** tab, expand the **contentdb** database, and ensure both the **sessions** and **speakers** collections are selected for migration. Also, update the **Throughput (RU/s)** to `400` for both collections. Select **Next: Migration summary >>**.
 
-    ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex2tsk2-ste7.png?raw=true "Setting the Connection string")
+    ![](media/dmscollectionsetting.png)
 
-8. Select **Next: Database setting >>**.
+11. On the **Migration summary** tab, enter `MigrateData` in the **Activity name** field, then select **Start migration** to initiate the migration of the MongoDB data to Azure Cosmos DB. 
 
-9. On the **Database setting** tab, select the `contentdb` **Source Database** so this database from MongoDB will be migrated to Azure Cosmos DB.
-
-    ![The screenshot shows the Database setting tab with the contentdb source database selected.](media/dms-database-setting.png "Database setting tab")
-
-10. Select **Next: Collection setting >>**.
-
-11. On the **Collection setting** tab, expand the **contentdb** database, and ensure both the **sessions** and **speakers** collections are selected for migration. Also, update the **Throughput (RU/s)** to `400` for both collections.
-
-    ![The screenshot shows the Collection setting tab with both sessions and speakers collections selected with Throughput RU/s set to 400 for both collections.](media/dms-collection-setting.png "Throughput RU")
-
-12. Select **Next: Migration summary >>**.
-
-13. On the **Migration summary** tab, enter `MigrateData` in the **Activity name** field, then select **Start migration** to initiate the migration of the MongoDB data to Azure Cosmos DB.
-
-    ![The screenshot shows the Migration summary is shown with MigrateData entered in the Activity name field.](media/dms-migration-summary.png "Migration summary")
+    ![](media/dmsmigrationsummary.png)
 
 14. The status for the migration activity will be shown. The migration will only take a few seconds to complete. Select **Refresh** to reload the status to ensure it shows a **Status** of **Complete**.
 
-    ![The screenshot shows the MigrateData activity showing the status has completed.](media/dms-migrate-complete.png "MigrateData activity completed")
+    ![](media/dmsmigratecomplete.png)
 
 15. To verify the data was migrated, navigate to the **Cosmos DB Account** for the lab within the Azure Portal, then select the **Data Explorer**. You will see the `speakers` and `sessions` collections listed within the `contentdb` database, and you will be able to explore the documents within.
 
-    ![The screenshot shows the Cosmos DB is open in the Azure Portal with Data Explorer open showing the data has been migrated.](media/dms-confirm-data-in-cosmosdb.png "Cosmos DB is open")
+    ![](media/dmsconfirmdataincosmosdb.png)
 
