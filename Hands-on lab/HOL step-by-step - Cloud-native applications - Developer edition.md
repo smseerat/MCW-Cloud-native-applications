@@ -881,14 +881,14 @@ image and pushes it to your ACR instance automatically.
       # Configure workflow to also support triggering manually
       workflow_dispatch:
 
-    # Environment variables are defined so that they can be used throughout the job definitions.
-    env:
-      imageRepository: 'content-web'
-      resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
-      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
-      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
-      dockerfilePath: './content-web'
-      tag: '${{ github.run_id  }}'
+   # Environment variables are defined so that they can be used throughout the job definitions.
+   env:
+     imageRepository: 'content-web'
+     resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
+     containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
+     containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
+     dockerfilePath: './content-web'
+     tag: '${{ github.run_id  }}'
 
    # Jobs define the actions that take place when code is pushed to the master branch
    jobs:
@@ -2425,11 +2425,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
         - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
           http:
             paths:
-              - path: /(.*)
-                backend:
+              - backend:
                   serviceName: web
                   servicePort: 80
-              - path: /content-api/(.*)
+              - path: /api/(.*)
                 backend:
                   serviceName: api
                   servicePort: 3001

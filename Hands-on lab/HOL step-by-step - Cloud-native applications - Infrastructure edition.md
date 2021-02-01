@@ -1548,7 +1548,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
     ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/.github/workflows
     vi content-web.yml
     ```
 
@@ -2313,11 +2313,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
         - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
           http:
             paths:
-              - path: /(.*)
-                backend:
+              - backend:
                   serviceName: web
                   servicePort: 80
-              - path: /content-api/(.*)
+              - path: /api/(.*)
                 backend:
                   serviceName: api
                   servicePort: 3001
