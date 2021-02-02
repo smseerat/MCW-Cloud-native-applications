@@ -97,7 +97,7 @@ In this task, you will edit the web application source code to add Application I
 2. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+   cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
    git pull
    ```
 
