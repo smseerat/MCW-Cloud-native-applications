@@ -395,7 +395,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 6. Update your starter files by pulling the latest changes from the Git repository:
 
     ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+    cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
     git pull
     ```
 
@@ -594,7 +594,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
     ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
     vi content-web.yml
     ```
 
