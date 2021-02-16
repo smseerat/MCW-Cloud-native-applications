@@ -214,9 +214,9 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
 
-4. Open the Azure Cloud Shell, and **SSH** to the **Build agent VM**.
+4. Switch to the Git Bash window which has the  **SSH session** to the **Build agent VM**.
 
-5. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
+5. Navigate to the `~/Fabmedical` directory.
 
     ```bash
     cd ~/Fabmedical

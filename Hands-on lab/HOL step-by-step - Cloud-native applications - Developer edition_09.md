@@ -86,7 +86,7 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
+1. Execute this command in Azure Command Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
@@ -149,7 +149,7 @@ In this task, you will edit the web application source code to add Application I
 
 In this task you will setup a Kubernetes Ingress to take advantage of path-based routing and TLS termination.
 
-1. Within the Azure Cloud Shell, run the following command to add the Nginx stable Helm repository:
+1. Within the Azure Command Shell, run the following command to add the Nginx stable Helm repository:
 
     ```bash
     helm repo add stable https://charts.helm.sh/stable
@@ -178,15 +178,15 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png "Copy ingress controller settings")
 
-    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Cloud Shell.
+    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Command Shell.
     >
     > ```bash
     > kubectl get svc --namespace kube-system
     > ```
     >
-   ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
+   ![A screenshot of Azure Command Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-6. Within the Azure Cloud Shell, create a script to update the public DNS name for the IP.
+6. Within the Azure Command Shell, create a script to update the public DNS name for the IP.
 
    ```bash
    code update-ip.sh
@@ -210,7 +210,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
    ```
 
-   ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
+   ![A screenshot of Command Shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
 
    Be sure to replace the following placeholders in the script:
 
