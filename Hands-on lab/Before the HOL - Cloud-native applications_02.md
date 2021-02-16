@@ -53,7 +53,7 @@ In this section, you validate that you can connect to the new Build Agent VM usi
     Password.1!!
     ```
 
-1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
+1. SSH connects to the VM and displays a command prompt such as the following. Keep this shell window open for the next step:
 
    `adminfabmedical@fabmedical:~$`
 
@@ -95,7 +95,7 @@ In this task, you will use `git` to copy the lab content to your VM and copy the
      ls
      ```
 
-   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/clonefiles.png?raw=true "Cloud Shell")
+   ![The  shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/clonefiles.png?raw=true "Shell")
 
 1. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
 
@@ -147,7 +147,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git config --global user.name "Your Name"
     ```
 
-1. Using the Cloud Shell, initialize a new git repository:
+1. Using the Shell, initialize a new git repository:
 
     ```
     git init
@@ -177,12 +177,12 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using this shell session. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
 
     > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
 
 1. Refresh your GitHub repository, you should now see the code published.
 
-    > **Note**: You will need Git bash windows in the next exercise so **Do Not** close this windows.
+    > **Note**: You will need Git bash windows in the next exercise so **Do Not** close this window.
 
 .

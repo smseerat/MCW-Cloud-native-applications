@@ -6,17 +6,17 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 ### Task 1: Tunnel into the Azure Kubernetes Service cluster
 
-In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
+In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from the command shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
+> **Note**: The following tasks should be executed in a new command shell (cmd.exe) on the lab VM, which we will designate as the Azure Command shell.
 
-1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
+1. Login to Azure using the following command :
 
    ```bash
-   az account show
+   az login
    ```
 
-   - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in cloud shell before the lab):
+   - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in Command Shell before the lab):
    
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step1.png?raw=true "kubectl get nodes")
 
@@ -25,21 +25,23 @@ In this task, you will gather the information you need about your Azure Kubernet
    az account set --subscription {id}
    ```
 
-2. Configure kubectl to connect to the Kubernetes cluster:
+2. Download kubectl and configure a search path to it. 
+
+   ```bash
+   az aks install-cli
+   set PATH=%PATH%;%userprofile%\.azure-kubectl
+   
+   ```
+
+3. Next, to enable kubectl to connect to the Kubernetes cluster, configure the required credentials. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
    ```bash
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
-   ```
-   
-    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
 
-
-3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
-
-   ```bash
    kubectl get nodes
    ```
 
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png "kubectl get nodes")
 
 4. Since the AKS cluster uses RBAC, a `ClusterRoleBinding` must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
@@ -47,21 +49,22 @@ In this task, you will gather the information you need about your Azure Kubernet
    ```bash
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
+
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step4.png?raw=true "kubectl get nodes")
 
    > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
 
-5. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Cloud Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
+5. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Command Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
 
-    Within the Azure Cloud Shell, use the following command to download the Kubeconfig file:
+    Within the Azure Command Shell, use the following command to download the Kubeconfig file:
 
     ```bash
     download /home/<username>/.kube/config
     ```
 
-    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Cloud Shell.
+    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Command Shell.
 
-    >**Note**: You can find the `<username>` from the first part of the Azure Cloud Shell command-line prompt; such as `<username>@Azure:~$`.
+    >**Note**: You can find the `<username>` from the first part of the Azure Command Shell command-line prompt; such as `<username>@Azure:~$`.
     >
     > You can also look in the `/home` directory and so see the directory name that exists within it to find the correct username directory where the Kubeconfig file resides:
     >
@@ -71,7 +74,7 @@ In this task, you will gather the information you need about your Azure Kubernet
     
     ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step5.png?raw=true "kubectl get nodes")
 
-6. Create an SSH tunnel linking a local port (`8001`) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+6. Create an SSH tunnel linking a local port (`8001`) on your Command Shell host to port 443 on the management node of the cluster. Command Shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
@@ -152,11 +155,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    mongodb://<USERNAME>:<PASSWORD>@fabmedical-<SUFFIX>.documents.azure.com:10255/contentdb?ssl=true&replicaSet=globaldb
    ```
 
-10. To avoid disconnecting from the Kubernetes dashboard, open a **new** Azure Cloud Shell console.
-
-    ![This is a screenshot of the cloud shell window with a red arrow pointing at the "Open new session" button on the toolbar.](media/hol-2019-10-19_06-13-34.png "Open new Azure Cloud Shell console")
-
-11. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Open your Azure Cloud Shell window and use the following command to encode the connection string and then, copy the output.
+10. Open a **new** git bash shell window.
+    
+11. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Within the git bash window, use the following command to encode the connection string and then, copy the output.
 
     > **Note**: Double quote marks surrounding the connection string are required to successfully produce the required output.
 
@@ -164,9 +165,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     echo -n "[CONNECTION STRING VALUE]" | base64 -w 0 - | echo $(</dev/stdin)
     ```
 
-    ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
+    ![This is a screenshot of the Azure Command Shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-12. Return to the Kubernetes UI in your browser and select **+ Create**.
+12. Close the Git bash window by typing **'Exit'** and return to the Kubernetes UI in your browser and select **+ Create**.
 
 13. In the **Create from input** tab, update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
@@ -190,13 +191,13 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Kubernetes management dashboard showing the value of a secret.](media/Ex2-Task1.15.png "View CosmosDB secret")
 
-16. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
+16. Next, download the api deployment configuration using the following command in your Azure Command Shell window:
 
     ```bash
     kubectl get -o=yaml deployment api > api.deployment.yml
     ```
 
-17. Edit the downloaded file using cloud shell code editor:
+17. Edit the downloaded file using Command Shell code editor:
 
     ```bash
     code api.deployment.yml
@@ -240,9 +241,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 In this task, deploy the web service using `kubectl`.
 
-1. Open a **new** Azure Cloud Shell console.
+1. Open a **new** Azure Command Shell console.
 
-2. Create a text file called `web.deployment.yml` using the Azure Cloud Shell
+2. Create a text file called `web.deployment.yml` using the Azure Command Shell
    Editor.
 
    ```bash
@@ -314,13 +315,13 @@ In this task, deploy the web service using `kubectl`.
 
 5. Select the **...** button and choose **Save**.
 
-   ![In this screenshot of an Azure Cloud Shell editor window, the ... button has been selected and the Save option is highlighted.](media/b4-image62.png "Save Azure Cloud Shell changes")
+   ![In this screenshot of an Azure Command Shell editor window, the ... button has been selected and the Save option is highlighted.](media/b4-image62.png "Save Azure Command Shell changes")
 
 6. Select the **...** button again and choose **Close Editor**.
 
-   ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
+   ![In this screenshot of the Azure Command Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
 
-7. Create a text file called `web.service.yml` using the Azure Cloud Shell
+7. Create a text file called `web.service.yml` using the Azure Command Shell
    Editor.
 
    ```bash
@@ -390,7 +391,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png "Kubernetes delete deployment")
 
-5. Open a **new** Azure Cloud Shell console.
+5. Open a **new** Azure Command Shell console.
 
 6. Update your starter files by pulling the latest changes from the Git repository:
 
@@ -642,7 +643,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 3. Save the file.
 
-4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
+4. In the Azure Command Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
     ```bash
     cat ~/.kube/config
