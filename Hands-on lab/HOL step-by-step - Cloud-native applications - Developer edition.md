@@ -760,7 +760,6 @@ In this task, you will push images to your ACR account, version images with tagg
    ```bash
    docker image tag content-web [LOGINSERVER]/content-web
    docker image tag content-api [LOGINSERVER]/content-api
-   docker image tag content-init [LOGINSERVER]/content-init
    ```
 
    > **Note**: Be sure to replace the `[LOGINSERVER]` of your ACR instance.
@@ -778,7 +777,6 @@ In this task, you will push images to your ACR account, version images with tagg
    ```bash
    docker image push [LOGINSERVER]/content-web
    docker image push [LOGINSERVER]/content-api
-   docker image push [LOGINSERVER]/content-init
    ```
 
    ![In this screenshot of the console window, an example of images being pushed to an ACR account results from typing and running the following at the command prompt: docker push [LOGINSERVER]/content-web.](media/image67.png "Push image to ACR")
@@ -796,7 +794,6 @@ In this task, you will push images to your ACR account, version images with tagg
     ```bash
     docker image tag [LOGINSERVER]/content-web:latest [LOGINSERVER]/content-web:v1
     docker image tag [LOGINSERVER]/content-api:latest [LOGINSERVER]/content-api:v1
-    docker image tag [LOGINSERVER]/content-init:latest [LOGINSERVER]/content-init:v1
     docker image ls
     ```
 
@@ -807,7 +804,6 @@ In this task, you will push images to your ACR account, version images with tagg
     ```bash
     docker image push [LOGINSERVER]/content-web:v1
     docker image push [LOGINSERVER]/content-api:v1
-    docker image push [LOGINSERVER]/content-init:v1
     ```
 
 12. Refresh one of the repositories to see the two versions of the image now appear.
@@ -957,9 +953,7 @@ image and pushes it to your ACR instance automatically.
 
 19. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
 
-20. Next, setup the **content-init** workflow. Follow the same steps as the previous `content-api` workflow for the `content-init.yml` file, remembering to update the `[SHORT_SUFFIX]` value with your own three-letter suffix.
-
-21. Commit and push the changes to the Git repository:
+20. Commit and push the changes to the Git repository:
 
    ```bash
    git add .
@@ -1452,7 +1446,7 @@ In this task, deploy the web service using `kubectl`.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events.](media/image94.png "Display External Endpoint")
 
-14. In the top navigation, select the `speakers` and `sessions` links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
+14. In the top navigation, select the `speakers` and `sessions` links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -1629,7 +1623,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
 
-25. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
+25. Select the speakers and sessions links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 

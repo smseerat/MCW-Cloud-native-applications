@@ -12,27 +12,35 @@ In this task, you will increase the number of instances for the API deployment i
 
 2. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
 
-3. Select the **SCALE** button in the upper-right.
+3. Select the vertical ellipses and then select **Edit**.
+
+   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step3.png?raw=true "Scale a resource")
+
+4. In the Edit a resource dialog, select the YAML tab. You will see a list of settings shown in YAML format.
+
+5. Scroll down about halfway to find the cpu and update the value of cpu to 500m, as shown in the screenshot below. When done click on update.
+
+   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step5.png?raw=true "Scale a resource")
+
+6. From the API deployment view, select the **SCALE** button.
 
    ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png "Scale a resource")
 
-4. Change the number of replicas to **2**, and then select **Scale**.
+7. Change the number of replicas to **2**, and then select **Scale**.
 
    ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png "Scale a Deployment dialog")
 
    > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
 
-5. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
+8. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
    ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png "View replica details")
 
-6. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
+9. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
 
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
 
-   > **Note**: If you receive an error about insufficient CPU, that is expected.
-
-7. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
+10. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
 
    - One deployment and one replica set are each healthy for the api service.
 
@@ -40,7 +48,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Three pods are healthy.
 
-8. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
+11. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
    - Navigate to the `/stats` page. You will see information about the environment including:
 
@@ -106,15 +114,15 @@ In this task, you will try to increase the number of instances for the API servi
 
    ![In the Scale a Deployment dialog box, 4 is entered in the Desired number of pods box.](media/image119.png "Scale a resource")
 
-10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and two unhealthy (or possibly pending depending on timing) instances.
+10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and one or two unhealthy (or possibly pending depending on timing) instances.
 
-    ![In the api service view, various information is displayed in the Details box and in the Pods box.](media/image120.png "View API service endpoints and pods")
+    ![In the api service view, various information is displayed in the Details box and in the Pods box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step10.png?raw=true "View API service endpoints and pods")
 
 11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
 
-    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](media/image121.png "View deployment log")
+    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step11.png?raw=true "View deployment log")
 
-    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third and fourth pod instances will wait for a new node to be available that can run another instance using that port.
+    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third or fourth pod instances will wait for a new node to be available that can run another instance using that port.
 
 12. Reduce the number of requested pods to `2` using the **Scale** button.
 
@@ -138,9 +146,9 @@ In this task, you will restart containers and validate that the restart does not
 
 3. From the API deployment view, select **Scale** and from the dialog presented, and enter `4` for the desired number of pods. Select **OK**.
 
-4. From the navigation menu, select **Workloads** -> **Replica Sets**. Select the **api** replica set, and from the **Replica Set** view, you will see that two pods cannot deploy.
+4. From the navigation menu, select **Workloads** -> **Replica Sets**. Select the **api** replica set, and from the **Replica Set** view, you will see that one or two pods cannot deploy.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. In the Pods box, two pods have exclamation point (!) alerts and messages indicating that they cannot deploy.](media/image125.png "View failed pod deployment details")
+   ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. In the Pods box, two pods have exclamation point (!) alerts and messages indicating that they cannot deploy.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step4.png?raw=true "View failed pod deployment details")
 
 5. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the two api pod instances periodically. The task id and pid might also change between the two api pod instances.
 
@@ -150,15 +158,15 @@ In this task, you will restart containers and validate that the restart does not
 
 7. From this view, take note that the hostName value shown in the web application stats page matches the pod names for the pods that are running.
 
-   ![Two different pod names are highlighted in the Pods box, which match the values from the previous Stats page.](media/image127.png "View two API pod details")
+   ![Two different pod names are highlighted in the Pods box, which match the values from the previous Stats page.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step7.png?raw=true "View two API pod details")
 
 8. Note the remaining pods are still pending, since there are not enough port resources available to launch another instance. Make some room by deleting a running instance. Select the context menu and choose **Delete** for one of the healthy pods.
 
-   ![The context menu for a pod in the pod list is expanded with the Delete item selected.](media/image128.png "Delete running pod instance")
+   ![The context menu for a pod in the pod list is expanded with the Delete item selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step8.png?raw=true "Delete running pod instance")
 
 9. Once the running instance is gone, Kubernetes will be able to launch one of the pending instances. However, because you set the desired size of the deploy to 4, Kubernetes will add a new pending instance. Removing a running instance allowed a pending instance to start, but in the end, the number of pending and running instances is unchanged.
 
-   ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](media/image129.png "API pod running")
+   ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step9.png?raw=true "API pod running")
 
 10. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
 
@@ -206,9 +214,9 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
 
-4. Open the Azure Cloud Shell, and **SSH** to the **Build agent VM**.
+4. Switch to the Git Bash window which has the  **SSH session** to the **Build agent VM**.
 
-5. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
+5. Navigate to the `~/Fabmedical` directory.
 
     ```bash
     cd ~/Fabmedical
@@ -222,7 +230,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
 7. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
 
-    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
+    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk5-step7.png?raw=true "Modify the connection information in Vim")
 
 8. Press the Escape key and type :wq and then press the Enter key to save and close the file.
 
@@ -232,7 +240,7 @@ In this task, you will run a performance test script that will test the Autoscal
     bash ./perftest.sh
     ```
 
-    > **Note:** The script will take a minute to complete executing.
+    > **Note:** The script will take a minute to complete executing. If it takes more then 2 mins press ctrl+c to close current process.
 
 10. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
 

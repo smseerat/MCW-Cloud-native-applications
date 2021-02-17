@@ -10,11 +10,15 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 1. From the Azure Portal, select **+ Create a resource**.
 
+    ![](media/createresource.png)
+
 2. Search the marketplace for **Azure Database Migration Service** and select it.
+
+    ![](media/searchdms.png)
 
 3. Select **Create**.
 
-    ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/dms-marketplace-create.png "Azure Database Migration Service")
+    ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/create-dms.png "Azure Database Migration Service")
 
 4. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
@@ -22,17 +26,19 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
     - Migration service name: Enter a name, such as `fabmedical{DeploymentId}`. You can get the DeploymentId from environment details tab
     - Location: Choose the Azure Region used for the Resource Group.
 
-    ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-create-basics.png "Create Migration Basics Tab")
+    ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
 
 5. Select **Next: Networking >>**.
 
-6. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-[SUFFIX]` resource group.
+6. On the **Networking** tab, select the **Virtual Network** `fabmedical-vnet/default` within the `fabmedical-[DeploymentId]` resource group.
 
-    ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-create-networking.png "Create Migration Service Networking tab")
+    ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-networking.png "Create Migration Service Networking tab")
 
-7. Select **Review + create**.
+7. Select **Review + create**. 
 
 8. Select **Create** to create the Azure Database Migration Service instance.
+
+    ![](media/dms-create.png)
 
 The service may take 5 - 10 minutes to provision.
 
@@ -82,7 +88,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
 7. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]`.
 
-    ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](media/dms-select-target-connection-string.png "Setting the Connection string")
+    ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex2tsk2-ste7.png?raw=true "Setting the Connection string")
 
 8. Select **Next: Database setting >>**.
 

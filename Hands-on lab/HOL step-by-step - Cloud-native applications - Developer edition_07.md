@@ -6,35 +6,42 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 ### Task 1: Tunnel into the Azure Kubernetes Service cluster
 
-In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
+In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from the command shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
+> **Note**: The following tasks should be executed in a new command shell (cmd.exe) on the lab VM, which we will designate as the Azure Command shell.
 
-1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
+1. Login to Azure using the following command :
 
    ```bash
-   az account show
+   az login
    ```
 
-   - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in cloud shell before the lab):
+   - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in Command Shell before the lab):
+   
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step1.png?raw=true "kubectl get nodes")
 
    ```bash
    az account list
    az account set --subscription {id}
    ```
 
-2. Configure kubectl to connect to the Kubernetes cluster:
+2. Download kubectl and configure a search path to it. 
+
+   ```bash
+   az aks install-cli
+   set PATH=%PATH%;%userprofile%\.azure-kubectl
+   
+   ```
+
+3. Next, to enable kubectl to connect to the Kubernetes cluster, configure the required credentials. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
    ```bash
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
-   ```
 
-3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
-
-   ```bash
    kubectl get nodes
    ```
 
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png "kubectl get nodes")
 
 4. Since the AKS cluster uses RBAC, a `ClusterRoleBinding` must be created before you can correctly access the dashboard. To create the required binding, execute the command below:
@@ -43,27 +50,31 @@ In this task, you will gather the information you need about your Azure Kubernet
    kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
    ```
 
+   ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step4.png?raw=true "kubectl get nodes")
+
    > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
 
-5. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Cloud Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
+5. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Command Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
 
-    Within the Azure Cloud Shell, use the following command to download the Kubeconfig file:
+    Within the Azure Command Shell, use the following command to download the Kubeconfig file:
 
     ```bash
     download /home/<username>/.kube/config
     ```
 
-    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Cloud Shell.
+    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Command Shell.
 
-    >**Note**: You can find the `<username>` from the first part of the Azure Cloud Shell command-line prompt; such as `<username>@Azure:~$`.
+    >**Note**: You can find the `<username>` from the first part of the Azure Command Shell command-line prompt; such as `<username>@Azure:~$`.
     >
     > You can also look in the `/home` directory and so see the directory name that exists within it to find the correct username directory where the Kubeconfig file resides:
     >
     > ```bash
     > ls /home
     > ```
+    
+    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step5.png?raw=true "kubectl get nodes")
 
-6. Create an SSH tunnel linking a local port (`8001`) on your cloud shell host to port 443 on the management node of the cluster. Cloud shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+6. Create an SSH tunnel linking a local port (`8001`) on your Command Shell host to port 443 on the management node of the cluster. Command Shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
@@ -106,7 +117,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    - Use `3001` for Port and `3001` for Target port.
 
-![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](media/image78.png "Display Create from form")
+![This is a screenshot of the Deploy a Containerized App dialog box. Specify app details below is selected, and the fields have been filled in with the information that follows. At the bottom of the dialog box is a SHOW ADVANCED OPTIONS link.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step1.png?raw=true "Display Create from form")
 
 3. Select **SHOW ADVANCED OPTIONS**
 
@@ -130,11 +141,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 7. Open the Azure portal in your browser and navigate to your resource group and find your Cosmos DB resource. Select the Cosmos DB resource to view details.
 
-   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/Ex2-Task1.9.png "Select CosmosDB resource from list")
+   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step7.png?raw=true "Select CosmosDB resource from list")
 
 8. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
-   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](media/Ex2-Task1.10.png "Capture CosmosDB connection string")
+   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step8.png?raw=true "Capture CosmosDB connection string")
 
 9. Update the provided connection string with a database `contentdb` and a replica set `globaldb`.
 
@@ -144,11 +155,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    mongodb://<USERNAME>:<PASSWORD>@fabmedical-<SUFFIX>.documents.azure.com:10255/contentdb?ssl=true&replicaSet=globaldb
    ```
 
-10. To avoid disconnecting from the Kubernetes dashboard, open a **new** Azure Cloud Shell console.
-
-    ![This is a screenshot of the cloud shell window with a red arrow pointing at the "Open new session" button on the toolbar.](media/hol-2019-10-19_06-13-34.png "Open new Azure Cloud Shell console")
-
-11. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Open your Azure Cloud Shell window and use the following command to encode the connection string and then, copy the output.
+10. Open a **new** git bash shell window.
+    
+11. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Within the git bash window, use the following command to encode the connection string and then, copy the output.
 
     > **Note**: Double quote marks surrounding the connection string are required to successfully produce the required output.
 
@@ -156,9 +165,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     echo -n "[CONNECTION STRING VALUE]" | base64 -w 0 - | echo $(</dev/stdin)
     ```
 
-    ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
+    ![This is a screenshot of the Azure Command Shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-12. Return to the Kubernetes UI in your browser and select **+ Create**.
+12. Close the Git bash window by typing **'Exit'** and return to the Kubernetes UI in your browser and select **+ Create**.
 
 13. In the **Create from input** tab, update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
@@ -182,13 +191,13 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Kubernetes management dashboard showing the value of a secret.](media/Ex2-Task1.15.png "View CosmosDB secret")
 
-16. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
+16. Next, download the api deployment configuration using the following command in your Azure Command Shell window:
 
     ```bash
     kubectl get -o=yaml deployment api > api.deployment.yml
     ```
 
-17. Edit the downloaded file using cloud shell code editor:
+17. Edit the downloaded file using Command Shell code editor:
 
     ```bash
     code api.deployment.yml
@@ -232,9 +241,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 In this task, deploy the web service using `kubectl`.
 
-1. Open a **new** Azure Cloud Shell console.
+1. Open a **new** Azure Command Shell console.
 
-2. Create a text file called `web.deployment.yml` using the Azure Cloud Shell
+2. Create a text file called `web.deployment.yml` using the Azure Command Shell
    Editor.
 
    ```bash
@@ -306,13 +315,13 @@ In this task, deploy the web service using `kubectl`.
 
 5. Select the **...** button and choose **Save**.
 
-   ![In this screenshot of an Azure Cloud Shell editor window, the ... button has been selected and the Save option is highlighted.](media/b4-image62.png "Save Azure Cloud Shell changes")
+   ![In this screenshot of an Azure Command Shell editor window, the ... button has been selected and the Save option is highlighted.](media/b4-image62.png "Save Azure Command Shell changes")
 
 6. Select the **...** button again and choose **Close Editor**.
 
-   ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
+   ![In this screenshot of the Azure Command Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
 
-7. Create a text file called `web.service.yml` using the Azure Cloud Shell
+7. Create a text file called `web.service.yml` using the Azure Command Shell
    Editor.
 
    ```bash
@@ -360,7 +369,7 @@ In this task, deploy the web service using `kubectl`.
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events.](media/image94.png "Display External Endpoint")
 
-14. In the top navigation, select the `speakers` and `sessions` links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job in Task 5.
+14. In the top navigation, select the `speakers` and `sessions` links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -382,7 +391,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png "Kubernetes delete deployment")
 
-5. Open a **new** Azure Cloud Shell console.
+5. Open a **new** Azure Command Shell console.
 
 6. Update your starter files by pulling the latest changes from the Git repository:
 
@@ -413,6 +422,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
       repository: [LOGINSERVER].azurecr.io/content-web
       pullPolicy: Always
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk4-step9.png?raw=true "Show Advanced Options")
 
 10. Search for `nameOverride` and `fullnameOverride` entries and update the values so that they match the following:
 
@@ -420,7 +430,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     nameOverride: "web"
     fullnameOverride: "web"
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step10.png?raw=true "Show Advanced Options")
+    
 11. Search for the `service` definition and update the values so that they match the following:
 
     ```yaml
@@ -428,6 +439,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
       type: LoadBalancer
       port: 80
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step11.png?raw=true "Show Advanced Options")
 
 12. Search for the `resources` definition and update the values so that they match the following. You are removing the curly braces and adding the `requests`:
 
@@ -444,7 +456,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         cpu: 1000m
         memory: 128Mi
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step12.png?raw=true "Show Advanced Options")
+    
 13. Save changes and close the editor.
 
 14. We will now update the file named `Chart.yaml`.
@@ -458,7 +471,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     ```yaml
     appVersion: latest
     ```
-
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step15.png?raw=true "Show Advanced Options")
+    
 16. Save changes and close the editor.
 
 17. We will now update the file named `deployment.yaml`.
@@ -483,6 +497,8 @@ You will configure a Helm Chart that will be used to deploy and configure the **
           annotations:
             rollme: {{ randAlphaNum 5 | quote }}
     ```
+    
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3task2-step18.png?raw=true "Show Advanced Options")
 
 19. Search for the `containers` definition and update the values so that they match the following. You are changing the `containerPort`, `livenessProbe` port and adding the `env` variable:
 
@@ -505,10 +521,12 @@ You will configure a Helm Chart that will be used to deploy and configure the **
             path: /
             port: 3000
     ```
+    
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step19.png?raw=true "Show Advanced Options")
 
-19. Save changes and close the editor.
+20. Save changes and close the editor.
 
-20. We will now update the file named `service.yaml`.
+21. We will now update the file named `service.yaml`.
 
     ```bash
     code service.yaml
@@ -523,8 +541,9 @@ You will configure a Helm Chart that will be used to deploy and configure the **
         protocol: TCP
         name: http
     ```
+    ![In the Advanced options dialog box, the above information has been entered. At the bottom of the dialog box is a Deploy button.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step22.png?raw=true "Show Advanced Options")
 
-22. Save changes and close the editor.
+23. Save changes and close the editor.
 
 24. The chart is now setup to run our web container. Type the following command to deploy the application described by the YAML files. You will receive a message indicating that helm has created a web deployment and a web service.
 
@@ -539,7 +558,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
 
-26. Select the speakers and sessions links. Note that no data is displayed, although we have connected to our Cosmos DB instance, there is no data loaded. You will resolve this by running the content-init application as a Kubernetes Job.
+25. Select the speakers and sessions links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
@@ -624,7 +643,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 3. Save the file.
 
-4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
+4. In the Azure Command Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
     ```bash
     cat ~/.kube/config
@@ -701,7 +720,7 @@ In this task, you will access and review the various logs and dashboards made av
 
 1. From the Azure Portal, select the resource group `fabmedical-{DeploymentId}`, and then select your `Kubernetes Service` Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media/Ex2-Task8.1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk7-step1.png?raw=true "Select fabmedical resource group")
 
 2. From the Monitoring blade, select **Insights**.
 

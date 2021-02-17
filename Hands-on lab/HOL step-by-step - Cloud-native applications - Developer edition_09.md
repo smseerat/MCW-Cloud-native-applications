@@ -50,9 +50,9 @@ In this task, you will update the web service so that it supports dynamic discov
 
 5. From the **web** Deployments view, select **Scale**. From the dialog presented enter 4 as the desired number of pods and select **OK**.
 
-6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **api** pods. From this view, you should see an error like that shown in the following screenshot.
+6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **web** pods. From this view, you should see an error like that shown in the following screenshot.
 
-   ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](media/image141.png "View Pod deployment events")
+   ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk2-step6.png?raw=true "View Pod deployment events")
 
 Like the API deployment, the web deployment used a fixed _hostPort_, and your ability to scale was limited by the number of available agent nodes. However, after resolving this issue for the web service by removing the _hostPort_ setting, the web deployment is still unable to scale past two pods due to CPU constraints. The deployment is requesting more CPU than the web application needs, so you will fix this constraint in the next task.
 
@@ -64,25 +64,29 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 2. Select the vertical ellipses, then select **Edit**.
 
-3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`.
+3. From the Edit a Deployment dialog, select the **JSON** tab, then find the **cpu** resource requirements for the web container. Change this value to `125m`
 
-   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/image142.png "Change cpu value")
+   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk3-step3.png?raw=true "Change cpu value")
 
-4. Select **Update** to save the changes and update the deployment.
+4. In the same **JSON** tab, find the **port** resource under readinessProbe and update it to 3000.
 
-5. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
+   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk3-step4.png?raw=true "Change cpu value")
 
-6. When the deployment update completes, four web pods should be shown in running state.
+5. Select **Update** to save the changes and update the deployment.
+
+6. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
+
+7. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/image143.png "Four pods running")
 
-7. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
+8. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
 ### Task 4: Perform a rolling update
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
+1. Execute this command in Azure Command Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
@@ -145,10 +149,10 @@ In this task, you will edit the web application source code to add Application I
 
 In this task you will setup a Kubernetes Ingress to take advantage of path-based routing and TLS termination.
 
-1. Within the Azure Cloud Shell, run the following command to add the Nginx stable Helm repository:
+1. Within the Azure Command Shell, run the following command to add the Nginx stable Helm repository:
 
     ```bash
-    helm repo add nginx-stable https://helm.nginx.com/stable
+    helm repo add stable https://charts.helm.sh/stable
     ```
 
 2. Update your helm package list.
@@ -159,13 +163,13 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
    > ```
-   > helm repo add stable https://charts.helm.sh/stable
+   > helm repo add nginx-stable https://helm.nginx.com/stable
    > ```
 
 3. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
-   helm install nginx-stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
+   helm install nginx stable/nginx-ingress
    ```
 
 4. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
@@ -174,15 +178,15 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png "Copy ingress controller settings")
 
-    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Cloud Shell.
+    > **Note**: It could take a few minutes to refresh, alternately, you can find the IP using the following command in Azure Command Shell.
     >
     > ```bash
     > kubectl get svc --namespace kube-system
     > ```
     >
-   ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
+   ![A screenshot of Azure Command Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-6. Within the Azure Cloud Shell, create a script to update the public DNS name for the IP.
+6. Within the Azure Command Shell, create a script to update the public DNS name for the IP.
 
    ```bash
    code update-ip.sh
@@ -206,7 +210,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
    ```
 
-   ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
+   ![A screenshot of Command Shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
 
    Be sure to replace the following placeholders in the script:
 
@@ -378,7 +382,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
 21. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
+    ![A screenshot showing the output of the sessions content in the browser.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk5-step21.png?raw=true "Content api sessions")
 
 22. Test TLS termination by visiting both services again using `https`.
 
