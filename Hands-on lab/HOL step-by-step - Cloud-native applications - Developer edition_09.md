@@ -1,4 +1,4 @@
-## Exercise 5: Working with services and routing application traffic
+# Exercise 5: Working with services and routing application traffic
 
 **Duration**: 1 hour
 
@@ -6,7 +6,7 @@ In the previous exercise, we introduced a restriction to the scale properties of
 
 Kubernetes services can discover the ports assigned to each pod, allowing you to run multiple instances of the pod on the same agent node --- something that is not possible when you configure a specific static port (such as 3001 for the API service).
 
-### Task 1: Scale a service without port constraints
+## Task 1: Scale a service without port constraints
 
 In this task, we will reconfigure the API deployment so that it will produce pods that choose a dynamic hostPort for improved scalability.
 
@@ -34,7 +34,7 @@ In this task, we will reconfigure the API deployment so that it will produce pod
 
 6. Return to the browser and refresh the stats page. You should see all 4 pods serve responses as you refresh.
 
-### Task 2: Update an external service to support dynamic discovery with a load balancer
+## Task 2: Update an external service to support dynamic discovery with a load balancer
 
 In this task, you will update the web service so that it supports dynamic discovery through the Azure load balancer.
 
@@ -56,7 +56,7 @@ In this task, you will update the web service so that it supports dynamic discov
 
 Like the API deployment, the web deployment used a fixed _hostPort_, and your ability to scale was limited by the number of available agent nodes. However, after resolving this issue for the web service by removing the _hostPort_ setting, the web deployment is still unable to scale past two pods due to CPU constraints. The deployment is requesting more CPU than the web application needs, so you will fix this constraint in the next task.
 
-### Task 3: Adjust CPU constraints to improve scale
+## Task 3: Adjust CPU constraints to improve scale
 
 In this task, you will modify the CPU requirements for the web service so that it can scale out to more instances.
 
@@ -82,11 +82,11 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 8. Return to the browser tab with the web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
-### Task 4: Perform a rolling update
+## Task 4: Perform a rolling update
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in Azure Command Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
+1. Execute this command in the Git bash Shell (SSH session connected to the Build VM) to retrieve the instrumentation key for the `content-web` Application Insights resource:
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
@@ -94,26 +94,22 @@ In this task, you will edit the web application source code to add Application I
 
    Copy this value. You will use it later.
 
-2. Update your starter files by pulling the latest changes from the Git repository:
+1. Update your starter files by pulling the latest changes from the Git repository:
 
    ```bash
-   cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
+   cd ~/Fabmedical/content-web
    git pull
    ```
 
-3. Install support for Application Insights.
+1. Install support for Application Insights. Press 'Y' if prompted.
 
    ```bash
    npm install applicationinsights --save
    ```
 
-4. Open the `app.js` file:
+1. open  the github.com/`<user>`/Fabmedical site and edit the `app.js` file that exists within the content-web folder. Add the following lines immediately after `express` is instantiated on line 6:
 
-   ```bash
-   code app.js
-   ```
-
-5. Add the following lines immediately after `express` is instantiated on line 6:
+    >Note: Replace [YOUR APPINSIGHTS KEY] with the value copied earlier
 
    ```javascript
    const appInsights = require("applicationinsights");
@@ -121,23 +117,21 @@ In this task, you will edit the web application source code to add Application I
    appInsights.start();
    ```
 
-   ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png "AppInsights updates in app.js")
+   ![A screenshot of the code editor showing updates in context of the app.js file](media/github-edit-appjs.png "AppInsights updates in app.js")
 
-6. Save changes and close the editor.
+1. Commit changes with the description "Added Application Insights" and switch to the git bash shell window.
 
-7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new image.
+1. Pull down this file to your local repository
 
    ```bash
-   git add .
-   git commit -m "Added Application Insights"
-   git push
+   git pull .
    ```
 
-8. Visit the `content-web` workflow for your GitHub repository and see the new image being deployed into your Kubernetes cluster.
+1. If the optional task related to workflows was completed during Exercise 3, GitHub Actions CI will build and deploy a new image. Visit the `content-web` workflow for your GitHub repository and see the new image being deployed into your Kubernetes cluster.
 
-9. While this update runs, return the Kubernetes management dashboard in the browser.
+1. Return the Kubernetes management dashboard in the browser.
 
-10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+1. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/image144.png "Pod deployment is in progress")
 
@@ -145,36 +139,37 @@ In this task, you will edit the web application source code to add Application I
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
-### Task 5: Configure Kubernetes Ingress
+## Task 5: Configure Kubernetes Ingress
 
 In this task you will setup a Kubernetes Ingress to take advantage of path-based routing and TLS termination.
 
-1. Within the Azure Command Shell, run the following command to add the Nginx stable Helm repository:
+1. Switch to the Azure command Shell, run the following command to add the Nginx stable Helm repository:
 
     ```bash
     helm repo add stable https://charts.helm.sh/stable
     ```
 
-2. Update your helm package list.
+1. Update your helm package list.
 
    ```bash
    helm repo update
    ```
 
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
-   > ```
-   > helm repo add nginx-stable https://helm.nginx.com/stable
-   > ```
 
-3. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
+   ```bash
+    helm repo add nginx-stable https://helm.nginx.com/stable
+    ```
+
+1. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
    helm install nginx stable/nginx-ingress
    ```
 
-4. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
+1. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
 
-5. Under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the `nginx-ingress-RANDOM-controller` service.
+1. Under **Discovery and Load Balancing**, select **Services**, then copy the IP Address for the **External endpoints** for the `nginx-ingress-RANDOM-controller` service.
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/Ex4-Task5.5.png "Copy ingress controller settings")
 
@@ -186,46 +181,37 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     >
    ![A screenshot of Azure Command Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-6. Within the Azure Command Shell, create a script to update the public DNS name for the IP.
+1. Within the Azure Command Shell, run powershell as shown below to enable the execution of the next set of commands.
 
-   ```bash
-   code update-ip.sh
+   ```Powershell
+   powershell
    ```
-
-   Paste the following as the contents and update the IP and SUFFIX values:
-
-   ```bash
-   #!/bin/bash
-
-   # Public IP address
-   IP="[INGRESS PUBLIC IP]"
-
-   # Name to associate with public IP address
-   DNSNAME="fabmedical-[SUFFIX]-ingress"
-
-   # Get the resource-id of the public ip
-   PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
-
-   # Update public ip address with dns name
-   az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
-   ```
-
-   ![A screenshot of Command Shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
-
-   Be sure to replace the following placeholders in the script:
+   Paste and run the following commands. Be sure to replace the following placeholders in the script:
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied previously.
    - `[SUFFIX]`: Replace this with the same SUFFIX value used previously for this lab.
 
-7. Save changes and close the editor.
-
-8. Run the update script.
-
-   ```bash
-   bash ./update-ip.sh
+   ```Powershell
+   # Public IP address
+   $IP="[INGRESS PUBLIC IP]"
    ```
 
-9. Verify the IP update by visiting the URL in your browser.
+   ```Powershell
+   # Name to associate with public IP address
+   $DNSNAME="fabmedical-[SUFFIX]-ingress"
+   ```
+
+   ```Powershell
+   # Get the resource-id of the public ip
+   $PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+   ```
+
+   ```Powershell
+   # Update public ip address with dns name
+   az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
+   ```
+
+1. Verify the IP update by visiting the URL in your browser.
 
    > **Note**: It is normal to receive a 404 message at this time.
 
@@ -235,9 +221,9 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
    ![A screenshot of the fabmedical browser URL.](media/Ex4-Task5.9.png "fabmedical browser URL")
 
-10. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
+1. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
 
-    ```bash
+    ```shell
     kubectl create namespace cert-manager
 
     kubectl label namespace cert-manager cert-manager.io/disable-validation=true
@@ -245,10 +231,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
     ```
 
-11. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
+1. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
 
-    ```bash
-    code clusterissuer.yml
+    ```cmd
+    notepad clusterissuer.yml
     ```
 
     The following resource configuration should work as is:
@@ -274,15 +260,15 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
               class: nginx
     ```
 
-12. Save changes and close the editor.
+1. Save changes and close the editor.
 
-13. Create the issuer using `kubectl`.
+1. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
     ```
 
-14. Now you can create a certificate object.
+1. Now you can create a certificate object.
 
     > **Note**:
     >
@@ -293,7 +279,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
     > If a certificate is already available, skip to step 16.
 
     ```bash
-    code certificate.yml
+    notepad certificate.yml
     ```
 
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
@@ -312,9 +298,9 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
         kind: ClusterIssuer
     ```
 
-15. Save changes and close the editor.
+1. Save changes and close the editor.
 
-16. Create the certificate using `kubectl`.
+1. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -334,10 +320,10 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 
     It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
-17. Now you can create an ingress resource for the content applications.
+1. Now you can create an ingress resource for the content applications.
 
     ```bash
-    code content.ingress.yml
+    notepad content.ingress.yml
     ```
 
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
@@ -370,35 +356,35 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
                   servicePort: 3001
     ```
 
-18. Save changes and close the editor.
+1. Save changes and close the editor.
 
-19. Create the ingress using `kubectl`.
+1. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml
     ```
 
-20. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
+1. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
 
-21. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
+1. Visit the api directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
     ![A screenshot showing the output of the sessions content in the browser.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5tsk5-step21.png?raw=true "Content api sessions")
 
-22. Test TLS termination by visiting both services again using `https`.
+1. Test TLS termination by visiting both services again using `https`.
 
     > It can take between 5 and 30 minutes before the SSL site becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
-### Task 6: Multi-region Load Balancing with Traffic Manager
+## Task 6: Multi-region Load Balancing with Traffic Manager
 
 In this task, you will setup Azure Traffic Manager as a multi-region load balancer. This will enable you to provision an AKS instance of the app in a secondary Azure region with load balancing between the two regions.
 
 1. Within the Azure Portal, select **+ Create a resource**.
 
-2. Search the marketplace for **Traffic Manager profile**, select this resource type, then select **Create**.
+1. Search the marketplace for **Traffic Manager profile**, select this resource type, then select **Create**.
 
     ![The screenshot shows Traffic Manager profile in the Azure marketplace.](media/tm-marketplace.png "Traffic Manager profile")
 
-3. On the **Create Traffic Manager profile** blade, enter the following values, then select **Create**.
+1. On the **Create Traffic Manager profile** blade, enter the following values, then select **Create**.
 
     - Name: `fabmedical-[SUFFIX]'
     - Routing Method: **Performance**
@@ -406,13 +392,13 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![The screenshot shows the Create Traffic Manager profile blade with all values entered.](media/tm-create.png "Create Traffic Manager profile configuration")
 
-4. Navigate to the newly created `fabmedical-[SUFFIX]` **Traffic Manager profile**.
+1. Navigate to the newly created `fabmedical-[SUFFIX]` **Traffic Manager profile**.
 
-5. On the **Traffic Manager profile** blade, select **Endpoints** under **Settings**.
+1. On the **Traffic Manager profile** blade, select **Endpoints** under **Settings**.
 
-6. On the **Endpoints** pane, select **+ Add** to add a new endpoint to be load balanced.
+1. On the **Endpoints** pane, select **+ Add** to add a new endpoint to be load balanced.
 
-7. On the **Add endpoint** pane, enter the following values for the new endpoint, then select **Add**.
+1. On the **Add endpoint** pane, enter the following values for the new endpoint, then select **Add**.
 
     - Type: **External endpoint**
     - Name: `primary`
@@ -423,19 +409,18 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![Add endpoint configuration pane with values entered.](media/tm-add-endpoint-primary.png "Add endpoint configuration")
 
-8. Notice the list of **Endpoints** now shows the **primary** endpoint that was added.
+1. Notice the list of **Endpoints** now shows the **primary** endpoint that was added.
 
-9. On the **Traffic Manager profile** blade, select **Overview**.
+1. On the **Traffic Manager profile** blade, select **Overview**.
 
-10. On the **Overview** pane, copy the **DNS name** for the Traffic Manager profile.
+1. On the **Overview** pane, copy the **DNS name** for the Traffic Manager profile.
 
     ![The Traffic Manager profile overview pane with the DNS name highlighted](media/tm-overview.png "fabmedical Traffic Manager profile DNS name")
 
-11. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
+1. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
 
     ![The screenshot shows the Contoso Neuro website using the Traffic Manager profile DNS name](media/tm-endpoint-website.png "Traffic Manager show Contoso home page")
 
-12. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
+1. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
 
     > **Note:** You can setup the secondary AKS and instance of the Contoso Neuro website on your own if you wish. The steps to set that up are the same as most of the steps you went through in this lab to setup the primary AKS and app instance.
-

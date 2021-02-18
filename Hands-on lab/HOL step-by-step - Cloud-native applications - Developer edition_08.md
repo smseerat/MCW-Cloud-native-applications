@@ -1,10 +1,10 @@
-## Exercise 4: Scale the application and test HA
+# Exercise 4: Scale the application and test HA
 
 **Duration**: 20 minutes
 
 At this point, you have deployed a single instance of the web and API service containers. In this exercise, you will increase the number of container instances for the web service and scale the front-end on the existing cluster.
 
-### Task 1: Increase service instances from the Kubernetes dashboard
+## Task 1: Increase service instances from the Kubernetes dashboard
 
 In this task, you will increase the number of instances for the API deployment in the Kubernetes management dashboard. While it is deploying, you will observe the changing status.
 
@@ -68,7 +68,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Refresh the page in the browser, and you can see the hostName change between the two API service instances. The letters after `api-{number}-` in the hostname will change.
 
-### Task 2: Increase service instances beyond available resources
+## Task 2: Increase service instances beyond available resources
 
 In this task, you will try to increase the number of instances for the API service container beyond available resources in the cluster. You will observe how Kubernetes handles this condition and correct the problem.
 
@@ -130,7 +130,7 @@ In this task, you will try to increase the number of instances for the API servi
 
     ![Workloads is selected in the navigation menu. A green check mark now appears next to the api deployment listing in the Deployments box at right.](media/image122.png "Review pods list")
 
-### Task 3: Restart containers and test HA
+## Task 3: Restart containers and test HA
 
 In this task, you will restart containers and validate that the restart does not impact the running service.
 
@@ -182,7 +182,7 @@ In this task, you will restart containers and validate that the restart does not
 
     ![Workloads is selected in the navigation menu on the left. On the right are the Deployment, Pods, and Replica Sets boxes.](media/image132.png "View only one replica")
 
-### Task 4: Configure Cosmos DB Autoscale
+## Task 4: Configure Cosmos DB Autoscale
 
 In this task, you will setup Autoscale on Azure Cosmos DB.
 
@@ -202,7 +202,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 7. Perform the same task to enable **Autoscale** Throughput on the `speakers` collection.
 
-### Task 5: Test Cosmos DB Autoscale
+## Task 5: Test Cosmos DB Autoscale
 
 In this task, you will run a performance test script that will test the Autoscale feature of Azure Cosmos DB so you can see that it will now scale greater than 400 RU/s.
 
@@ -251,4 +251,3 @@ In this task, you will run a performance test script that will test the Autoscal
 12. Notice that the **Request charge** now shows there was activity on the **Cosmos DB account** that exceeded the 400 RU/s limit that was previously set before Autoscale was turned on.
 
     ![The screenshot shows the Cosmos DB request charge graph showing recent activity from performance test](media/cosmos-request-charge.png "Recent CosmosDB activity graph")
-
