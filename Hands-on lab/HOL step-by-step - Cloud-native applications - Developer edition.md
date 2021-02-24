@@ -1907,8 +1907,8 @@ In this task, you will try to increase the number of instances for the API servi
 
    ```text
      ports:
-	    containerPort: 3001
-	    hostPort: 3001
+	    - containerPort: 3001
+	      hostPort: 3001
    ```
 
    - Your container spec should now look like this:
