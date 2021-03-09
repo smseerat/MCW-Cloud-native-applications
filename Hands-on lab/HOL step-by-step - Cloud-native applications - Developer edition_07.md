@@ -41,6 +41,8 @@ In this task, you will gather the information you need about your Azure Kubernet
    kubectl get nodes
    ```
 
+   This will download a kubeconfig file called **config** in the `c:\users\<username>\.kube\` folder
+
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png "kubectl get nodes")
 
@@ -54,25 +56,16 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
 
-1. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Command Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
+1. Before you can connect to the Kubernetes Dashboard, you will need to open a **new command shell** window and login to Azure. This is because the ssh tunnel that will be established on port 8001 to launch the Kubernetes Dashboard will not allow you to enter any command till dashboard is closed.
 
-    Within the Azure Command Shell, use the following command to download the Kubeconfig file:
+    Within a **new** Azure Command Shell, use the following command to login to Azure:
 
     ```bash
-    download /home/<username>/.kube/config
+    az login
     ```
 
-    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Command Shell.
+    
 
-    >**Note**: You can find the `<username>` from the first part of the Azure Command Shell command-line prompt; such as `<username>@Azure:~$`.
-    >
-    > You can also look in the `/home` directory and so see the directory name that exists within it to find the correct username directory where the Kubeconfig file resides:
-    >
-    > ```bash
-    > ls /home
-    > ```
-
-    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step5.png?raw=true "kubectl get nodes")
 
 1. Create an SSH tunnel linking a local port (`8001`) on your Command Shell host to port 443 on the management node of the cluster. Command Shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
 
@@ -84,7 +77,7 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    ![In this screenshot of the console, the output of the az aks browse command.](media/image76.png "az aks browse command output")
 
-1. If the tunnel is successful, you will see the Kubernetes Dashboard authentication screen. Select the **Kubeconfig** option, select the ellipsis (`...`) button, select the **Kubeconfig** file that was previously downloaded, then select **Sign in**.
+1. If the tunnel is successful, you will see the Kubernetes Dashboard authentication screen (as shown below). Select the **Kubeconfig** option, select the ellipsis (`...`) button, select the **config** (Kubeconfig) file that was previously downloaded in the `c:\users\<username>\.kube\` folder, then select **Sign in**.
 
     ![The screenshot shows the Kubernetes Dashboard authentication prompt.](media/kubernetes-dashboard-kubeconfig-prompt.png "Kubernetes Dashboard authentication prompt")
 
@@ -391,13 +384,6 @@ You will configure a Helm Chart that will be used to deploy and configure the **
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png "Kubernetes delete deployment")
 
 1. Open a **new** Azure Command Shell console.
-
-1. Update your starter files by pulling the latest changes from the Git repository:
-
-    ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
-    git pull
-    ```
 
 1. We will use the `helm create` command to scaffold out a chart implementation that we can build on. Use the following commands to create a new chart named `web` in a new directory:
 
