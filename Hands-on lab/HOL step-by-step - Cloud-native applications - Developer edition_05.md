@@ -94,16 +94,15 @@ The purpose of this task is to make sure you can run the application successfull
    ```bash
    sed -i 's/localhost:/<AGENT VM IP>:/' app.js
    ```
- 
+
    ```bash
    head app.js
    node ./app.js &
    ```
 
+   ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
-    ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
-
-    Press `ENTER` again to get a command prompt for the next step.
+   Press `ENTER` again to get a command prompt for the next step.
 
 1. Test the web application using curl. You will see HTML output returned without errors.
 
@@ -159,7 +158,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
    ![In this screenshot of the console window, ll has been typed and run at the command prompt. The Dockerfile file is highlighted at the top of list.](media/image58.png "Highlight the Dockerfile")
 
-1. Review the `Dockerfile` content.   
+1. Review the `Dockerfile` content.
 
    ```bash
    cat Dockerfile
@@ -284,7 +283,7 @@ In this task, you will create Docker images for the application --- one for the 
    docker image ls
    ```
 
-   ![two images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
+   ![two images are now visible in this screenshot of the console window:  content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
 
 ## Task 5: Configure and run the **api** container
 
@@ -547,13 +546,14 @@ image and pushes it to your ACR instance automatically.
     
     ```
 
-1. Next edit the workflow YAML file.
+1. Next run the sed command to update the workflow YAML file with the correct DeploymentID. replace `<SUFFIX>` above with your DeploymentID value given on Environment details page
 
     ```bash
-    vi content-web.yml
+    sed 's/\[DeploymentID\]/<SUFFIX>/g' content-web.yml
+    cat content-web.yml
     ```
 
-   replace `[DeploymentID]` with your DeploymentID value given on Environment details page
+    Text to be replaced
 
       ```view
       # Environment variables are defined so that they can be used throughout the job definitions.
@@ -566,9 +566,9 @@ image and pushes it to your ACR instance automatically.
       tag: '${{ github.run_id  }}'
       ```
 
-    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
+    The contents of the file should  look like the illustration highlighted below
 
-1. Save the file and exit VI by pressing `<Esc>` then `:wq`.
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
 
 1. Save the pipeline YAML, then commit and push it to the Git repository:
 
@@ -592,15 +592,15 @@ image and pushes it to your ACR instance automatically.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-1. Next, setup the `content-api` workflow. 
+1. Next, setup the `content-api` workflow. Update the `resourceGroupName` using the `sed` command below and replacing the `<SUFFIX>` with your ```DeploymentID``` value from ```Environment Details``` tab.
 
     ```bash
     cd ~/Fabmedical/.github/workflows
-    vi content-api.yml
+    sed 's/\[DeploymentID\]/<SUFFIX>/g' content-api.yml
+    cat content-api.yml
     ```
 
-1. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value from ```Environment Details``` tab.
-
+    The updated file fragment should look like as show below
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
 1. Save the file, then commit and push it to the Git repository:

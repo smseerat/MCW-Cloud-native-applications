@@ -34,7 +34,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-1. Change the default Browser to Edge using the default apps setting option in windows.
+1. Change the default Browser to Edge using the default apps setting option in Windows.
 ![In this screenshot of the selection of Edge browser is set as the default browser using the "Default apps' item in settings .](media/edge-default-app.png "Make Edge the default browser using 'Default Apps' ")  
 1. Next, update the region + language settings of the Lab VM to region that is appropriate to your setting.
 
