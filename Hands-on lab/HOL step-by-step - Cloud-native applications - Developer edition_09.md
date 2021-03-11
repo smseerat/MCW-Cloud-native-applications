@@ -146,7 +146,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 1. Switch to the Azure command Shell, run the following command to add the Nginx stable Helm repository:
 
     ```bash
-    helm repo add stable https://charts.helm.sh/stable
+    helm repo add nginx-stable https://helm.nginx.com/stable
     ```
 
 1. Update your helm package list.
@@ -158,13 +158,13 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
    > **Note**: If you get a "no repositories found." error, then run the following command. This will add back the official Helm "stable" repository.
 
    ```bash
-    helm repo add nginx-stable https://helm.nginx.com/stable
+    helm repo add stable https://charts.helm.sh/stable
     ```
 
 1. Install the ingress controller resource to handle ingress requests as they come in. The ingress controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
 
    ```bash
-   helm install nginx stable/nginx-ingress
+   helm install nginx-stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --generate-name
    ```
 
 1. From the Kubernetes dashboard, ensure the Namespace filter is set to **All namespaces**
@@ -234,7 +234,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 1. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
 
     ```cmd
-    notepad clusterissuer.yml
+    code clusterissuer.yml
     ```
 
     The following resource configuration should work as is:
@@ -323,7 +323,7 @@ In this task you will setup a Kubernetes Ingress to take advantage of path-based
 1. Now you can create an ingress resource for the content applications.
 
     ```bash
-    notepad content.ingress.yml
+    code content.ingress.yml
     ```
 
     Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
