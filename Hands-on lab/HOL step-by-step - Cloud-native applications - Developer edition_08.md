@@ -214,7 +214,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
 
-4. Switch to the Git Bash window which has the  **SSH session** to the **Build agent VM**.
+4. Return to the SSH window which has the  **SSH session** to the **Build agent VM**.
 
 5. Navigate to the `~/Fabmedical` directory.
 

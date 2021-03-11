@@ -86,7 +86,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     Notice, the **Connection String** will automatically populate with the Key for your Azure Cosmos DB instance.
 
-1. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]` with your DeploymentID.
+1. **If** the **Connection string** contains `@undefined:` then replace it with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Note: replace the `[SUFFIX]` with your DeploymentID.
 
     ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex2tsk2-ste7.png?raw=true "Setting the Connection string")
 
@@ -115,3 +115,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 1. To verify the data was migrated, navigate to the **Cosmos DB Account** for the lab within the Azure Portal, then select the **Data Explorer**. You will see the `speakers` and `sessions` collections listed within the `contentdb` database, and you will be able to explore the documents within.
 
     ![The screenshot shows the Cosmos DB is open in the Azure Portal with Data Explorer open showing the data has been migrated.](media/dms-confirm-data-in-cosmosdb.png "Cosmos DB is open")
+
+1. in this step, we will update the index policy of the **sessions** collection to accommodate sorted queries required in the next exercise. Navigate to the **Scale & Settings** section under the **sessions** collection. Select the **Indexing Policy** tab (as show below) and add a new **Single field** index for the **startTime** field. Finally, click **Save** to complete the step.
+
+    ![Sessions Index added for startTime.](media/dms-sessionsindex-in-cosmosdb.png "Add Sessions Index")
