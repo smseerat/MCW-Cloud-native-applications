@@ -30,7 +30,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 1. If you see the pop-up **Stay Signed in?**, click Yes.
 
-1. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
+1. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab.
 
 1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
@@ -42,11 +42,11 @@ You should follow all of the steps provided in this section _before_ taking part
 
 In this section, you validate that you can connect to the new Build Agent VM using the git bash console.
 
-1. From the start menu in the Lab VM, find and Open Git Bash for Windows 
+1. From the start menu in the Lab VM, find and Open A new Command shell window (either Cmd.exe or Git Bash)
 
-![In this screenshot of the start selection of git Bash app, the App is selected.](media/gitbash-icon.png "Open Git bash from Start")
+1. Connect to build agent vm using the **Command to Connect to Build Agent VM** value provided in on lab **environment details** section of the guide. Example below
 
-1. Connect to build agent vm using the **Command to Connect to Build Agent VM** value provided in on lab **environment details** section of the guide.
+    >ssh  adminfabmedical@fabmedical327955.westus.cloudapp.azure.com
 
 1. When asked to confirm if you want to continue connecting, type `yes`.
 
@@ -78,7 +78,7 @@ In this section, you validate that you can connect to the new Build Agent VM usi
 
 1. Sign in with the Azure credentials already provided.
 
-1. After logging in, return to SSH prompt within the Git bash window. It should update by displaying your list of subscriptions.
+1. After logging in, return to SSH prompt within the Shell window. It should update by displaying your list of subscriptions.
 
     > **Note**: Pressing ENTER may be required to trigger the update of the shell screen.
 
@@ -86,7 +86,7 @@ In this section, you validate that you can connect to the new Build Agent VM usi
 
 In this task, you will use `git` to copy the lab content to your VM and copy the folders to used as source repos.
 
-1. Copy the following command to clone the lab files and then delete **.git** directory, because **.git** directory is not required. Next, copy the source folders that we need for the Fabmedical web application. Paste the below commands in the git Bash window and then press `<ENTER>`:
+1. Copy the following command to clone the lab files and then delete **.git** directory, because **.git** directory is not required. Next, copy the source folders that we need for the Fabmedical web application. Paste the below commands in the SSH session and then press `<ENTER>`:
 
      ```bash
      git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
@@ -107,7 +107,7 @@ In this task, you will use `git` to copy the lab content to your VM and copy the
     content-web/
     ```
 
- > **Note** : You have to use bash console so don't close it as it will be needed subsequently in Tasks and Exercises.
+ > **Note** : You have to use SSH session so don't close it as it will be needed subsequently in Tasks and Exercises.
 
 ## Task 3: Create a GitHub repository
 
@@ -186,4 +186,4 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Refresh your GitHub repository, you should now see the code published.
 
-    > **Note**: You will need this Git bash window in the next exercise so **Do Not** close it.
+    > **Note**: You will need this SSH session in the next exercise so **Do Not** close it.

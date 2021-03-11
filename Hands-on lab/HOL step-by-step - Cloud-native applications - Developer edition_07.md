@@ -14,16 +14,12 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    ```bash
    az login
+    
    ```
 
    - If you are not connected to the correct subscription, list your subscriptions and then set the subscription by its id with the following commands (similar to what you did in Command Shell before the lab):
 
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step1.png?raw=true "kubectl get nodes")
-
-   ```bash
-   az account list
-   az account set --subscription {id}
-   ```
 
 1. Download kubectl and configure a search path to it. 
 
@@ -33,13 +29,18 @@ In this task, you will gather the information you need about your Azure Kubernet
    
    ```
 
-1. Next, to enable kubectl to connect to the Kubernetes cluster, configure the required credentials. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
+1. Next, to enable kubectl to connect to the Kubernetes cluster, configure the required credentials after replace the [SUFFIX] values within the below command. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
    ```bash
-   az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
-
-   kubectl get nodes
+   az aks get-credentials -a --name fabmedical-[SUFFIX] --resource-group fabmedical-[SUFFIX]
    ```
+
+   ```bash
+   kubectl get nodes
+
+   ```
+
+   This will download a kubeconfig file called **config** in the `c:\users\<username>\.kube\` folder
 
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step2.png?raw=true "kubectl get nodes")
    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](media/image75.png "kubectl get nodes")
@@ -54,39 +55,30 @@ In this task, you will gather the information you need about your Azure Kubernet
 
    > **Note**: If you get an error saying `error: failed to create clusterrolebinding: clusterrolebindings.rbac.authorization.k8s.io "kubernetes-dashboard" already exists` just ignore it and move on to the next step.
 
-1. Before you can create an SSH tunnel and connect to the Kubernetes Dashboard, you will need to download the **Kubeconfig** file within Azure Command Shell that contains the credentials you will need to authenticate to the Kubernetes Dashboard.
+1. Before you can connect to the Kubernetes Dashboard, you will need to open a **new command shell** window and login to Azure. This is because the ssh tunnel that will be established on port 8001 to launch the Kubernetes Dashboard will not allow you to enter any command till dashboard is closed.
 
-    Within the Azure Command Shell, use the following command to download the Kubeconfig file:
+    Within a **new** Azure Command Shell, use the following command to login to Azure:
 
     ```bash
-    download /home/<username>/.kube/config
+    az login
     ```
 
-    Make sure to replace the `<username>` placeholder with your name from the command-line in the Azure Command Shell.
-
-    >**Note**: You can find the `<username>` from the first part of the Azure Command Shell command-line prompt; such as `<username>@Azure:~$`.
-    >
-    > You can also look in the `/home` directory and so see the directory name that exists within it to find the correct username directory where the Kubeconfig file resides:
-    >
-    > ```bash
-    > ls /home
-    > ```
-
-    ![In this screenshot of the console, kubectl get nodes has been typed and run at the command prompt, which produces a list of nodes.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk1-step5.png?raw=true "kubectl get nodes")
-
-1. Create an SSH tunnel linking a local port (`8001`) on your Command Shell host to port 443 on the management node of the cluster. Command Shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the values as follows:
+1. Create an SSH tunnel linking a local port (`8001`) on your Command Shell host to port 443 on the management node of the cluster. Command Shell will then use the web preview feature to give you remote access to the Kubernetes dashboard. Execute the command below replacing the [SUFFIX] values as follows:
 
    > **Note**: After you run this command, it may work at first and later lose its connection, so you may have to run this again to reestablish the connection. If the Kubernetes dashboard becomes unresponsive in the browser this is an indication to return here and check your tunnel or rerun the command.
 
    ```bash
-   az aks browse --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
+   az aks browse --name fabmedical-[SUFFIX] --resource-group fabmedical-[SUFFIX]
    ```
 
    ![In this screenshot of the console, the output of the az aks browse command.](media/image76.png "az aks browse command output")
 
-1. If the tunnel is successful, you will see the Kubernetes Dashboard authentication screen. Select the **Kubeconfig** option, select the ellipsis (`...`) button, select the **Kubeconfig** file that was previously downloaded, then select **Sign in**.
+1. If the tunnel is successful, you will see the Kubernetes Dashboard authentication screen (as shown below). Select the **Kubeconfig** option, select the ellipsis (`...`) button, select the **config** (Kubeconfig) file that was previously downloaded in the `c:\users\<username>\.kube\` folder, then select **Sign in**.
 
     ![The screenshot shows the Kubernetes Dashboard authentication prompt.](media/kubernetes-dashboard-kubeconfig-prompt.png "Kubernetes Dashboard authentication prompt")
+
+    ![The screenshot shows the Config file selection.](media/kubedashboardsignin.png "Config file selection dialog")
+    ![The screenshot shows the Config file selection.](media/kubedashboardsignin2.png "Config file selection dialog")
 
 1. Once authenticated, you will see the Kubernetes management dashboard.
 
@@ -140,33 +132,31 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 1. Open the Azure portal in your browser and navigate to your resource group and find your Cosmos DB resource. Select the Cosmos DB resource to view details.
 
-   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step7.png?raw=true "Select CosmosDB resource from list")
+   ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/ex3tsk2-step7.png "Select CosmosDB resource from list")
 
 1. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
-   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk2-step8.png?raw=true "Capture CosmosDB connection string")
+   ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](media/ex3tsk2-step8.png "Capture CosmosDB connection string")
 
-1. Update the provided connection string with a database `contentdb` and a replica set `globaldb`.
+1. Within Notepad, paste and update the provided connection string with a database `contentdb` and a replica set `globaldb`.
 
    > **Note**: Username and password redacted for brevity.
 
-   ```text
-   mongodb://<USERNAME>:<PASSWORD>@fabmedical-<SUFFIX>.documents.azure.com:10255/contentdb?ssl=true&replicaSet=globaldb
+      mongodb://\<USERNAME>:\<PASSWORD>@fabmedical-\<SUFFIX>.documents.azure.com:10255/`contentdb`?ssl=true&replicaSet=`globaldb`
+
+1. This connection string will be setup and stored as a Kubernetes secret and the `content-api` application pod will be configured to access the secret. 
+
+    First, we must base64 encode the secret value. Return to the SSH session window (left open uring Exercise 1) and within this SSH session execute the following command to encode the connection string (after patching [CONNECTION STRING VALUE] with the connecting string copied in Notepad) and then copy the output.
+
+   > **Note**: Double quote marks surrounding the connection string are required to successfully produce the required output.
+
+   ```bash
+   echo -n "[CONNECTION STRING VALUE]" | base64 -w 0 - | echo $(</dev/stdin)
    ```
 
-1. Open a **new** git bash shell window.
+  ![This is a screenshot of the Azure Command Shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-1. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Within the git bash window, use the following command to encode the connection string and then, copy the output.
-
-    > **Note**: Double quote marks surrounding the connection string are required to successfully produce the required output.
-
-    ```bash
-    echo -n "[CONNECTION STRING VALUE]" | base64 -w 0 - | echo $(</dev/stdin)
-    ```
-
-    ![This is a screenshot of the Azure Command Shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
-
-1. Close the Git bash window by typing **'Exit'** and return to the Kubernetes UI in your browser and select **+ Create**.
+1. Minimize the SSH session window and return to the Kubernetes Dashboard UI in your browser and select **+ Create** (top right corner).
 
 1. In the **Create from input** tab, update the following YAML with the encoded connection string from your clipboard, paste the YAML data into the create dialog, and choose **Upload**.
 
@@ -217,19 +207,12 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 1. Save your changes and close the editor.
 
-    ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
-
-1. Update the api deployment by using `kubectl` to apply the new configuration.
-
-    ```bash
-    kubectl apply -f api.deployment.yml
-    ```
-
-    >**Note**: If you receive an error like `Operation cannot be fulfilled on deployment.apps "api"` then delete the deployment and recreate it using the modified `api.deployment.yml` file.
+1. Delete and Re-create the api deployment using the modified `api.deployment.yml` file by executing the below `kubectl` to apply the new configuration.
 
       ```bash
       kubectl delete deployment api
       kubectl create -f api.deployment.yml
+      
       ```
 
 1. Select **Deployments** then **api** to view the api deployment. It now has a healthy instance and the logs indicate it has connected to mongodb.
@@ -310,17 +293,9 @@ In this task, deploy the web service using `kubectl`.
            terminationGracePeriodSeconds: 30
    ```
 
-1. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
+1. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server. Save your changes and close the editor.
 
-1. Select the **...** button and choose **Save**.
-
-   ![In this screenshot of an Azure Command Shell editor window, the ... button has been selected and the Save option is highlighted.](media/b4-image62.png "Save Azure Command Shell changes")
-
-1. Select the **...** button again and choose **Close Editor**.
-
-   ![In this screenshot of the Azure Command Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
-
-1. Create a text file called `web.service.yml` using the Azure Command Shell
+1. Next, create a text file called `web.service.yml` using the Azure Command Shell
    Editor.
 
    ```bash
@@ -372,7 +347,49 @@ In this task, deploy the web service using `kubectl`.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
 
-## Task 4: Deploy a service using a Helm chart
+## Task 4: Review Azure Monitor for Containers
+
+In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
+
+1. From the Azure Portal, select the resource group `fabmedical-{DeploymentId}`, and then select your `Kubernetes Service` Azure resource.
+
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk7-step1.png?raw=true "Select fabmedical resource group")
+
+1. From the Monitoring blade, select **Insights**.
+
+   ![In the Monitoring blade, Insights is highlighted.](media/Ex2-Task8.2.png "Select Insights link")
+
+1. Review the various available dashboards and a deeper look at the various metrics and logs available on the Cluster, Nodes, Controllers, and deployed Containers.
+
+   ![In this screenshot, the dashboards and blades are shown. Cluster metrics can be reviewed.](media/Ex2-Task8.3.png "Review the dashboard metrics")
+
+1. To review the Containers dashboards and see more detailed information about each container, select the **Containers** tab.
+
+   ![In this screenshot, the various containers information is shown.](media/monitor_1.png "View containers data")
+
+1. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names. You can compare the names with those in the kubernetes dashboard.
+
+   ![In this screenshot, the containers are filtered by container named web.](media/monitor_3.png "Filter data by container and web")
+
+1. By default, the CPU Usage metric will be selected displaying all cpu information for the selected container, to switch to another metric open the metric dropdown list and select a different metric.
+
+   ![In this screenshot, the various metric options are shown.](media/monitor_2.png "Filter by CPU usage")
+
+1. Upon selecting any pod, all the information related to the selected metric will be displayed on the right panel, and that would be the case when selecting any other metric, the details will be displayed on the right panel for the selected pod.
+
+   ![In this screenshot, the pod cpu usage details are shown.](media/monitor_4.png "POD CPU details")
+
+1. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
+
+   ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png "View container logs menu option")
+
+   ![The container logs are displayed based on a query entered in the query window.](media/monitor_6.png "Container logs")
+
+1. For each log entry you can display more information by expanding the log entry to view the below details.
+
+   ![The container log query results are displayed, one log entry is expanded in the results view with its details shown.](media/monitor_7.png "Expand the results")
+
+## [Optional] Task 5: Deploy a service using a Helm chart
 
 In this task, you will deploy the web service using a [Helm](https://helm.sh/) chart to streamline the installing and managing the container-based application on the Azure Kubernetes cluster.
 
@@ -391,13 +408,6 @@ You will configure a Helm Chart that will be used to deploy and configure the **
    ![A screenshot of the Kubernetes management dashboard showing how to delete a deployment.](media/Ex2-Task4.4.png "Kubernetes delete deployment")
 
 1. Open a **new** Azure Command Shell console.
-
-1. Update your starter files by pulling the latest changes from the Git repository:
-
-    ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/content-web
-    git pull
-    ```
 
 1. We will use the `helm create` command to scaffold out a chart implementation that we can build on. Use the following commands to create a new chart named `web` in a new directory:
 
@@ -560,11 +570,13 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
 1. Return to the browser where you have the Kubernetes management dashboard open. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. From the Services view, select the **web** service, and from this view, you will see the web service deploying. This deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
 
-    ![In the Kubernetes management dashboard, Services is selected below Discovery and Load Balancing in the navigation menu. At right are three boxes that display various information about the web service deployment: Details, Pods, and Events. "External endpoints" is highlighted to show that an external endpoint has been created.](media/image94.png "Web service endpoint")
+   ![In the Services box, a red arrow points at the hyperlinked external endpoint for the web service.](media/image112.png "Application external endpoint")
 
-1. Select the speakers and sessions links.
+1. You will see the `web` application in your browser and be able to select the Speakers and Sessions links to view those pages without errors. The lack of errors means that the web application is correctly calling the API service to show the details on each of those pages.
 
-    ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
+   ![In this screenshot of the Contoso Neuro web application, Speakers has been selected, and sample speaker information appears at the bottom.](media/image114.png "Sample speaker information displayed")
+
+   ![In this screenshot of the Contoso Neuro web application, Sessions has been selected, and sample session information appears at the bottom.](media/image115.png "Sample session information displayed")
 
 1. We will now persist the changes into the repository. Execute the following commands:
 
@@ -576,23 +588,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
     git push
     ```
 
-## Task 5: Test the application in a browser
-
-In this task, you will verify that you can browse to the web service you have deployed and view the speaker and content information exposed by the API service.
-
-1. From the Kubernetes management dashboard, in the navigation menu, select the **Services** view under **Discovery and Load Balancing**.
-
-2. In the list of services, locate the external endpoint for the `web` service and select this hyperlink to launch the application.
-
-   ![In the Services box, a red arrow points at the hyperlinked external endpoint for the web service.](media/image112.png "Application external endpoint")
-
-3. You will see the `web` application in your browser and be able to select the Speakers and Sessions links to view those pages without errors. The lack of errors means that the web application is correctly calling the API service to show the details on each of those pages.
-
-   ![In this screenshot of the Contoso Neuro web application, Speakers has been selected, and sample speaker information appears at the bottom.](media/image114.png "Sample speaker information displayed")
-
-   ![In this screenshot of the Contoso Neuro web application, Sessions has been selected, and sample session information appears at the bottom.](media/image115.png "Sample session information displayed")
-
-## Task 6: Configure Continuous Delivery to the Kubernetes Cluster
+## [Optional] Task 6: Configure Continuous Delivery to the Kubernetes Cluster
 
 In this task, you will use GitHub Actions workflows to automate the process for deploying the web image to the AKS cluster. You will update the workflow and configure a job so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
 
@@ -718,44 +714,3 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
     ![The screenshot shows workflow is running and the current status.](media/2020-08-25-22-15-39.png "Workflow is running")
 
-## Task 7: Review Azure Monitor for Containers
-
-In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
-
-1. From the Azure Portal, select the resource group `fabmedical-{DeploymentId}`, and then select your `Kubernetes Service` Azure resource.
-
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex3tsk7-step1.png?raw=true "Select fabmedical resource group")
-
-1. From the Monitoring blade, select **Insights**.
-
-   ![In the Monitoring blade, Insights is highlighted.](media/Ex2-Task8.2.png "Select Insights link")
-
-1. Review the various available dashboards and a deeper look at the various metrics and logs available on the Cluster, Nodes, Controllers, and deployed Containers.
-
-   ![In this screenshot, the dashboards and blades are shown. Cluster metrics can be reviewed.](media/Ex2-Task8.3.png "Review the dashboard metrics")
-
-1. To review the Containers dashboards and see more detailed information about each container, select the **Containers** tab.
-
-   ![In this screenshot, the various containers information is shown.](media/monitor_1.png "View containers data")
-
-1. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names. You can compare the names with those in the kubernetes dashboard.
-
-   ![In this screenshot, the containers are filtered by container named web.](media/monitor_3.png "Filter data by container and web")
-
-1. By default, the CPU Usage metric will be selected displaying all cpu information for the selected container, to switch to another metric open the metric dropdown list and select a different metric.
-
-   ![In this screenshot, the various metric options are shown.](media/monitor_2.png "Filter by CPU usage")
-
-1. Upon selecting any pod, all the information related to the selected metric will be displayed on the right panel, and that would be the case when selecting any other metric, the details will be displayed on the right panel for the selected pod.
-
-   ![In this screenshot, the pod cpu usage details are shown.](media/monitor_4.png "POD CPU details")
-
-1. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
-
-   ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png "View container logs menu option")
-
-   ![The container logs are displayed based on a query entered in the query window.](media/monitor_6.png "Container logs")
-
-1. For each log entry you can display more information by expanding the log entry to view the below details.
-
-   ![The container log query results are displayed, one log entry is expanded in the results view with its details shown.](media/monitor_7.png "Expand the results")

@@ -86,7 +86,7 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in the Git bash Shell (SSH session connected to the Build VM) to retrieve the instrumentation key for the `content-web` Application Insights resource:
+1. Execute this command in the SSH session window (SSH session connected to the Build VM during setup) to retrieve the instrumentation key for the `content-web` Application Insights resource:
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
@@ -119,7 +119,7 @@ In this task, you will edit the web application source code to add Application I
 
    ![A screenshot of the code editor showing updates in context of the app.js file](media/github-edit-appjs.png "AppInsights updates in app.js")
 
-1. Commit changes with the description "Added Application Insights" and switch to the git bash shell window.
+1. Commit changes with the description "Added Application Insights" and return to the SSH session window.
 
 1. Pull down this file to your local repository
 
