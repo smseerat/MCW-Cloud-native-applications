@@ -90,7 +90,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. Navigate to the **FabMedical** source code folder and list the contents.
 
     ```
-    cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
+    cd ~/clouddrive/MCW-Cloud-native-applications/'Hands-on lab'/lab-files/developer/
     ls
 
     ```
