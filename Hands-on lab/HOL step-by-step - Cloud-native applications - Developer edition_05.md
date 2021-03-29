@@ -136,6 +136,8 @@ The purpose of this task is to make sure you can run the application successfull
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
+    
+    **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file
 
 15. Now run the content-web application in the background.
 
