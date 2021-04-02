@@ -38,6 +38,8 @@ In this task, you will modify the CPU requirements for the web service so that i
    
 2. In the same JSON tab, find the port resource under readinessProbe and update it to 3000.
 
+   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5-tsk2-step2.png?raw=true "Change cpu value")
+
 3. Select **Review + save**, confirm the change and then select **Save** to update the deployment.
 
 4. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
