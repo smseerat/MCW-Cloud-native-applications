@@ -93,7 +93,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     Notice, the **Connection String** will automatically populate with the Key for your Azure Cosmos DB instance.
 
-8. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[DeploymentId].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[DeploymentId]`.
+8. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]` .
 
     ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](media/dmsselecttarget.png "Setting the Connection string")
 
