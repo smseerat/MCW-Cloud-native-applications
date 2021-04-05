@@ -8,7 +8,7 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
+> **Note**: The following tasks should be executed in cloud shell and not in the build machine, so disconnect from build machine if still connected.
 
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
@@ -28,7 +28,9 @@ In this task, you will gather the information you need about your Azure Kubernet
    ```bash
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
    ```
-
+  
+  > **Note**: Please make sure to replace `SUFFIX` with DeploymentId.
+  
 3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
    ```bash
@@ -41,7 +43,7 @@ In this task, you will gather the information you need about your Azure Kubernet
 
 In this task, you will deploy the API application to the Azure Kubernetes Service cluster using the Azure Portal.
 
-1. From the Azure Portal, select the resource group you created named fabmedical-SUFFIX, and then select your Kubernetes Service Azure resource.
+1. From the Azure Portal, select the resource group named fabmedical-DeploymentId, and then select your Kubernetes Service Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
 
@@ -543,7 +545,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
 22. Save changes and close the editor.
 
-23. The chart is now setup to deploy our web container. Type the following command to deploy the application described by the Helm chart. You will receive a message indicating that helm has created a web deployment and a web service.
+23. The chart is now setup to deploy our web container. Run the following command to deploy the application described by the Helm chart. You will receive a message indicating that helm has created a web deployment and a web service.
 
     ```bash
     cd ../..
@@ -552,7 +554,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ![In this screenshot of the console, helm install web ./web has been typed and run at the command prompt. Messages about web deployment and web service creation appear below.](media/Ex2-Task4.24.png "Helm web deployment messages")
 
-24. Return to the browser where you have the Azure Portal open. From the navigation menu, select **Services and ingresses**. You will see the web service deploying which deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
+24. Return to the browser where you have the Azure Portal open and navigate. From the Azure Kubernetes service navigation menu, select **Services and ingresses**. You will see the web service deploying which deployment can take a few minutes. When it completes, you should be able to access the website via an external endpoint.
 
     ![In the AKS Services and ingresses blade in the Azure Portal showing the web service selected.](media/2021-03-26-16-44-18.png "Web service endpoint")
 
@@ -629,13 +631,19 @@ In this task, you will use GitHub Actions workflows to automate the process for 
     cat ~/.kube/config
     ```
 
-5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, select **Secrets** from the left menu, then select the **New secret** button.
+5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, from the left menu select **Secrets** and then select the **New secret** button.
 
 6. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 
     ![The screenshot displays the KUBECONFIG secret](media/2020-08-25-22-34-04.png "Edit KUBECONFIG secret")
 
-7. Now return to edit the `content-web.yml` workflow and paste the following at the end of the file.
+7. Now return to edit the `content-web.yml` workflow.
+   
+   ```
+   vi content-web.yaml
+   ```
+   
+8. Paste the following at the end of the file.
 
     > **Note**: Be careful to check your indenting when pasting. The `aks-deployment` node should be indented with 2 spaces and line up with the node for the `build-and-push-helm-chart` job.
 
@@ -672,9 +680,9 @@ In this task, you will use GitHub Actions workflows to automate the process for 
             HELM_EXPERIMENTAL_OCI: 1
     ```
 
-8. Save the file.
+9. Save the file.
 
-9. Commit your changes
+10. Commit your changes
 
    ```bash
    cd ..
@@ -684,13 +692,13 @@ In this task, you will use GitHub Actions workflows to automate the process for 
    git push
    ```
 
-10. Switch back to GitHub.
+11. Switch back to GitHub.
 
-11. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+12. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-12. Selecting the currently running workflow will display its status.
+13. Selecting the currently running workflow will display its status.
 
     ![The screenshot shows workflow is running and the current status.](media/2020-08-25-22-15-39.png "Workflow is running")
 
@@ -698,7 +706,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your `Kubernetes Service` Azure resource.
+1. From the Azure Portal, select the resource group named `fabmedical-SUFFIX`, and then select your `Kubernetes Service` Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
 
@@ -726,7 +734,7 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In this screenshot, the pod cpu usage details are shown.](media/monitor_4.png "POD CPU details")
 
-8. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
+8. To display the logs for any container simply select it and view the right panel and you will find "**View container logs**" option which will list all logs for this specific container.
 
    ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png "View container logs menu option")
 
