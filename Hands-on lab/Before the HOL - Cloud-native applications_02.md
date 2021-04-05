@@ -37,7 +37,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-1. After launching the Azure Cloud Shell, select the **Bash** option. Now, on **You have no storage mounted** dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
+1. After launching the Azure Cloud Shell, select the **Bash** option. Now on You have no storage mounted dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
   
       - **Storage account** : **storage{Deployementid}**
       - **File Share** : **blob**
@@ -65,7 +65,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. In a new browser tab and open ```https://www.github.com``` and Log in with your personal GitHub account.
+1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
 
     > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
 
@@ -85,7 +85,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-1. Now, go back to the cloudshell window, if you have closed that open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
+1. Now go back to the cloudshell window, if you have closed that open a **new** Azure Cloud Shell console.  You can do this by selecting the **Open new session** button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
 1. Navigate to the **FabMedical** source code folder and list the contents.
 
@@ -103,7 +103,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     content-web/
     ```
 
-1. Set your username and email, which git uses for commits, run below commands
+1. Set your username and email, which git uses for commits, run below commands:
   
     ```
     git config --global user.email "you@example.com"
@@ -140,7 +140,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
+    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Refer the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
 
     > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
 
@@ -148,7 +148,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 4: Connect securely to the build agent
 
-In this section, you validate that you can connect to the new build agent VM.
+In this section, validate that you can connect to the new build agent VM.
 
 1. Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
@@ -159,7 +159,7 @@ In this section, you validate that you can connect to the new build agent VM.
     Password.1!!
     ```
 
-1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step:
+1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step.
 
    `adminfabmedical@fabmedical:~$`
 
