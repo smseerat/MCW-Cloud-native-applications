@@ -99,7 +99,7 @@ In this task, you will edit the web application source code to add Application I
 
 7. Visit the `content-web` Action for your GitHub Fabmedical repository and see the new Image being deployed into your Kubernetes cluster.
 
-8. While this update runs, return the Azure Portal in the browser.
+8. While this update runs, return the Azure Portal in the browser and open Azure kubernetes service.
 
 9. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
@@ -172,7 +172,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied from step 5.
    - `[AKS NODEPOOL RESOURCE GROUP]`: Replace with the name of the Resource Group copied from step 6.
-   - `[SUFFIX]`: Replace this with the same SUFFIX value used previously for this lab.
+   - `[SUFFIX]`: Replace this with the DeploymentId used previously for this lab.
 
    ```bash
    #!/bin/bash
@@ -274,7 +274,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     code certificate.yml
     ```
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
+    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name.
 
     ```yaml
     apiVersion: cert-manager.io/v1
@@ -380,7 +380,7 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
 3. On the **Create Traffic Manager profile** blade, enter the following values, then select **Create**.
 
-    - Name: `fabmedical-[SUFFIX]'
+    - Name: `fabmedical-[SUFFIX]`
     - Routing Method: **Performance**
     - Resource Group: `fabmedical-[SUFFIX]`
 
