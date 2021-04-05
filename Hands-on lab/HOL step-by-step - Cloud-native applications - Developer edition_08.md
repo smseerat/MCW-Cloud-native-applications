@@ -54,7 +54,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 ### Task 2: Resolve failed provisioning of replicas
 
-In this task, you will resolve the failed API replicas. These failures occur due to the clusters' inability to meet the requested resources.
+In this task, you will resolve the failed API replicas. These failures occur due to the cluster's inability to meet the requested resources.
 
 1. In the AKS blade in the Azure Portal select **Workloads** and then select the **API** deployment. Select the **YAML** navigation item.
 
@@ -89,7 +89,7 @@ In this task, you will resolve the failed API replicas. These failures occur due
 
 In this task, you will restart containers and validate that the restart does not impact the running service.
 
-1. Open the sample web application and navigate to the "Stats" page as shown.
+1. Open the sample web application and navigate to the "**Stats**" page as shown.
 
    ![The Stats page is visible in this screenshot of the Contoso Neuro web application.](media/image123.png "Contoso web task details")
 
@@ -127,7 +127,7 @@ In this task, you will restart containers and validate that the restart does not
 
 In this task, you will setup Autoscale on Azure Cosmos DB.
 
-1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
+1. In the Azure Portal, navigate to the `fabmedical-[DeploymentId]` **Azure Cosmos DB Account**.
 
 2. Select **Data Explorer**.
 
@@ -147,7 +147,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 In this task, you will run a performance test script that will test the Autoscale feature of Azure Cosmos DB so you can see that it will now scale greater than 400 RU/s.
 
-1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Cosmos DB account**.
+1. In the Azure Portal, navigate to the `fabmedical-[DeploymentId]` **Cosmos DB account**.
 
 2. Select **Connection String** under **Settings**.
 
@@ -173,7 +173,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Save the file and exit Vim.
+8. Save the file and exit Vi.
 
 9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 
