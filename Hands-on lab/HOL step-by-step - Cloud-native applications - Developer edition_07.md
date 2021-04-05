@@ -6,9 +6,9 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 ### Task 1: Tunnel into the Azure Kubernetes Service cluster
 
-In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
+In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from the cloud shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not in the build machine, so disconnect from build machine if still connected.
+> **Note**: The following tasks should be executed in the cloud shell and not in the build machine, so disconnect from the build machine if still connected.
 
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
@@ -29,7 +29,7 @@ In this task, you will gather the information you need about your Azure Kubernet
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
    ```
   
-  > **Note**: Please make sure to replace `SUFFIX` with DeploymentId.
+   > **Note**: Please make sure to replace `SUFFIX` with DeploymentId.
   
 3. Test that the configuration is correct by running a simple kubectl command to produce a list of nodes:
 
@@ -144,7 +144,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![Service is showing as unhealthy](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/2021-03-25-17-06-09.png?raw=true "Service is showing as unhealthy")
 
-   > **Note:** if the logs don't display it may be the Pod no longer exists. You can use the **View in Log Analytics** to view historical logs regardless of Pod.
+   > **Note:** if the logs don't display it may be the Pod no longer exists. You can use **View in Log Analytics** to view historical logs regardless of Pod.
 
 9. If you scroll through the log you can see it indicates that the content-api application is once again failing because it cannot find a MongoDB api to communicate with. You will resolve this issue by connecting to Cosmos DB.
 
@@ -178,7 +178,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 14. Return to the AKS blade in the Azure Portal and select **Configuration** under the **Kubernetes resources** section. Select **Secrets** and choose **+ Add**.
 
-15. In the **Add with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
+15. In the **Add with YAML** screen, paste the following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
     ```yaml
     apiVersion: v1
@@ -740,6 +740,6 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![The container logs are displayed based on a query entered in the query window.](media/monitor_6.png "Container logs")
 
-9. For each log entry you can display more information by expanding the log entry to view the below details.
+9. For each log entry, you can display more information by expanding the log entry to view the below details.
 
    ![The container log query results are displayed, one log entry is expanded in the results view with its details shown.](media/monitor_7.png "Expand the results")
