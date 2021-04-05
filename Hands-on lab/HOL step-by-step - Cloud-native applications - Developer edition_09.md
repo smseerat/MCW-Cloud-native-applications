@@ -10,11 +10,11 @@ Kubernetes services can discover the ports assigned to each pod, allowing you to
 
 In this task, you will update the web service so that it supports dynamic discovery through an Azure load balancer.
 
-1. From AKS **Kubernetes resources** menu, select **Deployments** under **Workloads**. From the list select the **web** deployment.
+1. From the AKS **Kubernetes resources** menu, select **Deployments** under **Workloads**. From the list select the **web** deployment.
 
 2. Select **YAML**, then select the **JSON** tab.
 
-3. First locate the replicas node and update the required count to `4`.
+3. First, locate the replicas node and update the required count to `4`.
 
 4. Next, scroll to the web containers spec as shown in the screenshot. Remove the hostPort entry for the web container's port mapping.
 
@@ -22,7 +22,7 @@ In this task, you will update the web service so that it supports dynamic discov
 
 5. Select **Review + save** and then confirm the change and **Save**.
 
-6. Check the status of the scale out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **web** pods. From this view, you should see an error like that shown in the following screenshot.
+6. Check the status of the scale-out by refreshing the web deployment's view. From the navigation menu, select **Pods** from under Workloads. Select the **web** pods. From this view, you should see an error like that shown in the following screenshot.
 
    ![Deployments is selected under Workloads in the navigation menu on the left. On the right are the Details and New Replica Set boxes. The web deployment is highlighted in the New Replica Set box, indicating an error.](media/2021-03-26-18-23-38.png "View Pod deployment events")
 
@@ -32,7 +32,7 @@ Like the API deployment, the web deployment used a fixed _hostPort_, and your ab
 
 In this task, you will modify the CPU requirements for the web service so that it can scale out to more instances.
 
-1. Re-open the JSON view for the web deployment and then find the **cpu** resource requirements for the web container. Change this value to `125m`.
+1. Re-open the JSON view for the web deployment and then find the **CPU** resource requirements for the web container. Change this value to `125m`.
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/2021-03-26-18-24-06.png "Change cpu value")
    
@@ -111,7 +111,7 @@ In this task, you will edit the web application source code to add Application I
 
 ### Task 4: Configure Kubernetes Ingress
 
-In this task you will setup a Kubernetes Ingress using an [nginx proxy server](https://nginx.org/en/) to take advantage of path-based routing and TLS termination.
+In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](https://nginx.org/en/) to take advantage of path-based routing and TLS termination.
 
 1. Within the Azure Cloud Shell, run the following command to add the nginx stable Helm repository:
 
@@ -411,7 +411,7 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![The Traffic Manager profile overview pane with the DNS name highlighted](media/tm-overview.png "fabmedical Traffic Manager profile DNS name")
 
-11. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
+11. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that was just copied.
 
     ![The screenshot shows the Contoso Neuro website using the Traffic Manager profile DNS name](media/tm-endpoint-website.png "Traffic Manager show Contoso home page")
 
