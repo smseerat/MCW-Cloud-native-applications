@@ -22,8 +22,8 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 4. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
-    - Resource group: Select fabmedical-{DeploymentId} resource group.
-    - Migration service name: Enter a name, such as `fabmedical{DeploymentId}`. You can get the DeploymentId from environment details tab
+    - Resource group: Select **fabmedical-[DeploymentId]** resource group.
+    - Migration service name: Enter a name as **`fabmedical[DeploymentId]`**. You can get the DeploymentId from environment details tab
     - Location: Choose the Azure Region used for the Resource Group.
 
     ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
@@ -47,7 +47,7 @@ The service may take 5 - 10 minutes to provision.
 In this task, you will create a **Migration project** within Azure Database Migration Service, and then migrate the data from MongoDB to Azure Cosmos DB.
 
 
-1. In the Azure Portal, navigate to your Build Agent VM, and copy the Private IP address **(2)**. Paste the contents into the text editor of your choice (such as Notepad on Windows, macOS users can use TextEdit) for future use.
+1. In the Azure Portal, navigate to your Build Agent VM, and copy the Private IP address. Paste the contents into the notepad for future use.
 
    ![Built Agent VM is shown. Overview tab is open. Private IP address is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/agent-vm-private-ip-address.png?raw=true "Private IP Address")
 
@@ -87,13 +87,13 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     - Subscription: Select the Azure subscription you're using for this lab.
 
-    - Select Cosmos DB name: Select the `fabmedical-[SUFFIX]` Cosmos DB instance.
+    - Select Cosmos DB name: Select the `fabmedical-[DeploymentId]` Cosmos DB instance.
 
     ![The Select target tab with values selected.](media/dmsselecttarget.png "MongoDB to Azure Database for CosmosDB - Select target")
 
     Notice, the **Connection String** will automatically populate with the Key for your Azure Cosmos DB instance.
 
-8. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[SUFFIX].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[SUFFIX]`.
+8. Modify the **Connection string** by replacing `@undefined:` with `@fabmedical-[DeploymentId].documents.azure.com:` so the DNS name matches the Azure Cosmos DB instance. Be sure to replace the `[DeploymentId]`.
 
     ![The screenshot shows the Connection string with the @undefined: value replaced with the correct DNS name.](media/dmsselecttarget.png "Setting the Connection string")
 
