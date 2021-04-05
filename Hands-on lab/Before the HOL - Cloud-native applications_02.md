@@ -9,7 +9,7 @@ You should follow all of the steps provided in this section _before_ taking part
  
    ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/azureportal.png?raw=true "Cloud Shell Bash Window")
    
-1. Click on **Get Started** on edge browser.
+1. Click on **Get Started** on Edge browser.
 
    ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/getstarted.png?raw=true)
    
