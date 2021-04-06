@@ -117,8 +117,6 @@ Each tenant will have the following containers:
 
      - Is a [Member](https://docs.microsoft.com/azure/active-directory/fundamentals/users-default-permissions#member-and-guest-users) user in the Azure AD tenant you will use. (Guest users will not have the necessary permissions.)
 
-     > **Note** If you do not meet these requirements, you may have to ask another member user with subscription owner rights to login to the portal and execute the create service principal step ahead of time.
-
    - You must have enough cores available in your subscription to create the build agent and Azure Kubernetes Service cluster in Before the Hands-on Lab. You will need eight cores if following the exact instructions in the lab, or more if you choose additional cluster nodes or larger VM sizes. If you execute the steps required before the lab, you will be able to see if you need to request more cores in your sub.
 
 2. Local machine or a virtual machine configured with:
@@ -644,7 +642,7 @@ In this task, you will configure the `web` container to communicate with the API
 4. Observe that the `contentApiUrl` variable can be set with an environment variable.
 
    ```javascript
-   const contentApiUrl = process.env.CONTENT_API_URL || "http://localhost:3001";
+   const contentApiUrl = process.env.CONTENT_API_URL || "http://[VM IP]:3001";
    ```
 
 5. Open the Dockerfile for editing using Vim and press the `i` key to go into edit mode.
@@ -770,7 +768,7 @@ In this task, you will push images to your ACR account, version images with tagg
    docker image ls
    ```
 
-   ![This is a screenshot of a docker images list example.](media/vm-docker-images-list.PNG "Docker image list")
+   ![This is a screenshot of a docker images list example.](./media/tagged-images-for-acr.png "Docker image list")
 
 7. Push the images to your ACR account with the following command:
 
@@ -797,7 +795,7 @@ In this task, you will push images to your ACR account, version images with tagg
     docker image ls
     ```
 
-    ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png "View latest image by tag")
+    ![In this screenshot of the console window is an example of tags being added and displayed.](media/newly-tagged-images.png "View latest image by tag")
 
 11. Push the images to your ACR account with the following command:
 
@@ -892,33 +890,33 @@ image and pushes it to your ACR instance automatically.
 
    # Jobs define the actions that take place when code is pushed to the master branch
    jobs:
-      build-and-publish-docker-image:
-        name: Build and Push Docker Image
-        runs-on: ubuntu-latest
-        steps:
-        # Checkout the repo
-        - uses: actions/checkout@master
+     build-and-publish-docker-image:
+       name: Build and Push Docker Image
+       runs-on: ubuntu-latest
+       steps:
+       # Checkout the repo
+       - uses: actions/checkout@master
 
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v1
+       - name: Set up Docker Buildx
+         uses: docker/setup-buildx-action@v1
 
-        - name: Login to ACR
-          uses: docker/login-action@v1
-          with:
-            registry: ${{ env.containerRegistry }}
-            username: ${{ secrets.ACR_USERNAME }}
-            password: ${{ secrets.ACR_PASSWORD }}
+       - name: Login to ACR
+         uses: docker/login-action@v1
+         with:
+           registry: ${{ env.containerRegistry }}
+           username: ${{ secrets.ACR_USERNAME }}
+           password: ${{ secrets.ACR_PASSWORD }}
 
-        - name: Build and push an image to container registry
-          uses: docker/build-push-action@v2
-          with:
-            context: ${{ env.dockerfilePath  }}
-            file: "${{ env.dockerfilePath }}/Dockerfile"
-            pull: true
-            push: true
-            tags: |
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
+       - name: Build and push an image to container registry
+         uses: docker/build-push-action@v2
+         with:
+           context: ${{ env.dockerfilePath  }}
+           file: "${{ env.dockerfilePath }}/Dockerfile"
+           pull: true
+           push: true
+           tags: |
+             ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
+             ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
     ```
 
 10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
@@ -965,7 +963,7 @@ image and pushes it to your ACR instance automatically.
 
 **Duration**: 20 minutes
 
-At this point, you have the web and API applications running in Azure Kubernetes Service. The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
+At this point, you have the web and API applications running in Docker instance (VM - Build Agent). The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
 
 ### Task 1: Enable Microsoft.DataMigration resource provider
 
@@ -1243,7 +1241,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](media/Ex2-Task1.10.png "Capture CosmosDB connection string")
 
-11. Modify the copied connection string by adding the database `contentdb` to the URL, along with a replicaSet of `globaldb`. The resulting connection string should look like the below sample.
+11. Modify the copied connection string by adding the database `contentdb` to the URL, along with a replicaSet of `globaldb`. The resulting connection string should look like the below sample. Note that you may need to modify the endpoint URL.
 
     > **Note**: Username and password redacted for brevity.
 
@@ -1279,7 +1277,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 15. Sort the Secrets list by name and you should now see your new secret displayed.
 
-    ![This is a screenshot of the Azure Portal for AKS showing secrets.](media/2021-03-25-17-08-31.png "Manage Kubernetes secrets")
+    ![This is a screenshot of the Azure Portal for AKS showing secrets.](media/find-cosmosdb-secret.png "Manage Kubernetes secrets")
 
 16. View the details for the **cosmosdb** secret by selected it in the list.
 
@@ -1650,7 +1648,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
     ```bash
-    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    cd ~/fabmedical/.github/workflows
     vi content-web.yml
     ```
 
@@ -1789,7 +1787,7 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In this screenshot, the various containers information is shown.](media/monitor_1.png "View containers data")
 
-5. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names. You can compare the names with those in the Kubernetes dashboard.
+5. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names. 
 
    ![In this screenshot, the containers are filtered by container named web.](media/monitor_3.png "Filter data by container and web")
 
@@ -1831,7 +1829,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 3. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/2021-03-26-16-50-11.png "View replica details")
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/api-replica-set.png "View replica details")
 
 4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 2 instances (shown as `1/2`).
 
@@ -1839,7 +1837,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    > **Note**: If you receive an error about insufficient CPU that is OK. We will see how to deal with this in the next Task (Hint: you can use the **Insights** option in the AKS Azure Portal to review the **Node** status and view the Kubernetes event logs).
 
-5. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
+   At this point, here is a health overview of the environment:
 
    - One Deployment and one Replica Set are each healthy for the web service.
 
@@ -1847,7 +1845,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Two pods are healthy in the 'default' namespace.
 
-6. Open the Contoso Neuro Conference web application. The application should still work without errors as you navigate to Speakers and Sessions pages.
+5. Open the Contoso Neuro Conference web application. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
    - Navigate to the `/stats` page. You will see information about the hosting environment including:
 
@@ -1877,17 +1875,17 @@ In this task, you will resolve the failed API replicas. These failures occur due
 
       ```yaml
       ports:
-         - containerPort: 3001
-         protocol: TCP
+        - containerPort: 3001
+          protocol: TCP
       ```
 
    - Modify the **cpu** and set it to **100m**. CPU is divided between all Pods on a Node.
 
       ```yaml
       resources:
-         requests:
-            cpu: 100m
-            memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       ```
 
    Select **Review + save** and, when prompted, confirm the changes and select **Save**.
@@ -1896,7 +1894,7 @@ In this task, you will resolve the failed API replicas. These failures occur due
 
 3. Return to the **Workloads** main view on the AKS Azure Portal and you will now see that the Deployment is healthy with two Pods operating.
 
-   ![In the Workload view with the API deployment highlighted.](media/2021-02-17_10-48-19.png "API deployment is now healthy")
+   ![In the Workload view with the API deployment highlighted.](media/healthy-deployment.png "API deployment is now healthy")
 
 ### Task 3: Restart containers and test HA
 
@@ -2051,8 +2049,6 @@ In this task, you will modify the CPU requirements for the web service so that i
 4. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/2021-03-26-18-24-35.png "Four pods running")
-
-5. Return to the browser tab with the sample web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
 
 ### Task 3: Perform a rolling update
 
@@ -2328,30 +2324,30 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     apiVersion: networking.k8s.io/v1beta1
     kind: Ingress
     metadata:
-       name: content-ingress
-       annotations:
-          kubernetes.io/ingress.class: nginx
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
-          nginx.ingress.kubernetes.io/use-regex: "true"
-          nginx.ingress.kubernetes.io/ssl-redirect: "false"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
+      name: content-ingress
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
     spec:
-       tls:
-       - hosts:
-          - fabmedical-sjw-ingress.westus2.cloudapp.azure.com
-          secretName: tls-secret
-       rules:
-          - host: fabmedical-sjw-ingress.westus2.cloudapp.azure.com
-          http:
-             paths:
-             - path: /(.*)
-                backend:
-                   serviceName: web
-                   servicePort: 80
-             - path: /content-api/(.*)
-                backend:            
-                   serviceName: api
-                   servicePort: 3001
+      tls:
+      - hosts:
+          - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
+        secretName: tls-secret
+      rules:
+      - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
+        http:
+          paths:
+          - path: /(.*)
+            backend:
+              serviceName: web
+              servicePort: 80
+          - path: /content-api/(.*)
+            backend:
+              serviceName: api
+              servicePort: 3001
     ```
 
 19. Save changes and close the editor.
@@ -2415,11 +2411,27 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![The Traffic Manager profile overview pane with the DNS name highlighted](media/tm-overview.png "fabmedical Traffic Manager profile DNS name")
 
-11. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
+11. Navigate back to Azure Cloud Shell. Open the `content.ingress.yml` file you created previously. Append the following YAML code to the file. Please maintain proper indentation. These YAML statements will ensure that you route requests originating from the traffic manager profile to the correct service.
+
+  ```yaml
+    - host: fabmedical-cnr.trafficmanager.net
+      http:
+        paths:
+        - path: /(.*)
+          backend:
+            serviceName: web
+            servicePort: 80
+        - path: /content-api/(.*)
+          backend:
+            serviceName: api
+            servicePort: 3001
+  ```
+
+12. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
 
     ![The screenshot shows the Contoso Neuro website using the Traffic Manager profile DNS name](media/tm-endpoint-website.png "Traffic Manager show Contoso home page")
 
-12. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
+13. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
 
     > **Note:** You can setup the secondary AKS and instance of the Contoso Neuro website on your own if you wish. The steps to set that up are the same as most of the steps you went through in this lab to setup the primary AKS and app instance.
 
@@ -2434,12 +2446,6 @@ In this exercise, you will de-provision any Azure resources created in support o
    - From the Portal, navigate to the blade of your **Resource Group** and then select **Delete** in the command bar at the top.
 
    - Confirm the deletion by re-typing the resource group name and selecting Delete.
-
-2. Delete the Service Principal created on Task 3: Create a Service Principal before the hands-on lab.
-
-   ```bash
-   az ad sp delete --id "Fabmedical-sp"
-   ```
 
 You should follow all steps provided _after_ attending the Hands-on lab.
 
