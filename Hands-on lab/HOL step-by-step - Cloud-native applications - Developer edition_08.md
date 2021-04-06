@@ -18,7 +18,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 3. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/api-replica-set.png "View replica details")
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](https://github.com/microsoft/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/api-replica-set.png?raw=true "View replica details")
 
 4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 2 instances (shown as `1/2`).
 
