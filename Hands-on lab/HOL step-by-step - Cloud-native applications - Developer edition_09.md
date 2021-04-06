@@ -48,8 +48,6 @@ In this task, you will modify the CPU requirements for the web service so that i
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/2021-03-26-18-24-35.png "Four pods running")
 
-6. Return to the browser tab with the sample web application loaded. Refresh the stats page at /stats to watch the display update to reflect the different api pods by observing the host name refresh.
-
 ### Task 3: Perform a rolling update
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
