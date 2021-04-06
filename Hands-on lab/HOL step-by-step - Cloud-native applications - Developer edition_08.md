@@ -25,8 +25,8 @@ In this task, you will increase the number of instances for the API deployment i
    ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4-tsk1-step4.png?raw=true "View api active pods")
 
    > **Note**: If you receive an error about insufficient CPU that is OK. We will see how to deal with this in the next Task (Hint: you can use the **Insights** option in the AKS Azure Portal to review the **Node** status and view the Kubernetes event logs).
-
-5. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
+   
+   At this point, here is a health overview of the environment:
 
    - One Deployment and one Replica Set are each healthy for the web service.
 
@@ -34,7 +34,7 @@ In this task, you will increase the number of instances for the API deployment i
 
    - Two pods are healthy in the 'default' namespace.
 
-6. Open the Contoso Neuro Conference web application. The application should still work without errors as you navigate to Speakers and Sessions pages.
+5. Open the Contoso Neuro Conference web application. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
    - Navigate to the `/stats` page. You will see information about the hosting environment including:
 
@@ -64,26 +64,24 @@ In this task, you will resolve the failed API replicas. These failures occur due
 
       ```yaml
       ports:
-         - containerPort: 3001
-         protocol: TCP
+        - containerPort: 3001
+          protocol: TCP
       ```
 
    - Modify the **cpu** and set it to **100m**. CPU is divided between all Pods on a Node.
 
       ```yaml
       resources:
-         requests:
-            cpu: 100m
-            memory: 128Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
       ```
 
    Select **Review + save** and, when prompted, confirm the changes and select **Save**.
 
    ![In the edit YAML dialog, showing two changes required.](media/2021-03-26-16-56-28.png "Modify deployment manifest")
 
-3. Return to the **Workloads** main view on the AKS Azure Portal and you will now see that the Deployment is healthy with three Pods operating.
-
-   ![In the Workload view with the API deployment highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4-tsk2-step3.png?raw=true "API deployment is now healthy")
+3. Return to the **Workloads** main view on the AKS Azure Portal and you will now see that the Deployment is healthy with two Pods operating.
 
 ### Task 3: Restart containers and test HA
 
