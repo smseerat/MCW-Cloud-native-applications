@@ -10,22 +10,22 @@ In this task, you will increase the number of instances for the API deployment i
 
 1. In the AKS blade in the Azure Portal select **Workloads** and then select the **API** deployment.
 
-2. Select **YAML** in the window that loads and scroll down until you find **replicas**. Change the number of replicas to **3**, and then select **Review + save**. When prompted, check **Confirm manifest change** and select **Save**.
+2. Select **YAML** in the window that loads and scroll down until you find **replicas**. Change the number of replicas to **2**, and then select **Review + save**. When prompted, check **Confirm manifest change** and select **Save**.
 
-   ![In the edit YAML dialog, 2 is entered in the desired number of replicas.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4-tsk1-step2.png?raw=true "Setting replicas to 2")
+   ![In the edit YAML dialog, 2 is entered in the desired number of replicas.](media/2021-03-26-16-49-32.png "Setting replicas to 2")
 
    > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the portal, as described in the following steps.
 
-3. From the Replica Set view for the API, you will see it is now deploying and that there are two healthy instance and one pending instance.
+3. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4-tsk1-step3.png?raw=true "View replica details")
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/api-replica-set.png "View replica details")
 
-4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 3 instances (shown as `1/3`).
+4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 2 instances (shown as `1/2`).
 
-   ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4-tsk1-step4.png?raw=true "View api active pods")
+   ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/2021-03-26-16-50-38.png "View api active pods")
 
    > **Note**: If you receive an error about insufficient CPU that is OK. We will see how to deal with this in the next Task (Hint: you can use the **Insights** option in the AKS Azure Portal to review the **Node** status and view the Kubernetes event logs).
-   
+
    At this point, here is a health overview of the environment:
 
    - One Deployment and one Replica Set are each healthy for the web service.
