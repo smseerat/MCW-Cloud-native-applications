@@ -324,30 +324,30 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
     apiVersion: networking.k8s.io/v1beta1
     kind: Ingress
     metadata:
-       name: content-ingress
-       annotations:
-          kubernetes.io/ingress.class: nginx
-          nginx.ingress.kubernetes.io/rewrite-target: /$1
-          nginx.ingress.kubernetes.io/use-regex: "true"
-          nginx.ingress.kubernetes.io/ssl-redirect: "false"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
+      name: content-ingress
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
     spec:
-       tls:
-       - hosts:
-          - fabmedical-sjw-ingress.westus2.cloudapp.azure.com
-          secretName: tls-secret
-       rules:
-          - host: fabmedical-sjw-ingress.westus2.cloudapp.azure.com
-          http:
-             paths:
-             - path: /(.*)
-                backend:
-                   serviceName: web
-                   servicePort: 80
-             - path: /content-api/(.*)
-                backend:            
-                   serviceName: api
-                   servicePort: 3001
+      tls:
+      - hosts:
+          - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
+        secretName: tls-secret
+      rules:
+      - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
+        http:
+          paths:
+          - path: /(.*)
+            backend:
+              serviceName: web
+              servicePort: 80
+          - path: /content-api/(.*)
+            backend:
+              serviceName: api
+              servicePort: 3001
     ```
 
 19. Save changes and close the editor.
@@ -411,10 +411,26 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![The Traffic Manager profile overview pane with the DNS name highlighted](media/tm-overview.png "fabmedical Traffic Manager profile DNS name")
 
-11. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that was just copied.
+11. Navigate back to Azure Cloud Shell. Open the `content.ingress.yml` file you created previously. Append the following YAML code to the file. Please maintain proper indentation. These YAML statements will ensure that you route requests originating from the traffic manager profile to the correct service.
+
+  ```yaml
+    - host: fabmedical-cnr.trafficmanager.net
+      http:
+        paths:
+        - path: /(.*)
+          backend:
+            serviceName: web
+            servicePort: 80
+        - path: /content-api/(.*)
+          backend:
+            serviceName: api
+            servicePort: 3001
+  ```
+
+12. Open a new web browser tab and navigate to the Traffic Manager profile **DNS name** that as just copied.
 
     ![The screenshot shows the Contoso Neuro website using the Traffic Manager profile DNS name](media/tm-endpoint-website.png "Traffic Manager show Contoso home page")
 
-12. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
+13. When setting up a multi-region hosted application in AKS, you will setup a secondary AKS in another Azure Region, then add its endpoint to its Traffic Manager profile to be load balanced.
 
     > **Note:** You can setup the secondary AKS and instance of the Contoso Neuro website on your own if you wish. The steps to set that up are the same as most of the steps you went through in this lab to setup the primary AKS and app instance.
