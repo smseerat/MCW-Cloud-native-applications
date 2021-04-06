@@ -663,7 +663,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
    ```
 
-   ![This is a screenshot of a docker images list example.](media/vm-docker-images-list.PNG "Docker image list")
+   ![This is a screenshot of a docker images list example.](https://github.com/anushabc/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/tagged-images-for-acr.png?raw=true "Docker image list")
 
 7. Push the images to your ACR account with the following command:
 
@@ -690,7 +690,7 @@ In this task, you will push images to your ACR account, version images with tagg
     docker image ls
     ```
 
-    ![In this screenshot of the console window is an example of tags being added and displayed.](media/image70.png "View latest image by tag")
+    ![In this screenshot of the console window is an example of tags being added and displayed.](https://github.com/anushabc/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/newly-tagged-images.png?raw=true "View latest image by tag")
 
 11. Push the images to your ACR account with the following command:
 
