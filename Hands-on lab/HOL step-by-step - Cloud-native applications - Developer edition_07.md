@@ -577,7 +577,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
 
     ```bash
-    cd ~/clouddrive/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/.github/workflows
+    cd ~/fabmedical/.github/workflows
     vi content-web.yml
     ```
 
@@ -722,7 +722,7 @@ In this task, you will access and review the various logs and dashboards made av
 
    ![In this screenshot, the various containers information is shown.](media/monitor_1.png "View containers data")
 
-5. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names. You can compare the names with those in the Kubernetes dashboard.
+5. Now filter by container name and search for the **web** containers, you will see all the containers created in the Kubernetes cluster with the pod names.
 
    ![In this screenshot, the containers are filtered by container named web.](media/monitor_3.png "Filter data by container and web")
 
