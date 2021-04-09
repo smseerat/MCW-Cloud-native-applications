@@ -36,15 +36,11 @@ In this task, you will modify the CPU requirements for the web service so that i
 
    ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](media/2021-03-26-18-24-06.png "Change cpu value")
    
-2. In the same JSON tab, find the port resource under readinessProbe and update it to 3000.
+2. Select **Review + save**, confirm the change and then select **Save** to update the deployment.
 
-   ![This is a screenshot of the Edit a Deployment dialog box with various displayed information about ports, env, and resources. The resources node, with cpu: 125m selected, is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex5-tsk2-step2.png?raw=true "Change cpu value")
+3. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
 
-3. Select **Review + save**, confirm the change and then select **Save** to update the deployment.
-
-4. From the navigation menu, select **Replica Sets** under **Workloads**. From the view's Replica Sets list select the web replica set.
-
-5. When the deployment update completes, four web pods should be shown in running state.
+4. When the deployment update completes, four web pods should be shown in running state.
 
    ![Four web pods are listed in the Pods box, and all have green check marks and are listed as Running.](media/2021-03-26-18-24-35.png "Four pods running")
 
