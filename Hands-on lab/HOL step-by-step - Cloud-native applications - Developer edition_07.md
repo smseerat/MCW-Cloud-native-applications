@@ -667,7 +667,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
     ![The screenshot displays the KUBECONFIG secret](media/2020-08-25-22-34-04.png "Edit KUBECONFIG secret")
 
-9. Now naviagte back to the `~/Fabmedical` directory:
+9. Now naviagte back to the `Fabmedical` directory:
    
    ```bash
    cd ~/clouddrive/Fabmedical
