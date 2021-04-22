@@ -615,8 +615,6 @@ In this task, you will use GitHub Actions workflows to automate the process for 
     
 4. Verify that the second job is present at the bottom of the `content-web.yml` workflow. 
 
-    > **Note**: Be careful to check your indenting when pasting.
-
     ```yaml
       build-and-push-helm-chart:
         name: Build and Push Helm Chart
@@ -677,11 +675,12 @@ In this task, you will use GitHub Actions workflows to automate the process for 
    ```
    
 10. Download the workflow yml files, do this by running the following commands:
+
    ```
-   rm -rf ~/Fabmedical/.github/workflows/
-   mkdir ~/Fabmedical/.github/workflows/
-   cd ~/Fabmedical/.github/workflows/
-   wget http://bit.ly/hol-content-web-2 -O content-web.yml
+      rm -rf ~/Fabmedical/.github/workflows/
+      mkdir ~/Fabmedical/.github/workflows/
+      cd ~/Fabmedical/.github/workflows/
+      wget http://bit.ly/hol-content-web-2 -O content-web.yml
    ```
 11. Next edit the workflow YAML file.
 
@@ -708,8 +707,6 @@ In this task, you will use GitHub Actions workflows to automate the process for 
  
   
 12. Verify that the second job is present at the bottom of the `content-web.yml` workflow. 
-
-    > **Note**: Be careful to check your indenting when pasting.
 
     ```yaml
       aks-deployment:
