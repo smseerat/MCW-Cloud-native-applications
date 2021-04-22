@@ -677,7 +677,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 10. Download the workflow yml files, do this by running the following commands:
 
       ```
-      cd ~/Fabmedical/.github/workflows/
+      cd ~/clouddrive/Fabmedical/.github/workflows/
       wget http://bit.ly/hol-content-web-2 -O content-web.yml
       ```
 11. Next edit the workflow YAML file.
