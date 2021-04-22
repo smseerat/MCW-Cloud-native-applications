@@ -577,16 +577,16 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 1. In your Azure Cloud Shell session, navigate to the ```~/Fabmedical``` directory:
 
    ```bash
-   cd ~/Fabmedical
+   cd ~/clouddrive/Fabmedical
 
    ```
 2. Before the GitHub Actions workflows can be setup, the `.github/workflows directory ` needs to be created again and download workflow yml files. Do this by running the following commands:
 
 
    ```
-   rm -rf ~/Fabmedical/.github/workflows/
-   mkdir ~/Fabmedical/.github/workflows/
-   cd ~/Fabmedical/.github/workflows/
+   rm -rf ~/clouddrive/Fabmedical/.github/workflows/
+   mkdir ~/clouddrive/Fabmedical/.github/workflows/
+   cd ~/clouddrive/Fabmedical/.github/workflows/
    wget http://bit.ly/hol-content-web-1 -O content-web.yml
    
    ```
@@ -670,15 +670,13 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 9. Now naviagte back to the `~/Fabmedical` directory:
    
    ```bash
-   cd ~/Fabmedical
+   cd ~/clouddrive/Fabmedical
 
    ```
    
 10. Download the workflow yml files, do this by running the following commands:
 
       ```
-      rm -rf ~/Fabmedical/.github/workflows/
-      mkdir ~/Fabmedical/.github/workflows/
       cd ~/Fabmedical/.github/workflows/
       wget http://bit.ly/hol-content-web-2 -O content-web.yml
       ```
