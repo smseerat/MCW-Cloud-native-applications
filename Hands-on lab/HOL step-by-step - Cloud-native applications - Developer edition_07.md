@@ -574,16 +574,48 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
 In this task, you will use GitHub Actions workflows to automate the process for deploying the web image to the AKS cluster. You will update the workflow and configure a job so that when new images are pushed to the ACR, the pipeline deploys the image to the AKS cluster.
 
-1. Navigate to the `.github/workflows` folder of the git repository, and open the `content-web.yml` workflow using `vi`:
+1. In your Azure Cloud Shell session, navigate to the ```~/Fabmedical``` directory:
 
-    ```bash
-    cd ~/fabmedical/.github/workflows
+   ```bash
+   cd ~/Fabmedical
+
+   ```
+2. Before the GitHub Actions workflows can be setup, the `.github/workflows directory ` needs to be created again and download workflow yml files. Do this by running the following commands:
+
+
+   ```
+   rm -rf ~/Fabmedical/.github/workflows/
+   mkdir ~/Fabmedical/.github/workflows/
+   cd ~/Fabmedical/.github/workflows/
+   wget http://bit.ly/hol-content-web-1 -O content-web.yml
+   
+   ```
+3. Next edit the workflow YAML file.
+
+    ```dotnetcli
     vi content-web.yml
+
     ```
+    
+   - Replace `[DeploymentID]` with your DeploymentID value given on Environment details page.
 
-2. You will add a second job to the bottom of the `content-web.yml` workflow. Paste the following at the end of the file:
+       ```
+       # Environment variables are defined so that they can be used throughout the job definitions.
+       env:
+        imageRepository: 'content-web'
+        resourceGroupName: 'fabmedical-[DeploymentID]'
+        containerRegistryName: 'acr[DeploymentID]'
+        containerRegistry: 'acr[DeploymentID].azurecr.io'
+        dockerfilePath: './content-web'
+        tag: '${{ github.run_id  }}'
 
-    > **Note**: Be careful to check your indenting when pasting. The `build-and-push-helm-chart` node should be indented with 2 spaces and line up with the node for the `build-and-publish-docker-image` job.
+       ```
+       
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
+    
+4. Verify that the second job is present at the bottom of the `content-web.yml` workflow. 
+
+    > **Note**: Be careful to check your indenting when pasting.
 
     ```yaml
       build-and-push-helm-chart:
@@ -623,29 +655,61 @@ In this task, you will use GitHub Actions workflows to automate the process for 
             HELM_EXPERIMENTAL_OCI: 1
     ```
 
-3. Save the file.
+5. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-4. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
+6. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
     ```bash
     cat ~/.kube/config
     ```
 
-5. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, from the left menu select **Secrets** and then select the **New secret** button.
+7. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, from the left menu select **Secrets** and then select the **New secret** button.
 
-6. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
+8. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 
     ![The screenshot displays the KUBECONFIG secret](media/2020-08-25-22-34-04.png "Edit KUBECONFIG secret")
 
-7. Now return to edit the `content-web.yml` workflow.
+9. Now naviagte back to the `~/Fabmedical` directory:
    
-   ```
-   vi content-web.yaml
-   ```
-   
-8. Paste the following at the end of the file.
+   ```bash
+   cd ~/Fabmedical
 
-    > **Note**: Be careful to check your indenting when pasting. The `aks-deployment` node should be indented with 2 spaces and line up with the node for the `build-and-push-helm-chart` job.
+   ```
+   
+10. Download the workflow yml files, do this by running the following commands:
+   ```
+   rm -rf ~/Fabmedical/.github/workflows/
+   mkdir ~/Fabmedical/.github/workflows/
+   cd ~/Fabmedical/.github/workflows/
+   wget http://bit.ly/hol-content-web-2 -O content-web.yml
+   ```
+11. Next edit the workflow YAML file.
+
+    ```dotnetcli
+    vi content-web.yml
+
+    ```
+
+   - Replace `[DeploymentID]` with your DeploymentID value given on Environment details page.
+
+       ```
+       # Environment variables are defined so that they can be used throughout the job definitions.
+       env:
+        imageRepository: 'content-web'
+        resourceGroupName: 'fabmedical-[DeploymentID]'
+        containerRegistryName: 'acr[DeploymentID]'
+        containerRegistry: 'acr[DeploymentID].azurecr.io'
+        dockerfilePath: './content-web'
+        tag: '${{ github.run_id  }}'
+
+       ```
+
+     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
+ 
+  
+12. Verify that the second job is present at the bottom of the `content-web.yml` workflow. 
+
+    > **Note**: Be careful to check your indenting when pasting.
 
     ```yaml
       aks-deployment:
@@ -680,9 +744,9 @@ In this task, you will use GitHub Actions workflows to automate the process for 
             HELM_EXPERIMENTAL_OCI: 1
     ```
 
-9. Save the file.
+13. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-10. Commit your changes
+14. Commit your changes
 
    ```bash
    cd ..
@@ -692,13 +756,13 @@ In this task, you will use GitHub Actions workflows to automate the process for 
    git push
    ```
 
-11. Switch back to GitHub.
+15. Switch back to GitHub.
 
-12. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+16. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-13. Selecting the currently running workflow will display its status.
+17. Selecting the currently running workflow will display its status.
 
     ![The screenshot shows workflow is running and the current status.](media/2020-08-25-22-15-39.png "Workflow is running")
 
