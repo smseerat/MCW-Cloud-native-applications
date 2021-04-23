@@ -154,9 +154,8 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
     >
    ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-6. Open the [Azure Portal Resource Groups blade](https://portal.azure.com/?feature.customPortal=false#blade/HubsExtension/BrowseResourceGroups) and locate the Resource Group that was automatically created to host the Node Pools for AKS. It will have the naming format of `MC_fabmedical-[SUFFIX]_fabmedical-[SUFFIX]_[REGION]`.
 
-7. Within the Azure Cloud Shell, create a script to update the public DNS name for the ingress external IP.
+6. Within the Azure Cloud Shell, create a script to update the public DNS name for the ingress external IP.
 
    ```bash
    code update-ip.sh
@@ -165,8 +164,9 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
    Paste the following as the contents. Be sure to replace the following placeholders in the script:
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied from step 5.
-   - `[AKS NODEPOOL RESOURCE GROUP]`: Replace with the name of the Resource Group copied from step 6.
+   - `[AKS NODEPOOL RESOURCE GROUP]`: Replace the `SUFFIX` and `REGION` with the region of your resource group.
    - `[SUFFIX]`: Replace this with the DeploymentId used previously for this lab.
+
 
    ```bash
    #!/bin/bash
@@ -175,7 +175,7 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
    IP="[INGRESS PUBLIC IP]"
 
    # Resource Group that contains AKS Node Pool
-   KUBERNETES_NODE_RG="[AKS NODEPOOL RESOURCE GROUP]"
+   KUBERNETES_NODE_RG="MC_fabmedical-[SUFFIX]_fabmedical-[SUFFIX]_[REGION]"
 
    # Name to associate with public IP address
    DNSNAME="fabmedical-[SUFFIX]-ingress"
@@ -189,15 +189,15 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
 
    ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
 
-8. Save changes and close the editor.
+7. Save changes and close the editor.
 
-9. Run the update script.
+8. Run the update script.
 
    ```bash
    bash ./update-ip.sh
    ```
 
-10. Verify the IP update by visiting the URL in your browser.
+9. Verify the IP update by visiting the URL in your browser.
 
     > **Note**: It is normal to receive a 404 message at this time.
 
@@ -207,7 +207,7 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
 
     ![A screenshot of the fabmedical browser URL.](media/Ex4-Task5.9.png "fabmedical browser URL")
 
-11. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
+10. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
 
     ```bash
     kubectl create namespace cert-manager
@@ -217,7 +217,7 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
     ```
 
-12. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
+11. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
 
     ```bash
     code clusterissuer.yml
@@ -246,15 +246,15 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
               class: nginx
     ```
 
-13. Save changes and close the editor.
+12. Save changes and close the editor.
 
-14. Create the issuer using `kubectl`.
+13. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
     ```
 
-15. Now you can create a certificate object.
+14. Now you can create a certificate object.
 
     > **Note**:
     >
@@ -284,9 +284,9 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
         kind: ClusterIssuer
     ```
 
-16. Save changes and close the editor.
+15. Save changes and close the editor.
 
-17. Create the certificate using `kubectl`.
+16. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -306,7 +306,7 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
 
     It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
-18. Now you can create an ingress resource for the content applications.
+17. Now you can create an ingress resource for the content applications.
 
     ```bash
     code content.ingress.yml
@@ -344,21 +344,21 @@ In this task, you will setup a Kubernetes Ingress using an [nginx proxy server](
               servicePort: 3001
     ```
 
-19. Save changes and close the editor.
+18. Save changes and close the editor.
 
-20. Create the ingress using `kubectl`.
+19. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml
     ```
 
-21. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
+20. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
 
-22. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
+21. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
     ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
 
-23. Test TLS termination by visiting both services again using `https`.
+22. Test TLS termination by visiting both services again using `https`.
 
     > It can take between 5 and 30 minutes before the SSL site becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
