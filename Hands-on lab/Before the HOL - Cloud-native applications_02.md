@@ -50,7 +50,7 @@ You should follow all of the steps provided in this section _before_ taking part
 
 In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-1. Copy the following command to clone the lab files inside clouddrive directory and then delete **.git** directory, becouse **.git** directory is not required. Paste in cloudshell and then press `<ENTER>`:
+1. Copy the following command to clone the lab files inside clouddrive directory and then delete **.git** directory, because **.git** directory is not required. Paste in cloudshell and then press `<ENTER>`:
 
      ```
      cd clouddrive
