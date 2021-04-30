@@ -397,7 +397,7 @@ You will configure a Helm Chart that will be used to deploy and configure the **
 
     ```bash
     cd clouddrive
-    git clone https://github.com/USER_NAME/fabmedical.git
+    git clone https://github.com/USER_NAME/Fabmedical.git
     ```
 
 7. We will use the `helm create` command to scaffold out a chart implementation that we can build on. Use the following commands to create a new chart named `web` in a new directory (`replace 'fabmedical' with the directory created by your clone`):
