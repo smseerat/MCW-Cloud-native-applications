@@ -1,4 +1,4 @@
-![Microsoft Cloud Workshops][logo]
+![Microsoft Cloud Workshop](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png 'Microsoft Cloud Workshop')
 
 <div class="MCWHeader1">
 Cloud-native applications - Developer edition
