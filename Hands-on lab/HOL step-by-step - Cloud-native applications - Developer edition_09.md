@@ -406,7 +406,7 @@ In this task, you will setup Azure Traffic Manager as a multi-region load balanc
 
     ![The Traffic Manager profile overview pane with the DNS name highlighted](media/tm-overview.png "fabmedical Traffic Manager profile DNS name")
 
-11. Navigate back to Azure Cloud Shell. Open the `content.ingress.yml` file you created previously. Append the following YAML code to the file. Please maintain proper indentation. These YAML statements will ensure that you route requests originating from the traffic manager profile to the correct service.
+11. Navigate back to Azure Cloud Shell. Open the `content.ingress.yml` file you created previously. Append the following YAML code to the file. Please maintain proper indentation. These YAML statements will ensure that you route requests originating from the traffic manager profile to the correct service.  Make sure to replace SUFFIX with your DeploymentID.
 
   ```yaml
     - host: fabmedical-[SUFFIX].trafficmanager.net
