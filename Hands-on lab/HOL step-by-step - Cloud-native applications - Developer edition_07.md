@@ -666,6 +666,7 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 8. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
 
+Note: Make sure to copy all the content of the file carefully from step 6. 
     ![The screenshot displays the KUBECONFIG secret](media/2020-08-25-22-34-04.png "Edit KUBECONFIG secret")
 
 9. Now naviagte back to the `Fabmedical` directory:
