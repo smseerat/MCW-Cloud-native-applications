@@ -658,13 +658,15 @@ In this task, you will use GitHub Actions workflows to automate the process for 
 
 6. In the Azure Cloud Shell, use the following command to output the `/.kube/config` file that contains the credentials for authenticating with Azure Kubernetes Service. These credentials were retrieved previously and will also be needed by GitHub Actions to deploy to AKS. Then copy the contents of the file.
 
+   > **Note:** Make sure to copy all the content of the file carefully.
+
     ```bash
     cat ~/.kube/config
     ```
 
 7. In GitHub, return to the **Fabmedical** repository screen, select the **Settings** tab, from the left menu select **Secrets** and then select the **New secret** button.
 
-8. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied.
+8. Create a new GitHub Secret with the Name of `KUBECONFIG` and paste in the contents of the `~/.kube/config` file that was previously copied. 
 
     ![The screenshot displays the KUBECONFIG secret](media/2020-08-25-22-34-04.png "Edit KUBECONFIG secret")
 
