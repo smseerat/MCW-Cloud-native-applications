@@ -48,9 +48,9 @@ In this task, you will modify the CPU requirements for the web service so that i
 
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
+> **Note:** The following tasks should be executed in the cloud shell and not in the build machine, so disconnect from the build machine if still connected.
 
-   > **Note:** The following tasks should be executed in the cloud shell and not in the build machine, so disconnect from the build machine if still connected.
+1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
