@@ -1,6 +1,6 @@
-## Exercise 4: Scale the application and test HA
+## Exercise 3: Scale the application and test HA
 
-**Duration**: 20 minutes
+**Duration**: 40 minutes
 
 At this point, you have deployed a single instance of the web and API service containers. In this exercise, you will increase the number of container instances for the web service and scale the front-end on the existing cluster.
 
@@ -18,7 +18,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 3. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](https://github.com/microsoft/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/api-replica-set.png?raw=true "View replica details")
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/api-replica-set.png "View replica details")
 
 4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 2 instances (shown as `1/2`).
 
@@ -54,7 +54,7 @@ In this task, you will increase the number of instances for the API deployment i
 
 ### Task 2: Resolve failed provisioning of replicas
 
-In this task, you will resolve the failed API replicas. These failures occur due to the cluster's inability to meet the requested resources.
+In this task, you will resolve the failed API replicas. These failures occur due to the clusters' inability to meet the requested resources.
 
 1. In the AKS blade in the Azure Portal select **Workloads** and then select the **API** deployment. Select the **YAML** navigation item.
 
@@ -83,11 +83,13 @@ In this task, you will resolve the failed API replicas. These failures occur due
 
 3. Return to the **Workloads** main view on the AKS Azure Portal and you will now see that the Deployment is healthy with two Pods operating.
 
+   ![In the Workload view with the API deployment highlighted.](media/healthy-deployment.png "API deployment is now healthy")
+
 ### Task 3: Restart containers and test HA
 
 In this task, you will restart containers and validate that the restart does not impact the running service.
 
-1. Open the sample web application and navigate to the "**Stats**" page as shown.
+1. Open the sample web application and navigate to the "Stats" page as shown.
 
    ![The Stats page is visible in this screenshot of the Contoso Neuro web application.](media/image123.png "Contoso web task details")
 
@@ -97,7 +99,7 @@ In this task, you will restart containers and validate that the restart does not
 
 3. After a few moments you will find that the API deployment is now running 4 replicas successfully.
 
-4. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the two api pod instances periodically. The task id and pid might also change between the two api pod instances.
+4. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the four api pod instances periodically. The task id and pid might also change between the four api pod instances.
 
    ![On the Stats page in the Contoso Neuro web application, two different api host name values are highlighted.](media/image126.png "View web task hostname")
 
@@ -107,7 +109,7 @@ In this task, you will restart containers and validate that the restart does not
 
    ![Viewing replica set in the Azure Portal.](media/2021-03-26-17-31-02.png "Viewing replica set in the Azure Portal")
 
-7. Select two of the Pods at random and choose **Delete**.
+7. Select two of the Pods at random and choose **Delete**. Select **Confirm delete**, and press **Delete** again.
 
    ![The context menu for a pod in the pod list is expanded with the Delete item selected.](media/2021-03-26-17-31-31.png "Delete running pod instance")
 
@@ -125,7 +127,7 @@ In this task, you will restart containers and validate that the restart does not
 
 In this task, you will setup Autoscale on Azure Cosmos DB.
 
-1. In the Azure Portal, navigate to the `fabmedical-[DeploymentId]` **Azure Cosmos DB Account**.
+1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
 
 2. Select **Data Explorer**.
 
@@ -145,13 +147,15 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 In this task, you will run a performance test script that will test the Autoscale feature of Azure Cosmos DB so you can see that it will now scale greater than 400 RU/s.
 
-1. In the Azure Portal, navigate to the `fabmedical-[DeploymentId]` **Cosmos DB account**.
+1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Cosmos DB account**.
 
 2. Select **Connection String** under **Settings**.
 
 3. On the **Connection String** pane, copy the **HOST**, **USERNAME**, and **PRIMARY PASSWORD** values. Save these for use later.
 
     ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
+
+    >**Note**: In your Cosmos DB account, you may see that the host endpoint uses `.mongo.cosmos.azure.com`, which is for version 3.6 of Mongo DB. The endpoint shown here is `.documents.azure.com`, which is for version 3.2 of Mongo DB. You can use either endpoint for the purposes of this Task. If you are curious about the new features added to version 3.6 (that do not affect the application in this lab), consult [this](https://devblogs.microsoft.com/cosmosdb/upgrade-your-server-version-from-3-2-to-3-6-for-azure-cosmos-db-api-for-mongodb/) post.
 
 4. Open the Azure Cloud Shell, and **SSH** to the **Build agent VM**.
 
@@ -171,7 +175,7 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Save the file and exit Vi.
+8. Save the file and exit Vim.
 
 9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 
