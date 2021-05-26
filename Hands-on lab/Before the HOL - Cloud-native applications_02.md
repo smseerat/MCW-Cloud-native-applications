@@ -191,3 +191,200 @@ In this task, you clone your repositories from GitHub so you can work with them 
    git clone https://github.com/<your_github_username>/Fabmedical 
    ```
 
+### Task 5: Test the Starter Application
+
+In this task, you will take the starter files and run the node.js application as a Docker application.  You will build the Docker images from the existing files and run containers to test and execute the application.
+
+1. From Azure Cloud Shell, connect to your build agent if you are not already connected.
+
+2. Type the following command to create a Docker network named `fabmedical`:
+
+   ```bash
+   docker network create fabmedical
+   ```
+
+3. Run an instance of mongodb to use for local testing.
+
+   ```bash
+   docker container run --name mongo --net fabmedical -p 27017:27017 -d mongo:4.0
+   ```
+
+   > **Note**:  With the existing source code written for MongoDB, it can be pointed towards the Azure Cosmos DB MongoDB API endpoint. The Azure Cosmos DB Emulator could be used for local development on Windows; however, the Cosmos DB emulator does not support Linux. As a result, when using Linux for development, MongoDB is still needed for local development environments; with Azure Cosmos DB used for data storage in the cloud. This allows existing source code written for MongoDB storage to be easily migrated to using Azure Cosmos DB backend.
+
+4. Confirm that the mongo container is running and ready.
+
+   ```bash
+   docker container list
+   docker container logs mongo
+   ```
+
+   ![In this screenshot of the console window, docker container list has been typed and run at the command prompt, and the “api” container is in the list. Below this the log output is shown.](media/b410-Step4.1.png "Docker container mongo logs")
+
+5. Connect to the mongo instance using the mongo shell and test some basic commands:
+
+   ```bash
+   mongo
+   ```
+
+   ```text
+   show dbs
+   quit()
+   ```
+
+   ![This screenshot of the console window shows the output from connecting to mongo.](media/b410-Step5.1.png "Connect to mongodb")
+
+6. To initialize the local database with test content, first navigate to the content-init directory and run npm install.
+
+   ```bash
+   cd ~/Fabmedical/content-init
+   npm install
+   ```
+
+   > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
+
+   ```bash
+   sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   ```
+
+7. Initialize the database.
+
+   ```bash
+   nodejs server.js
+   ```
+
+   ![This screenshot of the console window shows output from running the database initialization.](media/b410-Step7.1.png "Run nodejs server.js")
+
+8. Confirm that the database now contains test data.
+
+   ```bash
+   mongo
+   ```
+
+   ```text
+   show dbs
+   use contentdb
+   show collections
+   db.speakers.find()
+   db.sessions.find()
+   quit()
+   ```
+
+   This should produce output similar to the following:
+
+   ![This screenshot of the console window shows the data output.](media/b410-Step8.1.png "Show database records")
+
+9. Now navigate to the `content-api` directory and run npm install.
+
+   ```bash
+   cd ../content-api
+   npm install
+   ```
+
+   > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
+
+   ```bash
+   sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+   ```
+
+10. Start the API as a background process.
+
+    ```bash
+    nodejs ./server.js &
+    ```
+
+    ![In this screenshot, nodejs ./server.js & has been typed and run at the command prompt, which starts the API as a background process.](media/image47.png "Start the mongodb in background")
+
+11. Press `ENTER` again to get to a command prompt for the next step.
+
+12. Test the API using curl. You will request the speaker's content, and this will return a JSON result.
+
+    ```bash
+    curl http://localhost:3001/speakers
+    ```
+
+    ![In this screenshot, made a curl request to view speakers.](media/image47_1.png "Display speaker data")
+
+13. Navigate to the web application directory, run `npm install` and `ng build`.
+
+    ```bash
+    cd ../content-web
+    npm install
+    ng build
+    ```
+
+    ![In this screenshot, after navigating to the web application directory, nodejs ./server.js & has been typed and run at the command prompt, which runs the application as a background process as well.](media/image48.png "Running web server")
+
+    > **Note**: In some cases, the `root` user will be assigned ownership of your user's `.config` folder. If this happens, run the following command to return ownership to `adminfabmedical` and then try `npm install` again:
+
+    ```bash
+    sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
+    ```
+
+14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment.
+
+    ```bash
+    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SHORT_SUFFIX] --query publicIps -o tsv
+    ```
+
+    Example:
+
+    ```bash
+    az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
+    ```
+
+15. From the cloud shell in the build machine edit the `app.js` file using vim.
+
+    ```bash
+    vim app.js
+    ```
+
+    Then press **_i_** to get into the edit mode, after that replace localhost with the build machine IP address.
+
+    ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
+
+    Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
+
+16. Now run the content-web application in the background.
+
+    ```bash
+    node ./app.js &
+    ```
+
+    Press `ENTER` again to get a command prompt for the next step.
+
+17. Test the web application using curl. You will see HTML output returned without errors.
+
+    ```bash
+    curl http://localhost:3000
+    ```
+
+18. Leave the application running for the next task.
+
+19. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
+
+20. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
+
+21. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
+
+   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png "List of resources")
+
+22. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
+
+   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png "VM Public IP Address")
+
+23. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
+
+   ```text
+   http://[BUILDAGENTIP]:3000
+
+   EXAMPLE: http://13.68.113.176:3000
+   ```
+
+24. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
+
+25. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
+
+   ```bash
+   killall nodejs
+   killall node
+   ```
