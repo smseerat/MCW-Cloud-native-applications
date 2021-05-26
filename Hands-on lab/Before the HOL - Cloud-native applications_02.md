@@ -385,7 +385,7 @@ In this task, you will take the starter files and run the node.js application as
    killall nodejs
    killall node
    ```
-### Task 11: Build the Docker Images
+### Task 7: Build the Docker Images
 
 In this task, you will build the Docker images for the application --- one for the API application and another for the web application. Each image will be created via Docker commands that rely on a Dockerfile.
 
@@ -465,7 +465,7 @@ In this task, you will build the Docker images for the application --- one for t
 
    ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
 
-### Task 12: Run Docker Containers
+### Task 8: Run Docker Containers
 
 The web application container will be calling endpoints exposed by the API application container and the API application container will be communicating with mongodb. In this exercise, you will launch the images you created as containers on the same bridge network you created when starting mongodb.
 
@@ -548,7 +548,7 @@ The web application container will be calling endpoints exposed by the API appli
    curl http://localhost:[PORT]/speakers.html
    ```
 
-### Task 13: Setup Environment Variables
+### Task 9: Setup Environment Variables
 
 In this task, you will configure the `web` container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
 
@@ -655,13 +655,20 @@ In this task, you will configure the `web` container to communicate with the API
 
     Enter credentials if prompted.
 
-### Task 14: Push Images to Azure Container Registry
+### Task 10: Push Images to Azure Container Registry
 
 To run containers in a remote environment, you will typically push images to a Docker registry, where you can store and distribute images. Each service will have a repository that can be pushed to and pulled from with Docker commands. Azure Container Registry (ACR) is a managed private Docker registry service based on Docker Registry v2.
 
 In this task, you will push images to your ACR account, version images with tagging, and setup continuous integration (CI) to build future versions of your containers and push them to ACR automatically.
 
 1. In the Azure Portal `(https://portal.azure.com/)`, under navigate select **Resource groups** and click on **fabmedical-{DeploymentID}** resource group.
+
+   ![This is a screenshot of the selecting resource group.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/resourcegroup.png?raw=true "Cloud Shell Bash Window") 
+   
+   Now on the resource group page select Azure container registry.
+ 
+   ![This is a screenshot of acr.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/acr.png?raw=true "Cloud Shell Bash Window") 
+
 
 2. Select **Access keys** under **Settings** on the left-hand menu.
 
@@ -740,7 +747,7 @@ In this task, you will push images to your ACR account, version images with tagg
 
 12. Refresh one of the repositories to see the two versions of the image now appear.
 
-    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](media/image71.png "View two versions of image")
+    ![In this screenshot, content-api is selected under Repositories, and the Tags blade appears on the right. In the Tags blade, latest and v1 appear under Tags.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1task7-step12.png?raw=true "View two versions of image")
 
 13. Run the following commands to pull an image from the repository. Note that the default behavior is to pull images tagged with `latest`. You can pull a specific version using the version tag. Also, note that since the images already exist on the build agent, nothing is downloaded.
 
@@ -749,7 +756,7 @@ In this task, you will push images to your ACR account, version images with tagg
     docker image pull [LOGINSERVER]/content-web:v1
     ```
 
-### Task 15: Setup CI Pipeline to Push Images
+### Task 11: Setup CI Pipeline to Push Images
 
 In this task, you will use YAML to define a GitHub Actions workflow that builds your Docker
 image and pushes it to your ACR instance automatically.
@@ -764,7 +771,7 @@ image and pushes it to your ACR instance automatically.
 
 4. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
 
-    ![New secret screen with values are entered.](media/2020-08-24-21-48-54.png "New secret screen")
+    ![New secret screen with values are entered.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/2020-08-24-21-48-54.png?raw=true "New secret screen")
 
 5. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
 
