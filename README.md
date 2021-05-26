@@ -1,5 +1,6 @@
-### Let us know how we’re doing!  
-Please take a moment to fill out the [Microsoft Cloud Workshop Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbRyEtIpX7sDdChuWsXhzKJXJUNjFBVkROWDhSSVdYT0dSRkY4UVFCVzZBVy4u) and help us improve our offerings.
+## Microsoft Cloud Workshops - Retirement Survey  
+
+As we look to streamline content and improve training, we are considering retiring the Microsoft Cloud Workshop (MCW) program. Please take a moment to fill out the [Microsoft Cloud Workshop Survey](https://forms.office.com/r/834zwtaNtK) and give us your feedback.
 
 # Cloud-native applications
 
@@ -7,7 +8,7 @@ Fabrikam Medical Conferences provides conference web site services, tailored to 
 
 The goal of this workshop is to help them build a proof of concept (POC) that will migrate their code to a more manageable process that involves containerization of tenant code, a better DevOps workflow, and a simple lift-and-shift story for their database backend.
 
-November 2020
+May 2021
 
 ## Target Audience
 
