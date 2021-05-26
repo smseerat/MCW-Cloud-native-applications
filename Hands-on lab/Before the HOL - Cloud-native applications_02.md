@@ -453,9 +453,9 @@ In this task, you will build the Docker images for the application --- one for t
 
 9.  Type the following command to create a Docker image for the init application.
 
-      ```bash
+     ```bash
       docker image build -t content-init .
-      ```
+     ```
 
 10. When complete, you will see eight images now exist when you run the Docker images command.
 
@@ -783,86 +783,42 @@ image and pushes it to your ACR instance automatically.
    cd ~/Fabmedical
    ```
 
-7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created, if it doesn't already exist. Do this by running the following commands:
+7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
 
-    ```bash
-    mkdir ~/Fabmedical/.github
-    mkdir ~/Fabmedical/.github/workflows
+    ```
+    rm -rf ~/Fabmedical/.github/workflows/
+    mkdir ~/Fabmedical/.github/workflows/
+    cd ~/Fabmedical/.github/workflows/
+    wget http://bit.ly/hol-content-web -O content-web.yml
+    wget http://bit.ly/hol-content-api -O content-api.yml
     ```
 
-8. Navigate to the `.github/workflows` directory:
-
-    ```bash
-    cd ~/Fabmedical/.github/workflows
-    ```
-
-9. Next create the workflow YAML file.
-
-    ```dotnetcli
+8. Next create the workflow YAML file.
+   
+   ```dotnetcli
     vi content-web.yml
-    ```
+   ```
 
-   Add the following as the content. Be sure to replace the following placeholders:
+   - Replace `[DeploymentID]` with your DeploymentID value given on Environment details page.
 
-   - replace `[SHORT_SUFFIX]` with your short suffix such as `SOL`.
+       ```
+       # Environment variables are defined so that they can be used throughout the job definitions.
+       env:
+        imageRepository: 'content-web'
+        resourceGroupName: 'fabmedical-[DeploymentID]'
+        containerRegistryName: 'acr[DeploymentID]'
+        containerRegistry: 'acr[DeploymentID].azurecr.io'
+        dockerfilePath: './content-web'
+        tag: '${{ github.run_id  }}'
 
-   ```yml
-   name: content-web
+       ```
+ 
+    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
 
-   # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
-   on:
-      push:
-         branches:
-            - master
-         paths:
-            - 'content-web/**'
 
-      # Configure workflow to also support triggering manually
-      workflow_dispatch:
+9. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-   # Environment variables are defined so that they can be used throughout the job definitions.
-   env:
-     imageRepository: 'content-web'
-     resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
-     containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
-     containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
-     dockerfilePath: './content-web'
-     tag: '${{ github.run_id  }}'
-
-   # Jobs define the actions that take place when code is pushed to the master branch
-   jobs:
-     build-and-publish-docker-image:
-       name: Build and Push Docker Image
-       runs-on: ubuntu-latest
-       steps:
-       # Checkout the repo
-       - uses: actions/checkout@master
-
-       - name: Set up Docker Buildx
-         uses: docker/setup-buildx-action@v1
-
-       - name: Login to ACR
-         uses: docker/login-action@v1
-         with:
-           registry: ${{ env.containerRegistry }}
-           username: ${{ secrets.ACR_USERNAME }}
-           password: ${{ secrets.ACR_PASSWORD }}
-
-       - name: Build and push an image to container registry
-         uses: docker/build-push-action@v2
-         with:
-           context: ${{ env.dockerfilePath  }}
-           file: "${{ env.dockerfilePath }}/Dockerfile"
-           pull: true
-           push: true
-           tags: |
-             ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
-             ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
-    ```
-
-10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
-
-11. Save the pipeline YAML, then commit and push it to the Git repository:
+10. Save the pipeline YAML, then commit and push it to the Git repository:
 
     ```bash
     git add .
@@ -870,11 +826,11 @@ image and pushes it to your ACR instance automatically.
     git push
     ```
 
-12. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
+11. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
 
-13. On the **Actions** page, select the **content-web** workflow.
+12. On the **Actions** page, select the **content-web** workflow.
 
-14. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+13. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
@@ -884,21 +840,26 @@ image and pushes it to your ACR instance automatically.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
+17. Next, setup the `content-api` workflow. 
 
-18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
+    ```
+    cd ~/Fabmedical/.github/workflows
+    vi content-api.yml
+    
+    ```
 
-    ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "content-api.yml environment variables highlighted")
+18. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value.
 
-19. Commit and push the changes to the Git repository:
+    ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
+19. Save the file, then commit and push it to the Git repository:
     ```bash
     git add .
     git commit -m "Updated workflow YAML"
     git push
+    
     ```
-
-20. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
+20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
 
 You should follow all steps provided _before_ performing the Hands-on lab.
 
