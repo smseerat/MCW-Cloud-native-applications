@@ -191,11 +191,13 @@ In this task, you clone your repositories from GitHub so you can work with them 
    git clone https://github.com/<your_github_username>/Fabmedical 
    ```
 
-### Task 5: Test the Starter Application
+### Task 6: Test the Starter Application
 
 In this task, you will take the starter files and run the node.js application as a Docker application.  You will build the Docker images from the existing files and run containers to test and execute the application.
 
 1. From Azure Cloud Shell, connect to your build agent if you are not already connected.
+
+   ![This screenshot of the console window shows the output from connecting to mongo.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1-step1.png?raw=true)
 
 2. Type the following command to create a Docker network named `fabmedical`:
 
@@ -320,17 +322,10 @@ In this task, you will take the starter files and run the node.js application as
     sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
     ```
 
-14. From Azure cloud shell, run the following command to find the IP address for the build agent VM provisioned when you ran the ARM deployment.
+14. Copy **Build Agent VM** public IP address from **Environment Details** tab, you will need this for future use.
 
-    ```bash
-    az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SHORT_SUFFIX] --query publicIps -o tsv
-    ```
+    ![Edit the app.js file in vim in the build machine to update the API URL.](media/copyip.png)   
 
-    Example:
-
-    ```bash
-    az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
-    ```
 
 15. From the cloud shell in the build machine edit the `app.js` file using vim.
 
@@ -343,6 +338,8 @@ In this task, you will take the starter files and run the node.js application as
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/image27.png "Edit the app.js")
 
     Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
+    
+    **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
 16. Now run the content-web application in the background.
 
@@ -366,11 +363,11 @@ In this task, you will take the starter files and run the node.js application as
 
 21. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
 
-   ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](media/image54.png "List of resources")
+    ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/resourcegroup.png?raw=true "List of resources")
 
-22. From the **Virtual Machine** blade overview, find the **IP address** of the VM.
+22. From the **Virtual Machine(1)** blade overview, find the **IP address(2)** of the VM.
 
-   ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](media/image26.png "VM Public IP Address")
+    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/agent-vm-private-ip-address.png?raw=true "VM Public IP Address")
 
 23. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
 
