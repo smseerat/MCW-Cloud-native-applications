@@ -58,20 +58,27 @@ In this task, you will edit the web application source code to add Application I
 
    > **Note**: if you have a blank result check that the command you issued refers to the right resource.
 
-2. On your lab VM update your fabmedical repository files by pulling the latest changes from the git repository:
+2. Clone your fabmedical repository (replace URL with URL of your repository):
+
+    ```bash
+    cd clouddrive
+    git clone https://github.com/USER_NAME/Fabmedical.git
+    ```
+
+3. On your lab VM update your fabmedical repository files by pulling the latest changes from the git repository:
 
    ```bash
    cd ~/clouddrive/fabmedical/content-web
    git pull
    ```
 
-3. Install support for Application Insights.
+4. Install support for Application Insights.
 
    ```bash
    npm install applicationinsights --save
    ```
 
-4. Edit the `app.js` file using Vim or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
+5. Edit the `app.js` file using Vim or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
 
    ```javascript
    const appInsights = require("applicationinsights");
@@ -81,9 +88,9 @@ In this task, you will edit the web application source code to add Application I
 
    ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png "AppInsights updates in app.js")
 
-5. Save changes and close the editor.
+6. Save changes and close the editor.
 
-6. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
+7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
    ```bash
    git add .
@@ -91,15 +98,15 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-7. Visit the `content-web` Action for your GitHub Fabmedical repository and see the new Image being deployed into your Kubernetes cluster.
+8. Visit the `content-web` Action for your GitHub Fabmedical repository and see the new Image being deployed into your Kubernetes cluster.
 
-8. While this update runs, return the Azure Portal in the browser.
+9. While this update runs, return the Azure Portal in the browser.
 
-9. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-10. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+11. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
@@ -163,7 +170,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
    Paste the following as the contents. Be sure to replace the following placeholders in the script:
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied from step 5.
-   - `[AKS NODEPOOL RESOURCE GROUP]`: Replace the `SUFFIX` and `REGION` with the region of your resource group.
+   - `[ KUBERNETES_NODE_RG]`: Replace the `SUFFIX` and `REGION` with the region of your resource group.
    - `[SUFFIX]`: Replace this with the same SUFFIX value used previously for this lab.
 
    ```bash
@@ -354,7 +361,11 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
 
 21. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
+    ```
+    http://fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com/content-api/sessions
+    ```
+
+    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19-new.png "Content api sessions")
 
 22. Test TLS termination by visiting both services again using `https`.
 
