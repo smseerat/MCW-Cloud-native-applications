@@ -66,10 +66,14 @@ At the end of this lab, you will be better able to build and deploy containerize
 ## Prerequisites
 
 The lab assumes some basic knowledge of Docker containers and Kubernetes. The following modules on Microsoft Learn would be helpful:
-- https://docs.microsoft.com/en-us/learn/modules/intro-to-docker-containers/
-- https://docs.microsoft.com/en-us/learn/modules/intro-to-containers/
-- https://docs.microsoft.com/en-us/learn/modules/build-and-store-container-images/
-- https://docs.microsoft.com/en-us/learn/modules/intro-to-kubernetes/
+
+| Description | URL |
+|-|-|
+| Introduction to Docker Containers | https://docs.microsoft.com/en-us/learn/modules/intro-to-docker-containers/       |
+| Introduction to Containers | https://docs.microsoft.com/en-us/learn/modules/intro-to-containers/              |
+| Build and Store Container Images| https://docs.microsoft.com/en-us/learn/modules/build-and-store-container-images/ |
+| Introduction to Kubernetes | https://docs.microsoft.com/en-us/learn/modules/intro-to-kubernetes/              |
+|||
 
 The lab also requires the completion of the steps outlined in the [Before the HOL - Cloud-native applications](Before%20the%20HOL%20-%20Cloud-native%20applications.md) document in order to prepare an appropriate environment to execute the exercises in this lab. 
 

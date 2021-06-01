@@ -316,10 +316,10 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     git config --global credential.helper store
     ```
 
-13. Push to the master branch by issuing the following command:
+13. Push to the main branch by issuing the following command:
 
     ```bash
-    git push -u origin master
+    git push -u origin main
     ```
 
     > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>.
@@ -1139,11 +1139,11 @@ image and pushes it to your ACR instance automatically.
    ```yml
    name: content-web
 
-   # This workflow is triggered on push to the 'content-web' directory of the  master branch of the repository
+   # This workflow is triggered on push to the 'content-web' directory of the  main branch of the repository
    on:
       push:
          branches:
-            - master
+            - main
          paths:
             - 'content-web/**'
 
@@ -1159,7 +1159,7 @@ image and pushes it to your ACR instance automatically.
      dockerfilePath: './content-web'
      tag: '${{ github.run_id  }}'
 
-   # Jobs define the actions that take place when code is pushed to the master branch
+   # Jobs define the actions that take place when code is pushed to the main branch
    jobs:
      build-and-publish-docker-image:
        name: Build and Push Docker Image

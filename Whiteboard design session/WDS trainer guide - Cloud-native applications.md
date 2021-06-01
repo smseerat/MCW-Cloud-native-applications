@@ -304,9 +304,9 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
 _Kubernetes Architecture_
 
->**Note**: This diagram is an illustration of the Kubernetes topology, illustrating the master nodes managed by Azure, and the agent nodes where Customers can integrate and deploy applications.
+>**Note**: This diagram is an illustration of the Kubernetes topology, illustrating the controller backplane nodes managed by Azure, and the agent nodes where Customers can integrate and deploy applications.
 
-![A diagram of Azure Kubernetes Service managed components with master and agent nodes.](media/azure-kubernetes-components.png)
+![A diagram of Azure Kubernetes Service managed components with controller backplane and agent nodes.](media/azure-kubernetes-components.png)
 
 <https://docs.microsoft.com/azure/aks/intro-kubernetes>
 
