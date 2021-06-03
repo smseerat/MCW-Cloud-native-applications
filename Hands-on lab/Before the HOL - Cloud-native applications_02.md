@@ -136,7 +136,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. Push to the main branch by issuing the following command:
 
     ```
-    git push -u origin main
+    git push -u origin master
     
     ```
 
