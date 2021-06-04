@@ -354,7 +354,13 @@ In this task, you will take the starter files and run the node.js application as
     ```bash
     curl http://localhost:3000
     ```
-
+    
+    > **Note**:  If you get no such file or directory error, run the below command and retry step 17
+    
+     ```
+     ng build
+     ```
+  
 18. Leave the application running for the next task.
 
 19. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
