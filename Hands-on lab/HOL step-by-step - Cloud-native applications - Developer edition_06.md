@@ -119,3 +119,4 @@ In this task, you will create a **Migration project** within Azure Database Migr
 1. in this step, we will update the index policy of the **sessions** collection to accommodate sorted queries required in the next exercise. Navigate to the **Scale & Settings** section under the **sessions** collection. Select the **Indexing Policy** tab (as show below) and add a new **Single field** index for the **startTime** field. Finally, click **Save** to complete the step.
 
     ![Sessions Index added for startTime.](media/dms-sessionsindex-in-cosmosdb.png "Add Sessions Index")
+
