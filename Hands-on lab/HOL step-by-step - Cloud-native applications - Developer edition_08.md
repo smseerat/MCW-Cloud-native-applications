@@ -1,56 +1,42 @@
-# Exercise 4: Scale the application and test HA
+# Exercise 4: Scale the application and test High Availability [Optional]
 
 **Duration**: 20 minutes
 
 At this point, you have deployed a single instance of the web and API service containers. In this exercise, you will increase the number of container instances for the web service and scale the front-end on the existing cluster.
 
-## Task 1: Increase service instances from the Kubernetes dashboard
+## Task 1: Increase service instances from the Azure Portal
 
-In this task, you will increase the number of instances for the API deployment in the Kubernetes management dashboard. While it is deploying, you will observe the changing status.
+In this task, you will increase the number of instances for the API deployment in the AKS Azure Portal blade. While it is deploying, you will observe the changing status.
 
-1. Switch to the Kubernetes Dashboard.
+1. In the AKS blade in the Azure Portal select **Workloads** and then select the **API** deployment.
 
-2. From the navigation menu, select **Workloads** -\> **Deployments**, and then select the **API** deployment.
+2. Select **YAML** in the window that loads and scroll down until you find **replicas**. Change the number of replicas to **2**, and then select **Review + save**. When prompted, check **Confirm manifest change** and select **Save**.
 
-3. Select the vertical ellipses and then select **Edit**.
+   ![In the edit YAML dialog, 2 is entered in the desired number of replicas.](media/2021-03-26-16-49-32.png "Setting replicas to 2")
 
-   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step3.png?raw=true "Scale a resource")
+   > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the portal, as described in the following steps.
 
-4. In the Edit a resource dialog, select the YAML tab. You will see a list of settings shown in YAML format.
+3. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
 
-5. Scroll down about halfway to find the cpu and update the value of cpu to 500m, as shown in the screenshot below. When done click on update.
+   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/api-replica-set.png "View replica details")
 
-   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk1-step5.png?raw=true "Scale a resource")
+4. From the navigation menu, select **Workloads**. Note that the api Deployment has an alert and shows a pod count 1 of 2 instances (shown as `1/2`).
 
-6. From the API deployment view, select the **SCALE** button.
+   ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/2021-03-26-16-50-38.png "View api active pods")
 
-   ![In the Workloads > Deployments > api bar, the Scale icon is highlighted.](media/image89.png "Scale a resource")
+   > **Note**: If you receive an error about insufficient CPU that is OK. We will see how to deal with this in the next Task (Hint: you can use the **Insights** option in the AKS Azure Portal to review the **Node** status and view the Kubernetes event logs).
 
-7. Change the number of replicas to **2**, and then select **Scale**.
+   At this point, here is a health overview of the environment:
 
-   ![In the Scale a Deployment dialog box, 2 is entered in the Desired number of pods box.](media/image116.png "Scale a Deployment dialog")
+   - One Deployment and one Replica Set are each healthy for the web service.
 
-   > **Note**: If the deployment completes quickly, you may not see the deployment Waiting states in the dashboard, as described in the following steps.
+   - The api Deployment and Replica Set are in a warning state.
 
-8. From the Replica Set view for the API, you will see it is now deploying and that there is one healthy instance and one pending instance.
+   - Two pods are healthy in the 'default' namespace.
 
-   ![Replica Sets is selected under Workloads in the navigation menu on the left, and at right, Pods status: 1 pending, 1 running is highlighted. Below that, a red arrow points at the API deployment in the Pods box.](media/image117.png "View replica details")
+5. Open the Contoso Neuro Conference web application. The application should still work without errors as you navigate to Speakers and Sessions pages.
 
-9. From the navigation menu, select **Deployments** from the list. Note that the api service has a pending status indicated by the grey timer icon, and it shows a pod count 1 of 2 instances (shown as `1/2`).
-
-   ![In the Deployments box, the api service is highlighted with a grey timer icon at left and a pod count of 1/2 listed at right.](media/image118.png "View api active pods")
-
-10. From the Navigation menu, select **Workloads**. From this view, note that the health overview in the right panel of this view. You will see the following:
-
-   - One deployment and one replica set are each healthy for the api service.
-
-   - One replica set is healthy for the web service.
-
-   - Three pods are healthy.
-
-11. Navigate to the web application from the browser again. The application should still work without errors as you navigate to Speakers and Sessions pages.
-
-   - Navigate to the `/stats` page. You will see information about the environment including:
+   - Navigate to the `/stats` page. You will see information about the hosting environment including:
 
      - **webTaskId:** The task identifier for the web service instance.
 
@@ -66,121 +52,76 @@ In this task, you will increase the number of instances for the API deployment i
 
      - **uptime:** The up time for the API service.
 
-   - Refresh the page in the browser, and you can see the hostName change between the two API service instances. The letters after `api-{number}-` in the hostname will change.
+## Task 2: Resolve failed provisioning of replicas
 
-## Task 2: Increase service instances beyond available resources
+In this task, you will resolve the failed API replicas. These failures occur due to the clusters' inability to meet the requested resources.
 
-In this task, you will try to increase the number of instances for the API service container beyond available resources in the cluster. You will observe how Kubernetes handles this condition and correct the problem.
+1. In the AKS blade in the Azure Portal select **Workloads** and then select the **API** deployment. Select the **YAML** navigation item.
 
-1. From the navigation menu, select **Deployments**. From this view, select the **api** deployment.
+2. In the **YAML** screen scroll down and change the following items:
 
-2. Configure the deployment to use a fixed host port for initial testing. Select the vertical ellipses and then select **Edit**.
+   - Modify **ports** and remove the **hostPort**. Two Pods cannot map to the same host port.
 
-3. In the Edit a resource dialog, select the YAML tab. You will see a list of settings shown in YAML format. Use the copy button to copy the text to your clipboard.
+      ```yaml
+      ports:
+        - containerPort: 3001
+          protocol: TCP
+      ```
 
-   ![Screenshot of the Edit a resource dialog box that displays JSON data.](media/api-deployment-edit.PNG "Edit a resource YAML config")
+   - Modify the **cpu** and set it to **100m**. CPU is divided between all Pods on a Node.
 
-4. Paste the contents into the text editor of your choice (such as Notepad on Windows, macOS users can use TextEdit).
+      ```yaml
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      ```
 
-5. Scroll down about halfway to find the node `$.spec.template.spec.containers[0]`, as shown in the screenshot below.
+   Select **Review + save** and, when prompted, confirm the changes and select **Save**.
 
-   ![Screenshot of the deployment code, with the $.spec.template.spec.containers[0] section highlighted.](media/image84.png "Container deployment configuration")
+   ![In the edit YAML dialog, showing two changes required.](media/2021-03-26-16-56-28.png "Modify deployment manifest")
 
-6. The containers spec has a single entry for the API container at the moment. You will see that the name of the container is `api` - this is how you know you are looking at the correct container spec.
+3. Return to the **Workloads** main view on the AKS Azure Portal and you will now see that the Deployment is healthy with two Pods operating.
 
-   - Add the following snippet below the `name` property in the container spec:
-
-   ```text
-     ports:
-	    - containerPort: 3001
-	      hostPort: 3001
-   ```
-
-   - Your container spec should now look like this:
-
-   ![Screenshot of the deployment JSON code, with the $.spec.template.spec.containers[0] section highlighted, showing the updated values for containerPort and hostPort, both set to port 3001.](media/image85.png "View container ports")
-
-7. Copy the updated document from notepad into the clipboard. Return to the Kubernetes dashboard, which should still be viewing the **api** deployment.
-
-   - Paste the updated document.
-
-   - Select Update.
-
-   ![UPDATE is highlighted in the Edit a Deployment dialog box.](media/image88.png "Update API YAML")
-
-8. From the API deployment view, select **Scale**.
-
-9. Change the number of replicas to 4 and select **Scale**.
-
-   ![In the Scale a Deployment dialog box, 4 is entered in the Desired number of pods box.](media/image119.png "Scale a resource")
-
-10. From the navigation menu, select **Services** view under **Discovery and Load Balancing**. Select the **api** service from the **Services** list. From the api service view, you will see it has two healthy instances and one or two unhealthy (or possibly pending depending on timing) instances.
-
-    ![In the api service view, various information is displayed in the Details box and in the Pods box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step10.png?raw=true "View API service endpoints and pods")
-
-11. After a few minutes, select **Workloads** from the navigation menu. From this view, you should see an alert reported for the api deployment.
-
-    ![Workloads is selected in the navigation menu. At right, an exclamation point (!) appears next to the api deployment listing in the Deployments box.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk2-step11.png?raw=true "View deployment log")
-
-    > **Note**: This message indicates that there were not enough available resources to match the requirements for a new pod instance. In this case, this is because the instance requires port `3001`, and since there are only 2 nodes available in the cluster, only two api instances can be scheduled. The third or fourth pod instances will wait for a new node to be available that can run another instance using that port.
-
-12. Reduce the number of requested pods to `2` using the **Scale** button.
-
-13. Almost immediately, the warning message from the **Workloads** dashboard should disappear, and the **API** deployment will show `2/2` pods are running.
-
-    ![Workloads is selected in the navigation menu. A green check mark now appears next to the api deployment listing in the Deployments box at right.](media/image122.png "Review pods list")
+   ![In the Workload view with the API deployment highlighted.](media/healthy-deployment.png "API deployment is now healthy")
 
 ## Task 3: Restart containers and test HA
 
 In this task, you will restart containers and validate that the restart does not impact the running service.
 
-1. From the navigation menu on the left, select **Services** view under **Discovery and Load Balancing**. From the **Services** list, select the external endpoint hyperlink for the web service, and visit the **Stats** page by adding / stats to the URL. Keep this open and handy to be refreshed as you complete the steps that follow.
-
-   ![In the Services box, the hyperlinked external endpoint for the web service is highlighted. ](media/image112.png "View the services external endpoint")
+1. Open the sample web application and navigate to the "Stats" page as shown.
 
    ![The Stats page is visible in this screenshot of the Contoso Neuro web application.](media/image123.png "Contoso web task details")
 
-2. From the navigation menu, select **Workloads** -> **Deployments**. From Deployments list, select the **API** deployment.
+2. In the AKS blade in the Azure Portal open the api Deployment and increase the required replica count to `4`. Use the same process as Exercise 4, Task 1.
 
-   ![In the left menu the Deployments item is selected. The API deployment is highlighted in the Deployments list box.](media/image124.png "API pod deployments")
+   ![In the left menu the Deployments item is selected. The API deployment is highlighted in the Deployments list box.](media/2021-03-26-17-30-28.png "API pod deployments")
 
-3. From the API deployment view, select **Scale** and from the dialog presented, and enter `4` for the desired number of pods. Select **OK**.
+3. After a few moments you will find that the API deployment is now running 4 replicas successfully.
 
-4. From the navigation menu, select **Workloads** -> **Replica Sets**. Select the **api** replica set, and from the **Replica Set** view, you will see that one or two pods cannot deploy.
-
-   ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. In the Pods box, two pods have exclamation point (!) alerts and messages indicating that they cannot deploy.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step4.png?raw=true "View failed pod deployment details")
-
-5. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the two api pod instances periodically. The task id and pid might also change between the two api pod instances.
+4. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the four api pod instances periodically. The task id and pid might also change between the four api pod instances.
 
    ![On the Stats page in the Contoso Neuro web application, two different api host name values are highlighted.](media/image126.png "View web task hostname")
 
-6. After refreshing enough times to see that the `hostName` value is changing, and the service remains healthy, return to the **Replica Sets** view for the API. From the navigation menu, select Replica Sets under Workloads and select the **API** replica set.
+5. After refreshing enough times to see that the `hostName` value is changing, and the service remains healthy, you can open the **Replica Sets** view for the API in the Azure Portal.
 
-7. From this view, take note that the hostName value shown in the web application stats page matches the pod names for the pods that are running.
+6. On this view you can see the hostName value shown in the web application stats page matches the pod names for the pods that are running.
 
-   ![Two different pod names are highlighted in the Pods box, which match the values from the previous Stats page.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step7.png?raw=true "View two API pod details")
+   ![Viewing replica set in the Azure Portal.](media/2021-03-26-17-31-02.png "Viewing replica set in the Azure Portal")
 
-8. Note the remaining pods are still pending, since there are not enough port resources available to launch another instance. Make some room by deleting a running instance. Select the context menu and choose **Delete** for one of the healthy pods.
+7. Select two of the Pods at random and choose **Delete**. Select **Confirm delete**, and press **Delete** again.
 
-   ![The context menu for a pod in the pod list is expanded with the Delete item selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk3-step8.png?raw=true "Delete running pod instance")
+   ![The context menu for a pod in the pod list is expanded with the Delete item selected.](media/2021-03-26-17-31-31.png "Delete running pod instance")
 
-9. Once the running instance is gone, Kubernetes will be able to launch one of the pending instances. However, because you set the desired size of the deploy to 4, Kubernetes will add a new pending instance. Removing a running instance allowed a pending instance to start, but in the end, the number of pending and running instances is unchanged.
+8. Kubernetes will launch new Pods to meet the required replica count. Depending on your view you may see the old instances Terminating and new instances being Created.
 
-   ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4stp3-step9.png?raw=true "API pod running")
+   ![The first row of the Pods box is highlighted, and the pod has a green check mark and is running.](media/2021-03-26-17-31-54.png "API Pods changing state")
 
-10. From the navigation menu, select **Deployments** under **Workloads**. From the view's Deployments list, select the **API** deployment.
+9. Return to the API Deployment and scale it back to `1` replica. See Step 2 above for how to do this if you are unsure.
 
-11. From the API Deployment view, select Scale and enter `1` as the desired number of pods. Select **OK**.
+10. Return to the sample web site's stats page in the browser and refresh while Kubernetes is scaling down the number of Pods. You will notice that only one API host name shows up, even though you may still see several running pods in the API replica set view. Even though several pods are running, Kubernetes will no longer send traffic to the pods it has selected to terminate. In a few moments, only one pod will show in the API Replica Set view.
 
-    ![In the Scale a Deployment dialog box, 1 is entered in the Desired number of pods box.](media/image130.png "Scale replicas to one")
-
-12. Return to the web site's stats page in the browser and refresh while this is scaling down. You will notice that only one API host name shows up, even though you may still see several running pods in the API replica set view. Even though several pods are running, Kubernetes will no longer send traffic to the pods it has selected to scale down. In a few moments, only one pod will show in the API replica set view.
-
-    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. Only one API host name, which has a green check mark and is listed as running, appears in the Pods box.](media/image131.png "View replica details")
-
-13. From the navigation menu, select **Workloads**. From this view, note that there is only one API pod now.
-
-    ![Workloads is selected in the navigation menu on the left. On the right are the Deployment, Pods, and Replica Sets boxes.](media/image132.png "View only one replica")
+    ![Replica Sets is selected under Workloads in the navigation menu on the left. On the right are the Details and Pods boxes. Only one API host name, which has a green check mark and is listed as running, appears in the Pods box.](media/2021-03-26-17-32-24.png "View replica details")
 
 ## Task 4: Configure Cosmos DB Autoscale
 
@@ -188,7 +129,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 1. In the Azure Portal, navigate to the `fabmedical-[SUFFIX]` **Azure Cosmos DB Account**.
 
-2. From the left hand-menu select **Data Explorer**. 
+2. Select **Data Explorer**.
 
 3. Within **Data Explorer**, expand the `contentdb` database, then expand the `sessions` collection.
 
@@ -214,15 +155,17 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The Cosmos DB account Connection String pane with the fields to copy highlighted.](media/cosmos-connection-string-pane.png "View CosmosDB connection string")
 
-4. Return to the SSH window which has the  **SSH session** to the **Build agent VM**.
+    >**Note**: In your Cosmos DB account, you may see that the host endpoint uses `.mongo.cosmos.azure.com`, which is for version 3.6 of Mongo DB. The endpoint shown here is `.documents.azure.com`, which is for version 3.2 of Mongo DB. You can use either endpoint for the purposes of this Task. If you are curious about the new features added to version 3.6 (that do not affect the application in this lab), consult [this](https://devblogs.microsoft.com/cosmosdb/upgrade-your-server-version-from-3-2-to-3-6-for-azure-cosmos-db-api-for-mongodb/) post.
 
-5. Navigate to the `~/Fabmedical` directory.
+4. Open the Azure Command Shell, and **SSH** to the **Build agent VM**.
+
+5. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
 
     ```bash
     cd ~/Fabmedical
     ```
 
-6. Run the following command to open the `perftest.sh` script for editing in Vi.
+6. Run the following command to open the `perftest.sh` script for editing in Vim.
 
     ```bash
     vi perftest.sh
@@ -230,9 +173,9 @@ In this task, you will run a performance test script that will test the Autoscal
 
 7. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
 
-    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex4tsk5-step7.png?raw=true "Modify the connection information in Vim")
+    ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Press the Escape key and type :wq and then press the Enter key to save and close the file.
+8. Save the file and exit Vim.
 
 9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 
@@ -240,7 +183,7 @@ In this task, you will run a performance test script that will test the Autoscal
     bash ./perftest.sh
     ```
 
-    > **Note:** The script will take a minute to complete executing. If it takes more then 2 mins press ctrl+c to close current process.
+    > **Note:** The script will take a minute to complete executing.
 
 10. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
 

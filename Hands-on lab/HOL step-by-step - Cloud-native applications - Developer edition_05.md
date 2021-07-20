@@ -96,7 +96,7 @@ The purpose of this task is to make sure you can run the application successfull
 
     ![Edit the app.js file in vim in the build machine to update the API URL.](media/copyip.png)  
 
-1. From the bash console, we will use the sed command to  edit the `app.js` file and verify it. replace `<AGENT VM IP>` with the IP address copied in the previous step. We will also run the content-web application in the background.
+1. From the SSH session, we will use the sed command to  edit the `app.js` file and verify it. replace `<AGENT VM IP>` with the IP address copied in the previous step. We will also run the content-web application in the background.
 
     ```bash
     sed -i 's/localhost:/<AGENT VM IP>:/' app.js
@@ -158,7 +158,7 @@ In this task, you will create a new Dockerfile that will be used to run the API 
 
 > **Note**: You will be working in a Linux VM without friendly editor tools. You must follow the steps very carefully to work with Vim for a few editing exercises if you are not already familiar with Vim.
 
-1. From the Bash window, navigate to the `content-api` folder. Download a file named `Dockerfile` and verify it is downloaded by listing the contents of the folder 
+1. From the SSH session window, navigate to the `content-api` folder. Download a file named `Dockerfile` and verify it is downloaded by listing the contents of the folder 
 
     ```bash
     cd ~/Fabmedical/content-api
@@ -290,7 +290,7 @@ In this task, you will create Docker images for the application --- one for the 
     ```bash
     cd ../content-web
     ll
-    cat Dockerfile
+    head Dockerfile
     
     ```
 
@@ -353,7 +353,7 @@ The web application container will be calling endpoints exposed by the API appli
 
 In this task, you will configure the `web` container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
 
-1. From Bash window if we switch to the **content-web** folder and review the `app.js` file, we can observe the highlighted line declaring the **contentApiUrl**  variable, which can be set with an environment variable directive.
+1. From SSH session window if we switch to the **content-web** folder and review the `app.js` file, we can observe the highlighted line declaring the **contentApiUrl**  variable, which can be set with an environment variable directive.
 
     ```bash
     cd ../content-web
@@ -566,7 +566,7 @@ image and pushes it to your ACR instance automatically.
 
     ```bash
     rm -rf ~/Fabmedical/.github/workflows/
-    mkdir ~/Fabmedical/.github/workflows/
+    mkdir ~/Fabmedical/.github/workflows/ -p
     cd ~/Fabmedical/.github/workflows/
     wget http://bit.ly/hol-content-web -O content-web.yml
     wget http://bit.ly/hol-content-api -O content-api.yml
@@ -576,7 +576,7 @@ image and pushes it to your ACR instance automatically.
 1. Next run the sed command to update the workflow YAML file with the correct DeploymentID. replace `<SUFFIX>` above with your DeploymentID value given on Environment details page
 
     ```bash
-    sed 's/\[DeploymentID\]/<SUFFIX>/g' content-web.yml
+    sed -i's/\[DeploymentID\]/<SUFFIX>/g' content-web.yml
     cat content-web.yml
     ```
 
@@ -624,7 +624,7 @@ image and pushes it to your ACR instance automatically.
 
     ```bash
     cd ~/Fabmedical/.github/workflows
-    sed 's/\[DeploymentID\]/<SUFFIX>/g' content-api.yml
+    sed -i 's/\[DeploymentID\]/<SUFFIX>/g' content-api.yml
     cat content-api.yml
     
     ```
