@@ -13,8 +13,6 @@ In this hands-on lab, you will assist with completing this POC with a subset of 
 
 > **Important**: Most Azure resources require unique names. Throughout these steps, you will see the word "SUFFIX" as part of resource names. You should replace this with DeploymentId, you can get DeploymentId from the environment details tab.
 
-{"mode":"full","isActive":false}
-
 
 ## Solution architecture
 
@@ -38,5 +36,4 @@ Each tenant will have the following containers:
 
 - **Content service**: The API that handles content for the conference such as speakers, sessions, workshops, and sponsors.
 
-{"mode":"full","isActive":false}
 
