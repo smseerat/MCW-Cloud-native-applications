@@ -365,32 +365,39 @@ In this task, you will take the starter files and run the node.js application as
 
 19. If you received a JSON response to the /speakers content request and an HTML response from the web application, your environment is working as expected.
 
-20. From the Azure portal select the resource group you created named `fabmedical-SUFFIX`.
+20. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`. Get the Build Agent VM Ip from **Environment Details** tab.
 
-21. Select the build agent VM named `fabmedical-SUFFIX` from your list of available resources.
+    ```
+    http://[BUILDAGENTVMIP]:3000
+    ```
+   
+    > EXAMPLE: ```http://13.68.113.176:3000```
+   
+    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step4.png?raw=true "VM Public IP Address")
 
-    ![In this screenshot of your list of available resources, the first item is selected, which has the following values for Name, Type, and Location: fabmedical-soll (a red arrows points to this name), Virtual machine, and East US 2.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/resourcegroup.png?raw=true "List of resources")
+21. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
 
-22. From the **Virtual Machine(1)** blade overview, find the **IP address(2)** of the VM.
+    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
-    ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/agent-vm-private-ip-address.png?raw=true "VM Public IP Address")
+22. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
 
-23. Test the web application from a browser. Navigate to the web application using your build agent IP address at port `3000`.
+    ```
+    killall nodejs
+    killall node
+   
+    ```
+   > **Note**: If cloud shell gets stuck, follow the below steps
 
-   ```text
-   http://[BUILDAGENTIP]:3000
+   - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
 
-   EXAMPLE: http://13.68.113.176:3000
+  - Connect to build agent vm using the Command to Connect to Build Agent VM, which is given on lab environment details page.
+
+  - Run the following command:
+   ```
+   cd ~/Fabmedical/content-web
    ```
 
-24. Select the Speakers and Sessions links in the header. You will see the pages display the HTML version of the JSON content you curled previously.
-
-25. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
-
-   ```bash
-   killall nodejs
-   killall node
-   ```
+   
 ### Task 7: Build the Docker Images
 
 In this task, you will build the Docker images for the application --- one for the API application and another for the web application. Each image will be created via Docker commands that rely on a Dockerfile.
