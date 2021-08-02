@@ -319,6 +319,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 13. Push to the main branch by issuing the following command:
 
     ```bash
+    git branch -m master main
     git push -u origin main
     ```
 
