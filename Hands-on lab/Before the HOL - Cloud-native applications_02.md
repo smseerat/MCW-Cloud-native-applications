@@ -61,7 +61,43 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/clonefiles.png?raw=true "Cloud Shell")
 
-### Task 3: Create a GitHub repository
+### Task 3: Create GitHub Personal Access Token
+
+1. Ensure you are logged in to your GitHub account.
+
+2. Create a Personal Access Token as described below:
+
+   - In the upper-right corner of your GitHub page, click your profile photo, then click **Settings (1)** and in the left sidebar click **Developer settings (2)**.
+
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat.png)
+
+   - Then in the left sidebar, click **Personal access tokens (3)** and select **Generate new token (4)** button on the right. Provide the GitHub password if prompted. 
+   
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat1.png)
+
+3. Select the scopes or permissions you would like to grant this token
+
+    - **Note**: Provide the following text in the note field, **<inject key="DevOps Token" />**. 
+    
+    - **Select scopes**:
+
+        * repo - Full control of private repositories
+        * workflow - Update GitHub Action workflows
+        * write:packages - Upload packages to GitHub Package Registry
+        * delete:packages - Delete packages from GitHub Package Registry
+        * read:org - Read org and team membership, read org projects
+  
+      ![Permissions GH](media/image10.png)
+
+    - Click **Generate token**.
+
+      ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/gentoken.png)
+
+4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
+
+   ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/copytoken.png)
+
+### Task 4: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
@@ -147,7 +183,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Refresh your GitHub repository, you should now see the code published.
 
-### Task 4: Connect securely to the build agent
+### Task 5: Connect securely to the build agent
 
 In this section, validate that you can connect to the new build agent VM.
 
@@ -167,7 +203,7 @@ In this section, validate that you can connect to the new build agent VM.
    ![In this screenshot of a Cloud Shell window, ssh -i .ssh/fabmedical adminfabmedical@52.174.141.11 has been typed and run at the command prompt. The information detailed above appears in the window.](media/b4-image27.png "Azure Cloud Shell Connect to Host")
 
 
-### Task 5: Clone Repositories to the Build Agent
+### Task 6: Clone Repositories to the Build Agent
 
 In this task, you clone your repositories from GitHub so you can work with them on the build agent.
 
@@ -192,7 +228,7 @@ In this task, you clone your repositories from GitHub so you can work with them 
    git clone https://github.com/<your_github_username>/Fabmedical 
    ```
 
-### Task 6: Test the Starter Application
+### Task 7: Test the Starter Application
 
 In this task, you will take the starter files and run the node.js application as a Docker application.  You will build the Docker images from the existing files and run containers to test and execute the application.
 
@@ -399,7 +435,7 @@ In this task, you will take the starter files and run the node.js application as
    ```
 
    
-### Task 7: Build the Docker Images
+### Task 8: Build the Docker Images
 
 In this task, you will build the Docker images for the application --- one for the API application and another for the web application. Each image will be created via Docker commands that rely on a Dockerfile.
 
@@ -479,7 +515,7 @@ In this task, you will build the Docker images for the application --- one for t
 
    ![Three images are now visible in this screenshot of the console window: content-init, content-web, content-api, and node.](media/vm-list-containers.PNG "View content images")
 
-### Task 8: Run Docker Containers
+### Task 9: Run Docker Containers
 
 The web application container will be calling endpoints exposed by the API application container and the API application container will be communicating with mongodb. In this exercise, you will launch the images you created as containers on the same bridge network you created when starting mongodb.
 
@@ -562,7 +598,7 @@ The web application container will be calling endpoints exposed by the API appli
    curl http://localhost:[PORT]/speakers.html
    ```
 
-### Task 9: Setup Environment Variables
+### Task 10: Setup Environment Variables
 
 In this task, you will configure the `web` container to communicate with the API container using an environment variable, similar to the way the mongodb connection string is provided to the api.
 
@@ -669,7 +705,7 @@ In this task, you will configure the `web` container to communicate with the API
 
     Enter credentials if prompted.
 
-### Task 10: Push Images to Azure Container Registry
+### Task 11: Push Images to Azure Container Registry
 
 To run containers in a remote environment, you will typically push images to a Docker registry, where you can store and distribute images. Each service will have a repository that can be pushed to and pulled from with Docker commands. Azure Container Registry (ACR) is a managed private Docker registry service based on Docker Registry v2.
 
@@ -770,7 +806,7 @@ In this task, you will push images to your ACR account, version images with tagg
     docker image pull [LOGINSERVER]/content-web:v1
     ```
 
-### Task 11: Setup CI Pipeline to Push Images
+### Task 12: Setup CI Pipeline to Push Images
 
 In this task, you will use YAML to define a GitHub Actions workflow that builds your Docker
 image and pushes it to your ACR instance automatically.
