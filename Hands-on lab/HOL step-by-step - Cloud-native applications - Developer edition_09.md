@@ -99,15 +99,23 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-8. Visit the `content-web` Action for your GitHub Fabmedical repository and see the new Image being deployed into your Kubernetes cluster.
+8. Visit the `content-web` Action from your GitHub Fabmedical repository and see the new Image being deployed into your Kubernetes cluster. If the GitHub Action is in running state then **skip steps from 9 - 11** and continue from step 12.
+  
+9. If the GitHub Action for `content-web` haven't started automatically then run the workflow manually by following the next steps.
 
-9. While this update runs, return the Azure Portal in the browser.
+10. Navigate to GitHub and select **Actions**(1) and then select `content-web` from the list. Click on **Re-run Jobs**(2) and select **Re-run all Jobs**(3)
 
-10. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+    ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
+      
+11. Wait untill the Build and Push Docker Image of `content-web` **Completes** as shown in the image below:
+
+    ![Build and Push Docker image gets Complete](media/github-action-complete.png)
+
+12. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-11. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+13. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
