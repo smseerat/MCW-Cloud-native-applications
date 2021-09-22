@@ -101,7 +101,7 @@ In this task, you will edit the web application source code to add Application I
 
 8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository is in **running state** with Orange color then **skip steps 9 and 10** and continue from step 11.
   
-9. If the GitHub Action for `content-web` haven't started automatically then run the workflow manually by selecting **Actions**(1) and then select `content-web` from the list. Click on **Re-run Jobs**(2) and select **Re-run all Jobs**(3)
+8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. If it is in **running state** or if it is already execited run then **skip steps 9 and 10** and continue from step 11, if there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
 
    ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
       
