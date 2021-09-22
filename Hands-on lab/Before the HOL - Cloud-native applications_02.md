@@ -63,7 +63,9 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 ### Task 3: Create GitHub Personal Access Token
 
-1. Ensure you are logged in to your GitHub account.
+1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
+
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
 
 2. Create a Personal Access Token as described below:
 
@@ -96,14 +98,14 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
 
    ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/copytoken.png)
+   
+   > **Note**: Use Personal Access Token as Password when ever you asked to provide Password while pushing any Git changes in the Lab. 
 
 ### Task 4: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
-
-    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+1. Ensure you are logged in to your GitHub account.
 
 1. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
@@ -177,9 +179,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
     
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using the cloud shell. Refer the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token ```.
-
-    > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
+    > **Note**: Use your Personal Access Token as Password to Push the Git changes.
 
 1. Refresh your GitHub repository, you should now see the code published.
 
