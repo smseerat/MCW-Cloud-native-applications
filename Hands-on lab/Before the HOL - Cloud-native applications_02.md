@@ -650,6 +650,8 @@ In this task, you will configure the `web` container to communicate with the API
    :wq
    <Enter>
    ```
+   
+      **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
 8. Rebuild the web application Docker image using the same command as you did previously.
 
@@ -867,6 +869,8 @@ image and pushes it to your ACR instance automatically.
 
 
 9. Save the file and exit VI by pressing `<Esc>` then `:wq`.
+
+   **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
 10. Save the pipeline YAML, then commit and push it to the Git repository:
 
