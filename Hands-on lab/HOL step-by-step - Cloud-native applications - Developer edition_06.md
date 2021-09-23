@@ -24,7 +24,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
     - Resource group: Select **fabmedical-[DeploymentId]** resource group.
     - Migration service name:  Enter the name as **`fabmedical[DeploymentId]`**. You can get the DeploymentId from environment details tab
-    - Location: **Choose the Azure Region used for the Resource Group**.
+    - Location: **Choose the same Azure Region used for the Resource Group**.
 
     ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
 
