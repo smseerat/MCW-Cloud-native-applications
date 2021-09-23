@@ -79,7 +79,7 @@ In this task, you will edit the web application source code to add Application I
    ```
    > **Note**: **If the above command takes more then 5mins to finish, open a new cloud shell using ```http://shell.azure.com``` and navigate to content-web directory by  running  ``` cd ~/clouddrive/fabmedical/content-web``` and continue with next steps.**
  
-5. Edit the `app.js` file using  the command ```vi app.js ``` or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
+5. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
 
    ```javascript
    const appInsights = require("applicationinsights");
