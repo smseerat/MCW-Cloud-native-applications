@@ -111,7 +111,7 @@ In this task, you will edit the web application source code to add Application I
 
 11. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
-     >**Note: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step.**
+     >**Note: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step. There will be no effect on the steps due to this.**
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
