@@ -77,9 +77,9 @@ In this task, you will edit the web application source code to add Application I
    ```bash
    npm install applicationinsights --save
    ```
-   > **Note**: If the above command takes more then 5mins to finish, open a new cloud shell window navigate to content-web directory by  running ``` cd ~/clouddrive/fabmedical/content-web``` and continue with next steps.
+   > **Note**: **If the above command takes more then 5mins to finish, open a new cloud shell using ```http://shell.azure.com``` and navigate to content-web directory by  running  ``` cd ~/clouddrive/fabmedical/content-web``` and continue with next steps.**
  
-5. Edit the `app.js` file using Vim or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
+5. Edit the `app.js` file using  the command ```vi app.js ``` or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
 
    ```javascript
    const appInsights = require("applicationinsights");
@@ -99,9 +99,9 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository is in **running state** with Orange color then **skip steps 9 and 10** and continue from step 11.
+8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository and check if it is in **running state** with Orange color or not, if its running  then **skip step 9** and continue from step 11.
   
-8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. If it is in **running state** or if it is already execited run then **skip steps 9 and 10** and continue from step 11, if there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
+9. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. if there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
 
    ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
       
