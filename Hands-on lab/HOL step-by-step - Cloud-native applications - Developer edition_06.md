@@ -24,7 +24,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
     - Resource group: Select **fabmedical-[DeploymentId]** resource group.
     - Migration service name:  Enter the name as **`fabmedical[DeploymentId]`**. You can get the DeploymentId from environment details tab
-    - Location: Choose the Azure Region used for the Resource Group.
+    - Location: **Choose the Azure Region used for the Resource Group**.
 
     ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
 
@@ -44,7 +44,7 @@ The service may take 5 - 10 minutes to provision.
 
 In this task, you will create a **Migration project** within Azure Database Migration Service, and then migrate the data from MongoDB to Azure Cosmos DB.
 
-1. In the Azure Portal, navigate to your Build Agent VM, and copy the Private IP address **(2)**. Paste the contents into the notepad for future use.
+1. In the Azure Portal, navigate to your Build Agent VM i.e, named with **fabmedical** virtual machine in the resource group and copy the Private IP address **(2)**. Paste the contents into the notepad for future use.
 
    ![Built Agent VM is shown. Overview tab is open. Private IP address is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/master/Hands-on%20lab/media/agent-vm-private-ip-address.png?raw=true "Private IP Address")
 
