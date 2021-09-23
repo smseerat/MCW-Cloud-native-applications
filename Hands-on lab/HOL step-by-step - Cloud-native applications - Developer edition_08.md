@@ -175,7 +175,9 @@ In this task, you will run a performance test script that will test the Autoscal
 
     ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Save the file and exit Vim.
+8. Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
+    
+    **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
 9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 
