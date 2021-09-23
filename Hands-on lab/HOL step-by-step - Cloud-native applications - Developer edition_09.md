@@ -65,7 +65,7 @@ In this task, you will edit the web application source code to add Application I
     git clone https://github.com/USER_NAME/Fabmedical.git
     ```
 
-3. On your lab VM update your fabmedical repository files by pulling the latest changes from the git repository:
+3. On your Cloudshell update your fabmedical repository files by pulling the latest changes from the git repository:
 
    ```bash
    cd ~/clouddrive/fabmedical/content-web
@@ -111,9 +111,11 @@ In this task, you will edit the web application source code to add Application I
 
 11. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
+     >**Note: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step.**
+
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-  >**Note**: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step.
+  
 
 12. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
