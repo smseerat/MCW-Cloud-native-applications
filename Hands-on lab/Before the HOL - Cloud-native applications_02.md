@@ -135,11 +135,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
 
-    ```
-    content-api/
-    content-init/
-    content-web/
-    ```
+   ![](media/cna4.png "Azure Cloud Shell Connect to Host")
 
 1. Set your username and email, which git uses for commits, run below commands:
   
