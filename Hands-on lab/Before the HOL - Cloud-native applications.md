@@ -1108,26 +1108,45 @@ image and pushes it to your ACR instance automatically.
 
     ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created.](media/2020-08-24-21-51-24.png "Secrets screen")
 
-6. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
+6. In your Azure Cloud Shell, run `az ad sp create-for-rbac --sdk-auth` in to generate an Azure Active Directory service principal with credentials.  Copy the output JSON (example below) for the next step.
+
+   ```json
+   {
+      "clientId": "<client id>",
+      "clientSecret": "<client secret>",
+      "subscriptionId": "<subscription id>",
+      "tenantId": "<tenant id>",
+      "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+      "resourceManagerEndpointUrl": "https://management.azure.com/",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+      "galleryEndpointUrl": "https://gallery.azure.com/",
+      "managementEndpointUrl": "https://management.core.windows.net/"
+   }
+   ```
+
+7. Add another Secret named `AZURE_CREDENTIALS` and use the JSON output from the previous step as the value.
+
+8. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
 
    ```bash
    cd ~/Fabmedical
    ```
 
-7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created, if it doesn't already exist. Do this by running the following commands:
+9. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created, if it doesn't already exist. Do this by running the following commands:
 
     ```bash
     mkdir ~/Fabmedical/.github
     mkdir ~/Fabmedical/.github/workflows
     ```
 
-8. Navigate to the `.github/workflows` directory:
+10. Navigate to the `.github/workflows` directory:
 
     ```bash
     cd ~/Fabmedical/.github/workflows
     ```
 
-9. Next create the workflow YAML file.
+11. Next create the workflow YAML file.
 
     ```dotnetcli
     vi content-web.yml
@@ -1155,6 +1174,7 @@ image and pushes it to your ACR instance automatically.
    env:
      imageRepository: 'content-web'
      resourceGroupName: 'fabmedical-[SHORT_SUFFIX]'
+     clusterName: 'fabmedical-[SHORT_SUFFIX]'
      containerRegistryName: 'fabmedical[SHORT_SUFFIX]'
      containerRegistry: 'fabmedical[SHORT_SUFFIX].azurecr.io'
      dockerfilePath: './content-web'
@@ -1189,11 +1209,47 @@ image and pushes it to your ACR instance automatically.
            tags: |
              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
              ${{ env.containerRegistry }}/${{ env.imageRepository }}:latest
-    ```
+       
+       - name: Set Kubernetes Context
+         uses: azure/aks-set-context@v1
+         with:
+           creds: '${{ secrets.AZURE_CREDENTIALS }}' # Azure credentials
+           resource-group: '${{ env.resourceGroupName }}'
+           cluster-name: '${{ env.clusterName }}'
 
-10. Save the file and exit VI by pressing `<Esc>` then `:wq`.
+       - name: Create ingress-demo namespace
+         run: |
+           kubectl create namespace ingress-demo --dry-run -o json | kubectl apply -f -
 
-11. Save the pipeline YAML, then commit and push it to the Git repository:
+       - name: Create ACR credentials secret
+         uses: azure/k8s-create-secret@v1
+         with:
+           container-registry-url: ${{ env.containerRegistry }}.azurecr.io
+           container-registry-username: ${{ secrets.ACR_USERNAME }}
+           container-registry-password: ${{ secrets.ACR_PASSWORD }}
+           secret-name: ingress-demo-secret
+           namespace: ingress-demo
+           arguments: --force true
+
+   # This task will be important in Task 3 of Exercise 4
+   #   - name: Deploy to AKS
+   #     uses: azure/k8s-deploy@v1
+   #     with:
+   #       manifests: |
+   #         api.deployment.yml
+   #         web.deployment.yml
+   #         web.service.yml
+   #       images: |
+   #         ${{ env.containerRegistry }}.azurecr.io/${{ env.imageRepository }}:${{ env.tag }}
+   #       imagepullsecrets: |
+   #         ingress-demo-secret
+   #       namespace: ingress-demo
+      
+   ```
+
+12. Save the file and exit VI by pressing `<Esc>` then `:wq`.
+
+13. Save the pipeline YAML, then commit and push it to the Git repository:
 
     ```bash
     git add .
@@ -1201,27 +1257,27 @@ image and pushes it to your ACR instance automatically.
     git push
     ```
 
-12. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
+14. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
 
-13. On the **Actions** page, select the **content-web** workflow.
+15. On the **Actions** page, select the **content-web** workflow.
 
-14. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+16. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
+17. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
-16. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
+18. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
+19. Next, setup the `content-api` workflow. This repository already includes `content-api.yml` located within the `.github/workflows` directory. Open the `.github/workflows/content-api.yml` file for editing.
 
-18. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
+20. Edit the `resourceGroupName` and `containerRegistry` environment values to replace `[SHORT_SUFFIX]` with your own three-letter suffix so that it matches your container registry's name and resource group.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56.png "content-api.yml environment variables highlighted")
 
-19. Commit and push the changes to the Git repository:
+21. Commit and push the changes to the Git repository:
 
     ```bash
     git add .
@@ -1229,7 +1285,7 @@ image and pushes it to your ACR instance automatically.
     git push
     ```
 
-20. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
+22. Save the file, then navigate to the repositories in GitHub, select Actions, and then manually run the **content-api** workflow.
 
 You should follow all steps provided _before_ performing the Hands-on lab.
 
