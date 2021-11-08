@@ -12,15 +12,19 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
    ![](media/createresource.png)
 
-2. Search the marketplace for **Azure Database Migration Service** and select it.
+1. Search the marketplace for **Azure Database Migration Service** and select it.
 
    ![](media/searchdms.png)
 
-3. Select **Create**.
+1. Select **Create**.
 
-    ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/create-dms.png "Azure Database Migration Service")
+   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/create-dms.png "Azure Database Migration Service")
+    
+1. Select **Migrate my SQL Server, MySQL, PostgreSQL or MongoDB database(s) to Azure** and click on **Select**.
 
-4. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
+   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/cna5.png "Azure Database Migration Service")
+   
+1. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
     - Resource group: Select **fabmedical-[DeploymentId]** resource group.
     - Migration service name:  Enter the name as **`fabmedical[DeploymentId]`**. You can get the DeploymentId from environment details tab
@@ -28,15 +32,15 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
     ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
 
-5. Select **Next: Networking >>**.
+1. Select **Next: Networking >>**.
 
-6. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-[SUFFIX]` resource group.
+1. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-[SUFFIX]` resource group.
 
     ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-networking.png "Create Migration Service Networking tab")
 
-7. Select **Review + create**.
+1. Select **Review + create**.
 
-8. Select **Create** to create the Azure Database Migration Service instance.
+1. Select **Create** to create the Azure Database Migration Service instance.
 
 The service may take 5 - 10 minutes to provision.
 
