@@ -86,7 +86,7 @@ In this task, you will edit the web application source code to add Application I
 
    >**NOTE**: To keep indention correct, You can use any **YAML Validator** from the web. For your reference here's one of the YAML validator `https://yamlchecker.com/`.
 
-  ```
+   ```
         - name: Deploy to AKS
           uses: azure/k8s-deploy@v1
           with:
@@ -99,9 +99,9 @@ In this task, you will edit the web application source code to add Application I
             imagepullsecrets: |
               ingress-demo-secret
             namespace: ingress-demo
-  ```
+   ```
   
-  ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna10.png?raw=true "AppInsights updates in app.js")
+   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna10.png?raw=true "AppInsights updates in app.js")
 
 7. Commit the changes and navigate back to cloudshell.
 
