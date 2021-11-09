@@ -412,13 +412,33 @@ In this task, you will take the starter files and run the node.js application as
 
     ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
-22. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
+22. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes using ports `3000`.
 
     ```
-    killall nodejs
-    killall node
+    lsof -i:3000
    
     ```
+    Copy the PID and replace the same in the command below.
+    ```
+    kill -9 <PID>
+   
+    ``` 
+    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna2.png?raw=true "VM Public IP Address")
+
+23. Similarly, go to your cloud shell window and stop the running node processes using ports `3001`.
+
+    ```
+    lsof -i:3001
+   
+    ```
+    Copy the PID and replace the same in the command below.
+    
+    ```
+    kill -9 <PID>
+   
+    ```
+    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna3.png?raw=true "VM Public IP Address")
+    
    > **Note**: If cloud shell gets stuck, follow the below steps
 
    - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
@@ -429,7 +449,6 @@ In this task, you will take the starter files and run the node.js application as
    ```
    cd ~/Fabmedical/content-web
    ```
-
    
 ### Task 8: Build the Docker Images
 
