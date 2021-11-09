@@ -412,13 +412,33 @@ In this task, you will take the starter files and run the node.js application as
 
     ![In the Virtual Machine blade, Overview is selected on the left and Public IP address 52.174.141.11 is highlighted on the right.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/ex1tsk2-step5.png?raw=true "VM Public IP Address")
 
-22. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes.
+22. Once you have verified the application is accessible through a browser, go to your cloud shell window and stop the running node processes using ports `3000`.
 
     ```
-    killall nodejs
-    killall node
+    lsof -i:3000
    
     ```
+    Copy the PID and replace the same in the command below.
+    ```
+    kill -9 <PID>
+   
+    ``` 
+    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna2.png?raw=true "VM Public IP Address")
+
+23. Similarly, go to your cloud shell window and stop the running node processes using ports `3001`.
+
+    ```
+    lsof -i:3001
+   
+    ```
+    Copy the PID and replace the same in the command below.
+    
+    ```
+    kill -9 <PID>
+   
+    ```
+    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna3.png?raw=true "VM Public IP Address")
+    
    > **Note**: If cloud shell gets stuck, follow the below steps
 
    - Open a new Azure Cloud Shell console. You can do this by selecting the Open new session button from the first console, or navigating to ```https://shell.azure.com``` and logging in with the same lab credentials.
@@ -429,7 +449,6 @@ In this task, you will take the starter files and run the node.js application as
    ```
    cd ~/Fabmedical/content-web
    ```
-
    
 ### Task 8: Build the Docker Images
 
@@ -811,27 +830,54 @@ image and pushes it to your ACR instance automatically.
 
 1. In GitHub, return to the **Fabmedical** repository screen, and select the **Settings** tab.
 
-2. From the left menu, select **Secrets**.
+1. From the left menu, select **Secrets**.
 
-3. Select the **New repository secret** button.
+1. Select the **New repository secret** button.
 
     ![Settings link, Secrets link, and New secret button are highlighted.](media/2020-08-24-21-45-42.png "GitHub Repository secrets")
 
-4. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
+1. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
 
     ![New secret screen with values are entered.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/2020-08-24-21-48-54.png?raw=true "New secret screen")
 
-5. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
+1. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
 
     ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created.](media/2020-08-24-21-51-24.png "Secrets screen")
+    
+1. Go to Environment details click on **Service principle Credentials** copy **Application Id (Client Id)** , **client Secret** , **subscription Id** and **tenant Id**
 
-6. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
+   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna8.png?raw=true)
+
+   - Replace the values that you copied in below Json
+   
+   ```json
+   {
+      "clientId": "<client id>",
+      "clientSecret": "<client secret>",
+      "subscriptionId": "<subscription id>",
+      "tenantId": "<tenant id>",
+      "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+      "resourceManagerEndpointUrl": "https://management.azure.com/",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+      "galleryEndpointUrl": "https://gallery.azure.com/",
+      "managementEndpointUrl": "https://management.core.windows.net/"
+   }
+   ```
+   
+   - Copy the complete JSON output to your clipboard.
+
+1. In your repository settings, navigate to **Secrets** and create a new secret called `AZURE_CREDENTIALS`. Paste the copied value from your clipboard to the value of the secret and save it.
+
+   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna6.png?raw=true)
+
+1. In your Azure Cloud Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
 
    ```bash
    cd ~/Fabmedical
    ```
 
-7. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
+1. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
 
     ```
     rm -rf ~/Fabmedical/.github/workflows/
@@ -841,34 +887,35 @@ image and pushes it to your ACR instance automatically.
     wget http://bit.ly/hol-content-api -O content-api.yml
     ```
 
-8. Next create the workflow YAML file.
+1. Next create the workflow YAML file.
    
    ```dotnetcli
     vi content-web.yml
    ```
 
    - Replace `[DeploymentID]` with your DeploymentID value given on Environment details page.
+   
 
-       ```
-       # Environment variables are defined so that they can be used throughout the job definitions.
-       env:
-        imageRepository: 'content-web'
-        resourceGroupName: 'fabmedical-[DeploymentID]'
-        containerRegistryName: 'acr[DeploymentID]'
-        containerRegistry: 'acr[DeploymentID].azurecr.io'
-        dockerfilePath: './content-web'
-        tag: '${{ github.run_id  }}'
-
-       ```
+   ```
+   # Environment variables are defined so that they can be used throughout the job definitions.
+   env:
+     imageRepository: 'content-web'
+     resourceGroupName: 'fabmedical-[DeploymentID]'
+     clusterName: 'fabmedical-[DeploymentID]'
+     containerRegistryName: 'acr[DeploymentID]'
+     containerRegistry: 'acr[DeploymentID].azurecr.io'
+     dockerfilePath: './content-web'
+     tag: '${{ github.run_id  }}'
+   ```
  
-    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
+   ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna9.png?raw=true "content-web workflow")
 
 
-9. Save the file and exit VI by pressing `<Esc>` then `:wq`.
+1. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
    **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
-10. Save the pipeline YAML, then commit and push it to the Git repository:
+1. Save the pipeline YAML, then commit and push it to the Git repository:
 
     ```bash
     git add .
@@ -876,21 +923,21 @@ image and pushes it to your ACR instance automatically.
     git push
     ```
 
-11. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
+1. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
 
-12. On the **Actions** page, select the **content-web** workflow.
+1. On the **Actions** page, select the **content-web** workflow.
 
-13. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
+1. On the **content-web** workflow, select **Run workflow** and manually trigger the workflow to execute.
 
     ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/2020-08-25-15-38-06.png "content-web workflow")
 
-15. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
+1. After a second, the newly triggered workflow execution will display in the list. Select the new **content-web** execution to view its status.
 
-16. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
+1. Selecting the **Build and Push Docker Image** job of the workflow will display its execution status.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-17. Next, setup the `content-api` workflow. 
+1. Next, setup the `content-api` workflow. 
 
     ```
     cd ~/Fabmedical/.github/workflows
@@ -898,18 +945,18 @@ image and pushes it to your ACR instance automatically.
     
     ```
 
-18. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value.
+1. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value.
 
     ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
 
-19. Save the file, then commit and push it to the Git repository:
+1. Save the file, then commit and push it to the Git repository:
     ```bash
     git add .
     git commit -m "Updated workflow YAML"
     git push
     
     ```
-20. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
+1. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
 
 You should follow all steps provided _before_ performing the Hands-on lab.
 
