@@ -71,15 +71,8 @@ In this task, you will edit the web application source code to add Application I
    cd ~/clouddrive/fabmedical/content-web
    git pull
    ```
-
-4. Install support for Application Insights.
-
-   ```bash
-   npm install applicationinsights --save
-   ```
-   > **Note**: **If the above command takes more then 5mins to finish, open a new cloud shell using ```http://shell.azure.com``` and navigate to content-web directory by  running  ``` cd ~/clouddrive/fabmedical/content-web``` and continue with next steps.**
  
-5. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6. Make sure to replace the applications insights key in the below code which you copied before.
+4. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6. Make sure to replace the applications insights key in the below code which you copied before.
 
    ```javascript
    const appInsights = require("applicationinsights");
@@ -88,10 +81,31 @@ In this task, you will edit the web application source code to add Application I
    ```
 
    ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png "AppInsights updates in app.js")
+   
+6. Add (`uncomment`) the following task to the `content-web.yml` workflow file in the `.github/workflows` folder of `Fabmedical` repository in Github. Be sure to keep indention of the task within the file consistent with the rest of the `content-web.yml` file.
 
-6. Save changes and close the editor.
+   >**NOTE**: To keep indention correct, You can use any **YAML Validator** from the web. For your reference here's one of the YAML validator `https://yamlchecker.com/`.
 
-7. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
+  ```
+        - name: Deploy to AKS
+          uses: azure/k8s-deploy@v1
+          with:
+            manifests: |
+              api.deployment.yml
+              web.deployment.yml
+              web.service.yml
+            images: |
+              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
+            imagepullsecrets: |
+              ingress-demo-secret
+            namespace: ingress-demo
+  ```
+  
+  ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna10.png?raw=true "AppInsights updates in app.js")
+
+7. Commit the changes and navigate back to cloudshell.
+
+8. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
    ```bash
    git add .
@@ -99,25 +113,23 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-8. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository and check if it is in **running state** with Orange color or not, if its running  then **skip step 9** and continue from step 11.
+9. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository and check if it is in **running state** with Orange color or not, if its running  then **skip step 9** and continue from step 11.
   
-9. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. If there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
+10. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. If there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
 
-   ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
+    ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
       
-10. Wait untill the Build and Push Docker Image of `content-web` **Completes** as shown in the image below:
+11. Wait untill the Build and Push Docker Image of `content-web` **Completes** as shown in the image below:
 
     ![Build and Push Docker image gets Complete](media/github-action-complete.png)
 
-11. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+12. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
      >**Note: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step. There will be no effect on the steps due to this.**
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-  
-
-12. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+13. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
