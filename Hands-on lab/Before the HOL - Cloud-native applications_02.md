@@ -418,12 +418,12 @@ In this task, you will take the starter files and run the node.js application as
     lsof -i:3000
    
     ```
-    Copy the PID and replace the same in the command below.
+    Copy the **PID**(1) and replace the same in the command below.
     ```
     kill -9 <PID>
    
     ``` 
-    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna2.png?raw=true "VM Public IP Address")
+    ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna11.png?raw=true "VM Public IP Address")
 
 23. Similarly, go to your cloud shell window and stop the running node processes using ports `3001`.
 
@@ -431,13 +431,13 @@ In this task, you will take the starter files and run the node.js application as
     lsof -i:3001
    
     ```
-    Copy the PID and replace the same in the command below.
+    Copy the **PID**(1) and replace the same in the command below.
     
     ```
     kill -9 <PID>
    
     ```
-    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna3.png?raw=true "VM Public IP Address")
+    ![](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna12.png?raw=true "VM Public IP Address")
     
    > **Note**: If cloud shell gets stuck, follow the below steps
 
