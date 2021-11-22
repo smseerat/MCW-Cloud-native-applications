@@ -400,11 +400,11 @@ In this task, you will access and review the various logs and dashboards made av
 
 7. Upon selecting any pod, all the information related to the selected metric will be displayed on the right panel, and that would be the case when selecting any other metric, the details will be displayed on the right panel for the selected pod.
 
-   ![In this screenshot, the pod CPU usage details are shown.](media/monitor_4.png "POD CPU details")
+   ![In this screenshot, the pod CPU usage details are shown.](media/cna13.png "POD CPU details")
 
 8. To display the logs for any container simply select it and view the right panel and you will find "View container logs" option which will list all logs for this specific container.
 
-   ![In the View in Analytics dropdown, the View container logs item is selected.](media/monitor_5.png "View container logs menu option")
+   ![In the View in Analytics dropdown, the View container logs item is selected.](media/cna14.png "View container logs menu option")
 
    ![The container logs are displayed based on a query entered in the query window.](media/monitor_6.png "Container logs")
 
