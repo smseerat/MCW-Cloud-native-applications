@@ -79,7 +79,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 3. Select the scopes or permissions you would like to grant this token
 
-    - **Note**: Provide the following text in the note field, **<inject key="DevOps Token" />**. 
+    - **Note**: Provide the following text in the note field, {DeploymentId}-token. 
     
     - **Select scopes**:
 
