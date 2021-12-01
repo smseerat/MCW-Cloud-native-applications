@@ -8,7 +8,7 @@ In this exercise, you will connect to the Azure Kubernetes Service cluster you c
 
 In this task, you will gather the information you need about your Azure Kubernetes Service cluster to connect to the cluster and execute commands to connect to the Kubernetes management dashboard from cloud shell.
 
-> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected.
+> **Note**: The following tasks should be executed in cloud shell and not the build machine, so disconnect from build machine if still connected. Please open a new Azure cloudshell and perform the steps as ODLuser.
 
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
