@@ -1,14 +1,10 @@
-## Microsoft Cloud Workshops - Retirement Survey  
-
-As we look to streamline content and improve training, we are considering retiring the Microsoft Cloud Workshop (MCW) program. Please take a moment to fill out the [Microsoft Cloud Workshop Survey](https://forms.office.com/r/834zwtaNtK) and give us your feedback.
-
 # Cloud-native applications
 
 Fabrikam Medical Conferences provides conference web site services, tailored to the medical community. Their business has grown and the management of many instances of the code base and change cycle per tenant has gotten out of control.
 
 The goal of this workshop is to help them build a proof of concept (POC) that will migrate their code to a more manageable process that involves containerization of tenant code, a better DevOps workflow, and a simple lift-and-shift story for their database backend.
 
-May 2021
+November 2021
 
 ## Target Audience
 
@@ -31,9 +27,9 @@ By the end of this design session, you will be better able to design solutions t
 
 ### Hands-on Lab
 
-This hands-on lab is designed to guide you through the process of building and deploying Docker images to the Kubernetes platform hosted on Azure Kubernetes Services (AKS), in addition to learning how to work with dynamic service discovery, service scale-out, and high-availability.
+This hands-on lab will guide the student through deploying a web application and API microservice to a Kubernetes platform hosted on Azure Kubernetes Services (AKS). In addition, the lab will instruct the student on configuring the behavior of these services through dynamic service discovery, service scale-out, and high availability in the context of AKS-hosted services. By demonstrating crucial Kubernetes concepts, the student will gain experience with the Kubernetes deployment and service resource types. The student will create them manually through the Azure Portal and manipulate their configurations to scale the associated microservice instances up and down and manage their CPU and memory resource allocations with the Kubernetes cluster.
 
-At the end of this lab, you will be better able to build and deploy containerized applications to Azure Kubernetes Service and perform common DevOps procedures.
+At the end of this lab, you have a solid understanding of how to build and deploy containerized applications to Azure Kubernetes Service and perform common DevOps tasks and procedures.
 
 ## Azure services and related products
 
@@ -42,10 +38,6 @@ At the end of this lab, you will be better able to build and deploy containerize
 - GitHub
 - Docker
 - Cosmos DB (including MongoDB API)
-
-## Azure solutions
-
-App Modernization
 
 ## Related references
 

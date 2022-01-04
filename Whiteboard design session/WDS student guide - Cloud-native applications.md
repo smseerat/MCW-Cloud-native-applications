@@ -9,16 +9,16 @@ Whiteboard design session student guide
 </div>
 
 <div class="MCWHeader3">
-May 2021
+November 2021
 </div>
 
-Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
+Information in this document, including URL and other Internet Website references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
 
 Microsoft may have patents, patent applications, trademarks, copyrights, or other intellectual property rights covering subject matter in this document. Except as expressly provided in any written license agreement from Microsoft, the furnishing of this document does not give you any license to these patents, trademarks, copyrights, or other intellectual property.
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2020 Microsoft Corporation. All rights reserved.
+© 2021 Microsoft Corporation. All rights reserved.
 
 Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
@@ -58,25 +58,25 @@ Timeframe: 15 minutes
 
 Directions: With all participants in the session, the facilitator/SME presents an overview of the customer case study along with technical tips.
 
-1. Meet your table participants and trainer.
+1. Meet your team members and trainer.
 
-2. Read all of the directions for steps 1-3 in the student guide.
+2. Read all directions for steps 1-3 in the student guide.
 
-3. As a table team, review the following customer case study.
+3. As a team, review the following customer case study.
 
 ### Customer situation
 
-Fabrikam Medical Conferences provides conference web site services tailored to the medical community. They started out 10 years ago building a few conference sites for a small conference organizer. Since then, word of mouth has spread, and Fabrikam Medical Conferences is now a well-known industry brand. They now handle over 100 conferences per year and growing.
+Fabrikam Medical Conferences provides conference website services tailored to the medical community. They started out 10 years ago building a few conference sites for a small conference organizer. Since then, word of mouth has spread, and Fabrikam Medical Conferences is now a well-known industry brand. They now handle over 100 conferences per year and growing.
 
-Medical conferences are typically low budget web sites as the conferences are usually between 100 to only 1500 attendees at the high end. At the same time, the conference owners have significant customization and change demands that require turnaround on a dime to the live sites. These changes can impact various aspects of the system from UI through to the back end, including conference registration and payment terms.
+Medical conferences are typically low budget websites as the conferences are usually between 100 to only 1500 attendees at the high end. At the same time, the conference owners have significant customization and change demands that require turnaround on a dime to the live sites. These changes can impact various aspects of the system from UI through to the back end, including conference registration and payment terms.
 
 The VP of Engineering at Fabrikam, Arthur Block, has a team of 12 developers who handle all aspects of development, testing, deployment, and operational management of their customer sites. Due to customer demands, they have issues with the efficiency and reliability of their development and DevOps workflows.
 
 The conference sites are currently hosted on-premises with the following topology and platform implementation:
 
-- The conference web sites are built with the MEAN stack (Mongo, Express, Angular, Node.js).
+- The conference websites are built with the MEAN stack (Mongo, Express, Angular, Node.js).
 
-- Web sites and APIs are built as microservices hosted on Linux servers.
+- Websites and APIs are built as microservices hosted on Linux servers.
 
 - The on-prem data backend is MongoDB; also running on a separate cluster of Linux servers machines.
 
@@ -88,7 +88,7 @@ Customers are considered "tenants", and each tenant is treated as a unique deplo
 
 - A copy of the most recent functional conference code base is taken and configured to point at the tenant database.
 
-  - This includes a web site code base and an administrative site code base for entering conference content such as speakers, sessions, workshops, sponsors, and session feedback from attendees.
+  - This includes a website code base and an administrative site code base for entering conference content such as speakers, sessions, workshops, sponsors, and session feedback from attendees.
 
 - Modifications to support the customer's styles, graphics, layout, and other custom requests are applied.
 
@@ -98,9 +98,9 @@ Customers are considered "tenants", and each tenant is treated as a unique deplo
 
   - They have the ability to add new events and isolate speakers, sessions, workshops, and other details.
 
-- The tenant's code (conference and admin web site) is deployed to a specific group of load balanced Linux servers dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
+- The tenant's code (conference and admin website) is deployed to a specific group of load balanced Linux servers dedicated to one or more tenant. Each group of machines hosts a specific set of tenants, and this is distributed according to scale requirements of the tenant.
 
-- Once the conference site is live, the inevitable requests for changes to the web site pages, styles, registration requirements, and any number of custom requests begin.
+- Once the conference site is live, the inevitable requests for changes to the website pages, styles, registration requirements, and any number of custom requests begin.
 
 Arthur is painfully aware that this small business, which evolved into something bigger, has organically grown into what should be a fully multi-tenanted application suite for conferences. However, the team is having difficulty approaching this goal. They are constantly updating the code base for each tenant and doing their best to merge improvements into a core code base they can use to spin up new conferences. The pace of change is fast, the budget is tight, and they simply do not have time to stop and restructure the core code base to support all the flexibility customers require.
 
@@ -122,7 +122,7 @@ Arthur is looking to take a step in this direction with the following goals in m
 
 - Increase visibility into system operations and health.
 
-  - The team has little to no aggregate views of health across the web sites deployed.
+  - The team has little to no aggregate views of health across the websites deployed.
 
 While multi-tenancy is a goal for the code base, even with this in place, Arthur believes there will always be the need for custom copies of code for a particular tenant who requires a one-off custom implementation. Arthur feels that Docker containers may be a good solution to support their short-term DevOps and development agility needs, while also being the right direction once they reach a majority multi-tenant application solution.
 
@@ -172,7 +172,7 @@ While multi-tenancy is a goal for the code base, even with this in place, Arthur
 
 3. We heard Azure Cosmos DB is compatible with MongoDB. Will this provide a migration that minimizes code changes?
 
-4. We know Microsoft offers Cognitive Services with pre-built AI models. What models offer the features we are looking to use for enhancing our conference web site?
+4. We know Microsoft offers Cognitive Services with pre-built AI models. What models offer the features we are looking to use for enhancing our conference website?
 
 ### Infographic for common scenarios
 
@@ -200,15 +200,15 @@ Timeframe: 60 minutes
 
 **Business needs**
 
-Directions: With all participants at your table, answer the following questions and list the answers on a flip chart:
+Directions: With your team, answer the following questions and be prepared to present your solution to others:
 
-1. Who should you present this solution to? Who is your target customer audience? Who are the decision makers?
+1. Who will you present this solution to? Who is your target customer audience? Who are the decision makers?
 
 2. What customer business needs do you need to address with your solution?
 
 **Design**
 
-Directions: With all participants at your table, respond to the following questions on a flip chart:
+Directions: With your team, respond to the following questions:
 
 _High-level architecture_
 
@@ -216,13 +216,15 @@ _High-level architecture_
 
 2. Without getting into the details (the following sections will address the particular details), diagram your initial vision of the container platform, the containers that should be deployed (for a single tenant), and the data tier.
 
-_Choosing a container platform on Azure_
+_Choosing a container platform_
 
 1. List the potential platform choices for deploying containers to Azure.
 
 2. Which would you recommend and why?
 
 3. Describe how the customer can provision their Azure Kubernetes Service (AKS) environment to get their POC started.
+
+4. Discuss the potential of a multi-cloud approach for Kubernetes and the ability to leverage a variety of cloud resources from multiple vendors.
 
 _Containers, discovery, and load balancing_
 
@@ -238,9 +240,9 @@ _Containers, discovery, and load balancing_
 
 2. What options does the customer have for a Docker image registry and container scanning, and what would you recommend?
 
-3. How will the customer configure web site containers so that they are reachable publicly at port 80/443 from Azure Kubernetes Service (AKS)?
+3. How will the customer configure website containers so that they are reachable publicly at port 80/443 from Azure Kubernetes Service (AKS)?
 
-4. Explain how Azure Kubernetes Service (AKS) can route requests to multiple web site containers hosted on the same node at port 80/443
+4. Explain how Azure Kubernetes Service (AKS) can route requests to multiple website containers hosted on the same node at port 80/443
 
 _Scalability considerations_
 
@@ -254,7 +256,7 @@ _Automating DevOps workflows_
 
 **Prepare**
 
-Directions: With all participants at your table:
+Directions: As a team:
 
 1. Identify any customer needs that are not addressed with the proposed solution.
 
@@ -276,9 +278,9 @@ Timeframe: 30 minutes
 
 Directions:
 
-1. Pair with another table.
+1. Pair with another team.
 
-2. One table is the Microsoft team and the other table is the customer.
+2. One group is the Microsoft team, the other is the customer.
 
 3. The Microsoft team presents their proposed solution to the customer.
 
@@ -288,13 +290,13 @@ Directions:
 
 6. The customer team gives feedback to the Microsoft team.
 
-7. Tables switch roles and repeat Steps 2-6.
+7. Switch roles and repeat Steps 2-6.
 
 ## Wrap-up
 
 Timeframe: 15 minutes
 
-Directions: Tables reconvene with the larger group to hear the facilitator/SME share the preferred solution for the case study.
+Directions: Reconvene with the larger group to hear the facilitator/SME share the preferred solution for the case study.
 
 ## Additional references
 
@@ -314,3 +316,4 @@ Directions: Tables reconvene with the larger group to hear the facilitator/SME s
 | Azure Cosmos DB                 | <https://docs.microsoft.com/azure/cosmos-db/introduction> |
 | Azure Database for PostgreSQL   | <https://azure.microsoft.com/services/postgresql/> |
 | Azure Cognitive Services        | <https://azure.microsoft.com/services/cognitive-services/> |
+| Azure Arc-enabled Kubernetes    | <https://docs.microsoft.com/azure/azure-arc/kubernetes/overview/> |
