@@ -305,6 +305,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
    ```bash
+   
    adminfabmedical@fabmedical-???:~/Fabmedical/scripts$ exit
    logout
    Connection to 20.123.9.212 closed.
@@ -333,13 +334,16 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    Last login: Sat Dec  4 11:47:31 2021 from 23.100.27.176
    adminfabmedical@fabmedical-mgy:~$
+   
    ```
 
 6. After reestablishing an SSH session to the build agent VM, run the `create_and_seed_database.sh` script to create and seed the MongoDB database for use in the workshop.
 
    ```bash
+   
    cd ~/Fabmedical/scripts
    bash create_and_seed_database.sh
+   
    ```
 
 ### Task : Build Docker Images
