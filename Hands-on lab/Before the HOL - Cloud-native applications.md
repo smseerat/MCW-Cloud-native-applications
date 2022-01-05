@@ -135,36 +135,23 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 5: Set up Azure Cloud Shell environment
 
-1. A GitHub personal access token (PAT) with appropriate permissions is required to set up and complete this lab - [Follow this link](https://github.com/settings/tokens/new?scopes=repo&description=GitHub%20Secrets%20CLI) to quickly set up a GitHub personal access token with the required permissions. Save the obtained PAT as it will be needed by future steps.
+1. Set the following environment variables in an Azure Cloud Shell terminal. Make you replace all the values properly.
 
-2. Set the following environment variables in an Azure Cloud Shell terminal.
+   > **NOTE**: You can copy the **DeploymentID** from the **Environment Details** page of the environment.
 
    ```bash
-   export MCW_SUFFIX=<SUFFIX>                   # Needs to be a unique three letter string
-   export MCW_GITHUB_USERNAME=<GITHUB USERNAME> # Your Github account username
-   export MCW_GITHUB_TOKEN=<GITHUB PAT>         # A personal access token for your Github account
+   export MCW_SUFFIX=<PASTE DeploymentID>                   # Needs to be a unique three letter string
+   export MCW_GITHUB_USERNAME=<PASTE YOUR GITHUB USERNAME> # Your Github account username
+   export MCW_GITHUB_TOKEN=<PASTE YOUR GITHUB PAT TOKEN>        # A personal access token for your Github account
+   export MCW_GITHUB_URL=<PASTE YOUR FABMEDICAL REPO URL> 
+   export MCW_GITHUB_EMAIL=<YOUR GITHUB EMAIL ID>
    ```
 
-   > **Note**: The following environment variables can also be set if their defaults are not appropriate for the lab setting or environment.
-
-      - MCW_GITHUB_URL - Defaults to `https://github.com/$MCW_GITHUB_USERNAME/Fabmedical`
-      - MCW_PRIMARY_LOCATION - Defaults to `northeurope`
-      - MCW_PRIMARY_LOCATION_NAME - Defaults to `North Europe`
-        - Note that the value needs to be placed in quotes (e.g. `export MCW_PRIMARY_LOCATION_NAME="West US"`)
-      - MCW_SECONDARY_LOCATION - Defaults to `westeurope`
-      - MCW_SECONDARY_LOCATION_NAME - Defaults to `West Europe`
-
-   > **Note**: If you run into the error below, you may have to either use a different regional pair or increase your regional core quotas in your current regions. This lab's cloud resources require at least eight available cores in your regional core quota. An up to date list of Azure Region Pairs can be found at [this link](https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions#azure-regional-pairs "Azure Region Pairs").
-
-      ```bash
-      {"error":{"code":"InvalidTemplateDeployment","message":"The template deployment 'azuredeploy' is not valid according to the validation procedure. The tracking id is '3d4adbc2-647b-4741-8d98-fe20495e0541'. See inner errorsfor details.","details":[{"code":"QuotaExceeded","message":"Provisioning of resource(s) for container service fabmedical-??? in resource group fabmedical-??? failed. Message: {\n  \"code\": \"QuotaExceeded\",\n  \"message\": \"Provisioning of resource(s) for container service fabmedical-??? in resource group fabmedical-??? failed. Message: Operation could not be completed as it results in exceeding approved Total Regional Cores quota. Additional details - Deployment Model: Resource Manager, Location: eastus, Current Limit: 10, Current Usage: 8, Additional Required: 4, (Minimum) New Limit Required: 12. Submit a request for Quota increase at https://aka.ms/ProdportalCRP/#blade/Microsoft_Azure_Capacity/UsageAndQuota.ReactView/Parameters/%7B%22subscriptionId%22:%228c924580-ce70-48d0-a031-1b21726acc1a%22,%22command%22:%22openQuotaApprovalBlade%22,%22quotas%22:[%7B%22location%22:%22eastus%22,%22providerId%22:%22Microsoft.Compute%22,%22resourceName%22:%22cores%22,%22quotaRequest%22:%7B%22properties%22:%7B%22limit%22:12,%22unit%22:%22Count%22,%22name%22:%7B%22value%22:%22cores%22%7D%7D%7D%7D]%7D by specifying parameters listed in the ‘Details’ section for deployment to succeed. Please read more about quota limits at https://docs.microsoft.com/en-us/azure/azure-supportability/regional-quota-requests. Details: \"\n }. Details: "}]}}
-      ```
-
-2. Run the `create_azure_resources.sh` script in the `MCW-Cloud-native-applications` repository that was cloned in a previous step. This will provision all of the Azure cloud resources necessary to execute the workshop.
+2. Paste the following command to go the right directory and to create a bash file named **bhol.sh**.
 
    ```bash
    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/scripts
-   bash create_azure_resources.sh
+   vi bhol.sh
    ```
 
 3. Upon successful execution of the `create_azure_resources.sh` script, a command for establishing an SSH session to the build agent VM should be present in the output.
