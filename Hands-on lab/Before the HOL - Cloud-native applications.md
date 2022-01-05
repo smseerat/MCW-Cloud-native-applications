@@ -304,7 +304,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
-   ```
+   ```bash
    
    adminfabmedical@fabmedical-???:~/Fabmedical/scripts$ exit
    logout
@@ -330,7 +330,6 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    New release '18.04.6 LTS' available.
    Run 'do-release-upgrade' to upgrade to it.
-
 
    Last login: Sat Dec  4 11:47:31 2021 from 23.100.27.176
    adminfabmedical@fabmedical-mgy:~$
