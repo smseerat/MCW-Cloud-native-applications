@@ -89,7 +89,16 @@ In this task, you will edit the web application source code to add Application I
 
 5. Save changes and close the editor.
 
-6. Add the following entries to the path triggers in the `content-web.yml` workflow file in the `.github/workflows` folder.
+6. Paste the following commands to be in the right path. You'll be able to see `content-web.yml`, `content-api.yml`, and `content-init.yml` files.
+
+   ```bash
+   cd ~/Fabmedical
+   cd .github
+   cd workflows
+   ls
+   ```
+
+6. Add the following entries (uncomment) to the path triggers in the `content-web.yml` workflow file using `code content-web.yml` command in the `.github/workflows` folder.
 
     ```yaml
     on:
@@ -101,8 +110,12 @@ In this task, you will edit the web application source code to add Application I
         - web.deployment.yml  # These two file
         - web.service.yml     # entries here
     ```
+    
+    ![](media_prod/uncomment.png "content-web")
 
-7. Uncomment the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+7. Replace the commented task in the end of the file and add the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+
+   > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
     ```yaml 
           - name: Deploy to AKS
@@ -117,8 +130,14 @@ In this task, you will edit the web application source code to add Application I
                 ingress-demo-secret
               namespace: ingress-demo
     ```
+    
+    ![](media_prod/contentadd.png "content-web")
+    
+8. Save the file and close the editor.
 
-8. Add the following entries to the path triggers in the `content-api.yml` workflow file in the `.github/workflows` folder.
+    ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
+
+8. Add the following entries (uncomment) to the path triggers in the `content-api.yml` workflow file using `code content-api.yml` command in the `.github/workflows` folder.
 
     ```yaml
     on:
@@ -131,7 +150,9 @@ In this task, you will edit the web application source code to add Application I
         - api.service.yml     # entries here
     ```
 
-9. Uncomment the following tasks in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+9. Replace the commented task in the end of the file and add the following task in the in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+
+   > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
     ```yaml
           - uses: Azure/aks-set-context@v1
