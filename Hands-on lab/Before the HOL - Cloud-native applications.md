@@ -1,113 +1,63 @@
-![Microsoft Cloud Workshop](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png 'Microsoft Cloud Workshop')
+## Before the hands-on lab
 
-<div class="MCWHeader1">
-Cloud-native applications
-</div>
-
-<div class="MCWHeader2">
-Before the hands-on lab setup guide
-</div>
-
-<div class="MCWHeader3">
-November 2021
-</div>
-
-Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
-
-Microsoft may have patents, patent applications, trademarks, copyrights, or other intellectual property rights covering subject matter in this document. Except as expressly provided in any written license agreement from Microsoft, the furnishing of this document does not give you any license to these patents, trademarks, copyrights, or other intellectual property.
-
-The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
-
-© 2021 Microsoft Corporation. All rights reserved.
-
-**Contents**
-
-<!-- TOC -->
-
-- [Cloud-native applications before the hands-on lab setup guide](#cloud-native-applications-before-the-hands-on-lab-setup-guide)
-  - [Overview](#overview)
-  - [Requirements](#requirements)
-  - [Before the hands-on lab](#before-the-hands-on-lab)
-    - [Task 1: Set up Azure Cloud Shell](#task-1-set-up-azure-cloud-shell)
-    - [Task 2: Download Starter Files](#task-2-download-starter-files)
-    - [Task 3: Create a GitHub repository](#task-3-create-a-github-repository)
-    - [Task 4: Set up Azure Cloud Shell environment](#task-4-set-up-azure-cloud-shell-environment)
-    - [Task 5: Complete the build agent setup](#task-5-complete-the-build-agent-setup)
-    - [Task 6: Build Docker Images](#task-6-build-docker-images)
-
-<!-- /TOC -->
-
-# Cloud-native applications before the hands-on lab setup guide
+**Duration**: 60 minutes
 
 ## Overview
 
 Before the hands-on lab, you will need to prepare the environment by deploying the database and the application locally on a virtual machine using Docker and MongoDB. You will also need to fork the GitHub repository containing the lab to your own GitHub account to be able to set up the CI/CD pipeline.
 
-## Requirements
-
-1. Microsoft Azure subscription must be pay-as-you-go or MSDN.
-
-   - Trial subscriptions will _not_ work.
-
-   - To complete this lab setup, ensure your account includes the following:
-
-     - Has the [Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#owner) built-in role for the subscription you use.
-
-     - Is a [Member](https://docs.microsoft.com/azure/active-directory/fundamentals/users-default-permissions#member-and-guest-users) user in the Azure AD tenant you use. (Guest users will not have the necessary permissions.)
-
-   - You must have enough cores available in your subscription to create the build agent and Azure Kubernetes Service cluster in [Task 5: Deploy ARM Template](#Task-5-Deploy-ARM-Template). You'll need eight cores if following the exact instructions in the lab, more if you choose additional agents or larger VM sizes. Execute the steps required before the lab to see if you need to request more cores in your sub.
-
-2. An account in Microsoft [GitHub](https://github.com).
-
-3. Local machine or a virtual machine configured with:
-
-   - A browser, preferably Chrome for consistency with the lab implementation tests.
-
-4. You will be asked to install other tools throughout the exercises.
-
-## Before the hands-on lab
-
-**Duration**: 60 minutes
 
 You should follow all the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
 
 ### Task 1: Set up Azure Cloud Shell
 
-1. Open a cloud shell by selecting the cloud shell icon in the menu bar.
+1. In the **JumpVM** provided to you on the left side, double click on the **Azure Portal** browser shortcut on the desktop.
+ 
+   ![](media_prod/azureportal.png "Cloud Shell Bash Window")
+   
+1. Click on **Get Started** on Edge browser.
 
-   ![The cloud shell icon is highlighted on the menu bar.](media/b4-image35.png "Cloud Shell")
+   ![](media_prod/getstarted.png)
+   
+1. Now, click on the cross icon to close **Let's set up your new tab page**.
 
-2. The cloud shell opens in the browser window. Choose **Bash** if prompted or use the left-hand dropdown on the shell menu bar to choose **Bash** from the dropdown (as shown). If prompted, select **Confirm**.
+   ![](media_prod/closeletus.png)
+   
+1. Close the current tab by clicking on close tab icon and then **Sign in Microsoft Azure** tab will open.
+ 
+   ![](media_prod/closeedgetab.png)
+ 
+1. On **Sign in to Microsoft Azure** tab, **Sign in** with following Azure credentials.
+ 
+     * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
+ 
+     * Azure Password: <inject key="AzureAdUserPassword"></inject> 
+ 
+1. If you see the pop-up **Stay Signed in?**, click Yes. 
+ 
+1. If you see the pop-up **You have free Azure Advisor recommendations!**, close the window to continue the lab. 
+ 
+1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
-   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](media/b4-image36.png "Cloud Shell Bash Window")
+1. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
 
-3. Make sure to set your default subscription correctly. To view your current subscription type:
+   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-   ```bash
-   az account show
-   ```
+1. After launching the Azure Cloud Shell, select the **Bash** option. Now on You have no storage mounted dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
+  
+      - **Storage account** : **storage{Deployementid}**
+      - **File Share** : **blob**
+  
+    > **Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
-   ![In this screenshot of a Bash window, az account show has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image37.png "Bash Shell AZ Account Show")
+   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
-4. If the subscription displayed in the previous step is not the subscription you plan on using for this workshop, you will need to set the current subscription to your desired subscription. To set your default subscription to something other than the current selection, type the following, replacing {id} with the desired subscription id value:
-
-   ```bash
-   az account set --subscription {id}
-   ```
-
-   > **Note**: If you do not know the id of your desired subscription, you can list the subscriptions available to you along with their ids via the following command:
-
-   ```bash
-   az account list
-   ```
-
-   ![In this screenshot of a Bash window, az account list has been typed and run at the command prompt. Some subscription information is visible in the window, and some information is obscured.](media/b4-image38.png "Bash AZ Account List")
 
 ### Task 2: Download Starter Files
 
-> **Note**: You will need access to your Azure subscription via Azure Cloud Shell to proceed further in the workshop.  If you don't have a cloud shell available, refer back to [Task 1: Set up Azure Cloud Shell](#task-1-set-up-azure-cloud-shell) for set up instructions.
+In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-1. Check out the starter files from the MCW Cloud-native applications GitHub repository and detach them from the existing remote repository via the following commands:
+1. 1. Copy the following command to clone the lab files using cloudshell and check out the starter files from the MCW Cloud-native applications GitHub repository and detach them from the existing remote repository via the following commands:
 
    ```bash
    cd ~
@@ -119,11 +69,49 @@ You should follow all the steps provided in this section _before_ taking part in
    cd MCW-Cloud-native-applications
    ```
 
-   > **Note**: If you do not have enough free space, you may need to remove extra files from your Cloud Shell environment.  Try running `azcopy jobs clean` to remove any `azcopy` jobs and data you do not need.
+   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media_prod/bhol-starterfiles.png "Bash Git Clone")
+   
+### Task 3: Create GitHub Personal Access Token
 
-   ![In this screenshot of a Bash window, git clone has been typed and run at the command prompt. The output from git clone is shown.](media/b4-2019-09-30_21-25-06.png "Bash Git Clone")
+1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
 
-### Task 3: Create a GitHub repository
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+
+2. Create a Personal Access Token as described below:
+
+   - In the upper-right corner of your GitHub page, click your profile photo, then click **Settings (1)** and in the left sidebar click **Developer settings (2)**.
+
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat.png)
+
+   - Then in the left sidebar, click **Personal access tokens (3)** and select **Generate new token (4)** button on the right. Provide the GitHub password if prompted. 
+   
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat1.png)
+
+3. Select the scopes or permissions you would like to grant this token
+
+    - **Note**: Provide the following text in the note field, **{DeploymentId}-token**. 
+    
+    - **Select scopes**:
+
+        * repo - Full control of private repositories
+        * workflow - Update GitHub Action workflows
+        * write:packages - Upload packages to GitHub Package Registry
+        * delete:packages - Delete packages from GitHub Package Registry
+        * read:org - Read org and team membership, read org projects
+  
+      ![Permissions GH](media_prod/image10.png)
+
+    - Click **Generate token**.
+
+      ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/gentoken.png)
+
+4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
+
+   ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/copytoken.png)
+   
+   > **Note**: Use Personal Access Token as Password when ever you asked to provide Password while pushing any Git changes in the Lab.
+
+### Task 4: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
@@ -137,7 +125,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![The GitHub Find a repository search criteria is shown with the New button selected.](media/2020-08-23-18-08-02.png "New repository button")
 
-4. On the **Create a new repository** screen, name the repository **Fabmedical** and select the **Create repository** button.
+4. On the **Create a new repository** screen, name the repository `Fabmedical` and select the **Create repository** button.
 
     ![Create a new repository page with Repository name field and Create repository button highlighted.](media/2020-08-23-18-11-38.png "Create a new repository")
 
@@ -145,7 +133,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Quick setup screen is displayed with the copy button next to the GitHub URL textbox selected.](media/2020-08-23-18-15-45.png "Quick setup screen")
 
-### Task 4: Set up Azure Cloud Shell environment
+### Task 5: Set up Azure Cloud Shell environment
 
 1. A GitHub personal access token (PAT) with appropriate permissions is required to set up and complete this lab - [Follow this link](https://github.com/settings/tokens/new?scopes=repo&description=GitHub%20Secrets%20CLI) to quickly set up a GitHub personal access token with the required permissions. Save the obtained PAT as it will be needed by future steps.
 
@@ -193,7 +181,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    ![In this screenshot of a Cloud Shell window, ssh -i .ssh/fabmedical adminfabmedical@52.174.141.11 has been typed and run at the command prompt. The information detailed above appears in the window.](media/b4-image27.png "Azure Cloud Shell Connect to Host")
 
-### Task 5: Complete the build agent setup
+### Task 6: Complete the build agent setup
 
 1. From an Azure Cloud Shell terminal, use the SSH command output from the previous task and start an active SSH session to the build agent VM.
 
@@ -259,8 +247,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    cd ~/Fabmedical/scripts
    bash create_and_seed_database.sh
    ```
-
-### Task 6: Build Docker Images
+7
+### Task : Build Docker Images
 
 1. Navigate to the `content-api` directory and build the `content-api` container image using the Dockerfile in the directory. Note how the deployed Azure Container Registry is referenced. Replace the `SUFFIX` placeholder in the command.
 
