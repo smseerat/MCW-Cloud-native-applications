@@ -58,95 +58,136 @@ In this task, you will edit the web application source code to add Application I
 
    > **Note**: If you have a blank result check that the command you issued refers to the right resource.
 
-2. Clone your fabmedical repository (replace URL with URL of your repository):
+2. From an Azure Cloud Shell terminal that does **NOT** have an active SSH session to the build agent VM update your Fabmedical repository files by pulling the latest changes from the git repository and then updating deployment YAML files.
 
     ```bash
-    cd clouddrive
-    git clone https://github.com/USER_NAME/Fabmedical.git
+    cd ~/Fabmedical/content-web
+    kubectl get deployment api -n ingress-demo -o=yaml > api.deployment.yaml
+    kubectl get deployment web -n ingress-demo -o=yaml > web.deployment.yaml
+    git pull
     ```
 
-3. On your Cloudshell update your fabmedical repository files by pulling the latest changes from the git repository:
+    > **Note**: The calls to `kubectl` are necessary to fetch recent changes to the port and CPU resource configurations made in previous steps for the `web` and `api` deployments.
 
-   ```bash
-   cd ~/clouddrive/fabmedical/content-web
-   git pull
-   ```
-   
-4. Install support for Application Insights.
+3. Install support for Application Insights.
 
-   ```bash
-   npm install applicationinsights --save
-   ```
-   > **Note**: **If the above command takes more then 5mins to finish, open a new cloud shell using ```http://shell.azure.com``` and navigate to content-web directory by  running  ``` cd ~/clouddrive/fabmedical/content-web``` and continue with next steps.**
+    ```bash
+    npm install applicationinsights --save
+    ```
 
-   > **Note**: **If you get any errors while executing this command. Please ignore and continue with next steps**.
- 
-5. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6. Make sure to replace the applications insights key in the below code which you copied before.
+    > **Note**: Make sure to include the `--save` argument. Without this, a reference to the `applicationinsights` npm package will not get added to the `package.json` file of the `content-web` nodejs project, resulting in a deployment failure in later steps.
 
-   ```javascript
-   const appInsights = require("applicationinsights");
-   appInsights.setup("[YOUR APPINSIGHTS KEY]");
-   appInsights.start();
-   ```
+4. Edit the `app.js` file using Vim or Visual Studio Code remote and add the following lines immediately after `express` is instantiated on line 6:
 
-   ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png "AppInsights updates in app.js")
-   
-6. Add (`uncomment`) the following task to the `content-web.yml` workflow file in the `.github/workflows` folder of `Fabmedical` repository in Github. Be sure to keep indention of the task within the file consistent with the rest of the `content-web.yml` file.
+    ```javascript
+    const appInsights = require("applicationinsights");
+    appInsights.setup("[YOUR APPINSIGHTS KEY]");
+    appInsights.start();
+    ```
 
-   >**NOTE**: To keep indention correct, You can use any **YAML Validator** from the web. For your reference here's one of the YAML validator `https://yamlchecker.com/`.
+    ![A screenshot of the code editor showing updates in context of the app.js file](media/hol-2019-10-02_12-33-29.png "AppInsights updates in app.js")
 
-   ```
-        - name: Deploy to AKS
-          uses: azure/k8s-deploy@v1
-          with:
-            manifests: |
-              api.deployment.yml
-              web.deployment.yml
-              web.service.yml
-            images: |
-              ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
-            imagepullsecrets: |
-              ingress-demo-secret
-            namespace: ingress-demo
-   ```
-  
-   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna10.png?raw=true "AppInsights updates in app.js")
+5. Save changes and close the editor.
 
-7. Commit the changes and navigate back to cloudshell.
+6. Add the following entries to the path triggers in the `content-web.yml` workflow file in the `.github/workflows` folder.
 
-8. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
+    ```yaml
+    on:
+      push:
+        branches:
+        - main
+        paths:
+        - 'content-api/**'
+        - web.deployment.yml  # These two file
+        - web.service.yml     # entries here
+    ```
+
+7. Uncomment the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+
+    ```yaml 
+          - name: Deploy to AKS
+            uses: azure/k8s-deploy@v1
+            with:
+              manifests: |
+                web.deployment.yml
+                web.service.yml
+              images: |
+                ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
+              imagepullsecrets: |
+                ingress-demo-secret
+              namespace: ingress-demo
+    ```
+
+8. Add the following entries to the path triggers in the `content-api.yml` workflow file in the `.github/workflows` folder.
+
+    ```yaml
+    on:
+      push:
+        branches:
+        - main
+        paths:
+        - 'content-api/**'
+        - api.deployment.yml  # These two file
+        - api.service.yml     # entries here
+    ```
+
+9. Uncomment the following tasks in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+
+    ```yaml
+          - uses: Azure/aks-set-context@v1
+            with:
+              creds: '${{ secrets.AZURE_CREDENTIALS }}'
+              cluster-name: '${{ env.clusterName }}'
+              resource-group: '${{ env.resourceGroupName }}'
+              
+          - name: Deploy to AKS
+            uses: azure/k8s-deploy@v1
+            with:
+              manifests: |
+                api.deployment.yml
+                api.service.yml
+              images: |
+                ${{ env.containerRegistry }}/${{ env.imageRepository }}:${{ env.tag }}
+              imagepullsecrets: |
+                ingress-demo-secret
+              namespace: ingress-demo
+    ```
+
+    > **Note**: Ensure the following files from [Exercise 2](#exercise-2-deploy-the-solution-to-azure-kubernetes-service), Tasks [2](#task-2-deploy-a-service-using-the-azure-portal) and [3](#task-3-deploy-a-service-using-kubectl), are present in the git repository root.
+
+    ```bash
+    api.deployment.yml
+    web.deployment.yml
+    web.service.yml
+    ```
+
+10. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
    ```bash
    git add .
+   kubectl delete deployment web -n ingress-demo
+   kubectl delete deployment api -n ingress-demo
    git commit -m "Added Application Insights"
-   git push --force
+   git push
    ```
 
-9. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository and check if it is in **running state** with Orange color or not, if its running  then **skip step 9** and continue from step 11.
-  
-10. Navigate to GitHub and Visit the `content-web` Action from your GitHub Fabmedical repository. If there is no workflow run with name `content-web` then proceed with next step to run/re-run the workflow jobs.
+11. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
-    ![Select content-web from the Actions and Re-run the Job](media/github-action.png)
-      
-11. Wait untill the Build and Push Docker Image of `content-web` **Completes** as shown in the image below:
+12. While the pipelines rune, return the Azure Portal in the browser.
 
-    ![Build and Push Docker image gets Complete](media/github-action-complete.png)
-
-12. Switch to the Azure Portal, From the navigation menu select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
-
-     >**Note: If you are not getting new replica set for the web as expected, it's an temporary issue and you can continue with the next step. There will be no effect on the steps due to this.**
+13. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-13. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+14. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
 ### Task 4: Configure Kubernetes Ingress
 
-In this task you will setup a Kubernetes Ingress using an [nginx proxy server](https://nginx.org/en/) to take advantage of path-based routing and TLS termination.
+This task will set up a Kubernetes Ingress using an [Nginx proxy server](https://nginx.org/en/) to take advantage of path-based routing and TLS termination.
 
-1. Within the Azure Cloud Shell, run the following command to add the nginx stable Helm repository:
+1. Run the following command from an Azure Cloud Shell terminal to add the Nginx stable Helm repository:
 
     ```bash
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -164,13 +205,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
    > helm repo add stable https://charts.helm.sh/stable 
    > ```
 
-3. Create a namespace in Kubernetes to install the Ingress resources.
-
-    ```bash
-    kubectl create namespace ingress-demo
-    ```
-
-4. Install the Ingress Controller resource to handle ingress requests as they come in. The Ingress Controller will receive a public IP of its own on the Azure Load Balancer and be able to handle requests for multiple services over port 80 and 443.
+3. Install the Ingress Controller resource to handle ingress requests as they come in. The Ingress Controller will receive a public IP of its own on the Azure Load Balancer and handle requests for multiple services over ports 80 and 443.
 
    ```bash
    helm install nginx-ingress ingress-nginx/ingress-nginx \
@@ -181,7 +216,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     --set controller.admissionWebhooks.patch.nodeSelector."beta\.kubernetes\.io/os"=linux
    ```
 
-5. In the Azure Portal under **Services and ingresses** copy the IP Address for the **External IP** for the `nginx-ingress-RANDOM-nginx-ingress` service.
+4. In the Azure Portal under **Services and ingresses**, copy the IP Address for the **External IP** for the `nginx-ingress-RANDOM-nginx-ingress` service.
 
    ![A screenshot of the Kubernetes management dashboard showing the ingress controller settings.](media/2021-03-26-18-26-13.png "Copy ingress controller settings")
 
@@ -193,12 +228,15 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     >
    ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-6. Within the Azure Cloud Shell, create a script to update the public DNS name for the ingress external IP.
+5. Open the [Azure Portal Resource Groups blade](https://portal.azure.com/?feature.customPortal=false#blade/HubsExtension/BrowseResourceGroups) and locate the Resource Group automatically created to host the Node Pools for AKS. It will have the naming format of `MC_fabmedical-[SUFFIX]_fabmedical-[SUFFIX]_[REGION]`.
+
+6. Within the Azure Cloud Shell, create a script to update the public DNS name for the external ingress IP.
 
    ```bash
+   cd ~/Fabmedical
    code update-ip.sh
    ```
-
+   
    Paste the following as the contents. Be sure to replace the following placeholders in the script:
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied from step 5.
@@ -248,19 +286,16 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
 
     ```bash
     kubectl create namespace cert-manager
-
     kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
     ```
 
-11. Cert manager will need a custom ClusterIssuer resource to handle requesting SSL certificates.
+11. Create a custom `ClusterIssuer` resource for the `cert-manager` service to use when handling requests for SSL certificates.
 
     ```bash
+    cd ~/Fabmedical
     code clusterissuer.yml
     ```
-
-    The following resource configuration should work as is:
 
     ```yaml
     apiVersion: cert-manager.io/v1
@@ -302,10 +337,11 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     > If a certificate is already available, skip to step 16.
 
     ```bash
+    cd ~/Fabmedical
     code certificate.yml
     ```
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name
+    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name.
 
     ```yaml
     apiVersion: cert-manager.io/v1
@@ -346,6 +382,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
 17. Now you can create an ingress resource for the content applications.
 
     ```bash
+    cd ~/Fabmedical
     code content.ingress.yml
     ```
 
@@ -356,6 +393,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
     kind: Ingress
     metadata:
       name: content-ingress
+      namespace: ingress-demo
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -393,11 +431,7 @@ In this task you will setup a Kubernetes Ingress using an [nginx proxy server](h
 
 21. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
-    ```
-    http://fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com/content-api/sessions
-    ```
-
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19-new.png "Content api sessions")
+    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
 
 22. Test TLS termination by visiting both services again using `https`.
 
