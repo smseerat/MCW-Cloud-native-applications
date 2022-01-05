@@ -304,7 +304,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
-   ```bash
+   ```
    
    adminfabmedical@fabmedical-???:~/Fabmedical/scripts$ exit
    logout
