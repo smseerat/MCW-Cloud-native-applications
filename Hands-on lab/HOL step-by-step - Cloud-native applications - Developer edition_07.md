@@ -44,20 +44,36 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 1. From the Azure Portal, select the resource group named fabmedical-DeploymentId, and then select your Kubernetes Service Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
+   
+2. Define a new Namespace for our API deployment. Select the **Namespaces** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal, and on the Namespaces tab select **+ Add**.
 
-2. We first need to define a Service for our API so that the application is accessible within the cluster. In the AKS blade select **Services and ingresses** and on the Services tab select **+ Add**.
+  ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media/create-namespace.png "Add a Namespace")
 
-    ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media/2021-03-25-17-04-04.png "Add a Service")
+3. In the **Add with YAML** screen, paste the following YAML and choose **Add**.
 
-3. In the **Add with YAML** screen, paste following YAML and choose **Add**.
+    ```yaml
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      labels:
+        name: ingress-demo
+      name: ingress-demo
+    ```
 
-   ```yaml
+4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal, and on the Services tab, select **+ Add**.
+
+  ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media/2021-03-25-17-04-04.png "Add a Service")
+
+5. In the **Add with YAML** screen, paste following YAML and choose **Add**.
+
+    ```yaml
     apiVersion: v1
     kind: Service
     metadata:
       labels:
         app: api
       name: api
+      namespace: ingress-demo
     spec:
       ports:
         - name: api-traffic
@@ -68,25 +84,26 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
         app: api
       sessionAffinity: None
       type: ClusterIP
-   ```
+    ```
 
-4. Now select **Workloads** under the **Kubernetes resources** section in the left navigation.
+6. Now select **Workloads** under the **Kubernetes resources** section in the left navigation.
 
     ![Select workloads under Kubernetes resources.](media/2021-03-25-17-04-35.png "Select workloads under Kubernetes resources")
 
-5. From the Workloads view, with **Deployments** selected (the default) then select **+ Add**.
+7. From the Workloads view, with **Deployments** selected (the default) then select **+ Add**.
 
    ![Selecting + Add to create a deployment.](media/2021-03-25-17-05-05.png "Selecing + Add to create a deployment")
 
-6. In the **Add with YAML** screen that loads paste the following YAML and update the `[LOGINSERVER]` placeholder with the name of the ACR instance.
+8. In the **Add with YAML** screen that loads paste the following YAML and update the `[LOGINSERVER]` placeholder with the name of the ACR instance.
 
-   ```yaml
+    ```yaml
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       labels:
-        app: api
+          app: api
       name: api
+      namespace: ingress-demo
     spec:
       replicas: 1
       selector:
@@ -94,69 +111,73 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
           app: api
       strategy:
         rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 1
+          maxSurge: 1
+          maxUnavailable: 1
         type: RollingUpdate
       template:
         metadata:
           labels:
-            app: api
-            name: api
+              app: api
+          name: api
         spec:
           containers:
-            - name: api
-              image: [LOGINSERVER].azurecr.io/content-api
-              imagePullPolicy: Always
-              livenessProbe:
-                httpGet:
+          - image: [LOGINSERVER].azurecr.io/content-api
+            env:
+              - name: MONGODB_CONNECTION
+                valueFrom:
+                  secretKeyRef:
+                    name: cosmosdb
+                    key: db
+            name: api
+            imagePullPolicy: Always
+            livenessProbe:
+              httpGet:
                   path: /
                   port: 3001
-                initialDelaySeconds: 30
-                periodSeconds: 20
-                timeoutSeconds: 10
-                failureThreshold: 3
-              ports:
-                - containerPort: 3001
-                  hostPort: 3001
-                  protocol: TCP
-              resources:
-                requests:
-                  cpu: 1
+              initialDelaySeconds: 30
+              periodSeconds: 20
+              timeoutSeconds: 10
+              failureThreshold: 3
+            ports:
+              - containerPort: 3001
+                hostPort: 3001
+                protocol: TCP
+            resources:
+              requests:
+                  cpu: 1000m
                   memory: 128Mi
-              securityContext:
-                privileged: false
-                terminationMessagePath: /dev/termination-log
-                terminationMessagePolicy: File
-                dnsPolicy: ClusterFirst
-                restartPolicy: Always
-                schedulerName: default-scheduler
-                securityContext: {}
-                terminationGracePeriodSeconds: 30
-   ```
+            securityContext:
+              privileged: false
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+    ```
 
-7. Select **Add** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
+9. Select **Add** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
 
    ![Service is showing as unhealthy](media/2021-03-25-17-05-36.png "Service is showing as unhealthy")
 
-8. Select the **api** deployment to open the Deployment, select **Live logs** and then a Pod from the drop-down. After a few moments, the live logs should appear.
+10. Select the **api** deployment to open the failing Deployment and observe the failing pod.
 
-   ![Service is showing as unhealthy](media/2021-03-25-17-06-09.png "Service is showing as unhealthy")
+    ![Pod is showing as unhealthy](media/failing-pod.png "Service pod is showing as unhealthy")
 
-   > **Note:** if the logs don't display it may be the Pod no longer exists. You can use the **View in Log Analytics** to view historical logs regardless of Pod.
+11. Select the failing pod from the list of pods in the `api` deployment and select **Events**.  Observe that the pod is failing to start because the `cosmosdb` secret is not present.
 
-9. If you scroll through the log you can see it indicates that the content-api application is once again failing because it cannot find a MongoDB api to communicate with. You will resolve this issue by connecting to Cosmos DB.
+    ![cosmosdb secret is missing](media/missing-secret-event.png "Pod is failing because of a missing secret")
 
-   ![This screenshot of the Kubernetes management dashboard shows logs output for the api container.](media/2021-03-25-17-07-13.png "MongoDB communication error")
-
-10. In the Azure Portal navigate to your resource group and find your Cosmos DB. Select the Cosmos DB resource to view details.
+12. In the Azure Portal navigate to your resource group and find your Cosmos DB. Select the Cosmos DB resource to view details.
 
     ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk2-step7.png "Select CosmosDB resource from list")
 
-11. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
+13. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
-    ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk2-step8.png "Capture CosmosDB connection string")
+    ![This is a screenshot of the Azure Portal showing the quick start for setting up Cosmos DB with MongoDB API. The copy button is highlighted.](media/Ex2-Task1.10.png "Capture CosmosDB connection string")
 
-12. Modify the copied connection string by adding the database `contentdb` to the URL, along with a replicaSet of `globaldb`. The resulting connection string should look like the below sample. Note that you may need to modify the endpoint URL.
+14. Modify the copied connection string by adding the database `contentdb` to the URL, along with a replicaSet of `globaldb`. The resulting connection string should look like the below sample. Note that you may need to modify the endpoint URL.
 
     ```text
     mongodb://<USERNAME>:<PASSWORD>@fabmedical-<SUFFIX>.mongo.cosmos.azure.com:10255/contentdb?ssl=true&replicaSet=globaldb
@@ -164,7 +185,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     
     ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/connnectionstring.png?raw=true "Show encoded secret")
 
-13. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Open your Azure Cloud Shell window and use the following command to encode the connection string and then, copy the output.
+15. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Open your Azure Cloud Shell window and use the following command to encode the connection string and then, copy the output.
 
     > **Note**: Double quote marks surrounding the connection string are required to successfully produce the required output.
 
@@ -174,15 +195,16 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-14. Return to the AKS blade in the Azure Portal and select **Configuration** under the **Kubernetes resources** section. Select **Secrets** and choose **+ Add**.
+16. Return to the AKS blade in the Azure Portal and select **Configuration** under the **Kubernetes resources** section. Select **Secrets** and choose **+ Add**.
 
-15. In the **Add with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
+17. In the **Add with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
     ```yaml
     apiVersion: v1
     kind: Secret
     metadata:
       name: cosmosdb
+      namespace: ingress-demo
     type: Opaque
     data:
       db: <base64 encoded value>
@@ -190,53 +212,96 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure Portal for AKS howing the YAML file for creating a deployment.](media/2021-03-25-17-08-06.png "Upload YAML data")
 
-16. Sort the Secrets list by name and you should now see your new secret displayed.
+18. Sort the Secrets list by name and you should now see your new secret displayed.
 
     ![This is a screenshot of the Azure Portal for AKS showing secrets.](media/find-cosmosdb-secret.png "Manage Kubernetes secrets")
 
-17. View the details for the **cosmosdb** secret by selected it in the list.
+19. View the details for the **cosmosdb** secret by selected it in the list.
 
     ![This is a screenshot of the Azure Portal for AKS showing the value of a secret.](media/2021-03-25-17-08-54.png "View cosmosdb secret")
 
-18. Next, download the api deployment configuration using the following command in your Azure Cloud Shell window:
+20. Create a new deployment manifest, `api.deployment.yml` and add the YAML content below to the file. Modify the `LOGINSERVER` placeholder for ACR.
 
     ```bash
-    kubectl get -o=yaml deployment api > api.deployment.yml
-    ```
-
-19. Edit the downloaded file using cloud shell code editor:
-
-    ```bash
+    cd ~/Fabmedical
     code api.deployment.yml
     ```
 
-    Add the following environment configuration to the container spec, below the `image` property:
-
     ```yaml
-      env:
-      - name: MONGODB_CONNECTION
-        valueFrom:
-          secretKeyRef:
-            name: cosmosdb
-            key: db
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+          app: api
+      name: api
+      namespace: ingress-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: api
+      strategy:
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+              app: api
+          name: api
+        spec:
+          containers:
+          - image: [LOGINSERVER].azurecr.io/content-api
+            env:
+              - name: MONGODB_CONNECTION
+                valueFrom:
+                  secretKeyRef:
+                    name: cosmosdb
+                    key: db
+            name: api
+            imagePullPolicy: Always
+            livenessProbe:
+              httpGet:
+                  path: /
+                  port: 3001
+              initialDelaySeconds: 30
+              periodSeconds: 20
+              timeoutSeconds: 10
+              failureThreshold: 3
+            ports:
+              - containerPort: 3001
+                hostPort: 3001
+                protocol: TCP
+            resources:
+              requests:
+                  cpu: 1000m
+                  memory: 128Mi
+            securityContext:
+              privileged: false
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30    
     ```
 
-    ![This is a screenshot of the Kubernetes management dashboard showing part of the deployment file.](media/Ex2-Task1.17.png "Edit the api.deployment.yml file")
-
-20. Save your changes and close the editor.
+21. Save the file and close the editor.
 
     ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
-21. Update the api deployment by using `kubectl` to deploy the API.
+22. Update the api deployment by using `kubectl` to deploy the API.
 
     ```bash
-    kubectl delete deployment api
+    kubectl delete deployment api -n ingress-demo 
     kubectl create -f api.deployment.yml
     ```
 
-22. In the Azure Portal return to Live logs (see Step 5). The last log should show as connected to MongoDB.
+23. In the Azure Portal return to Events blade of the deployed pod in the api deployment (see Step 5). The last log should show as connected to MongoDB.
 
-    ![This is a screenshot of the Kubernetes management dashboard showing logs output.](media/2021-03-25-17-09-24.png "API Logs")
+    ![This is a screenshot of the Kubernetes management dashboard showing pod events.](media/2021-03-25-17-09-24.png "Pod Events")
 
 ### Task 3: Deploy a service using kubectl
 
@@ -244,73 +309,75 @@ In this task, deploy the web service using `kubectl`.
 
 1. Open a **new** Azure Cloud Shell console.
 
-2. Create a text file called `web.deployment.yml` using the Azure Cloud Shell
+2. Create a text file called `web.deployment.yml` in the `~/Fabmedical` folder using the Azure Cloud Shell
    Editor.
 
    ```bash
+   cd ~/Fabmedical
    code web.deployment.yml
    ```
 
 3. Copy and paste the following text into the editor:
 
-   > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
+    > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
 
-   ```yaml
-   apiVersion: apps/v1
-   kind: Deployment
-   metadata:
-     labels:
-         app: web
-     name: web
-   spec:
-     replicas: 1
-     selector:
-         matchLabels:
-           app: web
-     strategy:
-         rollingUpdate:
-           maxSurge: 1
-           maxUnavailable: 1
-         type: RollingUpdate
-     template:
-         metadata:
-           labels:
-               app: web
-           name: web
-         spec:
-           containers:
-           - image: [LOGINSERVER].azurecr.io/content-web
-             env:
-               - name: CONTENT_API_URL
-                 value: http://api:3001
-             livenessProbe:
-               httpGet:
-                   path: /
-                   port: 3000
-               initialDelaySeconds: 30
-               periodSeconds: 20
-               timeoutSeconds: 10
-               failureThreshold: 3
-             imagePullPolicy: Always
-             name: web
-             ports:
-               - containerPort: 3000
-                 hostPort: 80
-                 protocol: TCP
-             resources:
-               requests:
-                   cpu: 1000m
-                   memory: 128Mi
-             securityContext:
-               privileged: false
-             terminationMessagePath: /dev/termination-log
-             terminationMessagePolicy: File
-           dnsPolicy: ClusterFirst
-           restartPolicy: Always
-           schedulerName: default-scheduler
-           securityContext: {}
-           terminationGracePeriodSeconds: 30
-   ```
+    ```yaml
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: web
+      name: web
+      namespace: ingress-demo
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: web
+      strategy:
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app: web
+          name: web
+        spec:
+          containers:
+          - image: [LOGINSERVER].azurecr.io/content-web
+            env:
+              - name: CONTENT_API_URL
+                value: http://api:3001
+            livenessProbe:
+              httpGet:
+                path: /
+                port: 3000
+              initialDelaySeconds: 30
+              periodSeconds: 20
+              timeoutSeconds: 10
+              failureThreshold: 3
+            imagePullPolicy: Always
+            name: web
+            ports:
+              - containerPort: 3000
+                hostPort: 80
+                protocol: TCP
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 128Mi
+            securityContext:
+              privileged: false
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+    ```
 
 4. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
 
@@ -320,43 +387,44 @@ In this task, deploy the web service using `kubectl`.
 
 6. Select the **...** button again and choose **Close Editor**.
 
-   ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
+    ![In this screenshot of the Azure Cloud Shell editor window, the ... button has been selected and the Close Editor option is highlighted.](media/b4-image63.png "Close Azure Cloud Editor")
 
-7. Create a text file called `web.service.yml` using the Azure Cloud Shell
-   Editor.
+7. Create a text file called `web.service.yml` in the `~/Fabmedical` folder using the Azure Cloud Shell Editor.
 
-   ```bash
-   code web.service.yml
-   ```
+    ```bash
+    code web.service.yml
+    ```
 
 8. Copy and paste the following text into the editor:
 
-   > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
+    > **Note**: Be sure to copy and paste only the contents of the code block carefully to avoid introducing any special characters.
 
-   ```yaml
-   apiVersion: v1
-   kind: Service
-   metadata:
-     labels:
-       app: web
-     name: web
-   spec:
-     ports:
-       - name: web-traffic
-         port: 80
-         protocol: TCP
-         targetPort: 3000
-     selector:
-       app: web
-     sessionAffinity: None
-     type: LoadBalancer
-   ```
+    ```yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: web
+      name: web
+      namespace: ingress-demo
+    spec:
+      ports:
+        - name: web-traffic
+          port: 80
+          protocol: TCP
+          targetPort: 3000
+      selector:
+        app: web
+      sessionAffinity: None
+      type: LoadBalancer
+    ```
 
 9. Save changes and close the editor.
 
-10. Type the following command to deploy the application described by the YAML files. You will receive a message indicating the items kubectl has created a web deployment and a web service.
+10. Execute the commands below to deploy the application described by the YAML files. You will receive a message indicating the items `kubectl` has created a web deployment and a web service.
 
     ```bash
+    cd ~/Fabmedical
     kubectl create --save-config=true -f web.deployment.yml -f web.service.yml
     ```
 
