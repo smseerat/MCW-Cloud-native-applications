@@ -257,9 +257,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. Run the following command to execute the `bhol.sh` script. This will provision all of the Azure cloud resources necessary to execute the workshop.
 
     ```bash
-    bash ./perftest.sh
+    bash bhol.sh
     ```
-
 
 1. Upon successful execution of the `bhol.sh` script, Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
@@ -342,7 +341,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    cd ~/Fabmedical/scripts
    bash create_and_seed_database.sh
    ```
-7
+
 ### Task : Build Docker Images
 
 1. Navigate to the `content-api` directory and build the `content-api` container image using the Dockerfile in the directory. Note how the deployed Azure Container Registry is referenced. Replace the `SUFFIX` placeholder in the command.
