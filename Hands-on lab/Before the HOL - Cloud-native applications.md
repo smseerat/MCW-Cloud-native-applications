@@ -146,25 +146,133 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    export MCW_GITHUB_URL=<PASTE YOUR FABMEDICAL REPO URL> 
    export MCW_GITHUB_EMAIL=<YOUR GITHUB EMAIL ID>
    ```
+   
+1. Go to Environment details, Click on **Service principle Credentials** and copy the **Application Id (Client Id)** , **client Secret** , **subscription Id** and **tenant Id**.
 
-2. Paste the following command to go the right directory and to create a bash file named **bhol.sh**.
+   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna8.png?raw=true)
+
+   - Replace the values that you copied in below Json
+   
+   ```json
+   { "clientId": "<client id>", "clientSecret": "<client secret>", "subscriptionId": "<subscription id>", "tenantId": "<tenant id>", "activeDirectoryEndpointUrl": "https://login.microsoftonline.com", "resourceManagerEndpointUrl": "https://management.azure.com/", "activeDirectoryGraphResourceId": "https://graph.windows.net/", "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/", "galleryEndpointUrl": "https://gallery.azure.com/", "managementEndpointUrl": "https://management.core.windows.net/" }
+   ```
+   
+   - Copy the complete JSON output to your clipboard.
+
+1. In GitHub, return to the **Fabmedical** repository screen, and select the **Settings** tab.
+
+1. From the left menu, select **Secrets**.
+
+1. Select the **New repository secret** button.
+
+    ![Settings link, Secrets link, and New secret button are highlighted.](media/2020-08-24-21-45-42.png "GitHub Repository secrets")
+
+1. In the **New secret** form, enter the name `AZURE_CREDENTIALS` and paste the copied value from your clipboard to the value of the secret and save it.
+
+   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna6.png?raw=true)
+
+1. Paste the following command to go the right directory and to create a bash file named **bhol.sh**.
 
    ```bash
    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/scripts
    vi bhol.sh
    ```
-
-3. Upon successful execution of the `create_azure_resources.sh` script, a command for establishing an SSH session to the build agent VM should be present in the output.
+   
+1. In the new bash the file, paste the following commands.
 
    ```bash
-   Command to create an active session to the build agent VM:
+   #!/bin/bash
 
-       ssh -i ~/.ssh/fabmedical adminfabmedical@<PUBLIC IP OF VM>
+   function replace_json_field {
+       tmpfile=/tmp/tmp.json
+       cp $1 $tmpfile
+       jq "$2 |= \"$3\"" $tmpfile > $1
+       rm "$tmpfile"
+   }
+
+   # Check if SUFFIX envvar exists
+   if [[ -z "${MCW_SUFFIX}" ]]; then
+       echo "Please set the MCW_SUFFIX environment variable to a unique three character string."
+       exit 1
+   fi
+
+   if [[ -z "${MCW_GITHUB_USERNAME}" ]]; then
+       echo "Please set the MCW_GITHUB_USERNAME environment variable to your Github Username"
+       exit 1
+   fi
+
+   if [[ -z "${MCW_GITHUB_TOKEN}" ]]; then
+       echo "Please set the MCW_GITHUB_TOKEN environment variable to your Github Token"
+       exit 1
+   fi
+
+   if [[ -z "${MCW_GITHUB_URL}" ]]; then
+       MCW_GITHUB_URL=https://$MCW_GITHUB_USERNAME:$MCW_GITHUB_TOKEN@github.com/$MCW_GITHUB_USERNAME/Fabmedical.git
+   fi
+
+   git config --global user.email "$MCW_GITHUB_EMAIL"
+   git config --global user.name "$MCW_GITHUB_USERNAME"
+
+   cp -R ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer ~/Fabmedical
+   cd ~/Fabmedical
+   git init
+   git remote add origin $MCW_GITHUB_URL
+
+   git config --global --unset credential.helper
+   git config --global credential.helper store
+
+   # Configuring github workflows
+   cd ~/Fabmedical
+   sed -i "s/\[SUFFIX\]/$MCW_SUFFIX/g" ~/Fabmedical/.github/workflows/content-init.yml
+   sed -i "s/\[SUFFIX\]/$MCW_SUFFIX/g" ~/Fabmedical/.github/workflows/content-api.yml
+   sed -i "s/\[SUFFIX\]/$MCW_SUFFIX/g" ~/Fabmedical/.github/workflows/content-web.yml
+
+   # Commit changes
+   git add .
+   git commit -m "Initial Commit"
+
+   # Get ACR credentials and add them as secrets to Github
+   ACR_CREDENTIALS=$(az acr credential show -n fabmedical$MCW_SUFFIX)
+   ACR_USERNAME=$(jq -r -n '$input.username' --argjson input "$ACR_CREDENTIALS")
+   ACR_PASSWORD=$(jq -r -n '$input.passwords[0].value' --argjson input "$ACR_CREDENTIALS")
+
+   GITHUB_TOKEN=$MCW_GITHUB_TOKEN
+   cd ~/Fabmedical
+   echo $GITHUB_TOKEN | gh auth login --with-token
+   gh secret set ACR_USERNAME -b "$ACR_USERNAME"
+   gh secret set ACR_PASSWORD -b "$ACR_PASSWORD" 
+
+   # Committing repository
+   cd ~/Fabmedical
+   git branch -m master main
+   git push -u origin main
    ```
+   
+   > Press `i` on your keyboard to enter insert mode, where you can alter the file.
 
-4. Use the SSH command output in the previous step to establish an SSH session to the build agent VM.  You should be presented with a prompt similar to the following:
+1. Save the file and exit Vim.
 
-   `adminfabmedical@fabmedical-SUFFIX:~$`
+   > You can do this by pressing the `Esc` key on your keyboard, followed by `:wq`.
+
+1. Run the following command to execute the `bhol.sh` script. This will provision all of the Azure cloud resources necessary to execute the workshop.
+
+    ```bash
+    bash ./perftest.sh
+    ```
+
+
+1. Upon successful execution of the `bhol.sh` script, Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
+
+1. When asked to confirm if you want to continue connecting, type `yes`.
+
+1. When asked for the password, enter **Build Agent VM Password** given below.
+    ```
+    Password.1!!
+    ```
+
+1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step.
+
+   `adminfabmedical@fabmedical:~$`
 
    ![In this screenshot of a Cloud Shell window, ssh -i .ssh/fabmedical adminfabmedical@52.174.141.11 has been typed and run at the command prompt. The information detailed above appears in the window.](media/b4-image27.png "Azure Cloud Shell Connect to Host")
 
