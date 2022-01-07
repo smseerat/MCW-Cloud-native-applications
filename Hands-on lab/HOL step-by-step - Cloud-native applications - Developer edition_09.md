@@ -182,7 +182,7 @@ In this task, you will edit the web application source code to add Application I
 
     ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
-13. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
+13. Let's push the changes made in `content-web.yml`, and `content-api.yml` files to the git repository using below mentioned commands.
 
 
     ```bash
@@ -191,7 +191,7 @@ In this task, you will edit the web application source code to add Application I
     git push
     ```
     
-14. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
+14. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, and `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
 
     ```bash
     git add .
@@ -201,14 +201,14 @@ In this task, you will edit the web application source code to add Application I
 
 15. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
-   ```bash
-   cd ~/Fabmedical/content-web
-   git add .
-   kubectl delete deployment web -n ingress-demo
-   kubectl delete deployment api -n ingress-demo
-   git commit -m "Added Application Insights"
-   git push
-   ```
+    ```bash
+    cd ~/Fabmedical/content-web
+    git add .
+    kubectl delete deployment web -n ingress-demo
+    kubectl delete deployment api -n ingress-demo
+    git commit -m "Added Application Insights"
+    git push
+    ```
 
 16. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
