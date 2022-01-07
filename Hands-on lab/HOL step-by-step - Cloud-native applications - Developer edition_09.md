@@ -98,7 +98,7 @@ In this task, you will edit the web application source code to add Application I
    ls
    ```
 
-6. Add the following entries (uncomment) to the path triggers in the `content-web.yml` workflow file using `code content-web.yml` command in the `.github/workflows` folder.
+7. Add the following entries (uncomment) to the path triggers in the `content-web.yml` workflow file using `code content-web.yml` command in the `.github/workflows` folder.
 
     ```yaml
     on:
@@ -113,7 +113,7 @@ In this task, you will edit the web application source code to add Application I
     
     ![](media_prod/uncomment.png "content-web")
 
-7. Replace the commented task in the end of the file and add the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+8. Replace the commented task in the end of the file and add the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
 
    > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
@@ -133,11 +133,11 @@ In this task, you will edit the web application source code to add Application I
     
     ![](media_prod/contentadd.png "content-web")
     
-8. Save the file and close the editor.
+9. Save the file and close the editor.
 
     ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
-8. Add the following entries (uncomment) to the path triggers in the `content-api.yml` workflow file using `code content-api.yml` command in the `.github/workflows` folder.
+10. Add the following entries (uncomment) to the path triggers in the `content-api.yml` workflow file using `code content-api.yml` command in the `.github/workflows` folder.
 
     ```yaml
     on:
@@ -149,8 +149,10 @@ In this task, you will edit the web application source code to add Application I
         - api.deployment.yml  # These two file
         - api.service.yml     # entries here
     ```
+    
+    ![](media_prod/uncommentapi.png "content-web")
 
-9. Replace the commented task in the end of the file and add the following task in the in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
+11. Replace the commented task in the end of the file and add the following task in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
 
    > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
@@ -173,18 +175,34 @@ In this task, you will edit the web application source code to add Application I
                 ingress-demo-secret
               namespace: ingress-demo
     ```
+    
+    ![](media_prod/contentapiadd.png "content-web")
+    
+12. Save the file and close the editor.
 
-    > **Note**: Ensure the following files from [Exercise 2](#exercise-2-deploy-the-solution-to-azure-kubernetes-service), Tasks [2](#task-2-deploy-a-service-using-the-azure-portal) and [3](#task-3-deploy-a-service-using-kubectl), are present in the git repository root.
+    ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
+
+13. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
+
 
     ```bash
-    api.deployment.yml
-    web.deployment.yml
-    web.service.yml
+    git add .
+    git commit -m "Updated workflow YAML"
+    git push
+    ```
+    
+14. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
+
+    ```bash
+    git add .
+    git commit -m "Added Deployment files"
+    git push --force
     ```
 
-10. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
+15. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
    ```bash
+   cd ~/Fabmedical/content-web
    git add .
    kubectl delete deployment web -n ingress-demo
    kubectl delete deployment api -n ingress-demo
@@ -192,15 +210,15 @@ In this task, you will edit the web application source code to add Application I
    git push
    ```
 
-11. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
+16. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
-12. While the pipelines rune, return the Azure Portal in the browser.
+17. While the pipelines rune, return the Azure Portal in the browser.
 
-13. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+18. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-14. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+19. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
