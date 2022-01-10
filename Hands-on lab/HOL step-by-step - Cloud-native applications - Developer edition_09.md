@@ -179,39 +179,25 @@ In this task, you will edit the web application source code to add Application I
 
     ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
-13. Let's push the changes made in `content-web.yml`, and `content-api.yml` files to the git repository using below mentioned commands.
+13. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
     ```bash
-    git add .
-    git commit -m "Updated workflow YAML"
-    git push
-    ```
-14. To Ensure the `api.deployment.yml`, `web.deployment.yml`, and `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
-
-    ```bash
-    git add .
-    git commit -m "Added Deployment files"
-    git push --force
-    ```
-15. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
-
-    ```bash
-    cd ~/Fabmedical/content-web
+    cd ~/Fabmedical
     git add .
     kubectl delete deployment web -n ingress-demo
     kubectl delete deployment api -n ingress-demo
     git commit -m "Added Application Insights"
     git push
     ```
-16. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
+14. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
-17. While the pipelines rune, return the Azure Portal in the browser.
+15. While the pipelines rune, return the Azure Portal in the browser.
 
-18. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+16. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
     ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
 
-19. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
+17. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
     ![On the Stats page, the hostName is highlighted.](media/image145.png "On Stats page hostName is displayed")
 
