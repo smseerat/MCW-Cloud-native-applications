@@ -148,7 +148,6 @@ In this task, you will edit the web application source code to add Application I
         - api.deployment.yml  # These two file
         - api.service.yml     # entries here
     ```
-    
     ![](media_prod/uncommentapi.png "content-web")
 
 11. Replace the commented task in the end of the file and add the following task in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
@@ -173,16 +172,14 @@ In this task, you will edit the web application source code to add Application I
               imagepullsecrets: |
                 ingress-demo-secret
               namespace: ingress-demo
-    ```
-    
-    ![](media_prod/contentapiadd.png "content-web")
+    ```   
+   ![](media_prod/contentapiadd.png "content-web")
     
 12. Save the file and close the editor.
 
     ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
 13. Let's push the changes made in `content-web.yml`, and `content-api.yml` files to the git repository using below mentioned commands.
-
 
     ```bash
     git add .
@@ -197,7 +194,7 @@ In this task, you will edit the web application source code to add Application I
     git commit -m "Added Deployment files"
     git push --force
     ```
-
+    
 15. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
     ```bash
