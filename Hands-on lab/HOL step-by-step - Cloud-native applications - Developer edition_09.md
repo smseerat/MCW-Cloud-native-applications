@@ -449,7 +449,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
 
 2. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
-    ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
+    ![A screenshot showing the output of the sessions content in the browser.](media_prod/finalop.19.png "Content api sessions")
 
 20. Test TLS termination by visiting both services again using `https`.
 
