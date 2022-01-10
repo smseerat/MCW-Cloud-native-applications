@@ -117,7 +117,7 @@ In this task, you will edit the web application source code to add Application I
 
    > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
-    ```yaml 
+   ```yaml 
           - name: Deploy to AKS
             uses: azure/k8s-deploy@v1
             with:
@@ -129,9 +129,8 @@ In this task, you will edit the web application source code to add Application I
               imagepullsecrets: |
                 ingress-demo-secret
               namespace: ingress-demo
-    ```
-    
-    ![](media_prod/contentadd.png "content-web")
+   ```
+   ![](media_prod/contentadd.png "content-web")
     
 9. Save the file and close the editor.
 
