@@ -186,15 +186,13 @@ In this task, you will edit the web application source code to add Application I
     git commit -m "Updated workflow YAML"
     git push
     ```
-    
-14. TO Ensure the `api.deployment.yml`, `web.deployment.yml`, and `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
+14. To Ensure the `api.deployment.yml`, `web.deployment.yml`, and `web.service.yml` files from Exercise 2, Tasks 2 and 3 are present in the git repository root. Let's push the changes to the git repository root using below mentioned commands.
 
     ```bash
     git add .
     git commit -m "Added Deployment files"
     git push --force
     ```
-    
 15. Push these changes to your repository so that GitHub Actions CI will build and deploy a new Container image.
 
     ```bash
@@ -205,7 +203,6 @@ In this task, you will edit the web application source code to add Application I
     git commit -m "Added Application Insights"
     git push
     ```
-
 16. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
 17. While the pipelines rune, return the Azure Portal in the browser.
