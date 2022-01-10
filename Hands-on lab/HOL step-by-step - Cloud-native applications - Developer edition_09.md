@@ -152,7 +152,7 @@ In this task, you will edit the web application source code to add Application I
 
 11. Replace the commented task in the end of the file and add the following task in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
 
-   > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
+    >**NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
     ```yaml
           - uses: Azure/aks-set-context@v1
@@ -173,7 +173,7 @@ In this task, you will edit the web application source code to add Application I
                 ingress-demo-secret
               namespace: ingress-demo
     ```   
-   ![](media_prod/contentapiadd.png "content-web")
+    ![](media_prod/contentapiadd.png "content-web")
     
 12. Save the file and close the editor.
 
