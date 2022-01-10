@@ -169,7 +169,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. In the **New secret** form, enter the name `AZURE_CREDENTIALS` and paste the copied value from your clipboard to the value of the secret and save it.
 
-   ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna6.png?raw=true)
+   ![Permissions GH](media_prod/git_secret.png)
 
 1. Paste the following command to go the right directory and to create a bash file named **bhol.sh**.
 
@@ -256,9 +256,10 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Run the following command to execute the `bhol.sh` script. This will provision all of the Azure cloud resources necessary to execute the workshop.
 
-    ```bash
-    bash bhol.sh
-    ```
+   ```bash
+   bash bhol.sh
+   ```
+   >**NOTE**: When asked for the credentials, Please enter your `GITHUB_USERNAME` and `PAT` as the password. 
 
 1. Upon successful execution of the `bhol.sh` script, Connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
@@ -279,7 +280,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. From an Azure Cloud Shell terminal, use the SSH command output from the previous task and start an active SSH session to the build agent VM.
 
-2. Clone the FabMedical GitHub repository created in the previous task.
+2. Clone the Fabmedical GitHub repository created in the previous task by replacing the `GITHUB_USERNAME` in the below mentioned command.
 
    ```bash
    git clone https://github.com/<GITHUB_USERNAME>/Fabmedical
