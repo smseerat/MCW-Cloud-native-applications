@@ -115,7 +115,7 @@ In this task, you will edit the web application source code to add Application I
 
 8. Replace the commented task in the end of the file and add the following task in the `content-web.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
 
-   > **NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
+   >**NOTE**: To make the file to be in proper indentation. You can use the following online YAML Vaildator `https://yamlchecker.com/`.
 
    ```yaml 
           - name: Deploy to AKS
@@ -130,11 +130,12 @@ In this task, you will edit the web application source code to add Application I
                 ingress-demo-secret
               namespace: ingress-demo
    ```
+   
    ![](media_prod/contentadd.png "content-web")
     
 9. Save the file and close the editor.
 
-    ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
+   ![This is a screenshot of the code editor save and close actions.](media/Ex2-Task1.17.1.png "Code editor configuration update")
 
 10. Add the following entries (uncomment) to the path triggers in the `content-api.yml` workflow file using `code content-api.yml` command in the `.github/workflows` folder.
 
@@ -148,6 +149,7 @@ In this task, you will edit the web application source code to add Application I
         - api.deployment.yml  # These two file
         - api.service.yml     # entries here
     ```
+    
     ![](media_prod/uncommentapi.png "content-web")
 
 11. Replace the commented task in the end of the file and add the following task in the `content-api.yml` workflow file in the `.github/workflows` folder. Be sure to indent the YAML formatting of the task to be consistent with the formatting of the existing file.
@@ -246,9 +248,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     >
    ![A screenshot of Azure Cloud Shell showing the command output.](media/Ex4-Task5.5a.png "View the ingress controller LoadBalancer")
 
-5. Open the [Azure Portal Resource Groups blade](https://portal.azure.com/?feature.customPortal=false#blade/HubsExtension/BrowseResourceGroups) and locate the Resource Group automatically created to host the Node Pools for AKS. It will have the naming format of `MC_fabmedical-[SUFFIX]_fabmedical-[SUFFIX]_[REGION]`.
-
-6. Within the Azure Cloud Shell, create a script to update the public DNS name for the external ingress IP.
+5. Within the Azure Cloud Shell, create a script to update the public DNS name for the external ingress IP.
 
    ```bash
    cd ~/Fabmedical
@@ -282,15 +282,15 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
 
    ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
 
-7. Save changes and close the editor.
+6. Save changes and close the editor.
 
-8. Run the update script.
+7. Run the update script.
 
    ```bash
    bash ./update-ip.sh
    ```
 
-9. Verify the IP update by visiting the URL in your browser.
+8. Verify the IP update by visiting the URL in your browser.
 
     > **Note**: It is normal to receive a 404 message at this time.
 
@@ -300,7 +300,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
 
     ![A screenshot of the fabmedical browser URL.](media/Ex4-Task5.9.png "fabmedical browser URL")
 
-10. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
+9. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
 
     ```bash
     kubectl create namespace cert-manager
@@ -308,7 +308,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
     ```
 
-11. Create a custom `ClusterIssuer` resource for the `cert-manager` service to use when handling requests for SSL certificates.
+10. Create a custom `ClusterIssuer` resource for the `cert-manager` service to use when handling requests for SSL certificates.
 
     ```bash
     cd ~/Fabmedical
@@ -336,15 +336,15 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
               class: nginx
     ```
 
-12. Save changes and close the editor.
+11. Save changes and close the editor.
 
-13. Create the issuer using `kubectl`.
+12. Create the issuer using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f clusterissuer.yml
     ```
 
-14. Now you can create a certificate object.
+13. Now you can create a certificate object.
 
     > **Note**:
     >
@@ -375,9 +375,9 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
         kind: ClusterIssuer
     ```
 
-15. Save changes and close the editor.
+14. Save changes and close the editor.
 
-16. Create the certificate using `kubectl`.
+15. Create the certificate using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f certificate.yml
@@ -397,7 +397,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
 
     It can take between 5 and 30 minutes before the tls-secret becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
 
-17. Now you can create an ingress resource for the content applications.
+16. Now you can create an ingress resource for the content applications.
 
     ```bash
     cd ~/Fabmedical
@@ -437,20 +437,20 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
               servicePort: 3001
     ```
 
-18. Save changes and close the editor.
+17. Save changes and close the editor.
 
-19. Create the ingress using `kubectl`.
+18. Create the ingress using `kubectl`.
 
     ```bash
     kubectl create --save-config=true -f content.ingress.yml
     ```
 
-20. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
+19. Refresh the ingress endpoint in your browser. You should be able to visit the speakers and sessions pages and see all the content.
 
-21. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
+2. Visit the API directly, by navigating to `/content-api/sessions` at the ingress endpoint.
 
     ![A screenshot showing the output of the sessions content in the browser.](media/Ex4-Task5.19.png "Content api sessions")
 
-22. Test TLS termination by visiting both services again using `https`.
+20. Test TLS termination by visiting both services again using `https`.
 
     > **Note**: It can take between 5 and 30 minutes before the SSL site becomes available. This is due to the delay involved with provisioning a TLS cert from letsencrypt.
