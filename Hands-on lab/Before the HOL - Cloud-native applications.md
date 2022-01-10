@@ -143,7 +143,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    export MCW_SUFFIX=<PASTE DeploymentID>                   # Needs to be a unique three letter string
    export MCW_GITHUB_USERNAME=<PASTE YOUR GITHUB USERNAME> # Your Github account username
    export MCW_GITHUB_TOKEN=<PASTE YOUR GITHUB PAT TOKEN>        # A personal access token for your Github account
-   export MCW_GITHUB_URL=<PASTE YOUR FABMEDICAL REPO URL> 
+   export MCW_GITHUB_URL=https://github.com/$MCW_GITHUB_USERNAME/Fabmedical 
    export MCW_GITHUB_EMAIL=<YOUR GITHUB EMAIL ID>
    ```
    
