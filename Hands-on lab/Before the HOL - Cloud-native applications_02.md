@@ -844,7 +844,7 @@ image and pushes it to your ACR instance automatically.
 
     ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created.](media/2020-08-24-21-51-24.png "Secrets screen")
     
-1. Go to Environment details click on **Service principle Credentials** copy **Application Id (Client Id)** , **client Secret** , **subscription Id** and **tenant Id**
+1. Go to Environment details click on **Service principle Credentials** copy **Application Id (Client Id)** , **client Secret (Secret key)** , **subscription Id** and **tenant Id**
 
    ![](https://github.com/Shivashant25/MCW-Cloud-native-applications/blob/prod-1/Hands-on%20lab/media/cna8.png?raw=true)
 
