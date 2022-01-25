@@ -354,6 +354,7 @@ In this task, you will take the starter files and run the node.js application as
     ```bash
     sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
     ```
+    > **Note**: If a blank screen appears after executing `ng build` command. Please restart the cloudshell. **SSH** into the build agent virtual machine. **Navigate** to `cd ~/Fabmedical/content-web` path and **run** the `node --max_old_space_size=102400 node_modules/@angular/cli/bin/ng build --prod` command. Wait till the execution completes and continue with the lab.
 
 14. Copy **Build Agent VM** public IP address from **Environment Details** tab, you will need this for future use.
 
