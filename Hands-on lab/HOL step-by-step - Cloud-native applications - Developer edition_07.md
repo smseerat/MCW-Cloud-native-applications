@@ -150,9 +150,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![This screenshot of the Kubernetes management dashboard shows logs output for the api container.](media/2021-03-25-17-07-13.png "MongoDB communication error")
 
-10. In the Azure Portal navigate to your resource group and find your Cosmos DB. Select the Cosmos DB resource to view details.
+10. In the Azure Portal navigate to your resource group and find your Azure Cosmos DB API for MongoDB account. Select the Cosmos DB resource to view details.
 
-    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk2-step7.png "Select CosmosDB resource from list")
+    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media/cna17.png "Select CosmosDB resource from list")
 
 11. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
