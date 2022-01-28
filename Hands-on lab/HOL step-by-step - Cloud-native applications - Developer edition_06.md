@@ -20,9 +20,9 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
    ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/create-dms.png "Azure Database Migration Service")
     
-1. Select **Migrate my SQL Server, MySQL, PostgreSQL or MongoDB database(s) to Azure** and click on **Select**.
+1. Select **Continue to use Azure Database Migration Service to migrate SQL Server, MySQL, PostgreSQL or MongoDB database(s) to Azure SQL MI, Azure SQL DB, Azure DB for MySQL, Azure DB for PostgreSQL and Azure Cosmos DB** and click on **Select**.
 
-   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/cna5.png "Azure Database Migration Service")
+   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/cna16.png "Azure Database Migration Service")
    
 1. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
