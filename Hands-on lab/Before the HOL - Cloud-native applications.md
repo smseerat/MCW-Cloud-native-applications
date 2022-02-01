@@ -75,7 +75,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
 
-    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://docs.github.com/en/get-started/signing-up-for-github/signing-up-for-a-new-github-account``` and create one.
 
 2. Create a Personal Access Token as described below:
 
