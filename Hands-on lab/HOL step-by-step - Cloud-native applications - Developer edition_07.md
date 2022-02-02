@@ -169,9 +169,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![cosmosdb secret is missing](media/missing-secret-event.png "Pod is failing because of a missing secret")
 
-12. In the Azure Portal navigate to your resource group and find your Cosmos DB. Select the Cosmos DB resource to view details.
+12. In the Azure Portal navigate to your resource group and find your Azure Cosmos DB API for MongoDB account. Select the Cosmos DB resource to view details.
 
-    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk2-step7.png "Select CosmosDB resource from list")
+    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media_prod/cna17.png)
 
 13. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
