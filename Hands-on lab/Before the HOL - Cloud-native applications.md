@@ -310,7 +310,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
-   ![](media_prod/exit-bhl.png)
+   ![](media_prod/exit-bhl1.png)
 
 6. After reestablishing an SSH session to the build agent VM, run the `create_and_seed_database.sh` script to create and seed the MongoDB database for use in the workshop.
 
