@@ -47,7 +47,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    
 2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
 
-  ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
 
 3. In the **Add with YAML** screen, paste the following YAML and choose **Add**.
 
@@ -62,7 +62,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Add (2)** and select **Add with YAML (3)**.
 
-  ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/ServiceandIngress.png "Add a Service")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/ServiceandIngress.png "Add a Service")
 
 5. In the **Add with YAML** screen, paste following YAML and choose **Add**.
 
