@@ -108,7 +108,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
     - Leave other values as default and select **Generate token**.
 
-      ![Permissions GH](media/github-05.png)
+      ![Permissions GH](media_prod/github-05.png)
 
 4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
 
