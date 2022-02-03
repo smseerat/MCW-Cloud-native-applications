@@ -45,9 +45,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
    
-2. Define a new Namespace for our API deployment. Select the **Namespaces** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal, and on the Namespaces tab select **+ Add**.
+2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
 
-  ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media/create-namespace.png "Add a Namespace")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
 
 3. In the **Add with YAML** screen, paste the following YAML and choose **Add**.
 
@@ -60,9 +60,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
       name: ingress-demo
     ```
 
-4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal, and on the Services tab, select **+ Add**.
+4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Add (2)** and select **Add with YAML (3)**.
 
-  ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media/2021-03-25-17-04-04.png "Add a Service")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/ServiceandIngress.png "Add a Service")
 
 5. In the **Add with YAML** screen, paste following YAML and choose **Add**.
 
@@ -169,9 +169,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![cosmosdb secret is missing](media/missing-secret-event.png "Pod is failing because of a missing secret")
 
-12. In the Azure Portal navigate to your resource group and find your Cosmos DB. Select the Cosmos DB resource to view details.
+12. In the Azure Portal navigate to your resource group and find your Azure Cosmos DB API for MongoDB account. Select the Cosmos DB resource to view details.
 
-    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk2-step7.png "Select CosmosDB resource from list")
+    ![This is a screenshot of the Azure Portal showing the Cosmos DB among existing resources.](media_prod/cna17.png)
 
 13. Under **Quick Start** select the **Node.js** tab and copy the **Node.js 3.0 connection string**.
 
@@ -195,7 +195,9 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-16. Return to the AKS blade in the Azure Portal and select **Configuration** under the **Kubernetes resources** section. Select **Secrets** and choose **+ Add**.
+16. Return to the AKS blade in the Azure Portal and select **Configuration (1)** under the **Kubernetes resources** section. Select **Secrets (2)** and choose **+ Add (3)**.
+
+    ![](media_prod/secrets-kub.png)
 
 17. In the **Add with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 

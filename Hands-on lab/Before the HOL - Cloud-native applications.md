@@ -57,7 +57,7 @@ You should follow all the steps provided in this section _before_ taking part in
 
 In this task, you use `git` to copy the lab content to your cloud shell so that the lab starter files will be available.
 
-1. 1. Copy the following command to clone the lab files using cloudshell and check out the starter files from the MCW Cloud-native applications GitHub repository and detach them from the existing remote repository via the following commands:
+1. Copy the following command to clone the lab files using cloudshell and check out the starter files from the MCW Cloud-native applications GitHub repository and detach them from the existing remote repository via the following commands:
 
    ```bash
    cd ~
@@ -75,39 +75,44 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
 1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
 
-    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://docs.github.com/en/get-started/signing-up-for-github/signing-up-for-a-new-github-account``` and create one.
-
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+    
 2. Create a Personal Access Token as described below:
 
-   - In the upper-right corner of your GitHub page, click your profile photo, then click **Settings (1)** and in the left sidebar click **Developer settings (2)**.
+   - In the upper-right corner of your GitHub page, select your profile photo, then click **Settings**.
 
-     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat.png)
+     ![Permissions GH](media_prod/github-01.png)
+    
+   - From the left hand side menu, select **Developer settings**.
+     
+     ![Permissions GH](media_prod/github-devset.png)
 
-   - Then in the left sidebar, click **Personal access tokens (3)** and select **Generate new token (4)** button on the right. Provide the GitHub password if prompted. 
+   - Now, click **Personal access tokens (1)** and select **Generate new token (2)** button on the right. Provide the GitHub password if prompted. 
    
-     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat1.png)
-
+     ![Permissions GH](media_prod/github-03.png)
+     
 3. Select the scopes or permissions you would like to grant this token
 
     - **Note**: Provide the following text in the note field, **{DeploymentId}-token**. 
     
-    - **Select scopes**:
+    - **Select scopes**: Select the following scopes when configuring your GitHub Personal Access Token
 
-        * repo - Full control of private repositories
-        * workflow - Update GitHub Action workflows
-        * write:packages - Upload packages to GitHub Package Registry
-        * delete:packages - Delete packages from GitHub Package Registry
-        * read:org - Read org and team membership, read org projects
+        - `repo` - Full control of private repositories
+        - `workflow` - Update GitHub Action workflows
+        - `write:packages` - Upload packages to GitHub Package Registry
+        - `delete:packages` - Delete packages from GitHub Package Registry
+        - `read:org` - Read org and team membership, read org projects
+
   
       ![Permissions GH](media_prod/image10.png)
 
-    - Click **Generate token**.
+    - Leave other values as default and select **Generate token**.
 
-      ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/gentoken.png)
+      ![Permissions GH](media_prod/github-05.png)
 
 4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
 
-   ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/copytoken.png)
+   ![Permissions GH](media_prod/github-06.png)
    
    > **Note**: Use Personal Access Token as Password when ever you asked to provide Password while pushing any Git changes in the Lab.
 
@@ -135,7 +140,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 5: Set up Azure Cloud Shell environment
 
-1. Set the following environment variables in an Azure Cloud Shell terminal. Make you replace all the values properly.
+1. Set the following environment variables in an Azure Cloud Shell terminal. Make sure you replace all the values properly.
 
    > **NOTE**: You can copy the **DeploymentID** from the **Environment Details** page of the environment.
 
@@ -305,35 +310,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
-   ```bash
-   adminfabmedical@fabmedical-???:~/Fabmedical/scripts$ exit
-   logout
-   Connection to 20.123.9.212 closed.
-   matt@Azure:~$ ssh -i ~/.ssh/fabmedical adminfabmedical@20.123.9.212
-   matt@Azure:~$ ssh -i .ssh/fabmedical adminfabmedical@20.123.9.212
-   Welcome to Ubuntu 16.04.7 LTS (GNU/Linux 4.15.0-1113-azure x86_64)
-
-   * Documentation:  https://help.ubuntu.com
-   * Management:     https://landscape.canonical.com
-   * Support:        https://ubuntu.com/advantage
-
-   UA Infra: Extended Security Maintenance (ESM) is not enabled.
-
-   0 updates can be applied immediately.
-
-   65 additional security updates can be applied with UA Infra: ESM
-   Learn more about enabling UA Infra: ESM service for Ubuntu 16.04 at
-   https://ubuntu.com/16-04
-
-   Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-   applicable law.
-
-   New release '18.04.6 LTS' available.
-   Run 'do-release-upgrade' to upgrade to it.
-
-   Last login: Sat Dec  4 11:47:31 2021 from 23.100.27.176
-   adminfabmedical@fabmedical-mgy:~$
-   ```
+   ![](media_prod/exit-bhl1.png)
 
 6. After reestablishing an SSH session to the build agent VM, run the `create_and_seed_database.sh` script to create and seed the MongoDB database for use in the workshop.
 
@@ -342,7 +319,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    bash create_and_seed_database.sh
    ```
 
-### Task : Build Docker Images
+### Task 7: Build Docker Images
 
 1. Navigate to the `content-api` directory and build the `content-api` container image using the Dockerfile in the directory. Note how the deployed Azure Container Registry is referenced. Replace the `SUFFIX` placeholder in the command.
 

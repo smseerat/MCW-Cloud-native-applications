@@ -193,7 +193,7 @@ In this task, you will edit the web application source code to add Application I
     ```
 14. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
 
-15. While the pipelines rune, return the Azure Portal in the browser.
+15. While the pipelines runs, return the Azure Portal in the browser.
 
 16. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
 
