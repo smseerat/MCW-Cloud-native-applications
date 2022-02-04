@@ -170,7 +170,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Select the **New repository secret** button.
 
-    ![Settings link, Secrets link, and New secret button are highlighted.](media/2020-08-24-21-45-42.png "GitHub Repository secrets")
+    ![Settings link, Secrets link, and New secret button are highlighted.](media/cna18.png "GitHub Repository secrets")
 
 1. In the **New secret** form, enter the name `AZURE_CREDENTIALS` and paste the copied value from your clipboard to the value of the secret and save it.
 
