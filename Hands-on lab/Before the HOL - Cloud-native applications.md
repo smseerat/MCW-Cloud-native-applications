@@ -293,6 +293,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 3. Set the following environment variables in the active SSH session to the build agent VM. Use the same GitHub access token used in a previous task.
 
+   > **NOTE**: You can copy the **DeploymentID** from the **Environment Details** page of the environment.
+
    ```bash
    export MCW_SUFFIX=<PASTE DeploymentID>                   # Needs to be a unique letter string
    export MCW_GITHUB_USERNAME=<GITHUB USERNAME> # Your Github account username
