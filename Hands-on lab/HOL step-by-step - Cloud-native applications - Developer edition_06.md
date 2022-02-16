@@ -26,15 +26,15 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
    
 1. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
 
-    - Resource group: Select **fabmedical-[DeploymentId]** resource group.
-    - Migration service name:  Enter the name as **`fabmedical[DeploymentId]`**. You can get the DeploymentId from environment details tab
+    - Resource group: Select **fabmedical-<inject key="DeploymentID" enableCopy="false" />** resource group.
+    - Migration service name:  Enter the name as **fabmedical<inject key="DeploymentID" enableCopy="false" />**. You can get the DeploymentId from environment details tab
     - Location: **Choose the same Azure Region used for the Resource Group**.
 
     ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
 
 1. Select **Next: Networking >>**.
 
-1. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-[SUFFIX]` resource group.
+1. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-<inject key="DeploymentID" enableCopy="false" />` resource group.
 
     ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-networking.png "Create Migration Service Networking tab")
 
