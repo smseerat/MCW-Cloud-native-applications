@@ -42,11 +42,11 @@ In this task, you will gather the information you need about your Azure Kubernet
 
 In this task, you will deploy the API application to the Azure Kubernetes Service cluster using the Azure Portal.
 
-1. From the Azure Portal, select the resource group named fabmedical-DeploymentId, and then select your Kubernetes Service Azure resource.
+1. From the Azure Portal, select the resource group named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your Kubernetes Service Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
    
-2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
+2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
 
    ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
 
@@ -61,7 +61,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
       name: ingress-demo
     ```
 
-4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-[SUFFIX] AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Add (2)** and select **Add with YAML (3)**.
+4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Add (2)** and select **Add with YAML (3)**.
 
    ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/ServiceandIngress.png "Add a Service")
 
@@ -95,7 +95,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![Selecting + Add to create a deployment.](media/2021-03-25-17-05-05.png "Selecing + Add to create a deployment")
 
-8. In the **Add with YAML** screen that loads paste the following YAML and update the `[LOGINSERVER]` placeholder with the name of the ACR instance.
+8. In the **Add with YAML** screen that loads paste the following YAML and update the `[LOGINSERVER]` with **fabmedical<inject key="DeploymentID" enableCopy="false" />** placeholder with the name of the ACR instance.
 
     ```yaml
     apiVersion: apps/v1
@@ -145,7 +145,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
                 protocol: TCP
             resources:
               requests:
-                  cpu: 2000m
+                  cpu: 200m
                   memory: 128Mi
             securityContext:
               privileged: false
