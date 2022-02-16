@@ -144,7 +144,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
                 protocol: TCP
             resources:
               requests:
-                  cpu: 1000m
+                  cpu: 2000m
                   memory: 128Mi
             securityContext:
               privileged: false
