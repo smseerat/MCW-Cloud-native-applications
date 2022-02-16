@@ -54,7 +54,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
 
      ```
      cd clouddrive
-     git clone https://github.com/microsoft/MCW-Cloud-native-applications.git
+     git clone https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications.git
      rm -rf MCW-Cloud-native-applications/.git
 
      ```
