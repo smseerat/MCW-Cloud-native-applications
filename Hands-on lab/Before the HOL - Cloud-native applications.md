@@ -305,6 +305,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    cd ~/Fabmedical/scripts
    bash create_build_environment.sh
    ```
+   > **Note**: Type '**N**' and press enter when asked for sharing the anonymous usage data with Angular team.
 
    > **Note**: Ignore any errors you encounter regarding the Docker client. That will be resolved after joining a new SSH session in the following steps.
 
