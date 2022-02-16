@@ -1,4 +1,4 @@
-FROM node:16.14.0-alpine
+FROM node:16.14.0-alpine AS base
 RUN apk -U add curl
 WORKDIR /usr/src/app
 EXPOSE 3001
