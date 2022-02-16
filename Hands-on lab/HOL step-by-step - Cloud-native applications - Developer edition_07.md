@@ -13,6 +13,7 @@ In this task, you will gather the information you need about your Azure Kubernet
 1. Verify that you are connected to the correct subscription with the following command to show your default subscription:
 
    ```bash
+   az login
    az account show
    ```
 
