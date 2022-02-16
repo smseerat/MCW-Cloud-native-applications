@@ -224,6 +224,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     ![This is a screenshot of the Azure Portal for AKS showing the value of a secret.](media/2021-03-25-17-08-54.png "View cosmosdb secret")
 
 20. Create a new deployment manifest, `api.deployment.yml` and add the YAML content below to the file. Modify the `LOGINSERVER` placeholder for ACR.
+    * LOGINSERVER: **fabmedical<inject key="DeploymentID" enableCopy="false" />**
 
     ```bash
     cd ~/Fabmedical
