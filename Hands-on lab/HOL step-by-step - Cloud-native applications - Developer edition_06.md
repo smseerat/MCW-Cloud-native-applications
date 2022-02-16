@@ -88,7 +88,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     - Subscription: Select the Azure subscription you're using for this lab.
 
-    - Select Cosmos DB name: Select the `fabmedical-[SUFFIX]` Cosmos DB instance.
+    - Select Cosmos DB name: Select the **fabmedical-<inject key="DeploymentID" enableCopy="false" />** Cosmos DB instance.
 
     ![The Select target tab with values selected.](media/dmsselecttarget.png "MongoDB to Azure Database for CosmosDB - Select target")
 
