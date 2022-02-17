@@ -255,7 +255,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    > You can do this by pressing the `Esc` key on your keyboard, followed by `:wq`.
 
-   > **Note**: If you face issue in saving the file in integrated environment, please remote to the LabVM using the credentials provided in the environment details tab and perfrom this step.
+   > **Note**: If you face issue in saving the file in integrated environment, please remote to the LabVM using the credentials provided in the environment details tab and perform this step.
 
 1. Run the following command to execute the `bhol.sh` script. This will provision all of the Azure cloud resources necessary to execute the workshop.
 
