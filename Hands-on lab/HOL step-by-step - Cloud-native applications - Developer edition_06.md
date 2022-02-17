@@ -34,7 +34,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 1. Select **Next: Networking >>**.
 
-1. On the **Networking** tab, select the **Virtual Network** within the `fabmedical-<inject key="DeploymentID" enableCopy="false" />` resource group.
+1. On the **Networking** tab, select the **Virtual Network** within the **fabmedical-<inject key="DeploymentID" enableCopy="false" />** resource group.
 
     ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-networking.png "Create Migration Service Networking tab")
 
