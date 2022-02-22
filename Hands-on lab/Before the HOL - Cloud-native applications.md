@@ -6,8 +6,9 @@
 
 Before the hands-on lab, you will need to prepare the environment by deploying the database and the application locally on a virtual machine using Docker and MongoDB. You will also need to fork the GitHub repository containing the lab to your own GitHub account to be able to set up the CI/CD pipeline.
 
-
 You should follow all the steps provided in this section _before_ taking part in the hands-on lab ahead of time as some of these steps take time.
+
+>**Note**: Please go through every instruction properly while performing the before hands-on-lab. If at all the lab guide is not followed correctly, attendees will be facing issues in next part of the lab due to the dependency.
 
 ### Task 1: Set up Azure Cloud Shell
 
@@ -288,6 +289,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    ```bash
    git clone https://github.com/<GITHUB_USERNAME>/Fabmedical
    ```
+   
+   >**Note**: Run `ls` command to make sure the repository is cloned properly.
 
 3. Set the following environment variables in the active SSH session to the build agent VM. Use the same GitHub access token used in a previous task.
 
