@@ -48,6 +48,8 @@ In this task, you will modify the CPU requirements for the web service so that i
  
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
+>**Note**: Please perform this task using a new Cloudshell which should be not connected to  build agent VM.
+
 1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
@@ -56,9 +58,9 @@ In this task, you will edit the web application source code to add Application I
 
    Copy this value. You will use it later.
 
-   > **Note**: If you have a blank result check that the command you issued refers to the right resource.
+   >**Note**: If you have a blank result check that the command you issued refers to the right resource.
 
-2. From an Azure Cloud Shell terminal that does **NOT** have an active SSH session to the build agent VM update your Fabmedical repository files by pulling the latest changes from the git repository and then updating deployment YAML files.
+2. From an Azure Cloud Shell terminal, Update your Fabmedical repository files by pulling the latest changes from the git repository and then updating deployment YAML files.
 
     ```bash
     cd ~/Fabmedical/content-web
