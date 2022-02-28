@@ -24,7 +24,7 @@ In this task, you will gather the information you need about your Azure Kubernet
    az account set --subscription {id}
    ```
 
-2. Configure kubectl to connect to the Kubernetes cluster:
+2. Configure kubectl to connect to the Kubernetes cluster. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
    az aks get-credentials -a --name fabmedical-SUFFIX --resource-group fabmedical-SUFFIX
@@ -95,7 +95,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![Selecting + Add to create a deployment.](media/2021-03-25-17-05-05.png "Selecing + Add to create a deployment")
 
-8. In the **Add with YAML** screen that loads paste the following YAML and update the `[LOGINSERVER]` with **fabmedical<inject key="DeploymentID" enableCopy="false" />** placeholder with the name of the ACR instance.
+8. In the **Add with YAML** screen that loads paste the following YAML and Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
     ```yaml
     apiVersion: apps/v1
@@ -223,8 +223,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure Portal for AKS showing the value of a secret.](media/2021-03-25-17-08-54.png "View cosmosdb secret")
 
-20. Create a new deployment manifest, `api.deployment.yml` and add the YAML content below to the file. Modify the `LOGINSERVER` placeholder for ACR.
-    * LOGINSERVER: **fabmedical<inject key="DeploymentID" enableCopy="false" />**
+20. Create a new deployment manifest, `api.deployment.yml` and add the YAML content below to the file. Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
     ```bash
     cd ~/Fabmedical
@@ -383,7 +382,7 @@ In this task, deploy the web service using `kubectl`.
           terminationGracePeriodSeconds: 30
     ```
 
-4. Update the `[LOGINSERVER]` entry to match the name of your ACR Login Server.
+4. Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
 5. Select the **...** button and choose **Save**.
 
