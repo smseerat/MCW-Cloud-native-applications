@@ -42,7 +42,7 @@ In this task, you will deploy an instance of the Azure Database Migration Servic
 
 1. Select **Create** to create the Azure Database Migration Service instance.
 
-The service may take 5 - 10 minutes to provision.
+The service may take 10 - 15 minutes to provision.
 
 ### Task 2: Migrate data to Azure Cosmos DB
 
