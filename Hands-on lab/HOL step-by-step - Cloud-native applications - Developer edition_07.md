@@ -440,6 +440,8 @@ In this task, deploy the web service using `kubectl`.
 12. In the top navigation, select the `speakers` and `sessions` links.
 
     ![A screenshot of the web site showing no data displayed.](media/Ex2-Task3.11.png "Web site home page")
+    
+    >**Note**: If you face any error while accessing the web page. Please wait for a minute and try accessing the external endpoint again as the web page takes few seconds to load for the first time.
 
 ### Task 4: Review Azure Monitor for Containers
 
