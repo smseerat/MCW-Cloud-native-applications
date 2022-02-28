@@ -347,7 +347,9 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    - USERNAME: **<inject key="Acr Username" />**
    - PASSWORD: **<inject key="Acr Password" />**
 
-   `docker login [LOGINSERVER] -u [USERNAME] -p [PASSWORD]`
+   ```
+   docker login [LOGINSERVER] -u [USERNAME] -p [PASSWORD]
+   ```
 
    ![This image demonstrates the credentials for Azure Container Registry.](./media/acr-credentials.png "ACR credentials")
 
