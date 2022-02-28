@@ -58,8 +58,8 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
    cd ~
    git clone \
       --depth 1 \
-      --branch master \
-      https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications.git \
+      --branch main \
+      https://github.com/microsoft/MCW-Cloud-native-applications.git \
       MCW-Cloud-native-applications
    cd MCW-Cloud-native-applications
    ```
