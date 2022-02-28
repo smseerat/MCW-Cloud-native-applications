@@ -42,7 +42,7 @@ You should follow all the steps provided in this section _before_ taking part in
 
 1. After launching the Azure Cloud Shell, select the **Bash** option. Now on You have no storage mounted dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
   
-      - **Storage account** : **storage<inject key="DeploymentID"></inject>**
+      - **Storage account** : **storage<inject key="DeploymentID" />**
       - **File Share** : **blob**
   
     > **Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
