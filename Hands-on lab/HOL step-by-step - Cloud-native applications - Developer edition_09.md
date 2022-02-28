@@ -79,7 +79,7 @@ In this task, you will edit the web application source code to add Application I
 
     > **Note**: Make sure to include the `--save` argument. Without this, a reference to the `applicationinsights` npm package will not get added to the `package.json` file of the `content-web` nodejs project, resulting in a deployment failure in later steps.
 
-4. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and and add the following lines immediately after `express` is instantiated on line 6:
+4. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and and add the following lines immediately after `express` is instantiated on line 6. Replace `YOUR APPINSIGHTS KEY` placeholder with the app insights key which you had copied earlier in the task.
 
     ```javascript
     const appInsights = require("applicationinsights");
