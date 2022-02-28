@@ -44,8 +44,6 @@ You should follow all the steps provided in this section _before_ taking part in
   
       - **Storage account** : **storage<inject key="DeploymentID" enableCopy="false"/>**
       - **File Share** : **blob**
-  
-    > **Note**: Storage account name should be always unique, you can get the Deployement Id  from the **Environment Details** tab. 
 
    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
@@ -90,7 +88,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
      
 3. Select the scopes or permissions you would like to grant this token
 
-    - **Note**: Provide the following text in the note field, **{DeploymentId}-token**. 
+    - **Note**: Provide the following text in the note field, **<inject key="DeploymentID" enableCopy="false"/>-token**. 
     
     - **Select scopes**: Select the following scopes when configuring your GitHub Personal Access Token
 
