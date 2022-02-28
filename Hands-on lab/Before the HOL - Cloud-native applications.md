@@ -292,7 +292,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 3. Set the following environment variables in the active SSH session to the build agent VM. Use the same GitHub access token used in a previous task.
 
-   > **NOTE**: You can copy the **DeploymentID** from the **Environment Details** page of the environment.
+   > **NOTE**: You can replace the **DeploymentID** with **<inject key="DeploymentID" />**..
 
    ```bash
    export MCW_SUFFIX=<PASTE DeploymentID>                   # Needs to be a unique letter string
@@ -323,14 +323,14 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 ### Task 7: Build Docker Images
 
-1. Navigate to the `content-api` directory and build the `content-api` container image using the Dockerfile in the directory. Note how the deployed Azure Container Registry is referenced. Replace the `SUFFIX` placeholder in the command.
+1. Navigate to the `content-api` directory and build the `content-api` container image using the Dockerfile in the directory. Note how the deployed Azure Container Registry is referenced. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
    cd ~/Fabmedical/content-api
    docker image build -t fabmedical[SUFFIX].azurecr.io/content-api:latest .
    ```
 
-2. Repeat this step for the `content-web` image, which serves as the application front-end.
+2. Repeat this step for the `content-web` image, which serves as the application front-end. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
    cd ~/Fabmedical/content-web
@@ -341,11 +341,11 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    ![This image demonstrates the tagged Docker images: content-api and content-web.](./media/docker-images.png "Tagged Docker images")
 
-4. Log in to Azure Container Registry using `docker login fabmedical[SUFFIX].azurecr.io`. Fetch the credentials from the **Access keys** tab of the ACR instance in the Azure portal.
+4. Log in to Azure Container Registry using **docker login fabmedical<inject key="DeploymentID" enableCopy="false"/>.azurecr.io**. Fetch the credentials from the **Access keys** tab of the ACR instance in the Azure portal.
 
    ![This image demonstrates the credentials for Azure Container Registry.](./media/acr-credentials.png "ACR credentials")
 
-5. Push the two images you built.
+5. Push the two images you built. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
    docker image push fabmedical[SUFFIX].azurecr.io/content-api:latest
