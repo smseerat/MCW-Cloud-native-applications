@@ -341,7 +341,13 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
    ![This image demonstrates the tagged Docker images: content-api and content-web.](./media/docker-images.png "Tagged Docker images")
 
-4. Log in to Azure Container Registry using **docker login fabmedical<inject key="DeploymentID" enableCopy="false"/>.azurecr.io**. Fetch the credentials from the **Access keys** tab of the ACR instance in the Azure portal.
+4. Log in to Azure Container Registry using the below mentioned command. Replace the Credentials with the following details mentioned below.
+
+   - LOGINSERVER: **<inject key="Acr LoginServer" />**
+   - USERNAME: **<inject key="Acr Username" />**
+   - PASSWORD: **<inject key="Acr Password" />**
+
+   `docker login [LOGINSERVER] -u [USERNAME] -p [PASSWORD]`
 
    ![This image demonstrates the credentials for Azure Container Registry.](./media/acr-credentials.png "ACR credentials")
 
