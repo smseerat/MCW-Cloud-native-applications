@@ -48,7 +48,9 @@ In this task, you will modify the CPU requirements for the web service so that i
  
 In this task, you will edit the web application source code to add Application Insights and update the Docker image used by the deployment. Then you will perform a rolling update to demonstrate how to deploy a code change.
 
-1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource:
+>**Note**: Please perform this task using a new Cloudshell which should be not connected to  build agent VM.
+
+1. Execute this command in Azure Cloud Shell to retrieve the instrumentation key for the `content-web` Application Insights resource. Replace the `SUFFIX` placeholder with **<inject key="DeploymentID" />**.
 
    ```bash
    az resource show -g fabmedical-[SUFFIX] -n content-web --resource-type "Microsoft.Insights/components" --query properties.InstrumentationKey -o tsv
@@ -56,9 +58,9 @@ In this task, you will edit the web application source code to add Application I
 
    Copy this value. You will use it later.
 
-   > **Note**: If you have a blank result check that the command you issued refers to the right resource.
+   >**Note**: If you have a blank result check that the command you issued refers to the right resource.
 
-2. From an Azure Cloud Shell terminal that does **NOT** have an active SSH session to the build agent VM update your Fabmedical repository files by pulling the latest changes from the git repository and then updating deployment YAML files.
+2. From an Azure Cloud Shell terminal, Update your Fabmedical repository files by pulling the latest changes from the git repository and then updating deployment YAML files.
 
     ```bash
     cd ~/Fabmedical/content-web
@@ -77,7 +79,7 @@ In this task, you will edit the web application source code to add Application I
 
     > **Note**: Make sure to include the `--save` argument. Without this, a reference to the `applicationinsights` npm package will not get added to the `package.json` file of the `content-web` nodejs project, resulting in a deployment failure in later steps.
 
-4. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and and add the following lines immediately after `express` is instantiated on line 6:
+4. Edit the `app.js` file using  the command ```code app.js ``` Visual Studio Code remote and and add the following lines immediately after `express` is instantiated on line 6. Replace `YOUR APPINSIGHTS KEY` placeholder with the app insights key which you had copied earlier in the task.
 
     ```javascript
     const appInsights = require("applicationinsights");
