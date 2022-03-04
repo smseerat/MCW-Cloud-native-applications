@@ -207,7 +207,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    fi
 
    if [[ -z "${MCW_GITHUB_URL}" ]]; then
-       MCW_GITHUB_URL=https://$MCW_GITHUB_USERNAME:$MCW_GITHUB_TOKEN@github.com/$MCW_GITHUB_USERNAME/Fabmedical.git
+       MCW_GITHUB_URL=https://$MCW_GITHUB_TOKEN@github.com/$MCW_GITHUB_USERNAME/Fabmedical.git
    fi
 
    git config --global user.email "$MCW_GITHUB_EMAIL"
