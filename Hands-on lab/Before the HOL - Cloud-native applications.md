@@ -137,7 +137,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Set the following environment variables in an Azure Cloud Shell terminal. Make sure you replace all the values properly.
 
-   > **NOTE**: You can copy the **DeploymentID** from the **Environment Details** page of the environment.
+   > **NOTE**: You can replace the **DeploymentID** with **<inject key="DeploymentID" />**.
 
    ```bash
    export MCW_SUFFIX=<PASTE DeploymentID>                   # Needs to be a unique letter string
