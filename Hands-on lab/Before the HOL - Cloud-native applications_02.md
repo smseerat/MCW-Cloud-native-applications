@@ -37,6 +37,8 @@ You should follow all of the steps provided in this section _before_ taking part
 1. Change the default Browser to Edge using the default apps setting option in Windows.
 ![In this screenshot of the selection of Edge browser is set as the default browser using the "Default apps' item in settings .](media/edge-default-app.png "Make Edge the default browser using 'Default Apps' ")  
 1. Next, update the region + language settings of the Lab VM to region that is appropriate to your setting.
+![Change the Region in settings to match current.](media/RegionChange.png "Change Region ")  
+![Change the Language in settings to match current.](media/LanguageChange.png "Change Region ")  
 
 ## Task 2: Connect securely to the build agent
 
@@ -109,13 +111,51 @@ In this task, you will use `git` to copy the lab content to your VM and copy the
 
  > **Note** : You have to use SSH session so don't close it as it will be needed subsequently in Tasks and Exercises.
 
-## Task 3: Create a GitHub repository
+## Task 4: Create GitHub Personal Access Token
+
+1. In a new browser tab open ```https://www.github.com``` and Log in with your personal GitHub account.
+
+    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+
+2. Create a Personal Access Token as described below:
+
+   - In the upper-right corner of your GitHub page, click your profile photo, then click **Settings (1)** and in the left sidebar click **Developer settings (2)**.
+
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat.png)
+
+   - Then in the left sidebar, click **Personal access tokens (3)** and select **Generate new token (4)** button on the right. Provide the GitHub password if prompted. 
+   
+     ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/Settings_pat1.png)
+
+3. Select the scopes or permissions you would like to grant this token
+
+    - **Note**: Provide the following text in the note field, **{DeploymentId}-token**. 
+    
+    - **Select scopes**:
+
+        * repo - Full control of private repositories
+        * workflow - Update GitHub Action workflows
+        * write:packages - Upload packages to GitHub Package Registry
+        * delete:packages - Delete packages from GitHub Package Registry
+        * read:org - Read org and team membership, read org projects
+  
+      ![Permissions GH](media/image10.png)
+
+    - Click **Generate token**.
+
+      ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/gentoken.png)
+
+4. Click on the Copy icon to copy the token to your clipboard and save it on your notepad. For security reasons, after you navigate off the page, you will not be able to see the token again. **DO NOT COMMIT THIS TO YOUR REPO!**
+
+   ![Permissions GH](https://raw.githubusercontent.com/CloudLabsAI-Azure/AIW-DevOps/main/Assets/copytoken.png)
+   
+   > **Note**: Use Personal Access Token as Password when ever you asked to provide Password while pushing any Git changes in the Lab. 
+
+### Task 5: Create a GitHub repository
 
 FabMedical has provided starter files for you. They have taken a copy of the websites for their customer Contoso Neuro and refactored it from a single node.js site into a website with a content API that serves up the speakers and sessions. This refactored code is a starting point to validate the containerization of their websites. Use this to help them complete a POC that validates the development workflow for running the website and API as Docker containers and managing them within the Azure Kubernetes Service environment.
 
-1. In a new browser tab and open ```https://www.github.com``` and Log in with your personal GitHub account.
-
-    > **Note** : You have to use your own GitHub account. If you don't have a GitHub account then navigate to the following link ```https://github.com/join ``` and create one.
+1. Ensure you are logged in to your GitHub account.
 
 1. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
@@ -137,23 +177,25 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Navigate to the **FabMedical** source code folder and list the contents.
 
-    ```bash
+      ```bash
     cd ~/Fabmedical
+    ll
     ```
 
-1. Set your username and email, which git uses for commits, run below commands
+1. You'll see the listing includes three folders, one for the web site, another for the content API and one to initialize API data:
+
+   ![](media/cna4.png "Azure Command Shell Connect to Host")
+
+1. Set your username and email, which git uses for commits, run below commands:
   
-    ```bash
-    git config --global user.email "you@example.com"
     ```
-
-    ```bash
+    git config --global user.email "you@example.com"
     git config --global user.name "Your Name"
     ```
 
-1. Using the Shell, initialize a new git repository:
+1. Using the Cloud Shell, initialize a new git repository:
 
-    ```bash
+    ```
     git init
     git add .
     git commit -m "Initial Commit"
@@ -162,13 +204,13 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Set the remote origin to the GitHub URL by issuing the following command, replace ```<your_github_username>``` with your Github username.
 
-    ```bash
+    ```
     git remote add origin https://github.com/<your_github_username>/Fabmedical    
     ```
 
 1. Configure git CLI to cache your credentials, so that you don't have to keep re-typing them.
 
-    ```bash
+    ```
     git config --global --unset credential.helper
     git config --global credential.helper store
     
@@ -176,14 +218,12 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. Push to the master branch by issuing the following command:
 
-    ```bash
-    git push -u origin master
+    ```
+    git branch -m master main
+    git push -u origin main
+    
     ```
 
-    > **Note**: If you have multi-factor authentication, you will need to create a personal access token when using this shell session. Reference the following link for help with setting up a GitHub personal access token to use for authenticating `git` with your GitHub account: ```https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token```.
-
-    > **Note**: Once you have your personal access token, retry the above command, use your token as the password.
+    > **Note**: Use your Personal Access Token as Password to Push the Git changes.
 
 1. Refresh your GitHub repository, you should now see the code published.
-
-    > **Note**: You will need this SSH session in the next exercise so **Do Not** close it.

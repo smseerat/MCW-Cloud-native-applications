@@ -549,53 +549,82 @@ image and pushes it to your ACR instance automatically.
 
 1. In the **New secret** form, enter the name `ACR_USERNAME` and for the value, paste in the Azure Container Registry **Username** that was copied previously. Select **Add secret**.
 
-    ![New secret screen with values are entered.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/2020-08-24-21-48-54.png?raw=true "New secret screen")
+    ![New secret screen with values are entered.](media/2020-08-24-21-48-54.png "New secret screen")
 
 1. Add another Secret, by entering the name `ACR_PASSWORD` and for the value, paste in the Azure Container Registry **Password** that was copied previously.
 
     ![Secrets screen with both the ACR_USERNAME and ACR_PASSWORD secrets created.](media/2020-08-24-21-51-24.png "Secrets screen")
+    
+1. Go to Environment details click on **Service principle Credentials** copy **Application Id (Client Id)** , **client Secret** , **subscription Id** and **tenant Id**
 
-1. In your SSH session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
+   ![](media/cna8.png)
+
+   - Replace the values that you copied in below Json
+   
+   ```json
+   {
+      "clientId": "<client id>",
+      "clientSecret": "<client secret>",
+      "subscriptionId": "<subscription id>",
+      "tenantId": "<tenant id>",
+      "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+      "resourceManagerEndpointUrl": "https://management.azure.com/",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+      "galleryEndpointUrl": "https://gallery.azure.com/",
+      "managementEndpointUrl": "https://management.core.windows.net/"
+   }
+   ```
+   
+   - Copy the complete JSON output to your clipboard.
+
+1. In your repository settings, navigate to **Secrets** and create a new secret called `AZURE_CREDENTIALS`. Paste the copied value from your clipboard to the value of the secret and save it.
+
+   ![](media/cna6.png)
+
+1. In your Azure Command Shell session connected to the build agent VM, navigate to the `~/Fabmedical` directory:
 
    ```bash
    cd ~/Fabmedical
-
    ```
 
 1. Before the GitHub Actions workflows can be setup, the `.github/workflows` directory needs to be created again and download workflow yml files. Do this by running the following commands:
 
-    ```bash
+    ```
     rm -rf ~/Fabmedical/.github/workflows/
-    mkdir ~/Fabmedical/.github/workflows/ -p
+    mkdir ~/Fabmedical/.github/workflows/
     cd ~/Fabmedical/.github/workflows/
     wget http://bit.ly/hol-content-web -O content-web.yml
     wget http://bit.ly/hol-content-api -O content-api.yml
-    
     ```
 
-1. Next run the sed command to update the workflow YAML file with the correct DeploymentID. replace `<SUFFIX>` above with your DeploymentID value given on Environment details page
+1. Next create the workflow YAML file.
+   
+   ```dotnetcli
+    vi content-web.yml
+   ```
 
-    ```bash
-    sed -i's/\[DeploymentID\]/<SUFFIX>/g' content-web.yml
-    cat content-web.yml
-    ```
+   - Replace `[DeploymentID]` with your DeploymentID value given on Environment details page.
+   
 
-    Text to be replaced
+   ```
+   # Environment variables are defined so that they can be used throughout the job definitions.
+   env:
+     imageRepository: 'content-web'
+     resourceGroupName: 'fabmedical-[DeploymentID]'
+     clusterName: 'fabmedical-[DeploymentID]'
+     containerRegistryName: 'acr[DeploymentID]'
+     containerRegistry: 'acr[DeploymentID].azurecr.io'
+     dockerfilePath: './content-web'
+     tag: '${{ github.run_id  }}'
+   ```
+ 
+   ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/cna9.png "content-web workflow")
 
-      ```view
-      # Environment variables are defined so that they can be used throughout the job definitions.
-      env:
-      imageRepository: 'content-web'
-      resourceGroupName: 'fabmedical-[DeploymentID]'
-      containerRegistryName: 'acr[DeploymentID]'
-      containerRegistry: 'acr[DeploymentID].azurecr.io'
-      dockerfilePath: './content-web'
-      tag: '${{ github.run_id  }}'
-      ```
 
-    The contents of the file should  look like the illustration highlighted below
+1. Save the file and exit VI by pressing `<Esc>` then `:wq`.
 
-    ![The content-web Action is shown with the Actions, content-web, and Run workflow links highlighted.](media/update-web-yml.png "content-web workflow")
+   **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
 1. Save the pipeline YAML, then commit and push it to the Git repository:
 
@@ -603,7 +632,6 @@ image and pushes it to your ACR instance automatically.
     git add .
     git commit -m "Added workflow YAML"
     git push
-    
     ```
 
 1. In GitHub, return to the **Fabmedical** repository screen, and select the **Actions** tab.
@@ -620,25 +648,23 @@ image and pushes it to your ACR instance automatically.
 
     ![Build and Push Docker Image job.](media/2020-08-25-15-42-11.png "Build and Push Docker Image job")
 
-1. Next, setup the `content-api` workflow. Update the `resourceGroupName` using the `sed` command below and replacing the `<SUFFIX>` with your ```DeploymentID``` value from ```Environment Details``` tab.
+1. Next, setup the `content-api` workflow. 
 
-    ```bash
+    ```
     cd ~/Fabmedical/.github/workflows
-    sed -i 's/\[DeploymentID\]/<SUFFIX>/g' content-api.yml
-    cat content-api.yml
+    vi content-api.yml
     
     ```
 
-    The updated file fragment should look like as show below
-    ![The screenshot shows the content-api.yml with the environment variables highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/2020-08-25-15-59-56-1.png?raw=true "content-api.yml environment variables highlighted")
+1. Edit the `resourceGroupName` by replacing the `[DeploymentID]` with your ```DeploymentID``` value.
+
+    ![The screenshot shows the content-api.yml with the environment variables highlighted.](media/2020-08-25-15-59-56-1.png "content-api.yml environment variables highlighted")
 
 1. Save the file, then commit and push it to the Git repository:
-
     ```bash
     git add .
     git commit -m "Updated workflow YAML"
     git push
     
     ```
-
-1. Next, navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
+1. Now navigate to the repositories in GitHub, select Actions, and then manually run the content-api workflow.
