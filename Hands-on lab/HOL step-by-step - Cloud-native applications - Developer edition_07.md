@@ -85,8 +85,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
         app: api
       sessionAffinity: None
       type: ClusterIP
-    ```
-
+     ```
 
 1. Before we deploy the `api` pod, we need to make sure that the database connection to the new Cosmodb database is stored as a connection string somewhere to be used by it, without which pod would fail to start because the `cosmosdb` connection and its location is not found.
 
