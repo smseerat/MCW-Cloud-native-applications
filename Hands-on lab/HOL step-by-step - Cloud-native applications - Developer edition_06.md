@@ -4,47 +4,7 @@
 
 At this point, you have the web and API applications running in Docker instance (VM - Build Agent). The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
 
-### Task 1: Provision Azure Database Migration Service
-
-In this task, you will deploy an instance of the Azure Database Migration Service that will be used to migrate the data from MongoDB to Cosmos DB.
-
-1. From the Azure Portal, select **+ Create a resource**.
-
-   ![](media/createresource.png)
-
-1. Search the marketplace for **Azure Database Migration Service** and select it.
-
-   ![](media/searchdms.png)
-
-1. Select **Create**.
-
-   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media/create-dms.png "Azure Database Migration Service")
-    
-1. Select **Continue to use Azure Database Migration Service to migrate SQL Server, MySQL, PostgreSQL or MongoDB database(s) to Azure SQL MI, Azure SQL DB, Azure DB for MySQL, Azure DB for PostgreSQL and Azure Cosmos DB** and click on **Select**.
-
-   ![The screenshot shows the Azure Database Migration Service in the Azure Marketplace.](media_prod/cna16.png)
-   
-1. On the **Basics** tab of the **Create Migration Service** pane, enter the following values:
-
-    - Resource group: Select **fabmedical-<inject key="DeploymentID" enableCopy="false" />** resource group.
-    - Migration service name:  Enter the name as **fabmedical<inject key="DeploymentID" enableCopy="false" />**. You can get the DeploymentId from environment details tab
-    - Location: **Choose the same Azure Region used for the Resource Group**.
-
-    ![The screenshot shows the Create Migration Service Basics tab with all values entered.](media/dms-basic.png "Create Migration Basics Tab")
-
-1. Select **Next: Networking >>**.
-
-1. On the **Networking** tab, select the **Virtual Network** within the **fabmedical-<inject key="DeploymentID" enableCopy="false" />** resource group.
-
-    ![The screenshot shows the Create Migration Service Networking tab with Virtual Network selected.](media/dms-networking.png "Create Migration Service Networking tab")
-
-1. Select **Review + create**.
-
-1. Select **Create** to create the Azure Database Migration Service instance.
-
-The service may take 10 - 15 minutes to provision.
-
-### Task 2: Migrate data to Azure Cosmos DB
+### Task 1: Migrate data to Azure Cosmos DB
 
 In this task, you will create a **Migration project** within Azure Database Migration Service, and then migrate the data from MongoDB to Azure Cosmos DB.
 
