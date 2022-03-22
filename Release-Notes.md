@@ -1,4 +1,11 @@
 # Release Notes
+
+### 21 March 2022
+
+  - Minor updates in the Lab Guide.
+  - In Exercise 1, the task for creating **Azure Database Migration Service** has been removed. Attendees will not be performing the task as the resource is being created now, it will be pre-deployed.
+
+-----------------
 ### 19 January 2022
 * Major update in the Lab Guide.
 * Before the hands-on lab exercise has been updated majorly. Few tasks have been removed and new tasks have been added.
