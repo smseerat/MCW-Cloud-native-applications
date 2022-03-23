@@ -47,6 +47,7 @@ You should follow all the steps provided in this section _before_ taking part in
 
    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
+   >**Note**: If the Azure CloudShell gets stuck. Please try restarting the CloudShell and continue with the lab.
 
 ### Task 2: Download Starter Files
 
