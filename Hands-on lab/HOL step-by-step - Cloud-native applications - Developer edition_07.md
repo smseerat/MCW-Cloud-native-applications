@@ -46,6 +46,8 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
    
+   >**Note**: If you notice a permission warning related to Kubernetes dynamic resource group. Please ignore and continue with the lab.
+   
 2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
 
    ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
