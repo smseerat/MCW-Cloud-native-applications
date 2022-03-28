@@ -40,7 +40,7 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
     ![Select source tab with values selected for the MongoDB server.](media/dmsselectsource.png "MongoDB to Azure Database for CosmosDB - Select source")
     
-    > **Note:** If you face any issue while connecting to the source DB. Please run the following commands in **Cloudshell connected to build agent VM**. You can use the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
+    > **Note:** If you face any issue while connecting to the source DB. Please run the following commands in **CloudShell connected to build agent VM**. You can use the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
     ```bash
     sudo apt install mongodb-server
