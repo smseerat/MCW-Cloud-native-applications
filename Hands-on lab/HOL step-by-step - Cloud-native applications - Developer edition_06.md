@@ -39,7 +39,16 @@ In this task, you will create a **Migration project** within Azure Database Migr
     > **Note:** Leave the **User Name** and **Password** blank as the MongoDB instance on the Build Agent VM for this lab does not have authentication turned on. The Azure Database Migration Service is connected to the same VNet as the Build Agent VM, so it's able to communicate within the VNet directly to the VM without exposing the MongoDB service to the Internet. In production scenarios, you should always have authentication enabled on MongoDB.
 
     ![Select source tab with values selected for the MongoDB server.](media/dmsselectsource.png "MongoDB to Azure Database for CosmosDB - Select source")
+    
+    > **Note:** If you face any issue while connecting to the source DB. Please run the following commands in **Cloudshell connected to build agent VM**. You can use the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
+    ```bash
+    sudo apt install mongodb-server
+    cd /etc
+    sudo sed -i 's/bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongodb.conf
+    sudo sed -i 's/#port = 27017/port = 27017/g' /etc/mongodb.conf
+    ```
+    
 6. Select **Next: Select target >>**.
 
 7. On the **Select target** pane, select the following values:
