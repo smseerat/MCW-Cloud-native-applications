@@ -16,14 +16,6 @@ You should follow all the steps provided in this section _before_ taking part in
  
    ![](media_prod/azureportal.png "Cloud Shell Bash Window")
    
-1. Click on **Start without your data** on Edge browser.
-
-   ![](media_prod/get_started.png)
-   
-1. Now, click on **Confirm and start browsing** button .
-
-   ![](media_prod/confirm.png)
-    
 1. On **Sign in to Microsoft Azure** tab, **Sign in** with following Azure credentials.
  
      * Azure Usename/Email: <inject key="AzureAdUserEmail"></inject> 
