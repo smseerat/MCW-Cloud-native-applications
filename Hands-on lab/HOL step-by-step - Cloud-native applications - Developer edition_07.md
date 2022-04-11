@@ -48,11 +48,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
    
    >**Note**: If you notice a permission warning related to Kubernetes dynamic resource group. Please ignore and continue with the lab.
    
-2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Add (2)** and select **Add with YAML (3)**.
+2. Define a new Namespace for our API deployment. Select the **Namespaces (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Namespaces tab click **+ Create (2)** and select **Create with YAML (3)**.
 
-   ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/Defaultapps.png "Add a Namespace")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/new-namesp.png "Add a Namespace")
 
-3. In the **Add with YAML** screen, paste the following YAML and choose **Add**.
+3. In the **Create with YAML** screen, paste the following YAML and choose **Create**.
 
     ```yaml
     apiVersion: v1
@@ -63,11 +63,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
       name: ingress-demo
     ```
 
-4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Add (2)** and select **Add with YAML (3)**.
+4. Define a Service for our API so that the application is accessible within the cluster. Select the **Services and ingresses (1)** blade of the fabmedical-<inject key="DeploymentID" enableCopy="false" /> AKS resource detail page of the Azure Portal. On the Services tab, click on **+ Create (2)** and select **Create with YAML (3)**.
 
-   ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/ServiceandIngress.png "Add a Service")
+   ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/new-namesp1.png "Add a Service")
 
-5. In the **Add with YAML** screen, paste following YAML and choose **Add**.
+5. In the **Create with YAML** screen, paste following YAML and choose **Create**.
 
     ```yaml
     apiVersion: v1
@@ -93,11 +93,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![Select workloads under Kubernetes resources.](media/2021-03-25-17-04-35.png "Select workloads under Kubernetes resources")
 
-7. From the Workloads view, with **Deployments** selected (the default) then select **+ Add**.
+7. From the Workloads view, with **Deployments** selected (the default) then select **+ Create** with **Create with YAML**.
 
-   ![Selecting + Add to create a deployment.](media/2021-03-25-17-05-05.png "Selecing + Add to create a deployment")
+   ![Selecting + Add to create a deployment.](media/worklod-new.png "Selecing + Add to create a deployment")
 
-8. In the **Add with YAML** screen that loads paste the following YAML and Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
+8. In the **Create with YAML** screen that loads paste the following YAML and Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
     ```yaml
     apiVersion: apps/v1
@@ -160,7 +160,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
           terminationGracePeriodSeconds: 30
     ```
 
-9. Select **Add** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
+9. Select **Create** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
 
    ![Service is showing as unhealthy](media/2021-03-25-17-05-36.png "Service is showing as unhealthy")
 
@@ -198,11 +198,11 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media/hol-2019-10-18_07-12-13.png "Show encoded secret")
 
-16. Return to the AKS blade in the Azure Portal and select **Configuration (1)** under the **Kubernetes resources** section. Select **Secrets (2)** and choose **+ Add (3)**.
+16. Return to the AKS blade in the Azure Portal and select **Configuration (1)** under the **Kubernetes resources** section. Select **Secrets (2)** and choose **+ Create (3)** with **Create with YAML**.
 
-    ![](media_prod/secrets-kub.png)
+    ![](media_prod/new-config1.png)
 
-17. In the **Add with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
+17. In the **Create with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Create**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
     ```yaml
     apiVersion: v1
