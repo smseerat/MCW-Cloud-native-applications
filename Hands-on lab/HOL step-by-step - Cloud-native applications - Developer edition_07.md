@@ -200,7 +200,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 16. Return to the AKS blade in the Azure Portal and select **Configuration (1)** under the **Kubernetes resources** section. Select **Secrets (2)** and choose **+ Create (3)** with **Create with YAML**.
 
-    ![](media_prod/new-config1.png)
+    ![](media/new-config1.png)
 
 17. In the **Create with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Create**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
