@@ -32,10 +32,18 @@ You should follow all the steps provided in this section _before_ taking part in
 
    ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
 
-1. After launching the Azure Cloud Shell, select the **Bash** option. Now on You have no storage mounted dialog box click on **Show advanced settings**. Select Create new under Storage account and provide values as below: 
+1. After launching the Azure Cloud Shell, select the **Bash** option.
+   
+   ![Permissions GH](media_prod/cna20.png)
+   
+1. Now in You have no storage mounted dialog box, Click on **Show advanced settings**. 
+
+   ![Permissions GH](media_prod/cna21.png)
+   
+5. In You have no storage mounted dialog box, Select Create new under Storage account and provide values as below: 
   
-      - **Storage account** : **storage<inject key="DeploymentID" enableCopy="false"/>**
-      - **File Share** : **blob**
+   - **Storage account** : **storage<inject key="DeploymentID" enableCopy="false"/>**
+   - **File Share** : **blob**
 
    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
 
