@@ -10,9 +10,13 @@ Kubernetes services can discover the ports assigned to each pod, allowing you to
 
 In this task, you will update the web service so that it supports dynamic discovery through an Azure load balancer.
 
-1. From AKS **Kubernetes resources** menu, select **Deployments** under **Workloads**. From the list select the **web** deployment.
+1. From AKS **Kubernetes resources** menu, select **Deployments** (2) under **Workloads** (1). From the list select the **web** (3) deployment.
 
-2. Select **YAML**, then select the **JSON** tab.
+   ![](media_prod/cna39.png "Remove web container hostPort entry")
+
+2. Select **YAML** (1), then select the **JSON** tab (2).
+
+   ![](media_prod/cna40.png "Remove web container hostPort entry")
 
 3. First locate the replicas node and update the required count to `4`.
 
