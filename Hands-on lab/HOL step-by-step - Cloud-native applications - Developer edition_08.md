@@ -111,7 +111,7 @@ In this task, you will restart containers and validate that the restart does not
 
 3. After a few moments you will find that the API deployment is now running 4 replicas successfully.
 
-   ![Viewing replica set in the Azure Portal.](media_prod/c32.png "Viewing replica set in the Azure Portal")
+   ![Viewing replica set in the Azure Portal.](media_prod/cna32.png "Viewing replica set in the Azure Portal")
 
 4. Return to the browser tab with the web application stats page loaded. Refresh the page over and over. You will not see any errors, but you will see the api host name change between the four api pod instances periodically. The task id and pid might also change between the four api pod instances.
 
