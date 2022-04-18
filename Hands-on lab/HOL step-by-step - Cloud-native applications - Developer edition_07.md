@@ -200,7 +200,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 16. Return to the AKS blade in the Azure Portal and select **Configuration (1)** under the **Kubernetes resources** section. Select **Secrets (2)** and choose **+ Create (3)** with **Create with YAML**.
 
-    ![](media/new-config1.png)
+    ![](media_prod/cna24.png)
 
 17. In the **Create with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Create**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
@@ -215,7 +215,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
       db: <base64 encoded value>
     ```
 
-    ![This is a screenshot of the Azure Portal for AKS howing the YAML file for creating a deployment.](media/2021-03-25-17-08-06.png "Upload YAML data")
+    ![This is a screenshot of the Azure Portal for AKS howing the YAML file for creating a deployment.](media_prod/cna25.png "Upload YAML data")
 
 18. Sort the Secrets list by name and you should now see your new secret displayed.
 
@@ -223,7 +223,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 19. View the details for the **cosmosdb** secret by selected it in the list.
 
-    ![This is a screenshot of the Azure Portal for AKS showing the value of a secret.](media/2021-03-25-17-08-54.png "View cosmosdb secret")
+    ![This is a screenshot of the Azure Portal for AKS showing the value of a secret.](media_prod/cna26.png "View cosmosdb secret")
 
 20. Create a new deployment manifest, `api.deployment.yml` and add the YAML content below to the file. Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
