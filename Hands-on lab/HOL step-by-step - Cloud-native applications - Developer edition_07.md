@@ -95,7 +95,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 7. From the Workloads view, with **Deployments** selected (the default) then select **+ Create** with **Create with YAML**.
 
-   ![Selecting + Add to create a deployment.](media/worklod-new.png "Selecing + Add to create a deployment")
+   ![Selecting + Add to create a deployment.](media_prod/cna27.png "Selecing + Add to create a deployment")
 
 8. In the **Create with YAML** screen that loads paste the following YAML and Update the `[LOGINSERVER]` placeholder with **fabmedical<inject key="DeploymentID" enableCopy="false" />** to match the name of your ACR Login Server.
 
