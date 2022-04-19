@@ -197,13 +197,15 @@ In this task, you will edit the web application source code to add Application I
     git commit -m "Added Application Insights"
     git push
     ```
-14. Visit the `content-web` and `content-api` Actions for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
+14. From **Actions** (1) tab in Github, Visit the `content-web` and `content-api` Actions (2) for your GitHub Fabmedical repository and observe the images being built and deployed into the Kubernetes cluster.
+
+    ![On the Stats page, the hostName is highlighted.](media_prod/cna41.png "On Stats page hostName is displayed")
 
 15. While the pipelines runs, return the Azure Portal in the browser.
 
-16. From the navigation menu, select **Replica Sets** under **Workloads**. From this view, you will see a new replica set for the web, which may still be in the process of deploying (as shown below) or already fully deployed.
+16. From the navigation menu, select **Replica Sets** (2) under **Workloads** (1). From this view, you will see a new replica set for the **web** (3), which may still be in the process of deploying (as shown below) or already fully deployed.
 
-    ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media/2021-03-26-18-25-30.png "Pod deployment is in progress")
+    ![At the top of the list, a new web replica set is listed as a pending deployment in the Replica Set box.](media_prod/cna43.png "Pod deployment is in progress")
 
 17. While the deployment is in progress, you can navigate to the web application and visit the stats page at `/stats`. Refresh the page as the rolling update executes. Observe that the service is running normally, and tasks continue to be load balanced.
 
