@@ -112,7 +112,7 @@ In this task, you will edit the web application source code to add Application I
         branches:
         - main
         paths:
-        - 'content-api/**'
+        - 'content-web/**'
         - web.deployment.yml  # These two file
         - web.service.yml     # entries here
     ```
