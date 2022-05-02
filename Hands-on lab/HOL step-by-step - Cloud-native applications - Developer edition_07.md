@@ -52,7 +52,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![This is a screenshot of the Azure Portal for AKS showing adding a Namespace.](media_prod/cna22.png "Add a Namespace")
 
-3. In the **Create with YAML** screen, paste the following YAML and choose **Create**.
+3. In the **Create with YAML** screen, paste the following YAML and click on **Add**.
 
     ```yaml
     apiVersion: v1
@@ -67,7 +67,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
    ![This is a screenshot of the Azure Portal for AKS showing adding a Service.](media_prod/cna23.png "Add a Service")
 
-5. In the **Create with YAML** screen, paste following YAML and choose **Create**.
+5. In the **Create with YAML** screen, paste following YAML and click on **Add**.
 
     ```yaml
     apiVersion: v1
@@ -160,7 +160,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
           terminationGracePeriodSeconds: 30
     ```
 
-9. Select **Create** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
+9. Click on **Add** to initiate the deployment. This can take a few minutes after which you will see the deployment listed.
 
    ![Service is showing as unhealthy](media/2021-03-25-17-05-36.png "Service is showing as unhealthy")
 
@@ -202,7 +202,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
     ![](media_prod/cna24.png)
 
-17. In the **Create with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Create**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
+17. In the **Create with YAML** screen, paste following YAML and replace the placeholder with the encoded connection string from your clipboard and choose **Add**. Note that YAML is position sensitive so you must ensure indentation is correct when typing or pasting.
 
     ```yaml
     apiVersion: v1
@@ -449,7 +449,7 @@ In this task, deploy the web service using `kubectl`.
 
 In this task, you will access and review the various logs and dashboards made available by Azure Monitor for Containers.
 
-1. From the Azure Portal, select the resource group you created named `fabmedical-SUFFIX`, and then select your `Kubernetes Service` Azure resource.
+1. From the Azure Portal, select the resource group you created named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your `Kubernetes Service` Azure resource.
 
    ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
 
