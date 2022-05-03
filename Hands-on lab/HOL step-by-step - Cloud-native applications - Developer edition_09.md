@@ -288,7 +288,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
    az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
    ```
 
-   ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/Ex4-Task5.6.png "Update the IP and SUFFIX values")
+   ![A screenshot of cloud shell editor showing the updated IP and SUFFIX values.](media/cloud-native-update-ip.png "Update the IP and SUFFIX values")
 
 6. Save changes and close the editor.
 
