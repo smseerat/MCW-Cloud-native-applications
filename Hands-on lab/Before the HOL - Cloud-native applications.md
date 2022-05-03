@@ -45,7 +45,7 @@ You should follow all the steps provided in this section _before_ taking part in
    - **Storage account** : **storage<inject key="DeploymentID" enableCopy="false"/>**
    - **File Share** : **blob**
 
-   ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image36.png?raw=true "Cloud Shell Bash Window")
+    ![This is a screenshot of the cloud shell opened in a browser window. Bash was selected](media_prod/b4-image36-new.png)
 
    >**Note**: If the Azure CloudShell gets stuck. Please try restarting the CloudShell and continue with the lab.
 
@@ -100,7 +100,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
         - `read:org` - Read org and team membership, read org projects
 
   
-      ![Permissions GH](media_prod/image10.png)
+       ![Permissions GH](media_prod/image10-new.png)
 
     - Leave other values as default and select **Generate token**.
 
@@ -168,7 +168,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
     ![Settings link, Secrets link, and New secret button are highlighted.](media/cna18.png "GitHub Repository secrets")
 
-1. In the **New secret** form, enter the name `AZURE_CREDENTIALS` and paste the copied value from your clipboard to the value of the secret and save it.
+1. In the **New secret** form, enter the name `AZURE_CREDENTIALS` and paste the copied value from your clipboard to the value of the secret and click on **Add secret**.
 
    ![Permissions GH](media_prod/git_secret.png)
 
