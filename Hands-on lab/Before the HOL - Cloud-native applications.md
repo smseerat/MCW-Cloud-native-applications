@@ -99,8 +99,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
         - `delete:packages` - Delete packages from GitHub Package Registry
         - `read:org` - Read org and team membership, read org projects
 
-  
-          ![Permissions GH](media_prod/image10-new.png)
+      ![Permissions GH](media_prod/image10-new.png)
 
     - Leave other values as default and select **Generate token**.
 
