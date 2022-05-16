@@ -298,7 +298,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
    bash ./update-ip.sh
    ```
 
-8. Verify the IP update by visiting the URL in your browser.
+8. Verify the IP update by visiting the URL in your browser. Make sure to update these values `[SUFFIX]`: **<inject key="DeploymentID" />** and `[AZURE-REGION]`: **<inject key="Region" />** in the URL before browsing it.
 
     > **Note**: It is normal to receive a 404 message at this time.
 
