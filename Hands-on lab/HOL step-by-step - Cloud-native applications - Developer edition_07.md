@@ -44,7 +44,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 1. From the Azure Portal, select the resource group named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your Kubernetes Service Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media_prod/ex3tsk7-step1.png "Select fabmedical resource group")
    
    >**Note**: If you notice a permission warning related to Kubernetes dynamic resource group. Please ignore and continue with the lab.
    
@@ -186,7 +186,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
     mongodb://<USERNAME>:<PASSWORD>@fabmedical-<SUFFIX>.mongo.cosmos.azure.com:10255/contentdb?ssl=true&replicaSet=globaldb
     ```
     
-    ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/local/connnectionstring.png?raw=true "Show encoded secret")
+    ![This is a screenshot of the Azure cloud shell window showing the command to create the base64 encoded secret.  The output to copy is highlighted.](media_prod/connnectionstring.png "Show encoded secret")
 
 15. You will setup a Kubernetes secret to store the connection string and configure the `content-api` application to access the secret. First, you must base64 encode the secret value. Open your Azure Cloud Shell window and use the following command to encode the connection string and then, copy the output.
 
@@ -451,7 +451,7 @@ In this task, you will access and review the various logs and dashboards made av
 
 1. From the Azure Portal, select the resource group you created named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your `Kubernetes Service` Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media_prod/ex3tsk7-step1.png "Select fabmedical resource group")
 
 2. From the Monitoring blade, select **Insights**.
 
