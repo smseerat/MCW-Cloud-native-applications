@@ -30,7 +30,7 @@ You should follow all the steps provided in this section _before_ taking part in
 
 1. In the **Azure portal**, open the **Azure Cloud Shell** by clicking on the cloud shell icon in the top menu bar. Alternatively, you can open cloud shell by navigating to ```https://shell.azure.com```.
 
-   ![The cloud shell icon is highlighted on the menu bar.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/b4-image35.png?raw=true "Cloud Shell")
+   ![The cloud shell icon is highlighted on the menu bar.](media_prod/cloudshell.png)
 
 1. After launching the Azure Cloud Shell, select the **Bash** option.
    
@@ -100,7 +100,7 @@ In this task, you use `git` to copy the lab content to your cloud shell so that 
         - `read:org` - Read org and team membership, read org projects
 
   
-       ![Permissions GH](media_prod/image10-new.png)
+          ![Permissions GH](media_prod/image10-new.png)
 
     - Leave other values as default and select **Generate token**.
 
