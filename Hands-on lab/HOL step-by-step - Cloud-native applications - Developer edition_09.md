@@ -367,7 +367,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     code certificate.yml
     ```
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name.
+    Use the following as the contents and update the `[SUFFIX]`: **<inject key="DeploymentID" />** and `[AZURE-REGION]`: **<inject key="Region" />** to match your ingress DNS name.
 
     ```yaml
     apiVersion: cert-manager.io/v1
@@ -412,7 +412,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     code content.ingress.yml
     ```
 
-    Use the following as the contents and update the `[SUFFIX]` and `[AZURE-REGION]` to match your ingress DNS name:
+    Use the following as the contents and update the **<inject key="DeploymentID" />** and `[AZURE-REGION]`: **<inject key="Region" />** to match your ingress DNS name:
 
     ```yaml
     apiVersion: networking.k8s.io/v1beta1
