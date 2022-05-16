@@ -44,7 +44,7 @@ In this task, you will deploy the API application to the Azure Kubernetes Servic
 
 1. From the Azure Portal, select the resource group named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your Kubernetes Service Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media_prod/ex3tsk7-step1.png "Select fabmedical resource group")
    
    >**Note**: If you notice a permission warning related to Kubernetes dynamic resource group. Please ignore and continue with the lab.
    
@@ -451,7 +451,7 @@ In this task, you will access and review the various logs and dashboards made av
 
 1. From the Azure Portal, select the resource group you created named **fabmedical-<inject key="DeploymentID" enableCopy="false" />**, and then select your `Kubernetes Service` Azure resource.
 
-   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](https://raw.githubusercontent.com/CloudLabs-MCW/MCW-Cloud-native-applications/fix/Hands-on%20lab/local/ex3tsk7-step1.png "Select fabmedical resource group")
+   ![In this screenshot, the resource group was previously selected and the AKS cluster is selected.](media_prod/ex3tsk7-step1.png "Select fabmedical resource group")
 
 2. From the Monitoring blade, select **Insights**.
 
