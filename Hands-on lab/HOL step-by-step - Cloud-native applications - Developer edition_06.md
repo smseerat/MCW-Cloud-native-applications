@@ -81,11 +81,11 @@ In this task, you will create a **Migration project** within Azure Database Migr
 
 13. On the **Migration summary** tab, enter `MigrateData` in the **Activity name** field, then select **Start migration** to initiate the migration of the MongoDB data to Azure Cosmos DB.
 
-    ![The screenshot shows the Migration summary is shown with MigrateData entered in the Activity name field.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/prod/Hands-on%20lab/media/dmsmigrationsummary.png?raw=true "Migration summary")
+     ![The screenshot shows the Migration summary is shown with MigrateData entered in the Activity name field.](media_prod/dmsmigrationsummary.png "Migration summary")
 
 14. The status for the migration activity will be shown. The migration will only take a few seconds to complete. Select **Refresh** to reload the status to ensure it shows a **Status** of **Complete**.
 
-    ![The screenshot shows the MigrateData activity showing the status has completed.](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/prod/Hands-on%20lab/media/dmsmigratecomplete.png?raw=true "MigrateData activity completed")
+    ![The screenshot shows the MigrateData activity showing the status has completed.](media_prod/dmsmigratecomplete.png "MigrateData activity completed")
 
 15. To verify the data was migrated, navigate to the **Cosmos DB Account** for the lab within the Azure Portal, then select the **Data Explorer**. You will see the `speakers` and `sessions` collections listed within the `contentdb` database, and you will be able to explore the documents within.
 
