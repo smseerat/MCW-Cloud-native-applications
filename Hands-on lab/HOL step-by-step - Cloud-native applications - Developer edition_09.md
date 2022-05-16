@@ -266,7 +266,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
    Paste the following as the contents. Be sure to replace the following placeholders in the script:
 
    - `[INGRESS PUBLIC IP]`: Replace this with the IP Address copied from step 5.
-   - `[ KUBERNETES_NODE_RG]`: Replace the `SUFFIX` with this value **<inject key="DeploymentID" />** and `REGION` with the region of your resource group value **<inject key="Region" />**.
+   - `[ KUBERNETES_NODE_RG]`: Replace the `SUFFIX` with this value **<inject key="DeploymentID" />** and `REGION` with the region of your resource group: **<inject key="Region" />**.
    - `[SUFFIX]`: Replace this with the same SUFFIX value **<inject key="DeploymentID" />** that you have used previously for this lab.
 
    ```bash
