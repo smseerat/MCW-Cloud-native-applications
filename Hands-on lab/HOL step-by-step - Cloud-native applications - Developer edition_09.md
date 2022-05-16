@@ -306,7 +306,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     http://fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com/
     ```
 
-    ![A screenshot of the fabmedical browser URL.](media/Ex4-Task5.9.png "fabmedical browser URL")
+   ![A screenshot of the fabmedical browser URL.](media/Ex4-Task5.9.png "fabmedical browser URL")
 
 9. Use helm to install `cert-manager`, a tool that can provision SSL certificates automatically from letsencrypt.org.
 
