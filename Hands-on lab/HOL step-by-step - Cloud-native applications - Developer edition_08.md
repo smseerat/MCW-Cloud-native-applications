@@ -147,7 +147,7 @@ In this task, you will setup Autoscale on Azure Cosmos DB.
 
 2. Select **Data Explorer**.
 
-    ![](media_prod/cna34.png "View replica details")
+    ![](media_prod/cna48.png "View replica details")
 
 3. Within **Data Explorer**, expand the `contentdb` (1) database, then expand the `sessions` (2) collection.
 
