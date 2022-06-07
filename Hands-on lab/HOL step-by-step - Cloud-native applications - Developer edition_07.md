@@ -486,3 +486,8 @@ In this task, you will access and review the various logs and dashboards made av
 9. For each log entry you can display more information by expanding the log entry to view the below details.
 
    ![The container log query results are displayed, one log entry is expanded in the results view with its details shown.](media/monitor_7.png "Expand the results")
+
+10. Click on the **Next** button present in the bottom-right corner of this lab guide.
+
+
+
