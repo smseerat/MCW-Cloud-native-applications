@@ -224,3 +224,8 @@ In this task, you will run a performance test script that will test the Autoscal
     ![The screenshot shows the Cosmos DB request charge graph showing recent activity from performance test](media/cosmos-request-charge.png "Recent CosmosDB activity graph")
     
     >**Note**: In case if you don't see data on the graph. Please set the time range to last 1 hour.
+
+13. Click on the **Next** button present in the bottom-right corner of this lab guide.
+
+
+
