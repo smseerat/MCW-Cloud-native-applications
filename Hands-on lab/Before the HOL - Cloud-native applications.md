@@ -359,5 +359,10 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    docker image push fabmedical[SUFFIX].azurecr.io/content-api:latest
    docker image push fabmedical[SUFFIX].azurecr.io/content-web:latest
    ```
+   
+   >**Note**: You should follow all steps provided _before_ performing the Hands-on lab.
 
-You should follow all steps provided _before_ performing the Hands-on lab.
+6. Click on the **Next** button present in the bottom-right corner of this lab guide.
+
+
+
