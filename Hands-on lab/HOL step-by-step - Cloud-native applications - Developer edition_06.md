@@ -2,7 +2,7 @@
 
 **Duration**: 40 minutes
 
-At this point, you have the web and API applications running in Docker instance (VM - Build Agent). The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
+At this point, you have created and pushed web and api image to container registry. The next, step is to migrate the MongoDB database data over to Azure Cosmos DB. This exercise will use the Azure Database Migration Service to migrate the data from the MongoDB database into Azure Cosmos DB.
 
 ### Task 1: Migrate data to Azure Cosmos DB
 
