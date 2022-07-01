@@ -268,9 +268,8 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 1. When asked to confirm if you want to continue connecting, type `yes`.
 
 1. When asked for the password, enter **Build Agent VM Password** given below.
-    ```
-    Password.1!!
-    ```
+
+   * Azure Password: <inject key="trainerUserPassword"></inject> 
 
 1. SSH connects to the VM and displays a command prompt such as the following. Keep this cloud shell window open for the next step.
 
