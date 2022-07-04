@@ -47,8 +47,8 @@ In this task, you will create a **Migration project** within Azure Database Migr
     cd /etc
     sudo sed -i 's/bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongodb.conf
     sudo sed -i 's/#port = 27017/port = 27017/g' /etc/mongodb.conf
-    sudo service mongod stop
-    sudo service mongod start
+    sudo service mongodb stop
+    sudo service mongodb start
     ```
     
 6. Select **Next: Select target >>**.
