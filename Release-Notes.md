@@ -1,5 +1,10 @@
 # Release Notes
 
+### 7 June 2022
+
+* Minor updates in the Lab Guide.
+  * Screenshots and instructions have been updated in the exercises for better user experience.
+
 ### 16 May 2022
 
 * Minor updates in the Lab Guide.
