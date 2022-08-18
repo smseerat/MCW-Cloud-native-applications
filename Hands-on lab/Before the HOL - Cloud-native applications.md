@@ -281,7 +281,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
 
 1. From an Azure Cloud Shell terminal, use the SSH command output from the previous task and start an active SSH session to the build agent VM.
 
-2. Clone the Fabmedical GitHub repository created in the previous task by replacing the `GITHUB_USERNAME` in the below mentioned command.
+1. Clone the Fabmedical GitHub repository created in the previous task by replacing the `GITHUB_USERNAME` in the below mentioned command.
 
    ```bash
    git clone https://github.com/<GITHUB_USERNAME>/Fabmedical
@@ -289,7 +289,7 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    
    >**Note**: Run `ls` command to make sure the repository is cloned properly.
 
-3. Set the following environment variables in the active SSH session to the build agent VM. Use the same GitHub access token used in a previous task.
+1. Set the following environment variables in the active SSH session to the build agent VM. Use the same GitHub access token used in a previous task.
 
    > **NOTE**: You can replace the **DeploymentID** with **<inject key="DeploymentID" />**..
 
@@ -299,21 +299,33 @@ FabMedical has provided starter files for you. They have taken a copy of the web
    export MCW_GITHUB_TOKEN=<GITHUB PAT>         # A personal access token for your Github account
    ```
 
-4. Run the `create_build_environment.sh` script to set up the build agent VM environment. This script installs necessary dependencies on the build agent VM and applies the configuration settings to the VM's environment necessary for proper execution of the workshop.
+1. Update the `create_build_environment.sh` script to set up the build agent VM environment.
+
+   ```bash
+   cd ~/Fabmedical/scripts
+   vi create_build_environment.sh
+   ```
+   
+1. update the **node.js version** by replacing `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -` with `curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -`. The updated bash file should look as mentioned in the screeenshot below.
+
+   ![](media_prod/cna50.png)
+
+1. Run the `create_build_environment.sh` script to set up the build agent VM environment. This script installs necessary dependencies on the build agent VM and applies the configuration settings to the VM's environment necessary for proper execution of the workshop.
 
    ```bash
    cd ~/Fabmedical/scripts
    bash create_build_environment.sh
    ```
+   
    > **Note**: Type '**N**' and press enter when asked for sharing the anonymous usage data with Angular team.
 
    > **Note**: Ignore any errors you encounter regarding the Docker client. That will be resolved after joining a new SSH session in the following steps.
 
-5. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
+1. After the script completes execution, type `exit` to exit the SSH session. We will need to join a new SSH session to ensure the docker environment on the build agent VM has completed set up.
 
    ![](media_prod/exit-bhl1.png)
 
-6. After reestablishing an SSH session to the build agent VM, run the `create_and_seed_database.sh` script to create and seed the MongoDB database for use in the workshop.
+1. After reestablishing an SSH session to the build agent VM, run the `create_and_seed_database.sh` script to create and seed the MongoDB database for use in the workshop.
 
    ```bash
    cd ~/Fabmedical/scripts
