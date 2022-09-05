@@ -313,7 +313,7 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     ```bash
     kubectl create namespace cert-manager
     kubectl label namespace cert-manager cert-manager.io/disable-validation=true
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.1/cert-manager.yaml
+    kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
     ```
 
 10. Create a custom `ClusterIssuer` resource for the `cert-manager` service to use when handling requests for SSL certificates.
