@@ -78,7 +78,7 @@ In this task, you will edit the web application source code to add Application I
 3. Install support for Application Insights.
 
     ```bash
-    npm install applicationinsights --save
+    npm install applicationinsights --force --save
     ```
 
     > **Note**: Make sure to include the `--save` argument. Without this, a reference to the `applicationinsights` npm package will not get added to the `package.json` file of the `content-web` nodejs project, resulting in a deployment failure in later steps.
@@ -429,10 +429,10 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     spec:
       tls:
       - hosts:
-          - fabmedical-737708-ingress.centralus.cloudapp.azure.com
+          - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
         secretName: tls-secret
       rules:
-      - host: fabmedical-737708-ingress.centralus.cloudapp.azure.com
+      - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
         http:
           paths:
           - path: /(.*)
