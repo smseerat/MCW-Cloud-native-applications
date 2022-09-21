@@ -418,37 +418,37 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
-    name: content-ingress
-    namespace: ingress-demo
-    annotations:
-       kubernetes.io/ingress.class: nginx
-       nginx.ingress.kubernetes.io/rewrite-target: /$1
-       nginx.ingress.kubernetes.io/use-regex: "true"
-       nginx.ingress.kubernetes.io/ssl-redirect: "false"
-       cert-manager.io/cluster-issuer: letsencrypt-prod
+      name: content-ingress
+      namespace: ingress-demo
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
     spec:
-    tls:
-    - hosts:
+      tls:
+      - hosts:
           - fabmedical-737708-ingress.centralus.cloudapp.azure.com
-       secretName: tls-secret
-    rules:
-    - host: fabmedical-737708-ingress.centralus.cloudapp.azure.com
-       http:
+        secretName: tls-secret
+      rules:
+      - host: fabmedical-737708-ingress.centralus.cloudapp.azure.com
+        http:
           paths:
           - path: /(.*)
-          pathType: Prefix
-          backend:
-             service:
+            pathType: Prefix
+            backend:
+              service:
                 name: web
                 port:
-                number: 80
+                  number: 80
           - path: /content-api/(.*)
-          pathType: Prefix
-          backend:
-             service:
-                name: api
-                port:
-                number: 3001
+            pathType: Prefix
+            backend:
+              service:
+                 name: api
+                 port:
+                   number: 3001
     ```
 
 17. Save changes and close the editor.
