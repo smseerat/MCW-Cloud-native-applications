@@ -415,34 +415,40 @@ This task will set up a Kubernetes Ingress using an [Nginx proxy server](https:/
     Use the following as the contents and update the `[SUFFIX]`: **<inject key="DeploymentID" />** and `[AZURE-REGION]`: **<inject key="Region" />** to match your ingress DNS name:
 
     ```yaml
-    apiVersion: networking.k8s.io/v1beta1
+    apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
-      name: content-ingress
-      namespace: ingress-demo
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/rewrite-target: /$1
-        nginx.ingress.kubernetes.io/use-regex: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "false"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
+    name: content-ingress
+    namespace: ingress-demo
+    annotations:
+       kubernetes.io/ingress.class: nginx
+       nginx.ingress.kubernetes.io/rewrite-target: /$1
+       nginx.ingress.kubernetes.io/use-regex: "true"
+       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+       cert-manager.io/cluster-issuer: letsencrypt-prod
     spec:
-      tls:
-      - hosts:
-          - fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-        secretName: tls-secret
-      rules:
-      - host: fabmedical-[SUFFIX]-ingress.[AZURE-REGION].cloudapp.azure.com
-        http:
+    tls:
+    - hosts:
+          - fabmedical-737708-ingress.centralus.cloudapp.azure.com
+       secretName: tls-secret
+    rules:
+    - host: fabmedical-737708-ingress.centralus.cloudapp.azure.com
+       http:
           paths:
           - path: /(.*)
-            backend:
-              serviceName: web
-              servicePort: 80
+          pathType: Prefix
+          backend:
+             service:
+                name: web
+                port:
+                number: 80
           - path: /content-api/(.*)
-            backend:
-              serviceName: api
-              servicePort: 3001
+          pathType: Prefix
+          backend:
+             service:
+                name: api
+                port:
+                number: 3001
     ```
 
 17. Save changes and close the editor.
