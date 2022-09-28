@@ -181,29 +181,33 @@ In this task, you will run a performance test script that will test the Autoscal
 
     >**Note**: In your Cosmos DB account, you may see that the host endpoint uses `.mongo.cosmos.azure.com`, which is for version 3.6 of Mongo DB. The endpoint shown here is `.documents.azure.com`, which is for version 3.2 of Mongo DB. You can use either endpoint for the purposes of this Task. If you are curious about the new features added to version 3.6 (that do not affect the application in this lab), consult [this](https://devblogs.microsoft.com/cosmosdb/upgrade-your-server-version-from-3-2-to-3-6-for-azure-cosmos-db-api-for-mongodb/) post.
 
-4. Open the Azure Cloud Shell, and **SSH** to the **Build agent VM**.
+4. Open the Azure Cloud Shell, connect to build agent vm using the **Command to Connect to Build Agent VM**, which is given on lab environment details page.
 
-5. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
+5. When asked for the password, enter **Build Agent VM Password** given below.
+
+   * Azure Password: **<inject key="Build Agent VM Password"></inject>**
+
+6. On the **Build agent VM**, navigate to the `~/Fabmedical` directory.
 
     ```bash
     cd ~/Fabmedical
     ```
 
-6. Run the following command to open the `perftest.sh` script for editing in Vim.
+7. Run the following command to open the `perftest.sh` script for editing in Vim.
 
     ```bash
     vi perftest.sh
     ```
 
-7. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
+8. There are several variables declared at the top of the `perftest.sh` script. Modify the **host**, **username**, and **password** variables by setting their values to the corresponding Cosmos DB Connection String values that were copied previously.
 
     ![The screenshot shows Vim with perftest.sh file open and variables set to Cosmos DB Connection String values.](media/cosmos-perf-test-variables.png "Modify the connection information in Vim")
 
-8. Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
+9. Then press **_ESC_**, write **_:wq_** to save you changes and close the file.
     
     **Note**: If **_ESC_** doesn't work press `ctrl+[` and then write **_:wq_** to save you changes and close the file.
 
-9. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
+10. Run the following command to execute the `perftest.sh` script to run a small load test against Cosmos DB. This script will consume RU's in Cosmos DB by inserting many documents into the Sessions container.
 
     ```bash
     bash ./perftest.sh
@@ -211,21 +215,21 @@ In this task, you will run a performance test script that will test the Autoscal
 
     > **Note:** The script will take a minute to complete executing.
 
-10. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
+11. Once the script has completed, navigate back to the **Cosmos DB account** in the Azure portal.
 
    ![](media_prod/cna33.png "View replica details")
 
-11. Scroll down on the **Overview** pane of the **Cosmos DB account** blade, and locate the **Request Charge** graph.
+12. Scroll down on the **Overview** pane of the **Cosmos DB account** blade, and locate the **Request Charge** graph.
 
     > **Note:** It may take 2 - 5 minutes for the activity on the Cosmos DB collection to appear in the activity log. Wait a couple minutes and then refresh the pane if the recent Request charge doesn't show up right now.
 
-12. Notice that the **Request charge** now shows there was activity on the **Cosmos DB account** that exceeded the 400 RU/s limit that was previously set before Autoscale was turned on.
+13. Notice that the **Request charge** now shows there was activity on the **Cosmos DB account** that exceeded the 400 RU/s limit that was previously set before Autoscale was turned on.
 
     ![The screenshot shows the Cosmos DB request charge graph showing recent activity from performance test](media/cosmos-request-charge.png "Recent CosmosDB activity graph")
     
     >**Note**: In case if you don't see data on the graph. Please set the time range to last 1 hour.
 
-13. Click on the **Next** button present in the bottom-right corner of this lab guide.
+14. Click on the **Next** button present in the bottom-right corner of this lab guide.
 
 
 
