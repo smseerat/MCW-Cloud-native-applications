@@ -8,19 +8,19 @@ You should follow all of the steps provided in this section _before_ taking part
 
 1. In the **Lab VM** provided to you on the left side, double click on the **Azure Portal** browser shortcut on the desktop.
 
-    ![Shell](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/azureportal.png?raw=true "Cloud Shell Window")
+   ![](./media/azureportal.png)
 
 1. Click on **Get Started** on edge browser.
 
-   ![Browser](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/getstarted.png?raw=true)
+   ![](./media/getstarted.png)
 
 1. Now, click on the cross icon to close **Let's set up your new tab page**.
 
-   ![Close](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/closeletus.png?raw=true)
-
+   ![](./media/closeletus.png)
+   
 1. Close the current tab by clicking on close tab icon and then **Sign in Microsoft Azure** tab will open.
 
-   ![close](https://github.com/CloudLabs-MCW/MCW-Cloud-native-applications/blob/fix/Hands-on%20lab/media/closeedgetab.png?raw=true)
+   ![](./media/closeedgetab.png)
  
 1. On **Sign in to Microsoft Azure** tab, **Sign in** with following Azure credentials.
 
@@ -35,9 +35,13 @@ You should follow all of the steps provided in this section _before_ taking part
 1. If a **Welcome to Microsoft Azure** popup window appears, click **Maybe Later** to skip the tour.
 
 1. Change the default Browser to Edge using the default apps setting option in Windows.
+
 ![In this screenshot of the selection of Edge browser is set as the default browser using the "Default apps' item in settings .](media/edge-default-app.png "Make Edge the default browser using 'Default Apps' ")  
+
 1. Next, update the region + language settings of the Lab VM to region that is appropriate to your setting.
+
 ![Change the Region in settings to match current.](media/RegionChange.png "Change Region ")  
+
 ![Change the Language in settings to match current.](media/LanguageChange.png "Change Region ")  
 
 ## Task 2: Connect securely to the build agent
